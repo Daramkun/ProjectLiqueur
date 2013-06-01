@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{24D173E0-CAFD-43D5-B1B8-1C76C08421C1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Daramkun.Liqueur</RootNamespace>
+    <AssemblyName>Daramkun.Liqueur.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile88</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Common\BooleanState.cs" />
+    <Compile Include="Common\Timer.cs" />
+    <Compile Include="Contents\FileSystems\XUnzipSharp\XUnzip.cs" />
+    <Compile Include="Contents\FileSystems\ZipFileSystem.cs" />
+    <Compile Include="Contents\Loaders\LsfFontContentLoader.cs" />
+    <Compile Include="Contents\Loaders\ZipContentLoader.cs" />
+    <Compile Include="Contents\Loaders\ZipLsfFontContentLoader.cs" />
+    <Compile Include="Datas\Json\IJsonArray.cs" />
+    <Compile Include="Datas\Json\IJsonEntry.cs" />
+    <Compile Include="Datas\Json\JsonArray.cs" />
+    <Compile Include="Datas\Json\JsonEntry.cs" />
+    <Compile Include="Datas\Json\JsonItem.cs" />
+    <Compile Include="Datas\Json\JsonItembleAttribute.cs" />
+    <Compile Include="Datas\Json\JsonParser.cs" />
+    <Compile Include="Datas\Json\JsonProvider.cs" />
+    <Compile Include="Decoders\Images\DirectPixelDecoder.cs" />
+    <Compile Include="Decoders\Sounds\DirectChunkDecoder.cs" />
+    <Compile Include="Geometries\Rotator.cs" />
+    <Compile Include="Graphics\Fonts\BaseFont.cs" />
+    <Compile Include="Graphics\Fonts\LsfFont.cs" />
+    <Compile Include="Contents\ContentManager.cs" />
+    <Compile Include="Contents\IContentLoader.cs" />
+    <Compile Include="Contents\Loaders\ImageContentLoader.cs" />
+    <Compile Include="Contents\Loaders\SoundContentLoader.cs" />
+    <Compile Include="Contents\Loaders\TextContentLoader.cs" />
+    <Compile Include="Decoders\IDecoder.cs" />
+    <Compile Include="Decoders\Images\DefaultBitmapDecoder.cs" />
+    <Compile Include="Exceptions\AudioFailedInitializeException.cs" />
+    <Compile Include="Exceptions\CompressionProcessException.cs" />
+    <Compile Include="Common\GameTimeEventArgs.cs" />
+    <Compile Include="Geometries\Vector3.cs" />
+    <Compile Include="Graphics\Fonts\ZipLsfFont.cs" />
+    <Compile Include="Inputs\GamePadCollection.cs" />
+    <Compile Include="Inputs\RawDevices\RawAccelerometer.cs" />
+    <Compile Include="Inputs\RawDevices\RawGamePad.cs" />
+    <Compile Include="Inputs\RawDevices\RawKeyboard.cs" />
+    <Compile Include="Inputs\RawDevices\RawMouse.cs" />
+    <Compile Include="Inputs\RawDevices\RawTouchPanel.cs" />
+    <Compile Include="Inputs\IInputDevice.cs" />
+    <Compile Include="IO\Compression\Algorithms\Deflate.cs" />
+    <Compile Include="IO\Compression\Algorithms\Inflate.cs" />
+    <Compile Include="IO\Compression\CompressionMode.cs" />
+    <Compile Include="IO\Compression\Crc\CRC32.cs" />
+    <Compile Include="IO\Compression\DeflateStream.cs" />
+    <Compile Include="IO\Compression\GZipStream.cs" />
+    <Compile Include="IO\SubStream.cs" />
+    <Compile Include="IO\Compression\Utilities\InfTree.cs" />
+    <Compile Include="IO\Compression\Utilities\Iso8859Dash1Encoding.cs" />
+    <Compile Include="IO\Compression\Utilities\Path.cs" />
+    <Compile Include="IO\Compression\Utilities\Tree.cs" />
+    <Compile Include="IO\Compression\Zlib.cs" />
+    <Compile Include="IO\Compression\ZlibBaseStream.cs" />
+    <Compile Include="IO\Compression\ZlibCodec.cs" />
+    <Compile Include="IO\Compression\ZlibConstants.cs" />
+    <Compile Include="IO\Compression\ZlibStream.cs" />
+    <Compile Include="LiqueurSystem.cs" />
+    <Compile Include="Medias\ISoundPlayer.cs" />
+    <Compile Include="Nodes\FpsCalculator.cs" />
+    <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\TimerScheduler.cs" />
+    <Compile Include="Platforms\ILauncher.cs" />
+    <Compile Include="Platforms\IWindow.cs" />
+    <Compile Include="Contents\FileSystems\ManifestFileSystem.cs" />
+    <Compile Include="Contents\IFileSystem.cs" />
+    <Compile Include="Common\FileFormatAttribute.cs" />
+    <Compile Include="Graphics\ImageData.cs" />
+    <Compile Include="Decoders\ImageDecoders.cs" />
+    <Compile Include="Decoders\ISoundDecoder.cs" />
+    <Compile Include="Medias\SoundData.cs" />
+    <Compile Include="Decoders\Sounds\DefaultOggVorbisDecoder.cs" />
+    <Compile Include="Decoders\Sounds\DefaultWaveDecoder.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csogg\Buffer.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csogg\Packet.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csogg\Page.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csogg\StreamState.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csogg\SyncState.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\AllocChain.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Block.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\CodeBook.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Comment.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\csorbisException.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Drft.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\DspState.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\EncodeAuxNearestMatch.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\EncodeAuxThreshMatch.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Floor0.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Floor1.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\FuncFloor.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\FuncMapping.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\FuncResidue.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\FuncTime.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Info.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\InfoMode.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Lookup.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Lpc.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Lsp.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Mapping0.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Mdct.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\PsyInfo.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\PsyLook.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Residue0.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Residue1.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Residue2.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\StaticCodeBook.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\Time0.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\csvorbis\VorbisFile.cs" />
+    <Compile Include="Decoders\Sounds\OggVorbisCore\OggDecodeStream.cs" />
+    <Compile Include="Decoders\SoundDecoders.cs" />
+    <Compile Include="Exceptions\FileFormatMismatchException.cs" />
+    <Compile Include="Decoders\IImageDecoder.cs" />
+    <Compile Include="Common\GameTime.cs" />
+    <Compile Include="Geometries\Circle.cs" />
+    <Compile Include="Geometries\ICollision.cs" />
+    <Compile Include="Geometries\Line.cs" />
+    <Compile Include="Geometries\Rectangle.cs" />
+    <Compile Include="Geometries\Vector2.cs" />
+    <Compile Include="Graphics\Color.cs" />
+    <Compile Include="Graphics\ColorArrange.cs" />
+    <Compile Include="Graphics\IImage.cs" />
+    <Compile Include="Graphics\IFont.cs" />
+    <Compile Include="Graphics\IRenderer.cs" />
+    <Compile Include="Graphics\Transform2.cs" />
+    <Compile Include="Inputs\GamePadButton.cs" />
+    <Compile Include="Inputs\InputState.cs" />
+    <Compile Include="Inputs\KeyboardKey.cs" />
+    <Compile Include="Inputs\MouseButton.cs" />
+    <Compile Include="Inputs\PlayerIndex.cs" />
+    <Compile Include="Inputs\States\AccelerometerState.cs" />
+    <Compile Include="Inputs\States\GamePadState.cs" />
+    <Compile Include="Inputs\States\KeyboardState.cs" />
+    <Compile Include="Inputs\States\MouseState.cs" />
+    <Compile Include="Inputs\States\TouchPoint.cs" />
+    <Compile Include="Inputs\States\TouchState.cs" />
+    <Compile Include="Medias\AudioChannel.cs" />
+    <Compile Include="Medias\BitPerSample.cs" />
+    <Compile Include="Platforms\Platform.cs" />
+    <Compile Include="Platforms\PlatformInformation.cs" />
+    <Compile Include="Scenes\BaseSceneTransitor.cs" />
+    <Compile Include="Scenes\Scene.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenes\FrameScene.cs" />
+    <Compile Include="Scenes\Transits\DirectSceneTransitor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Decoders\Sounds\OggVorbisCore\LICENSE.txt" />
+    <Content Include="LICENSE.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
