@@ -106,7 +106,7 @@ namespace Daramkun.Walnut
 		public static void Run<T1, T2, T3> ( IFileSystem mainContentsFileSystem )
 			where T1 : ILauncher
 			where T2 : IScriptEngine
-			where T2 : Scene
+			where T3 : Scene
 		{
 			Run<T1, T2> ( mainContentsFileSystem, Activator.CreateInstance<T3> () );
 		}

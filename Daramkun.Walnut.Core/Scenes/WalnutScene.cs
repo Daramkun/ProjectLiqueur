@@ -23,12 +23,22 @@ namespace Daramkun.Walnut.Scenes
 
 		public WalnutScene ( Stream sceneStream, ContentManager contentManager )
 		{
-			AnalyzeJsonData ( JsonParser.Parse ( sceneStream ), contentManager );
+			jsonEntry = JsonParser.Parse ( sceneStream );
+			this.contentManager = contentManager;
 		}
 
 		public WalnutScene ( JsonEntry jsonEntry, ContentManager contentManager )
 		{
+			this.jsonEntry = jsonEntry;
+			this.contentManager = contentManager;
+		}
+
+		public override void OnInitialize ()
+		{
 			AnalyzeJsonData ( jsonEntry, contentManager );
+			if ( eventCallee != null )
+				eventCallee.onInitialize ();
+			base.OnInitialize ();
 		}
 
 		private void AnalyzeJsonData ( JsonEntry jsonEntry, ContentManager contentManager )
@@ -72,13 +82,6 @@ namespace Daramkun.Walnut.Scenes
 					}
 				}
 			}
-		}
-
-		public override void OnInitialize ()
-		{
-			if ( eventCallee != null )
-				eventCallee.onInitialize ();
-			base.OnInitialize ();
 		}
 
 		public override void OnFinalize ()

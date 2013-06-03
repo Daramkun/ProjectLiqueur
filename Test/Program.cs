@@ -23,6 +23,7 @@ using Daramkun.Liqueur.Platforms;
 using Daramkun.Liqueur.Scenes;
 using Daramkun.Walnut;
 using Daramkun.Walnut.Nodes;
+using Daramkun.Walnut.Scripts;
 
 namespace Test
 {
@@ -103,7 +104,7 @@ namespace Test
 			WalnutSystem.SetupDecoders ();
 			WalnutSystem.SetupFixedLogicTimeStep ( TimeSpan.FromTicks ( 166666 ), TimeSpan.FromTicks ( 166666 ) );
 			WalnutSystem.SetupInputDevices<Keyboard, Mouse, GamePad, TouchPanel, Accelerometer> ();
-			WalnutSystem.Run<Launcher, MyScene> ( new LocalFileSystem () );
+			WalnutSystem.Run<Launcher, IScriptEngine, MyScene> ( new LocalFileSystem () );
 		}
 	}
 }

@@ -14,5 +14,6 @@ namespace Daramkun.Walnut.Scripts
 		void AddGlobalVariable ( string name, object var );
 
 		object Run ( string script );
+		T Run<T> ( string script );
 	}
 }
