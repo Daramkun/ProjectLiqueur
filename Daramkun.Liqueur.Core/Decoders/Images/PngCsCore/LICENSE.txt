@@ -1,0 +1,7 @@
+﻿A C# library for reading/writing PNG images 
+
+This is a port of PNGJ, my original library, in Java. 
+
+Start reading here: Overview 
+
+Reference: API Docs 

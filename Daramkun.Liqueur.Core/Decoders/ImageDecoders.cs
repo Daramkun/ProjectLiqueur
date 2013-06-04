@@ -89,6 +89,7 @@ namespace Daramkun.Liqueur.Decoders
 		public static void AddDefaultDecoders ()
 		{
 			AddDecoder ( typeof ( DefaultBitmapDecoder ) );
+			AddDecoder ( typeof ( DefaultPngDecoder ) );
 			AddDecoder ( typeof ( DirectPixelDecoder ) );
 		}
 	}

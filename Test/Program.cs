@@ -57,6 +57,10 @@ namespace Test
 				{
 					Position = new Vector2 ( 140, 20 ),
 				} );
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<Image> ( "square.png" ) )
+				{
+					Position = new Vector2 ( 340, 100 ),
+				} );
 
 				AddChild ( new Label<IFont> ( WalnutSystem.MainContents.Load<LsfFont> ( "test.lsf" ) )
 				{

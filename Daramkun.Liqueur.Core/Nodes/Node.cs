@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,18 @@ namespace Daramkun.Liqueur.Nodes
 			T instantiate = Activator.CreateInstance ( typeof ( T ), args ) as T;
 			AddChild ( instantiate );
 			return instantiate;
+		}
+
+		public void StartCoroutine ( Func<IEnumerable> coroutine )
+		{
+			foreach ( IEnumerable e in coroutine () )
+				LiqueurSystem.Window.DoEvent ();
+		}
+
+		public void StartCoroutine ( Func<object, IEnumerable> coroutine, object argument )
+		{
+			foreach ( IEnumerable e in coroutine ( argument ) )
+				LiqueurSystem.Window.DoEvent ();
 		}
 
 		public Node AddChild ( Node node )

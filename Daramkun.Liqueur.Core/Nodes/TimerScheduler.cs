@@ -28,7 +28,7 @@ namespace Daramkun.Liqueur.Nodes
 		public override void OnUpdate ( GameTime gameTime )
 		{
 			List<Timer> removeTimers = new List<Timer> ();
-			foreach ( KeyValuePair<Timer, Action<Timer>> pair in timers )
+			foreach ( KeyValuePair<Timer, Action<Timer>> pair in timers.ToArray () )
 			{
 				pair.Key.Update ( gameTime );
 				if ( pair.Key.Check )
