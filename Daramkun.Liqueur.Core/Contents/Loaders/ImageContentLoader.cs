@@ -12,7 +12,7 @@ namespace Daramkun.Liqueur.Contents.Loaders
 	{
 		public static Type ImageType { get; set; }
 		public Type ContentType { get { return typeof ( IImage ); } }
-		public bool IsAutoStreamDispose { get { return true; } }
+		public bool IsSelfStreamDispose { get { return true; } }
 
 		public object Load ( Stream stream, params object [] args )
 		{

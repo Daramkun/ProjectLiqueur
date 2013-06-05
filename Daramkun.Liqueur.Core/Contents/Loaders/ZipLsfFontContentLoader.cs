@@ -11,7 +11,7 @@ namespace Daramkun.Liqueur.Contents.Loaders
 	{
 		public Type ContentType { get { return typeof ( ZipLsfFont ); } }
 
-		public bool IsAutoStreamDispose { get { return true; } }
+		public bool IsSelfStreamDispose { get { return true; } }
 
 		public object Load ( Stream stream, params object [] args )
 		{

@@ -74,7 +74,7 @@ namespace Daramkun.Liqueur.Contents
 					Stream stream = FileSystem.OpenFile ( filename );
 					object data = contentLoader.Load ( stream, args );
 					loadedContent.Add ( filename, data );
-					if ( !contentLoader.IsAutoStreamDispose )
+					if ( !contentLoader.IsSelfStreamDispose )
 						stream.Dispose ();
 					return ( T ) data;
 				}

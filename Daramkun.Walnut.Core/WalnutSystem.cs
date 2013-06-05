@@ -11,6 +11,7 @@ using Daramkun.Liqueur.Inputs;
 using Daramkun.Liqueur.Inputs.RawDevices;
 using Daramkun.Liqueur.Platforms;
 using Daramkun.Liqueur.Scenes;
+using Daramkun.Walnut.Contents.Loaders;
 using Daramkun.Walnut.Scenes;
 using Daramkun.Walnut.Scripts;
 
@@ -118,6 +119,8 @@ namespace Daramkun.Walnut
 			MainContents = new ContentManager ();
 			MainContents.FileSystem = mainContentsFileSystem;
 			MainContents.AddDefaultContentLoader ();
+			MainContents.AddContentLoader ( new StringTableContentLoader () );
+			MainContents.AddContentLoader ( new ResourceTableContentLoader () );
 
 			try
 			{

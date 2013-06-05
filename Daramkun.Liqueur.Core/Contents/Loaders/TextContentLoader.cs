@@ -9,7 +9,7 @@ namespace Daramkun.Liqueur.Contents.Loaders
 	public class TextContentLoader : IContentLoader
 	{
 		public Type ContentType { get { return typeof ( string ); } }
-		public bool IsAutoStreamDispose { get { return false; } }
+		public bool IsSelfStreamDispose { get { return false; } }
 
 		public object Load ( Stream stream, params object [] args )
 		{

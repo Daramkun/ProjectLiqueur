@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Datas.Json;
+using Daramkun.Liqueur.Geometries;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Graphics.Fonts;
 using Daramkun.Liqueur.Nodes;
@@ -82,6 +83,22 @@ namespace Daramkun.Walnut.Nodes
 			if ( eventCallee != null )
 				eventCallee.onDraw ( this, gameTime.ElapsedGameTime.Milliseconds / 1000.0f );
 			base.OnDraw ( gameTime );
+		}
+
+		protected Vector2 CalculatedAnchorPoint
+		{
+			get
+			{
+				Vector2 anchor = new Vector2 ();
+				Node parent = Parent;
+				while ( parent != null )
+				{
+					if ( parent is AnchorNode )
+						anchor += ( parent as AnchorNode ).Anchor;
+					parent = parent.Parent;
+				}
+				return anchor;
+			}
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace Daramkun.Liqueur.Contents
 	public interface IContentLoader
 	{
 		Type ContentType { get; }
-		bool IsAutoStreamDispose { get; }
+		bool IsSelfStreamDispose { get; }
 		object Load ( Stream stream, params object [] args );
 	}
 }

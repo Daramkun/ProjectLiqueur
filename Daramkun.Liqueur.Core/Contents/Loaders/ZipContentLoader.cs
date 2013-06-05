@@ -10,7 +10,7 @@ namespace Daramkun.Liqueur.Contents.Loaders
 	public class ZipContentLoader : IContentLoader
 	{
 		public Type ContentType { get { return typeof ( ZipFileSystem ); } }
-		public bool IsAutoStreamDispose { get { return true; } }
+		public bool IsSelfStreamDispose { get { return true; } }
 
 		public object Load ( Stream stream, params object [] args )
 		{

@@ -122,6 +122,7 @@ namespace Daramkun.Walnut.Nodes
 			LiqueurSystem.Renderer.Begin2D ();
 
 			Transform2 transform = this.transform;
+			transform.Translate -= CalculatedAnchorPoint;
 			Vector2 imageSize = ( SourceRectangle != null ) ? SourceRectangle.Value.Size : Image.Size;
 			imageSize *= transform.Scale;
 			if ( ( ObjectOffset & Nodes.ObjectOffset.Middle ) != 0 )

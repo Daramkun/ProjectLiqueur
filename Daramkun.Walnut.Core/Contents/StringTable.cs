@@ -8,7 +8,7 @@ using Daramkun.Liqueur.Datas.Json;
 
 namespace Daramkun.Walnut.Contents
 {
-	public class StringTable
+	public sealed class StringTable
 	{
 		Dictionary<string, string> stringTable = new Dictionary<string, string> ();
 

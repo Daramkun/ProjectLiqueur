@@ -8,18 +8,18 @@ using Daramkun.Liqueur.Contents;
 
 namespace Daramkun.Walnut.Contents.Loaders
 {
-	public class StringTableContentLoader : IContentLoader
+	public class ResourceTableContentLoader : IContentLoader
 	{
-		public Type ContentType { get { return typeof ( StringTable ); } }
+		public Type ContentType { get { return typeof ( ResourceTable ); } }
 
-		public bool IsSelfStreamDispose { get { return false; } }
+		public bool IsSelfStreamDispose { get { return true; } }
 
 		public object Load ( Stream stream, params object [] args )
 		{
 			if ( args != null && args.Length == 1 )
-				return new StringTable ( stream, args [ 0 ] as CultureInfo );
+				return new ResourceTable ( stream, args [ 0 ] as CultureInfo );
 			else
-				return new StringTable ( stream );
+				return new ResourceTable ( stream );
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Daramkun.Liqueur.Contents.Loaders
 	{
 		public Type ContentType { get { return typeof ( JsonEntry ); } }
 
-		public bool IsAutoStreamDispose { get { return false; } }
+		public bool IsSelfStreamDispose { get { return false; } }
 
 		public object Load ( Stream stream, params object [] args )
 		{

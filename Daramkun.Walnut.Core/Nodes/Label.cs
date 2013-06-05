@@ -72,6 +72,7 @@ namespace Daramkun.Walnut.Nodes
 			Vector2 area = ( Area == null ) ? Font.MeasureString ( Text ) : Area.Value;
 
 			Vector2 position = Position;
+			position -= CalculatedAnchorPoint;
 			if ( ( ObjectOffset & Nodes.ObjectOffset.Middle ) != 0 )
 				position -= new Vector2 ( area.X / 2, 0 );
 			if ( ( ObjectOffset & Nodes.ObjectOffset.Right ) != 0 )

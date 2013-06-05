@@ -9,7 +9,7 @@ using Daramkun.Liqueur.Contents.FileSystems;
 
 namespace Daramkun.Walnut.Contents
 {
-	public class ResourceTable
+	public sealed class ResourceTable : IDisposable
 	{
 		ContentManager contentManager;
 		CultureInfo cultureInfo;
@@ -35,6 +35,33 @@ namespace Daramkun.Walnut.Contents
 			contentManager.AddDefaultContentLoader ();
 
 			this.cultureInfo = cultureInfo;
+		}
+
+		private string PathCombine ( string path, string filename )
+		{
+			if ( path.IndexOf ( '\\' ) >= 0 )
+			{
+				if ( path [ path.Length - 1 ] == '\\' )
+					return path + filename;
+				else return string.Format ( "{0}\\{1}", path, filename );
+			}
+			else
+			{
+				if ( path [ path.Length - 1 ] == '/' )
+					return path + filename;
+				else return string.Format ( "{0}/{1}", path, filename );
+			}
+		}
+
+		public object Load<T> ( string filename, params object [] args )
+		{
+			return contentManager.Load<T> ( PathCombine ( cultureInfo.TwoLetterISOLanguageName, filename ), args );
+		}
+
+		public void Dispose ()
+		{
+			contentManager.Reset ();
+			contentManager.Dispose ();
 		}
 	}
 }
