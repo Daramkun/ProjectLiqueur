@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,6 +12,7 @@ using Daramkun.Liqueur.Inputs;
 using Daramkun.Liqueur.Inputs.RawDevices;
 using Daramkun.Liqueur.Platforms;
 using Daramkun.Liqueur.Scenes;
+using Daramkun.Walnut.Contents;
 using Daramkun.Walnut.Contents.Loaders;
 using Daramkun.Walnut.Scenes;
 using Daramkun.Walnut.Scripts;
@@ -21,6 +23,9 @@ namespace Daramkun.Walnut
     {
 		public static ContentManager MainContents { get; private set; }
 		public static IScriptEngine ScriptEngine { get; private set; }
+
+		public static WalnutPackage MainWalnutPackage { get; private set; }
+		public static WalnutPackage SubWalnutPackage { get; private set; }
 
 		private static bool IsSubtypeOf ( Type majorType, Type minorType )
 		{
@@ -119,8 +124,6 @@ namespace Daramkun.Walnut
 			MainContents = new ContentManager ();
 			MainContents.FileSystem = mainContentsFileSystem;
 			MainContents.AddDefaultContentLoader ();
-			MainContents.AddContentLoader ( new StringTableContentLoader () );
-			MainContents.AddContentLoader ( new ResourceTableContentLoader () );
 
 			try
 			{
@@ -140,6 +143,18 @@ namespace Daramkun.Walnut
 			LiqueurSystem.Run ( Activator.CreateInstance<T1> (), sceneObject );
 
 			MainContents.Reset ();
+		}
+
+		public static void Run<T1, T2> ( Stream package )
+			where T1 : ILauncher
+			where T2 : IScriptEngine
+		{
+			using ( MainWalnutPackage = new WalnutPackage ( package ) )
+			{
+				Run<T1, T2> ( MainWalnutPackage.PackageFileSystem, 
+					MainWalnutPackage.ResourceTable.Load<WalnutScene> ( MainWalnutPackage.MainScene,
+						MainWalnutPackage.ResourceTable ) );
+			}
 		}
     }
 }

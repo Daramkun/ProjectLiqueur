@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Exceptions
 {
-	public class FileFormatMismatchException : CommonException
+	public class NullOfFileSystemException : CommonException
 	{
-		public FileFormatMismatchException ()
+		public NullOfFileSystemException ()
 			: base ()
 		{
 
 		}
 
-		public FileFormatMismatchException ( string message )
+		public NullOfFileSystemException ( string message )
 			: base ( message )
 		{
 

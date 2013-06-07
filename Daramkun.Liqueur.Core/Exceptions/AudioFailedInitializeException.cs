@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Exceptions
 {
-	public class AudioFailedInitializeException : Exception
+	public class AudioFailedInitializeException : CommonException
 	{
 		public AudioFailedInitializeException ()
 			: base ()

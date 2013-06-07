@@ -11,6 +11,7 @@ using Daramkun.Liqueur.Geometries;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Graphics.Fonts;
 using Daramkun.Liqueur.Nodes;
+using Daramkun.Walnut.Contents;
 
 namespace Daramkun.Walnut.Nodes
 {

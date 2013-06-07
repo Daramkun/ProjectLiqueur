@@ -40,10 +40,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contents\Loaders\ResourceTableContentLoader.cs" />
-    <Compile Include="Contents\Loaders\StringTableContentLoader.cs" />
-    <Compile Include="Contents\ResourceTable.cs" />
-    <Compile Include="Contents\StringTable.cs" />
+    <Compile Include="Contents\Loaders\WalnutSceneContentLoader.cs" />
+    <Compile Include="Contents\ScriptTable.cs" />
+    <Compile Include="Contents\WalnutPackage.cs" />
+    <Compile Include="Exceptions\GameMismatchException.cs" />
     <Compile Include="Nodes\AnchorNode.cs" />
     <Compile Include="Nodes\Label.cs" />
     <Compile Include="Nodes\ObjectOffset.cs" />

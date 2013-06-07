@@ -71,6 +71,7 @@ namespace Daramkun.Liqueur.Datas.Json
 			string temp = ( Data == null ) ? "null" : ( ( Data is string ) ? Data as string : Data.ToString () );
 			if ( Data is string )
 			{
+				temp = temp.Replace ( "\\", "\\\\" );
 				temp = temp.Replace ( "\n", "\\n" );
 				temp = temp.Replace ( "\"", "\\\"" );
 				temp = String.Format ( "\"{0}\"", temp );

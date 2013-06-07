@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration ( "" )]
 [assembly: AssemblyCompany ( "Daramkun's NEST" )]
 [assembly: AssemblyProduct ( "Daramkun.Liqueur.Core" )]
-[assembly: AssemblyCopyright ( "Copyright © 2013 Daramkun, Powered by csVorbis, Zlib.Portable, XUnzip" )]
+[assembly: AssemblyCopyright ( "Copyright © 2013 Daramkun, Powered by csVorbis, Zlib.Portable, XUnzip, PngCs" )]
 [assembly: AssemblyTrademark ( "Project Liqueur®" )]
 [assembly: AssemblyCulture ( "" )]
 [assembly: NeutralResourcesLanguage ( "ko" )]

@@ -39,8 +39,10 @@
     <Compile Include="Contents\FileSystems\ZipFileSystem.cs" />
     <Compile Include="Contents\Loaders\JsonContentLoader.cs" />
     <Compile Include="Contents\Loaders\LsfFontContentLoader.cs" />
+    <Compile Include="Contents\Loaders\StringTableContentLoader.cs" />
     <Compile Include="Contents\Loaders\ZipContentLoader.cs" />
     <Compile Include="Contents\Loaders\ZipLsfFontContentLoader.cs" />
+    <Compile Include="Contents\StringTable.cs" />
     <Compile Include="Datas\Json\IJsonArray.cs" />
     <Compile Include="Datas\Json\IJsonEntry.cs" />
     <Compile Include="Datas\Json\JsonArray.cs" />
@@ -118,6 +120,10 @@
     <Compile Include="Decoders\Images\PngCsCore\Zlib\ZlibOutputStreamMs.cs" />
     <Compile Include="Decoders\Images\PngCsCore\Zlib\ZlibStreamFactory.cs" />
     <Compile Include="Decoders\Sounds\DirectChunkDecoder.cs" />
+    <Compile Include="Exceptions\CommonException.cs" />
+    <Compile Include="Exceptions\DecodingFailedException.cs" />
+    <Compile Include="Exceptions\NullOfFileSystemException.cs" />
+    <Compile Include="Exceptions\VersionMismatchException.cs" />
     <Compile Include="Geometries\Rotator.cs" />
     <Compile Include="Graphics\Fonts\BaseFont.cs" />
     <Compile Include="Graphics\Fonts\LsfFont.cs" />
@@ -247,7 +253,6 @@
   <ItemGroup>
     <Content Include="Decoders\Images\PngCsCore\LICENSE.txt" />
     <Content Include="Decoders\Sounds\OggVorbisCore\LICENSE.txt" />
-    <Content Include="LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

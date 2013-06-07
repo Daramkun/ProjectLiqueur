@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // 어셈블리의 일반 정보는 다음 특성 집합을 통해 제어됩니다.
 // 어셈블리와 관련된 정보를 수정하려면
 // 이 특성 값을 변경하십시오.
-[assembly: AssemblyTitle ( "Liqueur SpriteFont Generator" )]
+[assembly: AssemblyTitle ( "Daramkun.Walnut.Tools.ResourcePacker" )]
 [assembly: AssemblyDescription ( "" )]
 [assembly: AssemblyConfiguration ( "" )]
-[assembly: AssemblyCompany ( "Daramkun's NEST" )]
-[assembly: AssemblyProduct ( "Liqueur SpriteFont Generator" )]
+[assembly: AssemblyCompany ( "" )]
+[assembly: AssemblyProduct ( "Daramkun.Walnut.Tools.ResourcePacker" )]
 [assembly: AssemblyCopyright ( "Copyright © 2013 Daramkun All Rights Reserved" )]
-[assembly: AssemblyTrademark ( "Project Liqueur®" )]
+[assembly: AssemblyTrademark ( "Project Walnut®" )]
 [assembly: AssemblyCulture ( "" )]
 
 // ComVisible을 false로 설정하면 이 어셈블리의 형식이 COM 구성 요소에 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible ( false )]
 
 // 이 프로젝트가 COM에 노출되는 경우 다음 GUID는 typelib의 ID를 나타냅니다.
-[assembly: Guid ( "cd33597f-3e0c-4498-a598-4017d3424ebb" )]
+[assembly: Guid ( "8e6ac9ab-5100-4a86-8567-24ffbca84f2d" )]
 
 // 어셈블리의 버전 정보는 다음 네 가지 값으로 구성됩니다.
 //

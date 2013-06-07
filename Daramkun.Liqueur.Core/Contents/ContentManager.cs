@@ -1,21 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Daramkun.Liqueur.Contents.Loaders;
+using Daramkun.Liqueur.Exceptions;
 
 namespace Daramkun.Liqueur.Contents
 {
 	public sealed class ContentManager : IDisposable
 	{
+		public static List<Assembly> ContentLoaderAssemblies { get; private set; }
+
 		List<IContentLoader> contentLoaders = new List<IContentLoader> ();
 		Dictionary<string, object> loadedContent = new Dictionary<string, object> ();
 
 		public IFileSystem FileSystem { get; set; }
+		public bool IsCultureMode { get; set; }
+
+		static ContentManager ()
+		{
+			ContentLoaderAssemblies = new List<Assembly> ();
+			ContentLoaderAssemblies.Add ( Assembly.GetExecutingAssembly () );
+		}
+
+		public ContentManager ()
+		{
+			FileSystem = null;
+			IsCultureMode = true;
+		}
+
+		public ContentManager ( IFileSystem fileSystem )
+		{
+			FileSystem = fileSystem;
+			IsCultureMode = true;
+		}
 
 		public void AddContentLoader ( IContentLoader contentLoader )
 		{
+			if ( contentLoaders.Contains ( contentLoader ) ) return;
 			contentLoaders.Add ( contentLoader );
 		}
 
@@ -26,12 +51,15 @@ namespace Daramkun.Liqueur.Contents
 
 		public void AddDefaultContentLoader ()
 		{
-			AddContentLoader ( new TextContentLoader () );
-			AddContentLoader ( new ImageContentLoader () );
-			AddContentLoader ( new SoundContentLoader () );
-			AddContentLoader ( new LsfFontContentLoader () );
-			AddContentLoader ( new ZipLsfFontContentLoader () );
-			AddContentLoader ( new ZipContentLoader () );
+			foreach ( Assembly assembly in ContentLoaderAssemblies )
+			{
+				foreach ( Type type in assembly.GetTypes () )
+				{
+					if ( IsSubtypeOf ( type, typeof ( IContentLoader ) ) && type != typeof ( IContentLoader )
+						&& !type.IsAbstract && !type.IsInterface && type.IsPublic )
+						AddContentLoader ( Activator.CreateInstance ( type ) as IContentLoader );
+				}
+			}
 		}
 
 		public void AddContent ( string filename, object obj )
@@ -60,12 +88,40 @@ namespace Daramkun.Liqueur.Contents
 			return false;
 		}
 
+		private string PathCombine ( string path, string filename )
+		{
+			if ( path == null || path.Length == 0 ) return filename;
+
+			if ( path.IndexOf ( '\\' ) >= 0 )
+			{
+				if ( path [ path.Length - 1 ] == '\\' )
+					return path + filename;
+				else return string.Format ( "{0}\\{1}", path, filename );
+			}
+			else
+			{
+				if ( path [ path.Length - 1 ] == '/' )
+					return path + filename;
+				else return string.Format ( "{0}/{1}", path, filename );
+			}
+		}
+
 		public T Load<T> ( string filename, params object [] args )
 		{
-			if ( FileSystem == null ) return default ( T );
+			if ( FileSystem == null )
+				throw new NullOfFileSystemException ();
+
+			if ( IsCultureMode )
+			{
+				if ( FileSystem.IsFileExist ( PathCombine ( CultureInfo.CurrentCulture.Name, filename ) ) )
+					filename = PathCombine ( CultureInfo.CurrentCulture.Name, filename );
+				else if ( FileSystem.IsFileExist ( PathCombine ( CultureInfo.InvariantCulture.Name, filename ) ) )
+					filename = PathCombine ( CultureInfo.InvariantCulture.Name, filename );
+				else throw new FileNotFoundException ();
+			}
 
 			if ( loadedContent.ContainsKey ( filename ) )
-				return (T)loadedContent [ filename ];
+				return ( T ) loadedContent [ filename ];
 
 			foreach ( IContentLoader contentLoader in contentLoaders )
 			{
@@ -80,7 +136,7 @@ namespace Daramkun.Liqueur.Contents
 				}
 			}
 			
-			return default ( T );
+			throw new FileNotFoundException ();
 		}
 
 		public void Reset ()

@@ -9,6 +9,7 @@ using Daramkun.Liqueur.Datas.Json;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Graphics.Fonts;
 using Daramkun.Liqueur.Scenes;
+using Daramkun.Walnut.Contents;
 using Daramkun.Walnut.Nodes;
 using Daramkun.Walnut.Scripts;
 
@@ -53,7 +54,8 @@ namespace Daramkun.Walnut.Scenes
 					JsonEntry script = jsonEntry [ "script" ].Data as JsonEntry;
 					if ( script [ "language" ].Data as string == WalnutSystem.ScriptEngine.ScriptLanguage )
 					{
-						string scriptText = contentManager.Load<string> ( script [ "file" ].Data as string );
+						string scriptText;
+						scriptText = contentManager.Load<string> ( script [ "file" ].Data as string );
 						Type eventCalleeType = WalnutSystem.ScriptEngine.Run ( scriptText ) as Type;
 						eventCallee = Activator.CreateInstance ( eventCalleeType ) as EventCallee;
 					}

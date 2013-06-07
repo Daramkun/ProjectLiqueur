@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Exceptions
 {
-	public class CompressionProcessException : Exception
+	public class CompressionProcessException : CommonException
 	{
 		public CompressionProcessException ()
 			: base ()
