@@ -1,27 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ActiveRuntime="Mono 3.0.10" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Daramkun.Liqueur.Core/Datas/Json/JsonParser.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Daramkun.Liqueur.Core\Datas\Json\JsonParser.cs">
     <Files>
-      <File FileName="Daramkun.Liqueur.Core/Decoders/Images/PngCsCore/PngWriter.cs" Line="1" Column="1" />
-      <File FileName="Daramkun.Liqueur.Core/Decoders/Images/PngCsCore/PngReader.cs" Line="1" Column="1" />
-      <File FileName="Daramkun.Liqueur.Core/Datas/Json/JsonParser.cs" Line="193" Column="4" />
-      <File FileName="Daramkun.Liqueur.Core/Decoders/Images/PngCsCore/PngHelperInternal.cs" Line="216" Column="14" />
+      <File FileName="Daramkun.Liqueur.Core\Decoders\Images\PngCsCore\PngWriter.cs" Line="1" Column="1" />
+      <File FileName="Daramkun.Liqueur.Core\Decoders\Images\PngCsCore\PngReader.cs" Line="1" Column="1" />
+      <File FileName="Daramkun.Liqueur.Core\Datas\Json\JsonParser.cs" Line="171" Column="22" />
+      <File FileName="Daramkun.Liqueur.Core\Decoders\Images\PngCsCore\PngHelperInternal.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Project Liqueur" expanded="True">
-            <Node name="Daramkun.Liqueur.Core" expanded="True" selected="True">
-              <Node name="Datas" expanded="True">
-                <Node name="Json" expanded="True" />
-              </Node>
-              <Node name="Decoders" expanded="True">
-                <Node name="Images" expanded="True">
-                  <Node name="PngCsCore" expanded="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
+          <Node name="Project Liqueur" expanded="True" selected="True" />
           <Node name="Project Liqueur Tools" expanded="True">
             <Node name="Daramkun.Liqueur.Tools.LsfGen" expanded="True">
               <Node name="Properties" expanded="True" />
