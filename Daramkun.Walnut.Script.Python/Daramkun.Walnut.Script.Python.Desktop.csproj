@@ -11,6 +11,8 @@
     <AssemblyName>Daramkun.Walnut.Script.Python</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,11 +60,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{24d173e0-cafd-43d5-b1b8-1c76c08421c1}</Project>
+      <Project>{24D173E0-CAFD-43D5-B1B8-1C76C08421C1}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Daramkun.Walnut.Core\Daramkun.Walnut.Core.csproj">
-      <Project>{e474c557-f8fd-4d17-9387-bc634864665d}</Project>
+      <Project>{E474C557-F8FD-4D17-9387-BC634864665D}</Project>
       <Name>Daramkun.Walnut.Core</Name>
     </ProjectReference>
   </ItemGroup>

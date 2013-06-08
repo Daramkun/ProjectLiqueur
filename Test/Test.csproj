@@ -11,6 +11,8 @@
     <AssemblyName>Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -62,15 +64,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{24d173e0-cafd-43d5-b1b8-1c76c08421c1}</Project>
+      <Project>{24D173E0-CAFD-43D5-B1B8-1C76C08421C1}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Daramkun.Liqueur.Platforms\Daramkun.Liqueur.Platforms.OpenTK.csproj">
-      <Project>{2b207cec-300c-4e87-a1db-75188b3d2f9a}</Project>
+      <Project>{2B207CEC-300C-4E87-A1DB-75188B3D2F9A}</Project>
       <Name>Daramkun.Liqueur.Platforms.OpenTK</Name>
     </ProjectReference>
     <ProjectReference Include="..\Daramkun.Walnut.Core\Daramkun.Walnut.Core.csproj">
-      <Project>{e474c557-f8fd-4d17-9387-bc634864665d}</Project>
+      <Project>{E474C557-F8FD-4D17-9387-BC634864665D}</Project>
       <Name>Daramkun.Walnut.Core</Name>
     </ProjectReference>
   </ItemGroup>
