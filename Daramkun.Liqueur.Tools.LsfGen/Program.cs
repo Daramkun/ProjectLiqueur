@@ -157,20 +157,81 @@ namespace Daramkun.Liqueur.Tools.LsfGen
 			return new Size ( ( int ) imageSize.Width, ( int ) imageSize.Height );
 		}
 
+		static Point GetBoundingBox ( Bitmap charBitmap )
+		{
+			Point calced = new Point ();
+			bool leftCalc = true, rightCalc = true;
+
+			for ( int x = 0; x < charBitmap.Width / 2; x++ )
+			{
+				if ( leftCalc )
+				{
+					for ( int y = 0; y < charBitmap.Height; y++ )
+					{
+						if ( charBitmap.GetPixel ( x, y ).A != 0 )
+						{
+							calced.X = x - 1;
+							leftCalc = false;
+							break;
+						}
+					}
+				}
+				if ( rightCalc )
+				{
+					for ( int y = 0; y < charBitmap.Height; y++ )
+					{
+						if ( charBitmap.GetPixel ( charBitmap.Width - x - 1, y ).A != 0 )
+						{
+							calced.Y = x - 1;
+							rightCalc = false;
+							break;
+						}
+					}
+				}
+			}
+
+			return calced;
+		}
+
 		static Bitmap GetCharBitmap ( Graphics tempGraphics, Font font, Brush whiteBrush, bool antialias, char ch, Color backgroundColor )
 		{
 			Size imageSize = GetFontSize ( tempGraphics, font, "" + ch );
+			
 			Bitmap charBitmap = new Bitmap ( imageSize.Width, imageSize.Height );
 			Graphics charGraphics = Graphics.FromImage ( charBitmap );
+			
 			charGraphics.Clear ( backgroundColor );
+			
 			if ( antialias )
 				charGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 			else
 				charGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
+			
 			charGraphics.DrawString ( String.Format ( "{0}", ch ),
 				font, whiteBrush, new Rectangle ( 0, 0, imageSize.Width, imageSize.Height ),
 				new StringFormat () { Alignment = StringAlignment.Center } );
+
+			if ( ch == ' ' || ch == '	' || ch == '　' ) return charBitmap;
+			
+			Point measure = GetBoundingBox ( charBitmap );
 			charGraphics.Dispose ();
+			int cbw = charBitmap.Width, cbh = charBitmap.Height;
+			charBitmap.Dispose ();
+
+			charBitmap = new Bitmap ( cbw - ( measure.X + measure.Y ), cbh );
+			charGraphics = Graphics.FromImage ( charBitmap );
+
+			charGraphics.Clear ( Color.Transparent );
+
+			if ( antialias )
+				charGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+			else
+				charGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
+
+			charGraphics.DrawString ( String.Format ( "{0}", ch ),
+				font, whiteBrush, new Rectangle ( -measure.X, 0, imageSize.Width, imageSize.Height ),
+				new StringFormat () { Alignment = StringAlignment.Center } );
+
 			return charBitmap;
 		}
 
@@ -298,11 +359,11 @@ namespace Daramkun.Liqueur.Tools.LsfGen
 
 				Console.WriteLine ( "Completed make font image..." );
 
+				Console.WriteLine ( "Saving Liqueur Sprite Font file..." );
+
 				#region Save to ZipLsf
 				if ( filetype == "-z" )
 				{
-					Console.WriteLine ( "Saving Liqueur Sprite Font file..." );
-
 					string fontInformation = String.Format ( "{{ \"fontfamily\" : \"{0}\", \"fontsize\" : {1} }}",
 						fontname, fontsize );
 					using ( FileStream fileStream = new FileStream ( destination, FileMode.Create ) )

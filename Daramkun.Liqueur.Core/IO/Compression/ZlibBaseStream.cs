@@ -248,18 +248,21 @@ namespace Daramkun.Liqueur.IO.Compression
 			_z = null;
 		}
 
-		public void Close ()
+		protected override void Dispose ( bool isDisposed )
 		{
-			if ( stream == null ) return;
-			try
+			if ( isDisposed )
 			{
-				finish ();
-			}
-			finally
-			{
-				end ();
-				if ( !leaveOpen ) stream.Dispose ();
-				stream = null;
+				if ( stream == null ) return;
+				try
+				{
+					finish ();
+				}
+				finally
+				{
+					end ();
+					if ( !leaveOpen ) stream.Dispose ();
+					stream = null;
+				}
 			}
 		}
 

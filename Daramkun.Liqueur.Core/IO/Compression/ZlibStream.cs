@@ -77,7 +77,7 @@ namespace Daramkun.Liqueur.IO.Compression
 				if ( !disposed )
 				{
 					if ( disposing && ( this.baseStream != null ) )
-						this.baseStream.Close ();
+						this.baseStream.Dispose ();
 					disposed = true;
 				}
 			}

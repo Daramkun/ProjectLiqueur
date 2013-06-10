@@ -62,7 +62,7 @@ namespace Test
 					Position = new Vector2 ( 340, 100 ),
 				} );
 
-				AddChild ( new Label<IFont> ( WalnutSystem.MainContents.Load<LsfFont> ( "test.lsf" ) )
+				AddChild ( new Label<IFont> ( WalnutSystem.MainContents.Load<ZipLsfFont> ( "test.ziplsf" ) )
 				{
 					Text = "Test한글도 잘 나옴★ひらかなもキラン☆0123漢字`!@#$%?.,ⓕ\\\n" +
 					"LSF 폰트 파일 로드가 좀 느리네\n" + "ZIPLSF 파일 로드 엄청 빨라짐\n" + "뷁뷝뿗颬",

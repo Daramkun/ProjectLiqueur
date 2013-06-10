@@ -128,8 +128,9 @@ namespace Daramkun.Walnut
 			try
 			{
 				ScriptEngine = Activator.CreateInstance<T2> ();
+				ScriptEngine.AddReference ( typeof ( LiqueurSystem ).Assembly );
+				ScriptEngine.AddReference ( typeof ( WalnutSystem ).Assembly );
 				ScriptEngine.AddReference ( Assembly.GetCallingAssembly () );
-				ScriptEngine.AddReference ( Assembly.GetExecutingAssembly () );
 			}
 			catch { }
 
