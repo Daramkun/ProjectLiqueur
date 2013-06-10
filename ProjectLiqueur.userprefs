@@ -1,0 +1,54 @@
+<Properties>
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ActiveRuntime="Mono 3.0.10" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Daramkun.Liqueur.Core/Decoders/Images/PngCsCore/PngHelperInternal.cs">
+    <Files>
+      <File FileName="Daramkun.Liqueur.Core/Decoders/Images/PngCsCore/PngWriter.cs" Line="1" Column="1" />
+      <File FileName="Daramkun.Liqueur.Core/Decoders/Images/PngCsCore/PngReader.cs" Line="1" Column="1" />
+      <File FileName="Daramkun.Liqueur.Core/Datas/Json/JsonParser.cs" Line="5" Column="19" />
+      <File FileName="Daramkun.Liqueur.Core/Decoders/Images/PngCsCore/PngHelperInternal.cs" Line="6" Column="23" />
+      <File FileName="Daramkun.Liqueur.Core/Decoders/ImageDecoders.cs" Line="20" Column="4" />
+=======
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Daramkun.Liqueur.Core\Datas\Json\JsonParser.cs">
+    <Files>
+      <File FileName="Daramkun.Liqueur.Core\Decoders\Images\PngCsCore\PngWriter.cs" Line="1" Column="1" />
+      <File FileName="Daramkun.Liqueur.Core\Decoders\Images\PngCsCore\PngReader.cs" Line="1" Column="1" />
+      <File FileName="Daramkun.Liqueur.Core\Datas\Json\JsonParser.cs" Line="171" Column="22" />
+      <File FileName="Daramkun.Liqueur.Core\Decoders\Images\PngCsCore\PngHelperInternal.cs" Line="1" Column="1" />
+>>>>>>> fd315b4a125c0169448ae47e07a7b00225669424
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+<<<<<<< HEAD
+          <Node name="Project Liqueur" expanded="True">
+            <Node name="Daramkun.Liqueur.Core" expanded="True">
+              <Node name="Datas" expanded="True">
+                <Node name="Json" expanded="True" />
+              </Node>
+              <Node name="Decoders" expanded="True">
+                <Node name="Images" expanded="True">
+                  <Node name="PngCsCore" expanded="True">
+                    <Node name="PngHelperInternal.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+=======
+          <Node name="Project Liqueur" expanded="True" selected="True" />
+>>>>>>> fd315b4a125c0169448ae47e07a7b00225669424
+          <Node name="Project Liqueur Tools" expanded="True">
+            <Node name="Daramkun.Liqueur.Tools.LsfGen" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
+
