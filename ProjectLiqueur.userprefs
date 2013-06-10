@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <Properties>
+=======
+﻿<Properties>
+>>>>>>> 0096a3274acaa2f3c41da14a6902325a3273b72d
 <<<<<<< HEAD
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ActiveRuntime="Mono 3.0.10" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Daramkun.Liqueur.Core/Decoders/Images/PngCsCore/PngHelperInternal.cs">
