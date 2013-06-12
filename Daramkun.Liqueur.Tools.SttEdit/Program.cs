@@ -51,9 +51,9 @@ namespace Daramkun.Liqueur.Tools.SttEdit
 						{
 							case 1:
 								{
-									Console.Write ( "Key>" );
+									Console.Write ( "KEY>" );
 									string key = Console.ReadLine ();
-									Console.Write ( "Value>" );
+									Console.Write ( "VALUE>" );
 									string value = Console.ReadLine ();
 									if ( !entry.Contains ( cultureInfo.Name ) )
 										entry.Add ( new JsonItem ( cultureInfo.Name, new JsonEntry () ) );
@@ -65,7 +65,7 @@ namespace Daramkun.Liqueur.Tools.SttEdit
 								break;
 							case 2:
 								{
-									Console.Write ( "Key>" );
+									Console.Write ( "KEY>" );
 									string key = Console.ReadLine ();
 									if ( !entry.Contains ( cultureInfo.Name ) )
 										break;
@@ -86,7 +86,7 @@ namespace Daramkun.Liqueur.Tools.SttEdit
 								break;
 							case 4:
 								{
-									Console.Write ( "Culture>" );
+									Console.Write ( "CULTURE>" );
 									string culture = Console.ReadLine ();
 									cultureInfo = new CultureInfo ( culture );
 								}
