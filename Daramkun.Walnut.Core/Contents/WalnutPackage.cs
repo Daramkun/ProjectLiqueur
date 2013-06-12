@@ -15,7 +15,7 @@ namespace Daramkun.Walnut.Contents
 	{
 		public static Guid Guid { get; set; }
 
-		ZipFileSystem fileSystem;
+		IFileSystem fileSystem;
 
 		public string Version { get; private set; }
 		public string Copyright { get; private set; }
@@ -32,6 +32,17 @@ namespace Daramkun.Walnut.Contents
 		public WalnutPackage ( Stream stream )
 		{
 			fileSystem = new ZipFileSystem ( stream );
+			LoadPackage ();
+		}
+
+		public WalnutPackage ( IFileSystem fileSystem )
+		{
+			this.fileSystem = fileSystem;
+			LoadPackage ();
+		}
+
+		private void LoadPackage ()
+		{
 			JsonEntry jsonEntry = JsonParser.Parse ( fileSystem.OpenFile ( "info.json" ) );
 
 			if ( new Version ( jsonEntry [ "packageversion" ].Data as string ).Major != 1 )
@@ -45,14 +56,15 @@ namespace Daramkun.Walnut.Contents
 			Released = DateTime.Parse ( jsonEntry [ "released" ].Data as string );
 			MainScene = jsonEntry [ "mainscene" ].Data as string;
 
-			StringTable = new StringTable ( fileSystem.OpenFile ( "strings.wst" ) );
-			ResourceTable = new ContentManager ( new ZipFileSystem ( fileSystem.OpenFile ( "resources.wrs" ) ) );
-			ScriptTable = new ScriptTable ( fileSystem.OpenFile ( "scripts.wsc" ) );
+			StringTable = new StringTable ( fileSystem.OpenFile ( "strings.stt" ) );
+			ResourceTable = new ContentManager ( new ZipFileSystem ( fileSystem.OpenFile ( "resources.rst" ) ) );
+			ScriptTable = new ScriptTable ( fileSystem.OpenFile ( "scripts.rst" ) );
 		}
 
 		public void Dispose ()
 		{
-			fileSystem.Dispose ();
+			if ( fileSystem is IDisposable )
+				( fileSystem as IDisposable ).Dispose ();
 		}
 	}
 }
