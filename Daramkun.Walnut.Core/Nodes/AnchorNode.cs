@@ -16,19 +16,7 @@ namespace Daramkun.Walnut.Nodes
 		public AnchorNode ( JsonEntry jsonEntry, ContentManager contentManager )
 			: base ( jsonEntry, contentManager )
 		{
-
-		}
-
-		public override void OnInitialize ()
-		{
-			Node parent = Parent;
-			while ( parent != null )
-			{
-				if ( parent is AnchorNode )
-					throw new Exception ( "" );
-				parent = parent.Parent;
-			}
-			base.OnInitialize ();
+			Anchor = new Vector2 ();
 		}
 	}
 }

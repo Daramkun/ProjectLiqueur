@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 #if WINDOWS_PHONE
 using System.IO.IsolatedStorage;
+#elif NETFX_CORE
+using Windows.Storage;
 #endif
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Daramkun.Liqueur.Contents.FileSystems
 {
@@ -15,11 +18,18 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 
 #if WINDOWS_PHONE
 		IsolatedStorageFile isolatedStorageFile;
+#elif NETFX_CORE
+		StorageFolder storageFolder;
 #endif
 
 		public LocalFileSystem ()
 		{
 			path = "";
+#if WINDOWS_PHONE
+			isolatedStorageFile = IsolatedStorageFile.GetUserStoreForApplication ();
+#elif NETFX_CORE
+			storageFolder = StorageFolder.GetFolderFromPathAsync ( "" ).GetResults ();
+#endif
 		}
 
 		public LocalFileSystem ( string path )
@@ -27,6 +37,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			this.path = path;
 #if WINDOWS_PHONE
 			isolatedStorageFile = IsolatedStorageFile.GetUserStoreForApplication ();
+#elif NETFX_CORE
+			storageFolder = StorageFolder.GetFolderFromPathAsync ( path ).GetResults ();
 #endif
 		}
 
@@ -36,6 +48,11 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			return File.Exists ( Path.Combine ( path, filename ) );
 #elif WINDOWS_PHONE
 			return isolatedStorageFile.FileExists ( Path.Combine ( path, filename ) );
+#elif NETFX_CORE
+			IReadOnlyList<StorageFile> storageFiles = storageFolder.GetFilesAsync ().GetResults ();
+			foreach ( StorageFile storageFile in storageFiles )
+				if ( storageFile.Name == filename ) return true;
+			return false;
 #endif
 		}
 
@@ -45,6 +62,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			File.Create ( Path.Combine ( path, filename ) ).Dispose ();
 #elif WINDOWS_PHONE
 			isolatedStorageFile.CreateFile ( Path.Combine ( path, filename ) ).Dispose ();
+#elif NETFX_CORE
+			storageFolder.CreateFileAsync ( filename ).GetResults ();
 #endif
 		}
 
@@ -54,6 +73,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			File.Delete ( Path.Combine ( path, filename ) );
 #elif WINDOWS_PHONE
 			isolatedStorageFile.DeleteFile ( Path.Combine ( path, filename ) );
+#elif NETFX_CORE
+			storageFolder.GetFileAsync ( filename ).GetResults ().DeleteAsync ().GetResults ();
 #endif
 		}
 
@@ -63,6 +84,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			return File.Open ( Path.Combine ( path, filename ), FileMode.OpenOrCreate );
 #elif WINDOWS_PHONE
 			return isolatedStorageFile.OpenFile ( Path.Combine ( path, filename ), FileMode.OpenOrCreate );
+#elif NETFX_CORE
+			return storageFolder.GetFileAsync ( filename ).GetResults ().OpenAsync ( FileAccessMode.ReadWrite ).GetResults () as Stream;
 #endif
 		}
 
@@ -72,6 +95,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			return Directory.Exists ( directoryname );
 #elif WINDOWS_PHONE
 			return isolatedStorageFile.DirectoryExists ( Path.Combine ( path, directoryname ) );
+#elif NETFX_CORE
+			return false;
 #endif
 		}
 
@@ -81,6 +106,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			Directory.CreateDirectory ( Path.Combine ( path, directoryname ) );
 #elif WINDOWS_PHONE
 			isolatedStorageFile.CreateDirectory ( Path.Combine ( path, directoryname ) );
+#elif NETFX_CORE
+
 #endif
 		}
 
@@ -90,6 +117,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			Directory.Delete ( Path.Combine ( path, directoryname ) );
 #elif WINDOWS_PHONE
 			isolatedStorageFile.DeleteDirectory ( Path.Combine ( path, directoryname ) );
+#elif NETFX_CORE
+
 #endif
 		}
 
@@ -101,6 +130,11 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 				return Directory.GetFiles ( path );
 #elif WINDOWS_PHONE
 				return isolatedStorageFile.GetFileNames ( path );
+#elif NETFX_CORE
+				List<string> files = new List<string> ();
+				foreach ( StorageFile storageFile in storageFolder.GetFilesAsync ().GetResults () )
+					files.Add ( storageFile.Name );
+				return files.ToArray ();
 #endif
 			}
 		}
@@ -113,6 +147,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 				return Directory.GetDirectories ( path );
 #elif WINDOWS_PHONE
 				return isolatedStorageFile.GetDirectoryNames ( path );
+#elif NETFX_CORE
+				return new string [ 0 ];
 #endif
 			}
 		}
