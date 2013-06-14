@@ -106,7 +106,7 @@ namespace Test
 		static void Main ()
 		{
 			WalnutSystem.SetupDecoders ();
-			WalnutSystem.SetupFixedLogicTimeStep ( TimeSpan.FromTicks ( 166666 ), TimeSpan.FromTicks ( 166666 ) );
+			WalnutSystem.SetupFixedLogicTimeStep ( TimeSpan.FromTicks ( 333333 ), TimeSpan.FromTicks ( 333333 ) );
 			WalnutSystem.SetupInputDevices<Keyboard, Mouse, GamePad, TouchPanel, Accelerometer> ();
 			WalnutSystem.Run<Launcher, IScriptEngine, MyScene> ( new LocalFileSystem () );
 		}

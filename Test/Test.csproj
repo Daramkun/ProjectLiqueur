@@ -67,7 +67,7 @@
       <Project>{24D173E0-CAFD-43D5-B1B8-1C76C08421C1}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Daramkun.Liqueur.Platforms\Daramkun.Liqueur.Platforms.OpenTK.csproj">
+    <ProjectReference Include="..\Daramkun.Liqueur.Platforms.OpenTK\Daramkun.Liqueur.Platforms.OpenTK.csproj">
       <Project>{2B207CEC-300C-4E87-A1DB-75188B3D2F9A}</Project>
       <Name>Daramkun.Liqueur.Platforms.OpenTK</Name>
     </ProjectReference>

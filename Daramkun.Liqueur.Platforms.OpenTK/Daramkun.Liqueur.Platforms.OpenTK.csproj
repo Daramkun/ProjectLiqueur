@@ -63,9 +63,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PackagesOfOpenTK.config" />
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
