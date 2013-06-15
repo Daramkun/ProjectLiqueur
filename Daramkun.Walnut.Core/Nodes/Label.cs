@@ -14,7 +14,7 @@ using Daramkun.Walnut.Scripts;
 
 namespace Daramkun.Walnut.Nodes
 {
-	public class Label<T> : WalnutNode where T : IFont
+	public class Label : WalnutNode
 	{
 		public virtual IFont Font { get; set; }
 		public virtual Vector2 Position { get; set; }
@@ -35,7 +35,7 @@ namespace Daramkun.Walnut.Nodes
 		public Label ( ContentManager contentManager, string filename )
 			: base ()
 		{
-			Font = contentManager.Load<T> ( filename );
+			Font = contentManager.Load<BaseFont> ( filename );
 			ForeColor = Color.Black;
 		}
 
@@ -53,7 +53,7 @@ namespace Daramkun.Walnut.Nodes
 		public Label ( JsonEntry jsonEntry, ContentManager contentManager )
 			: base ( jsonEntry, contentManager )
 		{
-			Font = contentManager.Load<T> ( jsonEntry [ "resource" ].Data as string );
+			Font = contentManager.Load<BaseFont> ( jsonEntry [ "resource" ].Data as string );
 			Text = jsonEntry [ "text" ].Data as string;
 			Position = GetVector2 ( jsonEntry [ "position" ].Data as JsonArray );
 			ForeColor = GetColor ( jsonEntry [ "forecolor" ].Data as JsonArray );

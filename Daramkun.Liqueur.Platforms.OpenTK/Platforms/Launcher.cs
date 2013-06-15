@@ -76,7 +76,7 @@ namespace Daramkun.Liqueur.Platforms
 			( window as Window ).Dispose ();
 		}
 
-		public void Run ( Action updateLogic, Action drawLogic, Action resize, Action activated, Action deactivated )
+		public void Run ( Action updateLogic, Action drawLogic, Action resize, Action activated, Action deactivated, params object [] arguments )
 		{
 #if OPENTK
 			GameWindow window = LiqueurSystem.Window.Handle as GameWindow;

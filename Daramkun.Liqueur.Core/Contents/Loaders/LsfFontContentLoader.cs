@@ -9,7 +9,7 @@ namespace Daramkun.Liqueur.Contents.Loaders
 {
 	public class LsfFontContentLoader : IContentLoader
 	{
-		public Type ContentType { get { return typeof ( LsfFont ); } }
+		public Type ContentType { get { return typeof ( BaseFont ); } }
 		public bool IsSelfStreamDispose { get { return true; } }
 
 		public object Load ( Stream stream, params object [] args )

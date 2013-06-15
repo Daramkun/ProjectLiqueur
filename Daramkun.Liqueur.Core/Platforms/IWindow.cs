@@ -11,14 +11,13 @@ namespace Daramkun.Liqueur.Platforms
 	public interface IWindow
 	{
 		string Title { get; set; }
-		Vector2 ClientSize { get; set; }
 		bool IsCursorVisible { get; set; }
 		bool IsResizable { get; set; }
 		object Icon { get; set; }
 
 		object Handle { get; }
 
-		void DoEvent ();
+		void DoEvents ();
 		void FailFast ( string message, Exception exception );
 	}
 }

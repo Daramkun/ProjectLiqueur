@@ -75,12 +75,7 @@ namespace Daramkun.Walnut.Scenes
 					}
 					else if ( objEntry [ "objtype" ].Data as string == "label" )
 					{
-						if ( objEntry [ "fonttype" ].Data as string == "lsf" )
-							AddChild ( new Label<LsfFont> ( objEntry, contentManager ) );
-						else if ( objEntry [ "fonttype" ].Data as string == "ziplsf" )
-							AddChild ( new Label<ZipLsfFont> ( objEntry, contentManager ) );
-						else
-							AddChild ( new Label<IFont> ( objEntry, contentManager ) );
+						AddChild ( new Label ( objEntry, contentManager ) );
 					}
 				}
 			}

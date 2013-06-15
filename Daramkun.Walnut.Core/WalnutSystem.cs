@@ -109,15 +109,27 @@ namespace Daramkun.Walnut
 			};
 		}
 
-		public static void Run<T1, T2, T3> ( IFileSystem mainContentsFileSystem )
+		public static void Run<T1, T2, T3> ( IFileSystem mainContentsFileSystem, params object [] arguments )
 			where T1 : ILauncher
 			where T2 : IScriptEngine
 			where T3 : Scene
 		{
-			Run<T1, T2> ( mainContentsFileSystem, Activator.CreateInstance<T3> () );
+			Run<T1, T2> ( mainContentsFileSystem, Activator.CreateInstance<T3> (), arguments );
 		}
 
-		public static void Run<T1, T2> ( IFileSystem mainContentsFileSystem, object scene )
+		public static void Run<T1, T2> ( Stream package, params object [] arguments )
+			where T1 : ILauncher
+			where T2 : IScriptEngine
+		{
+			using ( MainWalnutPackage = new WalnutPackage ( package ) )
+			{
+				Run<T1, T2> ( MainWalnutPackage.PackageFileSystem,
+					MainWalnutPackage.ResourceTable.Load<WalnutScene> ( MainWalnutPackage.MainScene,
+						MainWalnutPackage.ResourceTable ), arguments );
+			}
+		}
+
+		public static void Run<T1, T2> ( IFileSystem mainContentsFileSystem, object scene, params object [] arguments )
 			where T1 : ILauncher
 			where T2 : IScriptEngine
 		{
@@ -141,21 +153,9 @@ namespace Daramkun.Walnut
 			else if ( scene is JsonEntry ) sceneObject = new WalnutScene ( scene as JsonEntry, MainContents );
 			else throw new ArgumentNullException ();
 
-			LiqueurSystem.Run ( Activator.CreateInstance<T1> (), sceneObject );
+			LiqueurSystem.Run ( Activator.CreateInstance<T1> (), sceneObject, arguments );
 
 			MainContents.Reset ();
-		}
-
-		public static void Run<T1, T2> ( Stream package )
-			where T1 : ILauncher
-			where T2 : IScriptEngine
-		{
-			using ( MainWalnutPackage = new WalnutPackage ( package ) )
-			{
-				Run<T1, T2> ( MainWalnutPackage.PackageFileSystem, 
-					MainWalnutPackage.ResourceTable.Load<WalnutScene> ( MainWalnutPackage.MainScene,
-						MainWalnutPackage.ResourceTable ) );
-			}
 		}
     }
 }

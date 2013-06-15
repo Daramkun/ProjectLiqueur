@@ -62,21 +62,21 @@ namespace Test
 					Position = new Vector2 ( 340, 100 ),
 				} );
 
-				AddChild ( new Label<IFont> ( WalnutSystem.MainContents.Load<ZipLsfFont> ( "test.ziplsf" ) )
+				AddChild ( new Label ( WalnutSystem.MainContents.Load<BaseFont> ( "test.lsf" ) )
 				{
 					Text = "Test한글도 잘 나옴★ひらかなもキラン☆0123漢字`!@#$%?.,ⓕ\\\n" +
 					"LSF 폰트 파일 로드가 좀 느리네\n" + "ZIPLSF 파일 로드 엄청 빨라짐\n" + "뷁뷝뿗颬",
 					Position = new Vector2 ( 10, 400 ),
 					ForeColor = Color.White
 				} );
-				AddChild ( new Label<IFont> ( WalnutSystem.MainContents.Load<LsfFont> ( "test.lsf" ) )
+				AddChild ( new Label ( WalnutSystem.MainContents.Load<BaseFont> ( "test.lsf" ) )
 				{
 					Position = new Vector2 ( 10, 590 ),
 					ForeColor = Color.White,
 					ObjectOffset = ObjectOffset.BottomLeft
 				} ).Update += ( object sender, GameTimeEventArgs e ) =>
 				{
-					( sender as Label<IFont> ).Text = String.Format ( "Update FPS: {0}\nRender FPS: {1}", fpsCalc.UpdateFPS, fpsCalc.DrawFPS );
+					( sender as Label ).Text = String.Format ( "Update FPS: {0}\nRender FPS: {1}", fpsCalc.UpdateFPS, fpsCalc.DrawFPS );
 				};
 
 				base.OnInitialize ();
@@ -106,7 +106,7 @@ namespace Test
 		static void Main ()
 		{
 			WalnutSystem.SetupDecoders ();
-			WalnutSystem.SetupFixedLogicTimeStep ( TimeSpan.FromTicks ( 333333 ), TimeSpan.FromTicks ( 333333 ) );
+			WalnutSystem.SetupFixedLogicTimeStep ( TimeSpan.FromTicks ( 166666 ), TimeSpan.FromTicks ( 166666 ) );
 			WalnutSystem.SetupInputDevices<Keyboard, Mouse, GamePad, TouchPanel, Accelerometer> ();
 			WalnutSystem.Run<Launcher, IScriptEngine, MyScene> ( new LocalFileSystem () );
 		}

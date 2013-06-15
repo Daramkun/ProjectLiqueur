@@ -43,7 +43,6 @@
     <Compile Include="Contents\Loaders\LsfFontContentLoader.cs" />
     <Compile Include="Contents\Loaders\StringTableContentLoader.cs" />
     <Compile Include="Contents\Loaders\ZipContentLoader.cs" />
-    <Compile Include="Contents\Loaders\ZipLsfFontContentLoader.cs" />
     <Compile Include="Contents\StringTable.cs" />
     <Compile Include="Datas\Json\IJsonArray.cs" />
     <Compile Include="Datas\Json\IJsonEntry.cs" />
@@ -128,7 +127,6 @@
     <Compile Include="Exceptions\VersionMismatchException.cs" />
     <Compile Include="Geometries\Rotator.cs" />
     <Compile Include="Graphics\Fonts\BaseFont.cs" />
-    <Compile Include="Graphics\Fonts\LsfFont.cs" />
     <Compile Include="Contents\ContentManager.cs" />
     <Compile Include="Contents\IContentLoader.cs" />
     <Compile Include="Contents\Loaders\ImageContentLoader.cs" />
@@ -140,7 +138,7 @@
     <Compile Include="Exceptions\CompressionProcessException.cs" />
     <Compile Include="Common\GameTimeEventArgs.cs" />
     <Compile Include="Geometries\Vector3.cs" />
-    <Compile Include="Graphics\Fonts\ZipLsfFont.cs" />
+    <Compile Include="Graphics\Fonts\LsfFont.cs" />
     <Compile Include="Inputs\GamePadCollection.cs" />
     <Compile Include="Inputs\RawDevices\RawAccelerometer.cs" />
     <Compile Include="Inputs\RawDevices\RawGamePad.cs" />

@@ -33,9 +33,9 @@ namespace Daramkun.Liqueur.Contents
 			{
 				if ( IsCultureMode )
 				{
-					if ( stringTable.Contains ( CultureInfo.CurrentCulture.Name ) )
+					if ( stringTable.Contains ( LiqueurSystem.CurrentCulture.Name ) )
 					{
-						JsonEntry innerEntry = stringTable [ CultureInfo.CurrentCulture.Name ].Data as JsonEntry;
+						JsonEntry innerEntry = stringTable [ LiqueurSystem.CurrentCulture.Name ].Data as JsonEntry;
 						if ( innerEntry.Contains ( key ) ) return innerEntry [ key ].Data as string;
 					}
 				}
@@ -50,7 +50,7 @@ namespace Daramkun.Liqueur.Contents
 			{
 				if ( stringTable.Contains ( CultureInfo.CurrentCulture.Name ) )
 				{
-					bool result = ( stringTable [ CultureInfo.CurrentCulture.Name ].Data as JsonEntry ).Contains ( key );
+					bool result = ( stringTable [ LiqueurSystem.CurrentCulture.Name ].Data as JsonEntry ).Contains ( key );
 					if ( result ) return result;
 				}
 			}

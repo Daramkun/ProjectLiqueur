@@ -254,13 +254,13 @@ namespace Daramkun.Liqueur.Tools.LsfGen
 			{
 				#region Display help
 				Console.WriteLine ( "USECASE:" );
-				Console.WriteLine ( "  lsfgen.exe dest fontname fontsize -[z|l|i] -[b|p] -[a|g] -[charset] chars" );
+				Console.WriteLine ( "  lsfgen.exe dest fontname fontsize -[z|i] -[b|p] -[a|g] -[charset] chars" );
 				Console.WriteLine ( "===============================================================================" );
 				Console.WriteLine ( "          dest:     dest - lsf filename or foldername for save images" );
 				Console.WriteLine ( "      fontname: fontname - fontname" );
 				Console.WriteLine ( "      fontsize: fontsize - fontsize (integer)" );
 				Console.WriteLine ( "      -[z|l|i]:        z - Save to Zip Liqueur Sprite Font File" );
-				Console.WriteLine ( "                       l - Save to Liqueur Sprite Font File" );
+				//Console.WriteLine ( "                       l - Save to Liqueur Sprite Font File" );
 				Console.WriteLine ( "                       i - Save to images to folder" );
 				Console.WriteLine ( "        -[b|p]:        b - Save to 32bpp Bitmap file" );
 				Console.WriteLine ( "                       p - Save to Portable network graphics file" );
@@ -384,11 +384,14 @@ namespace Daramkun.Liqueur.Tools.LsfGen
 					}
 				}
 				#endregion
+				/*
 				#region Save to Lsf
 				else if ( filetype == "-l" )
 				{
 					using ( FileStream fileStream = new FileStream ( destination, FileMode.Create ) )
 					{
+						BinaryWriter header = new BinaryWriter ( fileStream );
+						header.Write ( ( int ) 0xDEAD );
 						using ( DeflateStream ds = new DeflateStream ( fileStream, CompressionMode.Compress ) )
 						{
 							using ( BinaryWriter bw = new BinaryWriter ( ds ) )
@@ -412,6 +415,7 @@ namespace Daramkun.Liqueur.Tools.LsfGen
 					}
 				}
 				#endregion
+				*/
 				#region Save to image files
 				else
 				{

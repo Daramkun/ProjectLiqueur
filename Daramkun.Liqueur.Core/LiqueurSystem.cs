@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Common;
@@ -36,14 +37,17 @@ namespace Daramkun.Liqueur
 		private static ILauncher Launcher { get; set; }
 		public static PlatformInformation PlatformInformation { get { return Launcher.PlatformInformation; } }
 
+		public static CultureInfo CurrentCulture { get; set; }
+
 		static LiqueurSystem ()
 		{
+			CurrentCulture = CultureInfo.CurrentCulture;
 			GamePads = new GamePadCollection ();
 			FixedUpdateTimeStep = new TimeSpan ();
 			FixedDrawTimeStep = new TimeSpan ();
 		}
 
-		public static void Run ( ILauncher launcher, Scene firstScene )
+		public static void Run ( ILauncher launcher, Scene firstScene, params object [] arguments )
 		{
 			Launcher = launcher;
 
@@ -113,7 +117,8 @@ namespace Daramkun.Liqueur
 					FrameScene.OnDeactivated ();
 					if ( Deactivated != null )
 						Deactivated ( null, EventArgs.Empty );
-				}
+				},
+				arguments
 			);
 
 			FrameScene.OnFinalize ();

@@ -71,6 +71,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 					return stream;
 				}*/
 			/**/
+			if ( !indexInfo.ContainsKey ( filename ) ) return null;
+
 			MemoryStream stream = new MemoryStream ();
 			if ( !xUnzip.ExtractTo ( indexInfo [ filename ], stream ) )
 				return null;

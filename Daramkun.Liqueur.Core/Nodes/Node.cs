@@ -38,13 +38,13 @@ namespace Daramkun.Liqueur.Nodes
 		public void StartCoroutine ( Func<IEnumerable> coroutine )
 		{
 			foreach ( IEnumerable e in coroutine () )
-				LiqueurSystem.Window.DoEvent ();
+				LiqueurSystem.Window.DoEvents ();
 		}
 
 		public void StartCoroutine ( Func<object, IEnumerable> coroutine, object argument )
 		{
 			foreach ( IEnumerable e in coroutine ( argument ) )
-				LiqueurSystem.Window.DoEvent ();
+				LiqueurSystem.Window.DoEvents ();
 		}
 
 		public Node AddChild ( Node node )

@@ -111,8 +111,8 @@ namespace Daramkun.Liqueur.Contents
 
 			if ( IsCultureMode )
 			{
-				if ( FileSystem.IsFileExist ( PathCombine ( CultureInfo.CurrentCulture.Name, filename ) ) )
-					filename = PathCombine ( CultureInfo.CurrentCulture.Name, filename );
+				if ( FileSystem.IsFileExist ( PathCombine ( LiqueurSystem.CurrentCulture.Name, filename ) ) )
+					filename = PathCombine ( LiqueurSystem.CurrentCulture.Name, filename );
 				else if ( FileSystem.IsFileExist ( PathCombine ( CultureInfo.InvariantCulture.Name, filename ) ) )
 					filename = PathCombine ( CultureInfo.InvariantCulture.Name, filename );
 				else throw new FileNotFoundException ();

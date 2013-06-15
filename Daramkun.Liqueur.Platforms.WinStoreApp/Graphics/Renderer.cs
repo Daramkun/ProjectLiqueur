@@ -17,28 +17,13 @@ namespace Daramkun.Liqueur.Graphics
 		Window window;
 		Vector2 screenSize;
 
-#if XNA
-		internal GraphicsDevice GraphicsDevice
-		{
-			get { return null; }
-		}
-
-		internal SpriteBatch SpriteBatch { get; private set; }
-#endif
 
 		public Vector2 [] AvailableScreenSize
 		{
 			get
 			{
 				List<Vector2> screenSizes = new List<Vector2> ();
-#if OPENTK
-				foreach ( OpenTK.DisplayResolution resolution in
-					OpenTK.DisplayDevice.Default.AvailableResolutions )
-					screenSizes.Add ( new Vector2 ( resolution.Width, resolution.Height ) );
-#elif XNA
-				foreach ( DisplayMode displayMode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes )
-					screenSizes.Add ( new Vector2 ( displayMode.Width, displayMode.Height ) );
-#endif
+
 				return screenSizes.ToArray ();
 			}
 		}
@@ -49,41 +34,14 @@ namespace Daramkun.Liqueur.Graphics
 			set
 			{
 				screenSize = value;
-#if OPENTK
-				GL.MatrixMode ( MatrixMode.Projection );
-				GL.LoadIdentity ();
-				window.window.ClientSize = new System.Drawing.Size ( ( int ) value.X, ( int ) value.Y );
-				GL.Ortho ( 0, screenSize.X, screenSize.Y, 0, 0.0001f, 1000.0f );
-#elif XNA
-#if WINDOWS_PHONE
-				Microsoft.Xna.Framework.SharedGraphicsDeviceManager.Current.PreferredBackBufferWidth = ( int ) value.X;
-				Microsoft.Xna.Framework.SharedGraphicsDeviceManager.Current.PreferredBackBufferHeight = ( int ) value.Y;
-				Microsoft.Xna.Framework.SharedGraphicsDeviceManager.Current.ApplyChanges ();
-#endif
-#endif
+
 			}
 		}
 
 		public bool FullscreenMode
 		{
-			get
-			{
-#if OPENTK
-				return window.window.WindowState == OpenTK.WindowState.Fullscreen;
-#elif XNA
-#if WINDOWS_PHONE
-				return true;
-#endif
-#endif
-			}
-			set
-			{
-#if OPENTK
-				window.window.WindowState = ( value ) ? OpenTK.WindowState.Fullscreen : OpenTK.WindowState.Normal;
-#elif XNA
-
-#endif
-			}
+			get { return true; }
+			set { }
 		}
 
 		public Renderer ( Window window )

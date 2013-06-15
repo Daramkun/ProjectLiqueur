@@ -101,33 +101,6 @@ namespace Daramkun.Liqueur.Platforms
 			}
 		}
 
-		public Vector2 ClientSize
-		{
-			get
-			{
-#if OPENTK
-				return new Vector2 ( window.ClientSize.Width, window.ClientSize.Height );
-#elif XNA
-#if WINDOWS_PHONE
-				return new Vector2 ( Microsoft.Xna.Framework.SharedGraphicsDeviceManager.Current.PreferredBackBufferWidth,
-					Microsoft.Xna.Framework.SharedGraphicsDeviceManager.Current.PreferredBackBufferHeight );
-#endif
-#endif
-			}
-			set
-			{
-#if OPENTK
-				window.ClientSize = new System.Drawing.Size ( ( int ) value.X, ( int ) value.Y );
-#elif XNA
-#if WINDOWS_PHONE
-				Microsoft.Xna.Framework.SharedGraphicsDeviceManager.Current.PreferredBackBufferWidth = ( int ) value.X;
-				Microsoft.Xna.Framework.SharedGraphicsDeviceManager.Current.PreferredBackBufferHeight = ( int ) value.Y;
-				Microsoft.Xna.Framework.SharedGraphicsDeviceManager.Current.ApplyChanges ();
-#endif
-#endif
-			}
-		}
-
 		public bool IsCursorVisible
 		{
 			get
@@ -225,7 +198,7 @@ namespace Daramkun.Liqueur.Platforms
 #endif
 		}
 
-		public void DoEvent ()
+		public void DoEvents ()
 		{
 #if OPENTK
 			window.ProcessEvents ();

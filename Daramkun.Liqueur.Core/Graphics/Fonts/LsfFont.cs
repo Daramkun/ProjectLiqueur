@@ -3,60 +3,68 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Daramkun.Liqueur.Contents.FileSystems;
 using Daramkun.Liqueur.Contents.Loaders;
+using Daramkun.Liqueur.Datas.Json;
 using Daramkun.Liqueur.Decoders;
-using Daramkun.Liqueur.Geometries;
-using Daramkun.Liqueur.IO;
-using Daramkun.Liqueur.IO.Compression;
 
 namespace Daramkun.Liqueur.Graphics.Fonts
 {
-	public sealed class LsfFont : BaseFont
+	public class LsfFont : BaseFont
 	{
-		private struct FontImageData { public int Width, Height; public ImageData ImageData;  }
-
-		Dictionary<char, FontImageData> readedStream = new Dictionary<char, FontImageData> ();
 		Dictionary<char, IImage> readedImage = new Dictionary<char, IImage> ();
+		List<char> noneList = new List<char> ();
 		ImageContentLoader imageContentLoader;
+
+		ZipFileSystem fileSystem;
+
+		private char GetChar ( string filename )
+		{
+			if ( filename [ 0 ] >= '0' && filename [ 0 ] <= '9' )
+			{
+				return ( char ) int.Parse ( filename.Substring ( 0, filename.LastIndexOf ( '.' ) - 1 ) );
+			}
+			else return filename [ 0 ];
+		}
 
 		public LsfFont ( Stream stream )
 		{
-			using ( DeflateStream ds = new DeflateStream ( stream, CompressionMode.Decompress ) )
-			{
-				BinaryReader br = new BinaryReader ( ds );
-				FontFamily = br.ReadString ();
-				FontSize = br.ReadInt32 ();
-				int bitmapCount = br.ReadInt32 ();
-				for ( int i = 0; i < bitmapCount; i++ )
-				{
-					char ch = br.ReadChar ();
-					int fileSize = br.ReadInt32 ();
-					MemoryStream memStream = new MemoryStream ( br.ReadBytes ( fileSize ) );
-					ImageData? imageData = ImageDecoders.GetImageData ( memStream );
-					if ( imageData == null ) continue;
-					readedStream.Add ( ch, new FontImageData ()
-					{
-						Width = imageData.Value.Width,
-						Height = imageData.Value.Height,
-						ImageData = imageData.Value
-					} );
-				}
-			}
+			fileSystem = new ZipFileSystem ( stream );
+			Stream file = fileSystem.OpenFile ( "info.json" );
+			JsonEntry entry = JsonParser.Parse ( file );
+			FontFamily = entry [ "fontfamily" ].Data as string;
+			FontSize = ( int ) entry [ "fontsize" ].Data;
 
 			imageContentLoader = new ImageContentLoader ();
-
-			stream.Dispose ();
 		}
 
-		protected override void Dispose ( bool isDisposing)
+		protected override void Dispose(bool isDisposing)
 		{
 			if ( isDisposing )
 			{
-				readedStream.Clear ();
 				foreach ( KeyValuePair<char, IImage> image in readedImage )
 					image.Value.Dispose ();
 				readedImage.Clear ();
+				fileSystem.Dispose ();
 			}
+ 			base.Dispose(isDisposing);
+		}
+
+		private string IsExistCharFile ( char ch )
+		{
+			string filename = String.Format ( "{0}.bmp", ( int ) ch );
+			if ( fileSystem.Files.Contains ( filename ) )
+				return filename;
+			filename = String.Format ( "{0}.png", ( int ) ch );
+			if ( fileSystem.Files.Contains ( filename ) )
+				return filename;
+			filename = String.Format ( "{0}.bmp", ch );
+			if ( fileSystem.Files.Contains ( filename ) )
+				return filename;
+			filename = String.Format ( "{0}.png", ch );
+			if ( fileSystem.Files.Contains ( filename ) )
+				return filename;
+			return null;
 		}
 
 		protected override IImage this [ char ch ]
@@ -65,18 +73,21 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 			{
 				if ( readedImage.ContainsKey ( ch ) )
 					return readedImage [ ch ];
-				else if ( readedStream.ContainsKey ( ch ) )
+				else
 				{
-					FontImageData fontImageData = readedStream [ ch ];
-					IImage fontImage = imageContentLoader.Instantiate (
-						fontImageData.Width,
-						fontImageData.Height,
-						fontImageData.ImageData.ImageDecoder.GetPixels ( fontImageData.ImageData, Color.Magenta )
-					);
+					if ( noneList.Contains ( ch ) ) return null;
+					string filename = IsExistCharFile ( ch );
+					if ( filename == null )
+					{
+						noneList.Add ( ch );
+						return null;
+					}
+					ImageData imageData = ImageDecoders.GetImageData ( fileSystem.OpenFile ( filename ) ).Value;
+					IImage fontImage = imageContentLoader.Instantiate ( imageData.Width, imageData.Height,
+						imageData.ImageDecoder.GetPixels ( imageData, Color.Magenta ) );
 					readedImage.Add ( ch, fontImage );
 					return fontImage;
 				}
-				else return null;
 			}
 		}
 	}
