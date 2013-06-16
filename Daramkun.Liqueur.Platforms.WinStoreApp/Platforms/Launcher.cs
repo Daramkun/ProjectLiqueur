@@ -52,12 +52,14 @@ namespace Daramkun.Liqueur.Platforms
 
 		public void Run ( Action updateLogic, Action drawLogic, Action resize, Action activated, Action deactivated, params object [] arguments )
 		{
-			CoreWindow window = LiqueurSystem.Window.Handle as CoreWindow;
-			window.SizeChanged += ( CoreWindow sender, WindowSizeChangedEventArgs e ) => { resize (); };
-			window.VisibilityChanged += ( CoreWindow sender, VisibilityChangedEventArgs e ) =>
+			( LiqueurSystem.Window as Window ).InitializeWindow = ( CoreWindow window ) =>
 			{
-				if ( e.Visible ) activated ();
-				else deactivated ();
+				window.SizeChanged += ( CoreWindow sender, WindowSizeChangedEventArgs e ) => { resize (); };
+				window.VisibilityChanged += ( CoreWindow sender, VisibilityChangedEventArgs e ) =>
+				{
+					if ( e.Visible ) activated ();
+					else deactivated ();
+				};
 			};
 
 			( LiqueurSystem.Window as Window ).UpdateLogic += updateLogic;

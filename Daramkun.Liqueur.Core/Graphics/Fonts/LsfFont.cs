@@ -76,12 +76,15 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 				else
 				{
 					if ( noneList.Contains ( ch ) ) return null;
+
 					string filename = IsExistCharFile ( ch );
+
 					if ( filename == null )
 					{
 						noneList.Add ( ch );
 						return null;
 					}
+
 					ImageData imageData = ImageDecoders.GetImageData ( fileSystem.OpenFile ( filename ) ).Value;
 					IImage fontImage = imageContentLoader.Instantiate ( imageData.Width, imageData.Height,
 						imageData.ImageDecoder.GetPixels ( imageData, Color.Magenta ) );

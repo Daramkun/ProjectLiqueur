@@ -93,10 +93,11 @@ namespace Daramkun.Liqueur.Nodes
 			if ( Update != null )
 				Update ( this, new GameTimeEventArgs ( gameTime ) );
 
-			Node [] nodes = children.ToArray ();
-			foreach ( Node node in nodes )
+			foreach ( Node node in children.ToArray () )
+			{
 				if ( node.IsEnabled )
 					node.OnUpdate ( gameTime );
+			}
 		}
 
 		public virtual void OnDraw ( GameTime gameTime )
@@ -105,9 +106,11 @@ namespace Daramkun.Liqueur.Nodes
 				Draw ( this, new GameTimeEventArgs ( gameTime ) );
 
 			Node [] nodes = children.ToArray ();
-			foreach ( Node node in nodes )
+			foreach ( Node node in children.ToArray () )
+			{
 				if ( node.IsVisible )
 					node.OnDraw ( gameTime );
+			}
 		}
 
 		public int CompareTo ( Node other )

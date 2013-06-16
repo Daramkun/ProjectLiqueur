@@ -47,6 +47,8 @@
     <Compile Include="Scenes\WalnutScene.cs" />
     <Compile Include="Scripts\EventCallee.cs" />
     <Compile Include="Scripts\IScriptEngine.cs" />
+    <Compile Include="Scripts\NoneScriptEngine.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="WalnutSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

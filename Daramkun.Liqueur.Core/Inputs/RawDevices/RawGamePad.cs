@@ -13,10 +13,10 @@ namespace Daramkun.Liqueur.Inputs.RawDevices
 		public virtual bool IsConnected { get { return false; } }
 		public virtual bool IsSupportVibrator { get { return false; } }
 
-		protected Vector2 LeftThumbstick { get; set; }
-		protected Vector2 RightThumbstick { get; set; }
-		protected Vector2 Trigger { get; set; }
-		protected GamePadButton Buttons { get; set; }
+		protected Vector2 LeftThumbstick = new Vector2 ();
+		protected Vector2 RightThumbstick = new Vector2 ();
+		protected Vector2 Trigger = new Vector2 ();
+		protected GamePadButton Buttons = GamePadButton.None;
 
 		public RawGamePad ( IWindow window, PlayerIndex playerIndex )
 		{
@@ -34,7 +34,7 @@ namespace Daramkun.Liqueur.Inputs.RawDevices
 				Trigger.X, Trigger.Y, Buttons );
 		}
 
-		public abstract void Vibrate ( TimeSpan vibrateTime, float leftSpeed, float rightSpeed );
+		public abstract void Vibrate ( float leftSpeed, float rightSpeed );
 
 		protected virtual void Dispose ( bool isDisposing )
 		{

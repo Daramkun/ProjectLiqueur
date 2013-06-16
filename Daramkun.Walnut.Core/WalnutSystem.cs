@@ -110,16 +110,16 @@ namespace Daramkun.Walnut
 		}
 
 		public static void Run<T1, T2, T3> ( IFileSystem mainContentsFileSystem, params object [] arguments )
-			where T1 : ILauncher
-			where T2 : IScriptEngine
-			where T3 : Scene
+			where T1 : ILauncher, new ()
+			where T2 : IScriptEngine, new ()
+			where T3 : Scene, new ()
 		{
 			Run<T1, T2> ( mainContentsFileSystem, Activator.CreateInstance<T3> (), arguments );
 		}
 
 		public static void Run<T1, T2> ( Stream package, params object [] arguments )
-			where T1 : ILauncher
-			where T2 : IScriptEngine
+			where T1 : ILauncher, new ()
+			where T2 : IScriptEngine, new ()
 		{
 			using ( MainWalnutPackage = new WalnutPackage ( package ) )
 			{
@@ -130,8 +130,8 @@ namespace Daramkun.Walnut
 		}
 
 		public static void Run<T1, T2> ( IFileSystem mainContentsFileSystem, object scene, params object [] arguments )
-			where T1 : ILauncher
-			where T2 : IScriptEngine
+			where T1 : ILauncher, new ()
+			where T2 : IScriptEngine, new ()
 		{
 			MainContents = new ContentManager ();
 			MainContents.FileSystem = mainContentsFileSystem;

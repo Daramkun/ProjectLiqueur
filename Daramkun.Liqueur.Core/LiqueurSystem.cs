@@ -31,13 +31,14 @@ namespace Daramkun.Liqueur
 
 		public static TimeSpan FixedUpdateTimeStep { get; set; }
 		public static TimeSpan FixedDrawTimeStep { get; set; }
-		private static GameTime updateGameTime = new GameTime (),
-								drawGameTime = new GameTime ();
 
 		private static ILauncher Launcher { get; set; }
 		public static PlatformInformation PlatformInformation { get { return Launcher.PlatformInformation; } }
 
 		public static CultureInfo CurrentCulture { get; set; }
+
+		private static GameTime updateGameTime = new GameTime (),
+								drawGameTime = new GameTime ();
 
 		static LiqueurSystem ()
 		{

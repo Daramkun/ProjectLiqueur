@@ -4,18 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{55E7B0B6-EB7B-4E17-87AE-F6A76839E819}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{7D9859FD-E75D-4BAC-AD94-7A8D585B0BAC}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Daramkun.Liqueur</RootNamespace>
-    <AssemblyName>Daramkun.Liqueur.Platforms.WinStoreApp</AssemblyName>
+    <RootNamespace>Test.Windows8</RootNamespace>
+    <AssemblyName>Test.Windows8</AssemblyName>
     <DefaultLanguage>ko-KR</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>Test.Windows8_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -104,46 +105,30 @@
       <Project>{24d173e0-cafd-43d5-b1b8-1c76c08421c1}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Daramkun.Liqueur.Platforms.WinStoreApp\Daramkun.Liqueur.Platforms.WinStoreApp.csproj">
+      <Project>{55e7b0b6-eb7b-4e17-87ae-f6a76839e819}</Project>
+      <Name>Daramkun.Liqueur.Platforms.WinStoreApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Daramkun.Walnut.Core\Daramkun.Walnut.Core.csproj">
+      <Project>{e474c557-f8fd-4d17-9387-bc634864665d}</Project>
+      <Name>Daramkun.Walnut.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contents\FileSystems\LocalFileSystem.cs" />
-    <Compile Include="Graphics\Image.cs" />
-    <Compile Include="Graphics\Renderer.cs" />
-    <Compile Include="Inputs\Devices\Accelerometer.cs" />
-    <Compile Include="Inputs\Devices\GamePad.cs" />
-    <Compile Include="Inputs\Devices\Keyboard.cs" />
-    <Compile Include="Inputs\Devices\Mouse.cs" />
-    <Compile Include="Inputs\Devices\TouchPanel.cs" />
-    <Compile Include="Medias\SoundPlayer.cs" />
-    <Compile Include="Platforms\Launcher.cs" />
-    <Compile Include="Platforms\Window.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="SharpDX">
-      <HintPath>..\packages\SharpDX.2.4.2\lib\win8\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.D3DCompiler">
-      <HintPath>..\packages\SharpDX.D3DCompiler.2.4.2\lib\win8\SharpDX.D3DCompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct2D1">
-      <HintPath>..\packages\SharpDX.Direct2D1.2.4.2\lib\win8\SharpDX.Direct2D1.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>..\packages\SharpDX.Direct3D11.2.4.2\lib\win8\SharpDX.Direct3D11.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DXGI">
-      <HintPath>..\packages\SharpDX.DXGI.2.4.2\lib\win8\SharpDX.DXGI.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XAudio2">
-      <HintPath>..\packages\SharpDX.XAudio2.2.4.2\lib\win8\SharpDX.XAudio2.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XInput">
-      <HintPath>..\packages\SharpDX.XInput.2.4.2\lib\win8\SharpDX.XInput.dll</HintPath>
-    </Reference>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="Test.Windows8_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\SmallLogo.png" />
+    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\StoreLogo.png" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

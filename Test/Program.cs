@@ -108,7 +108,7 @@ namespace Test
 			WalnutSystem.SetupDecoders ();
 			WalnutSystem.SetupFixedLogicTimeStep ( TimeSpan.FromTicks ( 166666 ), TimeSpan.FromTicks ( 166666 ) );
 			WalnutSystem.SetupInputDevices<Keyboard, Mouse, GamePad, TouchPanel, Accelerometer> ();
-			WalnutSystem.Run<Launcher, IScriptEngine, MyScene> ( new LocalFileSystem () );
+			WalnutSystem.Run<Launcher, NoneScriptEngine, MyScene> ( new LocalFileSystem () );
 		}
 	}
 }

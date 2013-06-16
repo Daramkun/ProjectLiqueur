@@ -12,7 +12,7 @@ namespace Daramkun.Liqueur.Inputs.RawDevices
 	{
 		public virtual bool IsConnected { get { return false; } }
 
-		protected Vector3 AccelerometerValue { get; set; }
+		protected Vector3 AccelerometerValue = new Vector3 ();
 
 		public RawAccelerometer ( IWindow window )
 		{

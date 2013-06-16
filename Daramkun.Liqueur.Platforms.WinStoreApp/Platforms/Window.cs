@@ -13,6 +13,7 @@ using Daramkun.Liqueur.Platforms;
 using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
 using Windows.System.Threading;
+using Daramkun.Liqueur.Graphics;
 
 namespace Daramkun.Liqueur.Platforms
 {
@@ -71,6 +72,8 @@ namespace Daramkun.Liqueur.Platforms
 			Environment.FailFast ( message, exception );
 		}
 
+		public Action<CoreWindow> InitializeWindow;
+
 		#region IFrameworkView 구현
 		public void Initialize ( CoreApplicationView applicationView )
 		{
@@ -79,18 +82,18 @@ namespace Daramkun.Liqueur.Platforms
 
 		public void Load ( string entryPoint )
 		{
-
+			( LiqueurSystem.Renderer as Renderer ).CreateInstance ();
+			InitializeWindow ( window );
 		}
 
-		public async void Run ()
+		public void Run ()
 		{
 			window.Activate ();
-			
+
 			while ( true )
 			{
 				DoEvents ();
-
-				await ThreadPool.RunAsync ( _ => { UpdateLogic (); } );
+				UpdateLogic ();
 				DrawLogic ();
 			}
 		}

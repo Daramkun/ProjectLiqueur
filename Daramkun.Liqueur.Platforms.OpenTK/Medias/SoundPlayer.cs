@@ -6,27 +6,19 @@ using System.Text;
 using Daramkun.Liqueur.Decoders;
 using Daramkun.Liqueur.Decoders.Sounds;
 using Daramkun.Liqueur.Exceptions;
-#if OPENTK
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
-#elif XNA
-using Microsoft.Xna.Framework.Audio;
-#endif
 
 namespace Daramkun.Liqueur.Medias
 {
 	public class SoundPlayer : ISoundPlayer
 	{
-#if OPENTK
 		static AudioContext audioContext;
 		static uint audioContextRef;
 
 		int sourceId;
 		List<int> bufferIds;
 		ALFormat alFormat;
-#elif XNA
-		DynamicSoundEffectInstance soundEffect;
-#endif
 
 		SoundData soundData;
 
@@ -37,18 +29,14 @@ namespace Daramkun.Liqueur.Medias
 		{
 			get
 			{
-#if OPENTK
 				float seconds;
 				AL.GetSource ( sourceId, ALSourcef.SecOffset, out seconds );
 				return TimeSpan.FromSeconds ( seconds );
-#endif
 			}
 			set
 			{
-#if OPENTK
 				if ( value > Duration ) throw new ArgumentException ();
 				AL.Source ( sourceId, ALSourcef.SecOffset, ( float ) value.TotalSeconds );
-#endif
 			}
 		}
 
@@ -58,19 +46,15 @@ namespace Daramkun.Liqueur.Medias
 		{
 			get
 			{
-#if OPENTK
 				float volume;
 				AL.GetSource ( sourceId, ALSourcef.Gain, out volume );
 				return volume;
-#endif
 			}
 			set
 			{
-#if OPENTK
 				if ( value < 0f || value > 1f )
 					throw new ArgumentException ();
 				AL.Source ( sourceId, ALSourcef.Gain, value );
-#endif
 			}
 		}
 
@@ -78,22 +62,17 @@ namespace Daramkun.Liqueur.Medias
 		{
 			get
 			{
-#if OPENTK
 				return AL.GetSourceState ( sourceId ) == ALSourceState.Playing;
-#endif
 			}
 		}
 		public bool IsPaused
 		{
 			get
 			{
-#if OPENTK
 				return AL.GetSourceState ( sourceId ) == ALSourceState.Paused;
-#endif
 			}
 		}
 
-#if OPENTK
 		private void InitializeAudioContext ()
 		{
 			if ( audioContext == null )
@@ -115,7 +94,6 @@ namespace Daramkun.Liqueur.Medias
 				( ( soundData.BitPerSample == BitPerSample.Bps16 ) ? ALFormat.Stereo16 : ALFormat.Stereo8 ) :
 				( ( soundData.BitPerSample == BitPerSample.Bps16 ) ? ALFormat.Mono16 : ALFormat.Mono8 ) );
 		}
-#endif
 
 		public SoundPlayer ( Stream stream )
 		{
@@ -131,14 +109,8 @@ namespace Daramkun.Liqueur.Medias
 		{
 			this.soundData = soundData;
 
-#if OPENTK
 			InitializeAudioContext ();
 			InitializeALSource ();
-#elif XNA
-			soundEffect = new DynamicSoundEffectInstance ( soundData.SampleRate,
-				soundData.AudioChannel == AudioChannel.Mono ? Microsoft.Xna.Framework.Audio.AudioChannels.Mono :
-				Microsoft.Xna.Framework.Audio.AudioChannels.Stereo );
-#endif
 
 			Update ();
 			if ( fullLoading )
@@ -158,10 +130,8 @@ namespace Daramkun.Liqueur.Medias
 				throw new FileFormatMismatchException ();
 			soundData = soundChunk.Value;
 
-#if OPENTK
 			InitializeAudioContext ();
 			InitializeALSource ();
-#endif
 
 			Update ();
 			if ( fullLoading )
@@ -172,7 +142,6 @@ namespace Daramkun.Liqueur.Medias
 		{
 			if ( isDisposing )
 			{
-#if OPENTK
 				if ( sourceId != 0 )
 					AL.DeleteSource ( sourceId );
 				sourceId = 0;
@@ -188,10 +157,6 @@ namespace Daramkun.Liqueur.Medias
 					audioContext.Dispose ();
 					audioContext = null;
 				}
-#elif XNA
-				soundEffect.Dispose ();
-				soundEffect = null;
-#endif
 			}
 		}
 
@@ -204,31 +169,19 @@ namespace Daramkun.Liqueur.Medias
 		public void Play ()
 		{
 			isPlaying = true;
-#if OPENTK
 			AL.SourcePlay ( sourceId );
-#elif XNA
-			soundEffect.Play ();
-#endif
 		}
 
 		public void Stop ()
 		{
 			isPlaying = false;
-#if OPENTK
 			AL.SourceStop ( sourceId );
-#elif XNA
-			soundEffect.Stop ();
-#endif
 		}
 
 		public void Pause ()
 		{
 			isPlaying = false;
-#if OPENTK
 			AL.SourcePause ( sourceId );
-#elif XNA
-			soundEffect.Pause ();
-#endif
 		}
 
 		public SoundData SoundData { get { return soundData; } }
@@ -238,13 +191,11 @@ namespace Daramkun.Liqueur.Medias
 			byte [] data = soundData.SoundDecoder.GetSample ( soundData );
 			if ( data == null ) return true;
 
-#if OPENTK
 			if ( audioContext == null ) throw new Exception ();
 			int bufferId = AL.GenBuffer ();
 			AL.BufferData ( bufferId, alFormat, data, data.Length, soundData.SampleRate );
 			AL.SourceQueueBuffer ( sourceId, bufferId );
 			bufferIds.Add ( bufferId );
-#endif
 
 			if ( isPlaying && !IsPlaying )
 			{

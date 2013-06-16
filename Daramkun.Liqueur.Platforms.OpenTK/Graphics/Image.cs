@@ -17,11 +17,7 @@ namespace Daramkun.Liqueur.Graphics
 {
 	public class Image : IImage
 	{
-#if OPENTK
 		internal int texture;
-#elif XNA
-		Texture2D texture;
-#endif
 		Vector2 textureSize;
 
 		public int Width { get { return ( int ) textureSize.X; } }
@@ -64,7 +60,6 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			textureSize = new Vector2 ( width, height );
 
-#if OPENTK
 			texture = GL.GenTexture ();
 			GL.BindTexture ( TextureTarget.Texture2D, texture );
 
@@ -76,9 +71,9 @@ namespace Daramkun.Liqueur.Graphics
 			GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ref wrapS );
 			uint wrapT = ( uint ) TextureWrapMode.ClampToEdge;
 			GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ref wrapT );
-			
+
 			byte [] colorData = new byte [ width * height * 4 ];
-			
+
 			for ( int i = 0, index = 0; i < pixels.Length; i++ )
 			{
 				colorData [ index++ ] = pixels [ i ].BlueValue;
@@ -92,22 +87,14 @@ namespace Daramkun.Liqueur.Graphics
 				PixelType.UnsignedByte, colorData );
 
 			GL.BindTexture ( TextureTarget.Texture2D, 0 );
-#elif XNA
-			texture = new Texture2D ( ( LiqueurSystem.Renderer as Renderer ).GraphicsDevice, width, height );
-#endif
 		}
 
 		protected virtual void Dispose ( bool isDisposing )
 		{
 			if ( isDisposing )
 			{
-#if OPENTK
 				GL.DeleteTexture ( texture );
 				texture = 0;
-#elif XNA
-				texture.Dispose ();
-				texture = null;
-#endif
 			}
 		}
 
@@ -124,7 +111,6 @@ namespace Daramkun.Liqueur.Graphics
 
 		public void DrawBitmap ( Color overlay, Transform2 transform, Rectangle sourceRectangle )
 		{
-#if OPENTK
 			GL.BindTexture ( TextureTarget.Texture2D, texture );
 
 			GL.TexCoordPointer ( 2, TexCoordPointerType.Float, 0, new float [] {
@@ -156,22 +142,6 @@ namespace Daramkun.Liqueur.Graphics
 			}
 			catch ( AccessViolationException ex ) { Debug.WriteLine ( ex ); }
 			GL.PopMatrix ();
-#elif XNA
-			SpriteBatch spriteBatch = ( LiqueurSystem.Renderer as Renderer ).SpriteBatch;
-			spriteBatch.Draw ( 
-				texture,
-				new Microsoft.Xna.Framework.Vector2 ( transform.Translate.X, transform.Translate.Y ),
-				new Microsoft.Xna.Framework.Rectangle ( ( int ) sourceRectangle.Position.X, ( int ) sourceRectangle.Position.Y,
-					( int ) sourceRectangle.Size.X, ( int ) sourceRectangle.Size.Y ),
-				new Microsoft.Xna.Framework.Color (
-				overlay.RedScalar, overlay.GreenScalar, overlay.BlueScalar, overlay.AlphaScalar ),
-				transform.Rotation,
-				new Microsoft.Xna.Framework.Vector2 ( transform.RotationCenter.X, transform.RotationCenter.Y ),
-				new Microsoft.Xna.Framework.Vector2 ( transform.Scale.X, transform.Scale.Y ),
-				SpriteEffects.None,
-				0
-				);
-#endif
 		}
 	}
 }

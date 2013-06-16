@@ -12,9 +12,9 @@ namespace Daramkun.Liqueur.Inputs.RawDevices
 	{
 		public virtual bool IsConnected { get { return false; } }
 
-		protected MouseButton MouseButton { get; set; }
-		protected Vector2 Position { get; set; }
-		protected float Wheel { get; set; }
+		protected MouseButton MouseButton = MouseButton.Unknown;
+		protected Vector2 Position = new Vector2 ();
+		protected float Wheel = 0;
 
 		public RawMouse ( IWindow window )
 		{

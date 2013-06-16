@@ -62,23 +62,15 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 
 		public Stream OpenFile ( string filename )
 		{
-			/*for(int i = 0; i < xUnzip.FileInfo.Length; i++)
-				if ( xUnzip.FileInfo [ i ].FileName == filename )
-				{
-					MemoryStream stream = new MemoryStream ();
-					if ( !xUnzip.ExtractTo ( i, stream ) )
-						return null;
-					return stream;
-				}*/
-			/**/
-			if ( !indexInfo.ContainsKey ( filename ) ) return null;
+			lock ( xUnzip )
+			{
+				if ( !indexInfo.ContainsKey ( filename ) ) return null;
 
-			MemoryStream stream = new MemoryStream ();
-			if ( !xUnzip.ExtractTo ( indexInfo [ filename ], stream ) )
-				return null;
-			return stream;
-			/**/
-			//return null;
+				MemoryStream stream = new MemoryStream ();
+				if ( !xUnzip.ExtractTo ( indexInfo [ filename ], stream ) )
+					return null;
+				return stream;
+			}
 		}
 
 		public string [] Files { get { return filenameCache; } }

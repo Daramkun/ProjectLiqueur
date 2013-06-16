@@ -39,6 +39,7 @@
     <Compile Include="Common\Timer.cs" />
     <Compile Include="Contents\FileSystems\XUnzipSharp\XUnzip.cs" />
     <Compile Include="Contents\FileSystems\ZipFileSystem.cs" />
+    <Compile Include="Contents\Loaders\EffectContentLoader.cs" />
     <Compile Include="Contents\Loaders\JsonContentLoader.cs" />
     <Compile Include="Contents\Loaders\LsfFontContentLoader.cs" />
     <Compile Include="Contents\Loaders\StringTableContentLoader.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Common\GameTimeEventArgs.cs" />
     <Compile Include="Geometries\Vector3.cs" />
     <Compile Include="Graphics\Fonts\LsfFont.cs" />
+    <Compile Include="Graphics\IEffect.cs" />
     <Compile Include="Inputs\GamePadCollection.cs" />
     <Compile Include="Inputs\RawDevices\RawAccelerometer.cs" />
     <Compile Include="Inputs\RawDevices\RawGamePad.cs" />

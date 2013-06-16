@@ -18,7 +18,7 @@ namespace Daramkun.Liqueur.Inputs.Devices
 
 		}
 
-		public override void Vibrate ( TimeSpan vibrateTime, float leftSpeed, float rightSpeed )
+		public override void Vibrate ( float leftSpeed, float rightSpeed )
 		{
 
 		}
