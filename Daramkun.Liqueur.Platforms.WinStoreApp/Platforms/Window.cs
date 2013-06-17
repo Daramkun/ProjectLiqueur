@@ -14,6 +14,7 @@ using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
 using Windows.System.Threading;
 using Daramkun.Liqueur.Graphics;
+using System.Diagnostics;
 
 namespace Daramkun.Liqueur.Platforms
 {
@@ -52,6 +53,11 @@ namespace Daramkun.Liqueur.Platforms
 			set { }
 		}
 
+		public Vector2 ClientSize
+		{
+			get { return new Vector2 ( ( float ) window.Bounds.Width, ( float ) window.Bounds.Height ); }
+		}
+
 		internal Window ()
 		{
 
@@ -59,7 +65,7 @@ namespace Daramkun.Liqueur.Platforms
 
 		public void Dispose ()
 		{
-			
+
 		}
 
 		public void DoEvents ()
@@ -90,11 +96,26 @@ namespace Daramkun.Liqueur.Platforms
 		{
 			window.Activate ();
 
-			while ( true )
+			if ( Environment.ProcessorCount > 1 )
 			{
-				DoEvents ();
-				UpdateLogic ();
-				DrawLogic ();
+				Action [] Logics =
+				{
+					()=> { while ( true ) { DoEvents (); DrawLogic (); } },
+					()=> { while ( true ) { UpdateLogic (); } },
+				};
+				Parallel.ForEach<Action> ( Logics, ( Action logic ) =>
+				{
+					logic ();
+				} );
+			}
+			else
+			{
+				while ( true )
+				{
+					DoEvents ();
+					UpdateLogic ();
+					DrawLogic ();
+				}
 			}
 		}
 

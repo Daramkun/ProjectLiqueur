@@ -97,8 +97,6 @@ namespace Test
 				LiqueurSystem.Renderer.Clear ( Color.Black );
 
 				base.OnDraw ( gameTime );
-
-				LiqueurSystem.Renderer.Present ();
 			}
 		}
 

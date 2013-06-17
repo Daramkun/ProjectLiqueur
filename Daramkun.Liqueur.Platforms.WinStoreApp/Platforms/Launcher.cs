@@ -27,6 +27,13 @@ namespace Daramkun.Liqueur.Platforms
 			}
 		}
 
+		public bool Initialized { get; private set; }
+
+		public Launcher ()
+		{
+			Initialized = false;
+		}
+
 		public void LauncherInitialize ( out IWindow window, out IRenderer renderer )
 		{
 			window = new Window ();
@@ -50,7 +57,7 @@ namespace Daramkun.Liqueur.Platforms
 			}
 		}
 
-		public void Run ( Action updateLogic, Action drawLogic, Action resize, Action activated, Action deactivated, params object [] arguments )
+		public void Run ( Action initialize, Action updateLogic, Action drawLogic, Action resize, Action activated, Action deactivated, params object [] arguments )
 		{
 			( LiqueurSystem.Window as Window ).InitializeWindow = ( CoreWindow window ) =>
 			{
@@ -60,6 +67,8 @@ namespace Daramkun.Liqueur.Platforms
 					if ( e.Visible ) activated ();
 					else deactivated ();
 				};
+				initialize ();
+				Initialized = true;
 			};
 
 			( LiqueurSystem.Window as Window ).UpdateLogic += updateLogic;

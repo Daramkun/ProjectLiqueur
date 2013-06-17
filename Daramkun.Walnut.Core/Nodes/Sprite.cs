@@ -120,8 +120,6 @@ namespace Daramkun.Walnut.Nodes
 
 		public override void OnDraw ( GameTime gameTime )
 		{
-			LiqueurSystem.Renderer.Begin2D ();
-
 			Transform2 transform = this.transform;
 			transform.Translate -= CalculatedAnchorPoint;
 			Vector2 imageSize = ( SourceRectangle != null ) ? SourceRectangle.Value.Size : Image.Size;
@@ -139,8 +137,6 @@ namespace Daramkun.Walnut.Nodes
 				Image.DrawBitmap ( OverlayColor, transform );
 			else
 				Image.DrawBitmap ( OverlayColor, transform, SourceRectangle.Value );
-			
-			LiqueurSystem.Renderer.End2D ();
 			base.OnDraw ( gameTime );
 		}
 	}

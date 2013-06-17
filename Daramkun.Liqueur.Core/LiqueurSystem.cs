@@ -56,17 +56,19 @@ namespace Daramkun.Liqueur
 			Launcher.LauncherInitialize ( out window, out renderer );
 			Window = window; Renderer = renderer;
 
-			if ( Initialize != null )
-				Initialize ( null, EventArgs.Empty );
-			FrameScene = new FrameScene ( firstScene );
-			FrameScene.OnInitialize ();
-
 			TimeSpan elapsedUpdateTimeStep = new TimeSpan (),
 				elapsedDrawTimeStep = new TimeSpan ();
 			TimeSpan lastUpdateTimeStep = TimeSpan.FromMilliseconds ( Environment.TickCount ),
 				lastDrawTimeStep = TimeSpan.FromMilliseconds ( Environment.TickCount );
 
 			Launcher.Run (
+				() =>
+				{
+					if ( Initialize != null )
+						Initialize ( null, EventArgs.Empty );
+					FrameScene = new FrameScene ( firstScene );
+					FrameScene.OnInitialize ();
+				},
 				() =>
 				{
 					if ( elapsedUpdateTimeStep >= FixedUpdateTimeStep )
@@ -89,9 +91,12 @@ namespace Daramkun.Liqueur
 					if ( elapsedDrawTimeStep >= FixedDrawTimeStep )
 					{
 						drawGameTime.Update ();
+						LiqueurSystem.Renderer.Begin2D ();
 						FrameScene.OnDraw ( drawGameTime );
 						if ( Draw != null )
 							Draw ( null, new GameTimeEventArgs ( drawGameTime ) );
+						LiqueurSystem.Renderer.End2D ();
+						LiqueurSystem.Renderer.Present ();
 						elapsedDrawTimeStep -= FixedDrawTimeStep;
 					}
 					else

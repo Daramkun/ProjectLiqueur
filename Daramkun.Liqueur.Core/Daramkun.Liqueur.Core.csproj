@@ -165,6 +165,12 @@
     <Compile Include="IO\Compression\ZlibConstants.cs" />
     <Compile Include="IO\Compression\ZlibStream.cs" />
     <Compile Include="LiqueurSystem.cs" />
+    <Compile Include="Logging\ILogWriter.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Logging\LogWriters\DebugLogWriter.cs" />
+    <Compile Include="Logging\LogWriters\StreamLogWriter.cs" />
+    <Compile Include="Logging\MessageFormat.cs" />
     <Compile Include="Medias\ISoundPlayer.cs" />
     <Compile Include="Nodes\FpsCalculator.cs" />
     <Compile Include="Nodes\Node.cs" />

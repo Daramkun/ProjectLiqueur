@@ -8,6 +8,11 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 	{
 		Assembly assembly;
 
+		public ManifestFileSystem ()
+		{
+			assembly = Assembly.GetCallingAssembly ();
+		}
+
 		public ManifestFileSystem ( Assembly assembly )
 		{
 			this.assembly = assembly;

@@ -31,10 +31,6 @@ namespace Test.Windows8
 	{
 		class MyScene : Scene
 		{
-			BaseFont font;
-
-			FpsCalculator fpsCalc;
-
 			public MyScene ()
 			{
 			}
@@ -42,6 +38,12 @@ namespace Test.Windows8
 			public override void OnInitialize ()
 			{
 				LiqueurSystem.Window.Title = "Test Window";
+
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<Image> ( "Test.Windows8.Assets.사본 - StoreLogo.png", Color.Magenta ) )
+				{
+					Position = new Vector2 ( 20, 20 ),
+					SourceRectangle = new Rectangle ( new Vector2 ( 20, 20 ), new Vector2 ( 100, 100 ) )
+				} );
 
 				base.OnInitialize ();
 			}
@@ -59,10 +61,7 @@ namespace Test.Windows8
 			public override void OnDraw ( GameTime gameTime )
 			{
 				LiqueurSystem.Renderer.Clear ( Color.Black );
-
 				base.OnDraw ( gameTime );
-
-				LiqueurSystem.Renderer.Present ();
 			}
 		}
 
@@ -72,7 +71,7 @@ namespace Test.Windows8
 			WalnutSystem.SetupDecoders ();
 			WalnutSystem.SetupFixedLogicTimeStep ( TimeSpan.FromTicks ( 166666 ), TimeSpan.FromTicks ( 166666 ) );
 			WalnutSystem.SetupInputDevices<Keyboard, Mouse, GamePad, TouchPanel, Accelerometer> ();
-			WalnutSystem.Run<Launcher, NoneScriptEngine, MyScene> ( /*new LocalFileSystem ()*/null );
+			WalnutSystem.Run<Launcher, NoneScriptEngine, MyScene> ( new ManifestFileSystem () );
 		}
 	}
 }

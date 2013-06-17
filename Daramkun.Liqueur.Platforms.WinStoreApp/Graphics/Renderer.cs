@@ -17,7 +17,7 @@ namespace Daramkun.Liqueur.Graphics
 		SharpDX.Direct3D11.DeviceContext1 d3dDeviceContext;
 
 		SharpDX.DXGI.Adapter dxgiAdapter;
-		SharpDX.DXGI.SwapChain dxgiSwapChain;
+		internal SharpDX.DXGI.SwapChain dxgiSwapChain;
 
 		internal SharpDX.Direct2D1.DeviceContext d2dDeviceContext;
 		SharpDX.Direct2D1.Bitmap1 d2dBitmap;

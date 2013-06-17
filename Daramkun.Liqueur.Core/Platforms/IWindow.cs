@@ -14,6 +14,7 @@ namespace Daramkun.Liqueur.Platforms
 		bool IsCursorVisible { get; set; }
 		bool IsResizable { get; set; }
 		object Icon { get; set; }
+		Vector2 ClientSize { get; }
 
 		object Handle { get; }
 

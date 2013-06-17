@@ -10,9 +10,11 @@ namespace Daramkun.Liqueur.Platforms
 	{
 		PlatformInformation PlatformInformation { get; }
 
+		bool Initialized { get; }
+
 		void LauncherInitialize ( out IWindow window, out IRenderer renderer );
 		void LauncherFinalize ( IWindow window, IRenderer renderer );
-		void Run ( Action updateLogic, Action drawLogic,
+		void Run ( Action initialize, Action updateLogic, Action drawLogic,
 			Action resize, Action activated, Action deactivated, params object [] arguments );
 	}
 }

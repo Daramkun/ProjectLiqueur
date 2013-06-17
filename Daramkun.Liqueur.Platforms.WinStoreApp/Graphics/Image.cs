@@ -54,8 +54,14 @@ namespace Daramkun.Liqueur.Graphics
 		private void InitializeBitmap ( Color [] pixels, int width, int height )
 		{
 			textureSize = new Vector2 ( width, height );
-			texture = new SharpDX.Direct2D1.Bitmap ( ( LiqueurSystem.Renderer as Renderer ).d2dDeviceContext, new SharpDX.DrawingSize ( width, height ) );
-			texture.CopyFromMemory<Color> ( pixels );
+			texture = SharpDX.Direct2D1.Bitmap.New<Color> ( ( LiqueurSystem.Renderer as Renderer ).d2dDeviceContext,
+				new SharpDX.DrawingSize ( width, height ), pixels,
+				new SharpDX.Direct2D1.BitmapProperties ()
+				{
+					DpiX = ( LiqueurSystem.Renderer as Renderer ).d2dDeviceContext.DotsPerInch.Width,
+					DpiY = ( LiqueurSystem.Renderer as Renderer ).d2dDeviceContext.DotsPerInch.Height,
+					PixelFormat = new SharpDX.Direct2D1.PixelFormat ( SharpDX.DXGI.Format.B8G8R8A8_UNorm, SharpDX.Direct2D1.AlphaMode.Premultiplied )
+				} );
 		}
 
 		protected virtual void Dispose ( bool isDisposing )
@@ -81,8 +87,23 @@ namespace Daramkun.Liqueur.Graphics
 		public void DrawBitmap ( Color overlay, Transform2 transform, Rectangle sourceRectangle )
 		{
 			SharpDX.Direct2D1.DeviceContext context = ( LiqueurSystem.Renderer as Renderer ).d2dDeviceContext;
+
+			SharpDX.Matrix3x2 matrix = SharpDX.Matrix3x2.Translation ( transform.Translate.X + transform.RotationCenter.X,
+				transform.Translate.Y + transform.RotationCenter.Y );
+			matrix *= SharpDX.Matrix3x2.Rotation ( transform.Rotation );
+			matrix *= SharpDX.Matrix3x2.Translation ( -transform.RotationCenter.X + transform.ScaleCenter.X,
+				-transform.RotationCenter.Y + transform.ScaleCenter.Y );
+			matrix *= SharpDX.Matrix3x2.Scaling ( transform.Scale.X, transform.Scale.Y );
+			matrix *= SharpDX.Matrix3x2.Translation ( -transform.ScaleCenter.X, -transform.ScaleCenter.Y );
+
+			SharpDX.Matrix3x2 oldMatrix = context.Transform;
+			context.Transform = matrix;
+
+			context.DrawBitmap ( texture, overlay.AlphaScalar, SharpDX.Direct2D1.BitmapInterpolationMode.Linear,
+				new SharpDX.RectangleF ( sourceRectangle.Position.X, sourceRectangle.Position.Y,
+					sourceRectangle.Size.X, sourceRectangle.Size.Y ) );
 			
-			context.DrawBitmap ( texture, 1, SharpDX.Direct2D1.BitmapInterpolationMode.Linear );
+			context.Transform = oldMatrix;
 		}
 	}
 }

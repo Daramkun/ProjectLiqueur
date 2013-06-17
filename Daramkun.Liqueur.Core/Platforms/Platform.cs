@@ -9,15 +9,19 @@ namespace Daramkun.Liqueur.Platforms
 	{
 		Unknown = 0,
 
-		WindowsNT,
-		Xbox360,
-		Unix,
-		OSX,
+		WindowsNT = 1,
+		Unix = 2,
+		OSX = 3,
+		Cosmos = 4,
 
-		WindowsPhone,
-		WindowsRT,
-		Android,
-		iOS,
-		Blackberry,
+		WindowsPhone = 12,
+		WindowsRT = 13,
+		Android = 14,
+		iOS = 15,
+		Blackberry = 16,
+
+		Xbox360 = 25,
+		PlaystationVITA = 26,
+		OUYA = 27,
 	}
 }

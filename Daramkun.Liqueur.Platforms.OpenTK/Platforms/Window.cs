@@ -49,6 +49,14 @@ namespace Daramkun.Liqueur.Platforms
 			set { window.Icon = value as System.Drawing.Icon; }
 		}
 
+		public Daramkun.Liqueur.Geometries.Vector2 ClientSize
+		{
+			get
+			{
+				return new Geometries.Vector2 ( window.ClientSize.Width, window.ClientSize.Height );
+			}
+		}
+
 		internal Window ()
 		{
 			window = new OpenTK.GameWindow ( 800, 600,
