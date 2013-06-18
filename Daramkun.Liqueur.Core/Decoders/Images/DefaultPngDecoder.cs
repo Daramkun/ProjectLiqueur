@@ -40,9 +40,12 @@ namespace Daramkun.Liqueur.Decoders.Images
 
 			byte [] pixels = stream.ToArray ();
 			Color [] colors = new Color [ imageData.Width * imageData.Height ];
-			for ( int i = 0, index = 0; i < pixels.Length; i += 4, index++ )
+			for ( int i = 0, index = 0; i < pixels.Length; i += ( pixels.Length % 3 == 0 ) ? 3 : 4, index++ )
 			{
-				colors [ index ] = new Color ( pixels [ i + 0 ], pixels [ i + 1 ], pixels [ i + 2 ], pixels [ i + 3 ] );
+				if ( pixels.Length % 3 == 0 )
+					colors [ index ] = new Color ( pixels [ i + 0 ], pixels [ i + 1 ], pixels [ i + 2 ] );
+				else
+					colors [ index ] = new Color ( pixels [ i + 0 ], pixels [ i + 1 ], pixels [ i + 2 ], pixels [ i + 3 ] );
 			}
 			return colors;
 		}

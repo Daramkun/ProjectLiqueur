@@ -67,8 +67,6 @@ namespace Daramkun.Walnut.Nodes
 
 		public override void OnDraw ( GameTime gameTime )
 		{
-			LiqueurSystem.Renderer.Begin2D ();
-
 			Vector2 area = ( Area == null ) ? Font.MeasureString ( Text ) : Area.Value;
 
 			Vector2 position = Position;
@@ -83,8 +81,6 @@ namespace Daramkun.Walnut.Nodes
 				position -= new Vector2 ( 0, area.Y );
 			
 			Font.DrawFont ( Text, ForeColor, position, area );
-			
-			LiqueurSystem.Renderer.End2D ();
 			base.OnDraw ( gameTime );
 		}
 	}

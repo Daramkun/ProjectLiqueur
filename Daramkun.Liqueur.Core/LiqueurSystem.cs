@@ -32,7 +32,7 @@ namespace Daramkun.Liqueur
 		public static TimeSpan FixedUpdateTimeStep { get; set; }
 		public static TimeSpan FixedDrawTimeStep { get; set; }
 
-		private static ILauncher Launcher { get; set; }
+		internal static ILauncher Launcher { get; set; }
 		public static PlatformInformation PlatformInformation { get { return Launcher.PlatformInformation; } }
 
 		public static CultureInfo CurrentCulture { get; set; }
@@ -91,11 +91,9 @@ namespace Daramkun.Liqueur
 					if ( elapsedDrawTimeStep >= FixedDrawTimeStep )
 					{
 						drawGameTime.Update ();
-						LiqueurSystem.Renderer.Begin2D ();
 						FrameScene.OnDraw ( drawGameTime );
 						if ( Draw != null )
 							Draw ( null, new GameTimeEventArgs ( drawGameTime ) );
-						LiqueurSystem.Renderer.End2D ();
 						LiqueurSystem.Renderer.Present ();
 						elapsedDrawTimeStep -= FixedDrawTimeStep;
 					}

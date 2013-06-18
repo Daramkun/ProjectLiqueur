@@ -31,6 +31,8 @@ namespace Test.Windows8
 	{
 		class MyScene : Scene
 		{
+			FpsCalculator fpsCalc;
+
 			public MyScene ()
 			{
 			}
@@ -38,12 +40,24 @@ namespace Test.Windows8
 			public override void OnInitialize ()
 			{
 				LiqueurSystem.Window.Title = "Test Window";
+				
+				fpsCalc = new FpsCalculator ();
+				AddChild ( fpsCalc );
 
-				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<Image> ( "Test.Windows8.Assets.사본 - StoreLogo.png", Color.Magenta ) )
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<Image> ( "Test.Windows8.Assets.goodbye.png", Color.Magenta ) )
 				{
 					Position = new Vector2 ( 20, 20 ),
-					SourceRectangle = new Rectangle ( new Vector2 ( 20, 20 ), new Vector2 ( 100, 100 ) )
+					SourceRectangle = new Rectangle ( new Vector2 ( 20, 20 ), new Vector2 ( 200, 200 ) )
 				} );
+				AddChild ( new Label ( WalnutSystem.MainContents.Load<BaseFont> ( "Test.Windows8.Assets.test.lsf" ) )
+				{
+					Position = new Vector2 ( 10, 590 ),
+					ForeColor = Color.Cyan,
+					ObjectOffset = ObjectOffset.BottomLeft
+				} ).Update += ( object sender, GameTimeEventArgs e ) =>
+				{
+					( sender as Label ).Text = String.Format ( "Update FPS: {0}\nRender FPS: {1}", fpsCalc.UpdateFPS, fpsCalc.DrawFPS );
+				};
 
 				base.OnInitialize ();
 			}
@@ -61,6 +75,7 @@ namespace Test.Windows8
 			public override void OnDraw ( GameTime gameTime )
 			{
 				LiqueurSystem.Renderer.Clear ( Color.Black );
+
 				base.OnDraw ( gameTime );
 			}
 		}

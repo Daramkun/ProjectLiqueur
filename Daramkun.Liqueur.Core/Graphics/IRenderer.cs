@@ -12,9 +12,6 @@ namespace Daramkun.Liqueur.Graphics
 		Vector2 ScreenSize { get; set; }
 		bool FullscreenMode { get; set; }
 
-		void Begin2D ();
-		void End2D ();
-
 		void Clear ( Color color );
 		void Present ();
 	}

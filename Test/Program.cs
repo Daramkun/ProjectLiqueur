@@ -72,7 +72,7 @@ namespace Test
 				AddChild ( new Label ( WalnutSystem.MainContents.Load<BaseFont> ( "test.lsf" ) )
 				{
 					Position = new Vector2 ( 10, 590 ),
-					ForeColor = Color.White,
+					ForeColor = Color.Cyan,
 					ObjectOffset = ObjectOffset.BottomLeft
 				} ).Update += ( object sender, GameTimeEventArgs e ) =>
 				{

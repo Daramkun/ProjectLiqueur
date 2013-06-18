@@ -13,11 +13,13 @@ namespace Daramkun.Liqueur.Graphics
 		Window window;
 		Vector2 screenSize;
 
-		SharpDX.Direct3D11.Device1 d3dDevice;
-		SharpDX.Direct3D11.DeviceContext1 d3dDeviceContext;
+		internal SharpDX.Direct3D11.Device1 d3dDevice;
+		internal SharpDX.Direct3D11.DeviceContext1 d3dDeviceContext;
+
+		SharpDX.Direct3D11.RenderTargetView renderTarget;
 
 		SharpDX.DXGI.Adapter dxgiAdapter;
-		internal SharpDX.DXGI.SwapChain dxgiSwapChain;
+		SharpDX.DXGI.SwapChain dxgiSwapChain;
 
 		internal SharpDX.Direct2D1.DeviceContext d2dDeviceContext;
 		SharpDX.Direct2D1.Bitmap1 d2dBitmap;
@@ -90,6 +92,10 @@ namespace Daramkun.Liqueur.Graphics
 
 			dxgiSwapChain = dxgiFactory.CreateSwapChainForCoreWindow ( d3dDevice,
 				new SharpDX.ComObject ( window.Handle as CoreWindow ), ref swapChainDesc, null );
+			SharpDX.Direct3D11.Texture2D surfaceTexture = dxgiSwapChain.GetBackBuffer<SharpDX.Direct3D11.Texture2D> ( 0 );
+
+			renderTarget = new SharpDX.Direct3D11.RenderTargetView ( d3dDevice, surfaceTexture );
+			d3dDeviceContext.OutputMerger.SetTargets ( renderTarget );
 
 			SharpDX.Direct2D1.Device d2dDevice = new SharpDX.Direct2D1.Device ( dxgiDevice2 );
 			d2dDeviceContext = new SharpDX.Direct2D1.DeviceContext ( d2dDevice, SharpDX.Direct2D1.DeviceContextOptions.None );
@@ -104,7 +110,7 @@ namespace Daramkun.Liqueur.Graphics
 
 			SharpDX.DXGI.Surface dxgiSurface = dxgiSwapChain.GetBackBuffer<SharpDX.DXGI.Surface> ( 0 );
 			d2dBitmap = new SharpDX.Direct2D1.Bitmap1 ( d2dDeviceContext, dxgiSurface, bitmapProp );
-
+			
 			d2dDeviceContext.Target = d2dBitmap;
 		}
 
@@ -112,29 +118,24 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			dxgiSwapChain.Dispose ();
 			d2dBitmap.Dispose ();
+			renderTarget.Dispose ();
 			d3dDeviceContext.Dispose ();
 			d2dDeviceContext.Dispose ();
 			d3dDevice.Dispose ();
 		}
 
-		public void Begin2D ()
-		{
-			d2dDeviceContext.BeginDraw ();
-		}
-
-		public void End2D ()
-		{
-			d2dDeviceContext.EndDraw ();
-		}
-
 		public void Clear ( Color color )
 		{
+			d2dDeviceContext.BeginDraw ();
 			d2dDeviceContext.Clear ( new SharpDX.Color4 ( color.RedScalar, 
+				color.GreenScalar, color.BlueScalar, color.AlphaScalar ) );
+			d3dDeviceContext.ClearRenderTargetView ( renderTarget, new SharpDX.Color4 ( color.RedScalar,
 				color.GreenScalar, color.BlueScalar, color.AlphaScalar ) );
 		}
 
 		public void Present ()
 		{
+			d2dDeviceContext.EndDraw ();
 			dxgiSwapChain.Present ( 0, SharpDX.DXGI.PresentFlags.None );
 		}
 	}

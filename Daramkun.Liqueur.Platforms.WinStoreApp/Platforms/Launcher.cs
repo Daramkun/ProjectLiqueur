@@ -10,11 +10,24 @@ using Daramkun.Liqueur.Medias;
 using System.Net.NetworkInformation;
 using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
+using Windows.System.Profile;
 
 namespace Daramkun.Liqueur.Platforms
 {
 	public class Launcher : ILauncher
 	{
+		private string GetHardwareId ()
+		{
+			var token = HardwareIdentification.GetPackageSpecificToken ( null );
+			var hardwareId = token.Id;
+			var dataReader = Windows.Storage.Streams.DataReader.FromBuffer ( hardwareId );
+
+			byte [] bytes = new byte [ hardwareId.Length ];
+			dataReader.ReadBytes ( bytes );
+
+			return BitConverter.ToString ( bytes );
+		}  
+
 		public PlatformInformation PlatformInformation
 		{
 			get
@@ -22,7 +35,11 @@ namespace Daramkun.Liqueur.Platforms
 				return new PlatformInformation ()
 				{
 					Platform = Platforms.Platform.WindowsRT,
-					PlatformVersion = new Version(6, 2, 0, 0),
+					PlatformVersion = new Version ( 6, 2, 0, 0 ),
+					Is64BitPlatform = BooleanState.Unknown,
+					Is64BitProcess = BooleanState.Unknown,
+					UserName = Windows.System.UserProfile.UserInformation.GetDisplayNameAsync ().GetResults (),
+					MachineUniqueIdentifier = GetHardwareId (),
 				};
 			}
 		}

@@ -111,6 +111,8 @@ namespace Daramkun.Liqueur.Graphics
 
 		public void DrawBitmap ( Color overlay, Transform2 transform, Rectangle sourceRectangle )
 		{
+			( LiqueurSystem.Renderer as Renderer ).Begin2D ();
+
 			GL.BindTexture ( TextureTarget.Texture2D, texture );
 
 			GL.TexCoordPointer ( 2, TexCoordPointerType.Float, 0, new float [] {
@@ -142,6 +144,8 @@ namespace Daramkun.Liqueur.Graphics
 			}
 			catch ( AccessViolationException ex ) { Debug.WriteLine ( ex ); }
 			GL.PopMatrix ();
+
+			( LiqueurSystem.Renderer as Renderer ).End2D ();
 		}
 	}
 }

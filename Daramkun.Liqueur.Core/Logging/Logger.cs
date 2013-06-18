@@ -4,13 +4,14 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Daramkun.Liqueur.Logging.LogWriters;
 
 namespace Daramkun.Liqueur.Logging
 {
 	public static class Logger
 	{
 		public static MessageFormat MessageFormat { get; set; }
-		public static IList<ILogWriter> LogWriters { get; private set; }
+		public static IEnumerable<ILogWriter> LogWriters { get; private set; }
 
 		public static LogLevel LogLevel { get; set; }
 
@@ -18,6 +19,16 @@ namespace Daramkun.Liqueur.Logging
 		{
 			LogWriters = new List<ILogWriter> ();
 			LogLevel = Logging.LogLevel.Level5;
+		}
+
+		public static void AddDefaultLogWriter ()
+		{
+			AddLogWriter ( new DebugLogWriter () );
+		}
+
+		public static void AddLogWriter ( ILogWriter logWriter )
+		{
+			( LogWriters as List<ILogWriter> ).Add ( logWriter );
 		}
 
 		private static bool HasFlag ( MessageFormat messageFormat )
