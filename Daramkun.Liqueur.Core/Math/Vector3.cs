@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Daramkun.Liqueur.Geometries
+namespace Daramkun.Liqueur.Math
 {
 	public struct Vector3 : IComparer<Vector3>, ICollision<Vector3>
 	{
 		public static readonly Vector3 Zero = new Vector3 ( 0 );
 
 		public float X, Y, Z;
-
-		//public float X { get { return x; } set { x = value; } }
-		//public float Y { get { return y; } set { y = value; } }
-		//public float Z { get { return z; } set { z = value; } }
 		
 		public Vector3 ( float value )
 		{
 			X = Y = Z = value;
 		}
 
-		public Vector3 ( float x, float y, float z )
+		public Vector3 ( Vector2 value, float z )
 		{
-			this.X = x;
-			this.Y = y;
-			this.Z = z;
+			X = value.X;
+			Y = value.Y;
+			Z = z;
 		}
 
-		public float Length { get { return ( float ) Math.Sqrt ( X * X + Y * Y + Z * Z ); } }
+		public Vector3 ( float x, float y, float z )
+		{
+			X = x;
+			Y = y;
+			Z = z;
+		}
+
+		public float Length { get { return ( float ) System.Math.Sqrt ( X * X + Y * Y + Z * Z ); } }
 
 		public static Vector3 operator + ( Vector3 v1, Vector3 v2 )
 		{
@@ -71,11 +74,12 @@ namespace Daramkun.Liqueur.Geometries
 
 		public Vector3 Normalize ()
 		{
-			float length = Length;
-			X /= length;
-			Y /= length;
-			Z /= length;
-			return this;
+			return Normalize ( this );
+		}
+
+		public static Vector3 Normalize ( Vector3 value )
+		{
+			return value / value.Length;
 		}
 
 		public static float Dot ( Vector3 v1, Vector3 v2 )
@@ -92,15 +96,10 @@ namespace Daramkun.Liqueur.Geometries
 				);
 		}
 
-		public static Vector3 Normalize ( Vector3 value )
-		{
-			return value.Normalize ();
-		}
-
 		public static float Distance ( Vector3 v1, Vector3 v2 )
 		{
-			return ( float ) Math.Sqrt ( Math.Pow ( v2.X - v1.X, 2 ) +
-				Math.Pow ( v2.Y - v1.Y, 2 ) + Math.Pow ( v2.Z - v1.Z, 2 ) );
+			return ( float ) System.Math.Sqrt ( System.Math.Pow ( v2.X - v1.X, 2 ) +
+				System.Math.Pow ( v2.Y - v1.Y, 2 ) + System.Math.Pow ( v2.Z - v1.Z, 2 ) );
 		}
 
 		public int Compare ( Vector3 x, Vector3 y )
@@ -123,12 +122,12 @@ namespace Daramkun.Liqueur.Geometries
 
 		public static bool operator == ( Vector3 v1, Vector3 v2 )
 		{
-			return v1.Equals ( v2 );
+			return ( v1.X == v2.X && v1.Y == v2.Y ) && v1.Z == v2.Z;
 		}
 
 		public static bool operator != ( Vector3 v1, Vector3 v2 )
 		{
-			return !v1.Equals ( v2 );
+			return !( v1 == v2 );
 		}
 
 		public override int GetHashCode ()

@@ -6,21 +6,12 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Datas.Json
 {
-	/// <summary>
-	/// Json Item class
-	/// </summary>
 	public sealed class JsonItem
 	{
 		string _name;
 		object _data;
 
-		/// <summary>
-		/// Json Item name
-		/// </summary>
 		public string Name { get { return _name; } set { _name = value; } }
-		/// <summary>
-		/// Json Item data
-		/// </summary>
 		public object Data
 		{
 			get { return _data; }
@@ -51,21 +42,12 @@ namespace Daramkun.Liqueur.Datas.Json
 			}
 		}
 
-		/// <summary>
-		/// Create Json Item
-		/// </summary>
-		/// <param name="name">Json Item name</param>
-		/// <param name="data">Json Item data</param>
 		public JsonItem ( string name, object data )
 		{
 			Name = name;
 			Data = data;
 		}
 
-		/// <summary>
-		/// Generate Json item string
-		/// </summary>
-		/// <returns>Json item string</returns>
 		public override string ToString ()
 		{
 			string temp = ( Data == null ) ? "null" : ( ( Data is string ) ? Data as string : Data.ToString () );

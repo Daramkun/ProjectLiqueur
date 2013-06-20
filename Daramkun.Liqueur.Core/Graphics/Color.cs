@@ -5,6 +5,13 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Graphics
 {
+	public enum ColorArrange
+	{
+		ARGB,
+		RGBA,
+		BGRA,
+	}
+
 	public struct Color
 	{
 		public static ColorArrange DefaultArrange { get; set; }

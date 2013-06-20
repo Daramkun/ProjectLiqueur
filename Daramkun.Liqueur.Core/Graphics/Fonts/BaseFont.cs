@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Daramkun.Liqueur.Geometries;
+using Daramkun.Liqueur.Math;
 
 namespace Daramkun.Liqueur.Graphics.Fonts
 {
@@ -61,8 +61,14 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 					height += image.Height;
 				}
 
-				image.DrawBitmap ( color, new Transform2 ( position + 
-					new Vector2 ( lines [ lines.Count - 1 ].X - image.Width, height - image.Height ) ) );
+				image.DrawBitmap ( color,
+					//new Transform2 ( position + new Vector2 ( lines [ lines.Count - 1 ].X - image.Width, height - image.Height ) )
+					new Transform2 ()
+					{
+						Translate = position + new Vector2 ( lines [ lines.Count - 1 ].X - image.Width, height - image.Height ),
+						Scale = new Vector2 ( 1 ),
+					}
+					);
 			}
 		}
 
@@ -91,7 +97,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 			Vector2 measure = new Vector2 ( 0, 0 );
 			foreach ( Vector2 v in lines )
 			{
-				measure.X = ( float ) Math.Max ( measure.X, v.X );
+				measure.X = ( float ) System.Math.Max ( measure.X, v.X );
 				measure.Y += lines [ lines.Count - 1 ].Y;
 			}
 

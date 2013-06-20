@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Datas.Json;
-using Daramkun.Liqueur.Geometries;
+using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Graphics.Fonts;
 using Daramkun.Liqueur.Nodes;

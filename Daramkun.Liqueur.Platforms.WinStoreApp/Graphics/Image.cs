@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Decoders;
 using Daramkun.Liqueur.Decoders.Images;
-using Daramkun.Liqueur.Geometries;
+using Daramkun.Liqueur.Math;
 
 namespace Daramkun.Liqueur.Graphics
 {

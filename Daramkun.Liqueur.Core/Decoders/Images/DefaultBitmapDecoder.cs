@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Exceptions;
-using Daramkun.Liqueur.Geometries;
+using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Graphics;
 
 namespace Daramkun.Liqueur.Decoders.Images

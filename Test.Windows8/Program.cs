@@ -12,7 +12,7 @@ using Daramkun.Liqueur.Contents.Loaders;
 using Daramkun.Liqueur.Decoders;
 using Daramkun.Liqueur.Decoders.Images;
 using Daramkun.Liqueur.Decoders.Sounds;
-using Daramkun.Liqueur.Geometries;
+using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Graphics.Fonts;
 using Daramkun.Liqueur.Inputs;

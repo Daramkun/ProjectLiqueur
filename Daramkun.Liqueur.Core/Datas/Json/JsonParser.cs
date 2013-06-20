@@ -13,41 +13,14 @@ namespace Daramkun.Liqueur.Datas.Json
 	{
 		private enum TokenType
 		{
-			/// <summary>
-			/// Unknown Token
-			/// </summary>
 			Unknown,
-			/// <summary>
-			/// "~~"
-			/// </summary>
 			String,
-			/// <summary>
-			/// :
-			/// </summary>
 			RecordSplit,
-			/// <summary>
-			/// { ~~~ }
-			/// </summary>
 			Json,
-			/// <summary>
-			/// [~~~]
-			/// </summary>
 			Array,
-			/// <summary>
-			/// true[false]
-			/// </summary>
 			Boolean,
-			/// <summary>
-			/// 1234
-			/// </summary>
 			Integer,
-			/// <summary>
-			/// 123.456
-			/// </summary>
 			FloatingPoint,
-			/// <summary>
-			/// null
-			/// </summary>
 			Null,
 		}
 

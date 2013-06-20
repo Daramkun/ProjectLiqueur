@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Daramkun.Liqueur.Geometries
+namespace Daramkun.Liqueur.Math
 {
 	public struct Vector2 : IComparer<Vector2>, ICollision<Vector2>, ICollision<Circle>, ICollision<Rectangle>
 	{
 		public static readonly Vector2 Zero = new Vector2 ( 0 );
 
 		public float X, Y;
-
-		//public float X { get { return x; } set { x = value; } }
-		//public float Y { get { return y; } set { y = value; } }
 
 		public Vector2 ( float value )
 		{
@@ -25,7 +22,7 @@ namespace Daramkun.Liqueur.Geometries
 			this.Y = y;
 		}
 
-		public float Length { get { return ( float ) Math.Sqrt ( X * X + Y * Y ); } }
+		public float Length { get { return ( float ) System.Math.Sqrt ( X * X + Y * Y ); } }
 
 		public static Vector2 operator + ( Vector2 v1, Vector2 v2 )
 		{
@@ -69,10 +66,12 @@ namespace Daramkun.Liqueur.Geometries
 
 		public Vector2 Normalize ()
 		{
-			float length = Length;
-			X /= length;
-			Y /= length;
-			return this;
+			return Normalize ( this );
+		}
+
+		public static Vector2 Normalize ( Vector2 value )
+		{
+			return value / value.Length;
 		}
 
 		public static float Dot ( Vector2 v1, Vector2 v2 )
@@ -85,14 +84,9 @@ namespace Daramkun.Liqueur.Geometries
 			return new Vector2 ( v1.X * v2.Y, v1.Y * v2.X );
 		}
 
-		public static Vector2 Normalize ( Vector2 value )
-		{
-			return value.Normalize ();
-		}
-
 		public static float Distance ( Vector2 v1, Vector2 v2 )
 		{
-			return ( float ) Math.Sqrt ( Math.Pow ( v2.X - v1.X, 2 ) + Math.Pow ( v2.Y - v1.Y, 2 ) );
+			return ( float ) System.Math.Sqrt ( System.Math.Pow ( v2.X - v1.X, 2 ) + System.Math.Pow ( v2.Y - v1.Y, 2 ) );
 		}
 
 		public int Compare ( Vector2 x, Vector2 y )
@@ -115,12 +109,12 @@ namespace Daramkun.Liqueur.Geometries
 
 		public static bool operator == ( Vector2 v1, Vector2 v2 )
 		{
-			return v1.Equals ( v2 );
+			return v1.X == v2.X && v1.Y == v2.Y;
 		}
 
 		public static bool operator != ( Vector2 v1, Vector2 v2 )
 		{
-			return !v1.Equals ( v2 );
+			return !( v1 == v2 );
 		}
 
 		public override int GetHashCode ()

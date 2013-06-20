@@ -6,7 +6,7 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Daramkun.Liqueur;
 using Daramkun.Liqueur.Common;
-using Daramkun.Liqueur.Geometries;
+using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Inputs;
 using Daramkun.Liqueur.Inputs.States;
 using Daramkun.Liqueur.Platforms;
@@ -49,11 +49,11 @@ namespace Daramkun.Liqueur.Platforms
 			set { window.Icon = value as System.Drawing.Icon; }
 		}
 
-		public Daramkun.Liqueur.Geometries.Vector2 ClientSize
+		public Daramkun.Liqueur.Math.Vector2 ClientSize
 		{
 			get
 			{
-				return new Geometries.Vector2 ( window.ClientSize.Width, window.ClientSize.Height );
+				return new Math.Vector2 ( window.ClientSize.Width, window.ClientSize.Height );
 			}
 		}
 

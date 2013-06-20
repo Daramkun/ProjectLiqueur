@@ -230,7 +230,7 @@ namespace Daramkun.Liqueur.Contents.FileSystems.XUnzipSharp
 			{
 				while ( inputRemain > 0 )
 				{
-					toRead = Math.Min ( Math.Min ( 32768, inputRemain ), outputRemain );
+					toRead = System.Math.Min ( System.Math.Min ( 32768, inputRemain ), outputRemain );
 
 					int temp = br.Read ( bufIn, 0, toRead );
 					output.Write ( bufIn, 0, toRead );
@@ -246,7 +246,7 @@ namespace Daramkun.Liqueur.Contents.FileSystems.XUnzipSharp
 
 				while ( inputRemain > 0 )
 				{
-					toRead = Math.Min ( Math.Min ( 32768, inputRemain ), outputRemain );
+					toRead = System.Math.Min ( System.Math.Min ( 32768, inputRemain ), outputRemain );
 
 					int temp = stream.Read ( bufIn, 0, outputRemain );
 					output.Write ( bufIn, 0, temp );

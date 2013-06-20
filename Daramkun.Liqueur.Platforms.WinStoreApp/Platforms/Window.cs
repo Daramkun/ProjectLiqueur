@@ -6,7 +6,7 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Daramkun.Liqueur;
 using Daramkun.Liqueur.Common;
-using Daramkun.Liqueur.Geometries;
+using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Inputs;
 using Daramkun.Liqueur.Inputs.States;
 using Daramkun.Liqueur.Platforms;

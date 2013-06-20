@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Daramkun.Liqueur.Geometries
+namespace Daramkun.Liqueur.Math
 {
 	public struct Rectangle : ICollision<Rectangle>, ICollision<Circle>, ICollision<Vector2>
 	{

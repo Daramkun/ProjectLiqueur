@@ -58,7 +58,7 @@ namespace Daramkun.Liqueur.Inputs
 				MouseButton |= MouseButton.Right;
 			if ( ( e.Button & OpenTK.Input.MouseButton.Middle ) != 0 )
 				MouseButton |= MouseButton.Middle;
-			Position = new Daramkun.Liqueur.Geometries.Vector2 ( e.X, e.Y );
+			Position = new Daramkun.Liqueur.Math.Vector2 ( e.X, e.Y );
 		}
 
 		private void ButtonUpEvent ( object sender, OpenTK.Input.MouseButtonEventArgs e )
@@ -69,18 +69,18 @@ namespace Daramkun.Liqueur.Inputs
 				MouseButton &= MouseButton.Right;
 			if ( ( e.Button & OpenTK.Input.MouseButton.Middle ) != 0 )
 				MouseButton &= MouseButton.Middle;
-			Position = new Daramkun.Liqueur.Geometries.Vector2 ( e.X, e.Y );
+			Position = new Daramkun.Liqueur.Math.Vector2 ( e.X, e.Y );
 		}
 
 		private void MoveEvent ( object sender, OpenTK.Input.MouseMoveEventArgs e )
 		{
-			Position = new Daramkun.Liqueur.Geometries.Vector2 ( e.X, e.Y );
+			Position = new Daramkun.Liqueur.Math.Vector2 ( e.X, e.Y );
 		}
 
 		private void WheelEvent ( object sender, OpenTK.Input.MouseWheelEventArgs e )
 		{
 			Wheel = e.DeltaPrecise;
-			Position = new Daramkun.Liqueur.Geometries.Vector2 ( e.X, e.Y );
+			Position = new Daramkun.Liqueur.Math.Vector2 ( e.X, e.Y );
 		}
 #endif
 	}

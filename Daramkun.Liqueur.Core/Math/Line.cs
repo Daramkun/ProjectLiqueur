@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Daramkun.Liqueur.Geometries
+namespace Daramkun.Liqueur.Math
 {
 	public struct Line : ICollision<Line>
 	{
@@ -35,11 +35,11 @@ namespace Daramkun.Liqueur.Geometries
 			float x = ( pre * ( obj.Point1.X - obj.Point2.X ) - ( Point1.X - Point2.X ) * post ) / d;
 			float y = ( pre * ( obj.Point1.Y - obj.Point2.Y ) - ( Point1.Y - Point2.Y ) * post ) / d;
 
-			if ( x < Math.Min ( Point1.X, Point2.X ) || x > Math.Max ( Point1.X, Point2.X ) ||
-				x < Math.Min ( obj.Point1.X, obj.Point2.X ) || x > Math.Max ( obj.Point1.X, obj.Point2.X ) )
+			if ( x < System.Math.Min ( Point1.X, Point2.X ) || x > System.Math.Max ( Point1.X, Point2.X ) ||
+				x < System.Math.Min ( obj.Point1.X, obj.Point2.X ) || x > System.Math.Max ( obj.Point1.X, obj.Point2.X ) )
 				return false;
-			if ( y < Math.Min ( Point1.Y, Point2.Y ) || y > Math.Max ( Point1.Y, Point2.Y ) ||
-				y < Math.Min ( obj.Point1.Y, obj.Point2.Y ) || y > Math.Max ( obj.Point1.Y, obj.Point2.Y ) )
+			if ( y < System.Math.Min ( Point1.Y, Point2.Y ) || y > System.Math.Max ( Point1.Y, Point2.Y ) ||
+				y < System.Math.Min ( obj.Point1.Y, obj.Point2.Y ) || y > System.Math.Max ( obj.Point1.Y, obj.Point2.Y ) )
 				return false;
 
 			return true;

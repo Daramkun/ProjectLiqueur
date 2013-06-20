@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Daramkun.Liqueur.Geometries
+namespace Daramkun.Liqueur.Math
 {
 	public struct Circle : ICollision<Circle>, ICollision<Rectangle>, ICollision<Vector2>
 	{
@@ -46,10 +46,10 @@ namespace Daramkun.Liqueur.Geometries
 			float left = obj.Position.X - obj.Size.X / 2, right = obj.Position.X + obj.Size.X / 2,
 				top = obj.Position.Y - obj.Size.Y / 2, bottom = obj.Position.X + obj.Size.Y / 2;
 
-			rcp [ 0 ] = ( float ) Math.Sqrt ( Math.Pow ( x - left, 2 ) + Math.Pow ( y - top, 2 ) );
-			rcp [ 1 ] = ( float ) Math.Sqrt ( Math.Pow ( x - left, 2 ) + Math.Pow ( y - bottom, 2 ) );
-			rcp [ 2 ] = ( float ) Math.Sqrt ( Math.Pow ( x - right, 2 ) + Math.Pow ( y - top, 2 ) );
-			rcp [ 3 ] = ( float ) Math.Sqrt ( Math.Pow ( x - right, 2 ) + Math.Pow ( y - bottom, 2 ) );
+			rcp [ 0 ] = ( float ) System.Math.Sqrt ( System.Math.Pow ( x - left, 2 ) + System.Math.Pow ( y - top, 2 ) );
+			rcp [ 1 ] = ( float ) System.Math.Sqrt ( System.Math.Pow ( x - left, 2 ) + System.Math.Pow ( y - bottom, 2 ) );
+			rcp [ 2 ] = ( float ) System.Math.Sqrt ( System.Math.Pow ( x - right, 2 ) + System.Math.Pow ( y - top, 2 ) );
+			rcp [ 3 ] = ( float ) System.Math.Sqrt ( System.Math.Pow ( x - right, 2 ) + System.Math.Pow ( y - bottom, 2 ) );
 
 			if ( rcp [ 0 ] < rcp [ 1 ] ) temp [ 0 ] = rcp [ 0 ];
 			else temp [ 0 ] = rcp [ 1 ];

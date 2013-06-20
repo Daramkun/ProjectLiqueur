@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Daramkun.Liqueur.Geometries;
+using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Inputs.RawDevices;
 using Daramkun.Liqueur.Platforms;
 using SharpDX.XInput;

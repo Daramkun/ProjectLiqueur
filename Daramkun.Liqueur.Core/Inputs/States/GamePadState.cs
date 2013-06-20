@@ -1,4 +1,4 @@
-﻿using Daramkun.Liqueur.Geometries;
+﻿using Daramkun.Liqueur.Math;
 using System;
 using System.Collections.Generic;
 using System.Linq;
