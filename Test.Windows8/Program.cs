@@ -44,7 +44,7 @@ namespace Test.Windows8
 				fpsCalc = new FpsCalculator ();
 				AddChild ( fpsCalc );
 
-				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<Image> ( "Test.Windows8.Assets.goodbye.png", Color.Magenta ) )
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "Test.Windows8.Assets.goodbye.png", Color.Magenta ) )
 				{
 					Position = new Vector2 ( 20, 20 ),
 					SourceRectangle = new Rectangle ( new Vector2 ( 20, 20 ), new Vector2 ( 200, 200 ) )

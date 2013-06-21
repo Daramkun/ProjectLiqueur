@@ -15,5 +15,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		T GetArgument<T> ( string parameter );
 		void SetArgument<T> ( string parameter, T argument );
+
+		object this [ string parameter ] { get; set; }
 	}
 }

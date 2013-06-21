@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Daramkun.Liqueur.Graphics
 {
-	public class Image : IImage
+	class Image : IImage
 	{
 		internal int texture;
 		Vector2 textureSize;
@@ -130,13 +130,6 @@ namespace Daramkun.Liqueur.Graphics
 				} );
 
 			GL.PushMatrix ();
-			/*
-			GL.Translate ( transform.Translate.X + transform.RotationCenter.X, transform.Translate.Y + transform.RotationCenter.Y, 0 );
-			GL.Rotate ( transform.Rotation, 0, 0, 1 );
-			GL.Translate ( -transform.RotationCenter.X + transform.ScaleCenter.X, -transform.RotationCenter.Y + transform.ScaleCenter.Y, 0 );
-			GL.Scale ( transform.Scale.X, transform.Scale.Y, 1 );
-			GL.Translate ( -transform.ScaleCenter.X, -transform.ScaleCenter.Y, 0 );
-			*/
 			GL.LoadMatrix ( transform.Matrix.ToArray () );
 			GL.Color4 ( overlay.RedScalar, overlay.GreenScalar, overlay.BlueScalar, overlay.AlphaScalar );
 			try

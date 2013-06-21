@@ -127,6 +127,7 @@
     <Compile Include="Exceptions\NullOfFileSystemException.cs" />
     <Compile Include="Exceptions\VersionMismatchException.cs" />
     <Compile Include="Graphics\Primitive.cs" />
+    <Compile Include="Math\Projection.cs" />
     <Compile Include="Graphics\Vertices\FlexibleVertex.cs" />
     <Compile Include="Math\ITransform.cs" />
     <Compile Include="Math\Matrix4x4.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Logging\LogWriters\DebugLogWriter.cs" />
     <Compile Include="Logging\LogWriters\StreamLogWriter.cs" />
     <Compile Include="Logging\MessageFormat.cs" />
+    <Compile Include="Math\View.cs" />
     <Compile Include="Medias\ISoundPlayer.cs" />
     <Compile Include="Nodes\FpsCalculator.cs" />
     <Compile Include="Nodes\Node.cs" />

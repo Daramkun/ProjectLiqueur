@@ -10,7 +10,7 @@ using Daramkun.Liqueur.Math;
 
 namespace Daramkun.Liqueur.Graphics
 {
-	public class Image : IImage
+	class Image : IImage
 	{
 		SharpDX.Direct2D1.Bitmap texture;
 

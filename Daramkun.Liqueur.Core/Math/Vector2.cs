@@ -84,6 +84,14 @@ namespace Daramkun.Liqueur.Math
 			return new Vector2 ( v1.X * v2.Y, v1.Y * v2.X );
 		}
 
+		public static Vector2 Transform ( Vector2 position, Matrix4x4 matrix )
+		{
+			return new Vector2 (
+				( position.X * matrix.M11 ) + ( position.Y * matrix.M21 ) + matrix.M41,
+				( position.X * matrix.M12 ) + ( position.Y * matrix.M22 ) + matrix.M42
+			);
+		}
+
 		public static float Distance ( Vector2 v1, Vector2 v2 )
 		{
 			return ( float ) System.Math.Sqrt ( System.Math.Pow ( v2.X - v1.X, 2 ) + System.Math.Pow ( v2.Y - v1.Y, 2 ) );

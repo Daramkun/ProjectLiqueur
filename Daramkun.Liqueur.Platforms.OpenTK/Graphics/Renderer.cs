@@ -6,13 +6,14 @@ using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Platforms;
 #if OPENTK
 using OpenTK.Graphics.OpenGL;
+using Daramkun.Liqueur.Graphics.Vertices;
 #elif XNA
 using Microsoft.Xna.Framework.Graphics;
 #endif
 
 namespace Daramkun.Liqueur.Graphics
 {
-	class Renderer : IRenderer, IDisposable
+	class Renderer : IRenderer
 	{
 		Window window;
 		Vector2 screenSize;
@@ -54,6 +55,18 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
+		CullingMode cullMode = CullingMode.CounterClockWise;
+		public CullingMode CullingMode
+		{
+			get { return cullMode; }
+			set
+			{
+				cullMode = value;
+				GL.CullFace ( ( value == CullingMode.None ) ? CullFaceMode.FrontAndBack :
+					( value == CullingMode.ClockWise ) ? CullFaceMode.Back : CullFaceMode.Front );
+			}
+		}
+
 		public Renderer ( Window window )
 		{
 			this.window = window;
@@ -61,10 +74,8 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				GL.MatrixMode ( MatrixMode.Projection );
 				GL.LoadIdentity ();
-				GL.Ortho ( 0, 800, 600, 0, -0.0001f, 1000.0f );
+				GL.Ortho ( 0, 800, 600, 0, 0.001f, 1000.0f );
 			};
-
-			
 		}
 
 		public void Dispose ()
@@ -104,6 +115,66 @@ namespace Daramkun.Liqueur.Graphics
 		public void Present ()
 		{
 			window.window.SwapBuffers ();
+		}
+
+		private BeginMode ConvertPrimitiveMode ( PrimitiveType type )
+		{
+			switch ( type )
+			{
+				case PrimitiveType.PointList: return BeginMode.Points;
+				case PrimitiveType.LineList: return BeginMode.Lines;
+				case PrimitiveType.LineStrip: return BeginMode.LineStrip;
+				case PrimitiveType.TriangleList: return BeginMode.Triangles;
+				case PrimitiveType.TriangleStrip: return BeginMode.TriangleStrip;
+				case PrimitiveType.TriangleFan: return BeginMode.TriangleFan;
+				default: throw new Exception ();
+			}
+		}
+
+		public void DrawPrimitive<T> ( Primitive<T> primitive )
+		{
+			GL.Begin ( ConvertPrimitiveMode ( primitive.PrimitiveType ) );
+			foreach ( T point in primitive.Vertices )
+			{
+				if ( point is IFlexibleVertexPositionXY )
+				{
+					Vector2 position = ( point as IFlexibleVertexPositionXY ).Position;
+					GL.Vertex2 ( position.X, position.Y );
+				}
+				else if ( point is IFlexibleVertexPositionXYZ )
+				{
+					Vector3 position = ( point as IFlexibleVertexPositionXYZ ).Position;
+					GL.Vertex3 ( position.X, position.Y, position.Z );
+				}
+
+				if ( point is IFlexibleVertexNormal )
+				{
+					Vector3 normal = ( point as IFlexibleVertexNormal ).Normal;
+					GL.Normal3 ( normal.X, normal.Y, normal.Z );
+				}
+
+				if ( point is IFlexibleVertexDiffuse )
+				{
+					Color diffuse = ( point as IFlexibleVertexDiffuse ).Diffuse;
+					GL.Color4 ( diffuse.RedValue, diffuse.GreenValue, diffuse.BlueValue, diffuse.AlphaValue );
+				}
+
+				if ( point is IFlexibleVertexTexture1 )
+				{
+					Vector2 uv = ( point as IFlexibleVertexTexture1 ).TextureUV1;
+					GL.TexCoord2 ( uv.X, uv.Y );
+				}
+			}
+			if ( primitive.IsIndexPrimitive )
+				foreach ( int index in primitive.Indices )
+					GL.Index ( index );
+			GL.End ();
+
+		}
+
+		public IImage CreateImage ( ImageData imageData, Color colorKey )
+		{
+			return new Image ( imageData, colorKey );
 		}
 	}
 }

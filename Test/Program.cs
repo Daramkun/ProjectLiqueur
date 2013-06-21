@@ -48,16 +48,16 @@ namespace Test
 				fpsCalc = new FpsCalculator ();
 				AddChild ( fpsCalc );
 
-				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<Image> ( "a02.bmp", Color.Magenta ) )
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "a02.bmp", Color.Magenta ) )
 				{
 					Position = new Vector2 ( 20, 20 ),
 					SourceRectangle = new Rectangle ( new Vector2 ( 20, 20 ), new Vector2 ( 100, 100 ) )
 				} );
-				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<Image> ( "a02.bmp", Color.Magenta ) )
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "a02.bmp", Color.Magenta ) )
 				{
 					Position = new Vector2 ( 140, 20 ),
 				} );
-				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<Image> ( "square.png" ) )
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "square.png" ) )
 				{
 					Position = new Vector2 ( 340, 100 ),
 				} );

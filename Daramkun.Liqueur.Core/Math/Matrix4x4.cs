@@ -157,6 +157,23 @@ namespace Daramkun.Liqueur.Math
 			return Invert ( matrix );
 		}
 
+		public static Matrix4x4 Transpose ( Matrix4x4 matrix )
+		{
+			Matrix4x4 ret;
+
+			ret.M11 = matrix.M11; ret.M12 = matrix.M21; ret.M13 = matrix.M31; ret.M14 = matrix.M41;
+			ret.M21 = matrix.M12; ret.M22 = matrix.M22; ret.M23 = matrix.M32; ret.M24 = matrix.M42;
+			ret.M31 = matrix.M13; ret.M32 = matrix.M23; ret.M33 = matrix.M33; ret.M34 = matrix.M43;
+			ret.M41 = matrix.M14; ret.M42 = matrix.M24; ret.M43 = matrix.M34; ret.M44 = matrix.M44;
+
+			return ret;
+		}
+
+		public Matrix4x4 Transpose ()
+		{
+			return Transpose ( this );
+		}
+
 		public static Matrix4x4 Invert ( Matrix4x4 matrix )
 		{
 			float det1 = matrix.M11 * matrix.M22 - matrix.M12 * matrix.M21;

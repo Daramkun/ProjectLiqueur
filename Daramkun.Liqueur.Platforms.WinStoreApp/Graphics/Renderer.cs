@@ -138,5 +138,11 @@ namespace Daramkun.Liqueur.Graphics
 			d2dDeviceContext.EndDraw ();
 			dxgiSwapChain.Present ( 0, SharpDX.DXGI.PresentFlags.None );
 		}
+
+
+		public IImage CreateImage ( ImageData imageData, Color colorKey )
+		{
+			return new Image ( imageData, colorKey );
+		}
 	}
 }
