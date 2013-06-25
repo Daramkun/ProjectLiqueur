@@ -139,6 +139,8 @@ namespace Daramkun.Liqueur.Graphics
 			catch ( AccessViolationException ex ) { Debug.WriteLine ( ex ); }
 			GL.PopMatrix ();
 
+			GL.BindTexture ( TextureTarget.Texture2D, 0 );
+
 			( LiqueurSystem.Renderer as Renderer ).End2D ();
 		}
 	}

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Daramkun.Liqueur;
+using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Datas.Json;
 using Daramkun.Liqueur.Decoders;
@@ -27,26 +28,13 @@ namespace Daramkun.Walnut
 		public static WalnutPackage MainWalnutPackage { get; private set; }
 		public static WalnutPackage SubWalnutPackage { get; private set; }
 
-		private static bool IsSubtypeOf ( Type majorType, Type minorType )
-		{
-			if ( majorType == minorType || majorType.IsSubclassOf ( minorType ) )
-				return true;
-			else if ( minorType.IsInterface )
-			{
-				foreach ( Type type in majorType.GetInterfaces () )
-					if ( type == minorType )
-						return true;
-			}
-			return false;
-		}
-
 		public static void SetupDecoders ( params Type [] decoders )
 		{
 			foreach ( Type decoder in decoders )
 			{
-				if ( IsSubtypeOf ( decoder, typeof ( IImageDecoder ) ) )
+				if ( Utilities.IsSubtypeOf ( decoder, typeof ( IImageDecoder ) ) )
 					ImageDecoders.AddDecoder ( decoder );
-				else if ( IsSubtypeOf ( decoder, typeof ( ISoundDecoder ) ) )
+				else if ( Utilities.IsSubtypeOf ( decoder, typeof ( ISoundDecoder ) ) )
 					SoundDecoders.AddDecoder ( decoder );
 			}
 

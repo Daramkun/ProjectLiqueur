@@ -5,7 +5,7 @@
 Project Liqueur using the MIT-license.
 
 License Details:
-http://daramkun.mit-license.org/
+http://license.daram.pe.kr/MIT-License
 
 Some of source code referenced MonoXNA, MonoGame.
 
@@ -15,7 +15,7 @@ Some of source code referenced MonoXNA, MonoGame.
 Project Walnut using the MIT-license.
 
 License Details:
-http://daramkun.mit-license.org/
+http://license.daram.pe.kr/MIT-License
 
 -------------------------------------------------------------------
 3. SoundParty (in Project Liqueur)
@@ -23,7 +23,7 @@ http://daramkun.mit-license.org/
 Project SoundParty using the MIT-license.
 
 License Details:
-http://daramkun.mit-license.org/
+http://license.daram.pe.kr/MIT-License
 
 -------------------------------------------------------------------
 4. JsonLite (in Project Liqueur)
@@ -31,7 +31,7 @@ http://daramkun.mit-license.org/
 Project JsonLite using the MIT-license.
 
 License Details:
-http://daramkun.mit-license.org/
+http://license.daram.pe.kr/MIT-License
 
 ==================== Third party OSS Libraries ====================
 

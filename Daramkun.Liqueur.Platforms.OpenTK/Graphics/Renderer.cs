@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Platforms;
-#if OPENTK
-using OpenTK.Graphics.OpenGL;
 using Daramkun.Liqueur.Graphics.Vertices;
-#elif XNA
-using Microsoft.Xna.Framework.Graphics;
-#endif
+using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
+using Daramkun.Liqueur.Common;
 
 namespace Daramkun.Liqueur.Graphics
 {
@@ -55,27 +53,49 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
-		CullingMode cullMode = CullingMode.CounterClockWise;
+		CullingMode cullMode = CullingMode.None;
 		public CullingMode CullingMode
 		{
 			get { return cullMode; }
 			set
 			{
 				cullMode = value;
-				GL.CullFace ( ( value == CullingMode.None ) ? CullFaceMode.FrontAndBack :
-					( value == CullingMode.ClockWise ) ? CullFaceMode.Back : CullFaceMode.Front );
+				if ( value == Graphics.CullingMode.None ) GL.Disable ( EnableCap.CullFace );
+				else GL.Enable ( EnableCap.CullFace );
+				GL.FrontFace ( ( value == CullingMode.ClockWise ) ? FrontFaceDirection.Cw : FrontFaceDirection.Ccw );
+			}
+		}
+
+		FillMode fillMode = FillMode.Solid;
+		public FillMode FillMode
+		{
+			get { return fillMode; }
+			set
+			{
+				fillMode = value;
+				GL.PolygonMode ( MaterialFace.FrontAndBack,
+					( value == FillMode.Point ) ? PolygonMode.Point :
+					( value == FillMode.Wireframe ) ? PolygonMode.Line : PolygonMode.Fill );
+			}
+		}
+
+		Viewport viewPort = new Viewport () { X = 0, Y = 0, Width = 800, Height = 600 };
+		public Viewport Viewport
+		{
+			get { return viewPort; }
+			set
+			{
+				viewPort = value;
+				GL.Viewport ( value.X, value.Y, value.Width, value.Height );
 			}
 		}
 
 		public Renderer ( Window window )
 		{
 			this.window = window;
-			window.window.Resize += ( object sender, EventArgs e ) =>
-			{
-				GL.MatrixMode ( MatrixMode.Projection );
-				GL.LoadIdentity ();
-				GL.Ortho ( 0, 800, 600, 0, 0.001f, 1000.0f );
-			};
+			GL.MatrixMode ( MatrixMode.Projection );
+			GL.LoadIdentity ();
+			GL.Ortho ( 0, 800, 600, 0, 0.000f, 1000.0f );
 		}
 
 		public void Dispose ()
@@ -109,7 +129,7 @@ namespace Daramkun.Liqueur.Graphics
 		public void Clear ( Color color )
 		{
 			GL.ClearColor ( color.RedScalar, color.GreenScalar, color.BlueScalar, color.AlphaScalar );
-			GL.Clear ( ClearBufferMask.ColorBufferBit );
+			GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit );
 		}
 
 		public void Present ()
@@ -131,50 +151,63 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
-		public void DrawPrimitive<T> ( Primitive<T> primitive )
+		public void DrawPrimitive<T> ( IPrimitive<T> primitive ) where T : IFlexibleVertex
 		{
-			GL.Begin ( ConvertPrimitiveMode ( primitive.PrimitiveType ) );
-			foreach ( T point in primitive.Vertices )
+			if ( ( primitive as Primitive<T> ).vertexArray != null )
 			{
-				if ( point is IFlexibleVertexPositionXY )
-				{
-					Vector2 position = ( point as IFlexibleVertexPositionXY ).Position;
-					GL.Vertex2 ( position.X, position.Y );
-				}
-				else if ( point is IFlexibleVertexPositionXYZ )
-				{
-					Vector3 position = ( point as IFlexibleVertexPositionXYZ ).Position;
-					GL.Vertex3 ( position.X, position.Y, position.Z );
-				}
-
-				if ( point is IFlexibleVertexNormal )
-				{
-					Vector3 normal = ( point as IFlexibleVertexNormal ).Normal;
-					GL.Normal3 ( normal.X, normal.Y, normal.Z );
-				}
-
-				if ( point is IFlexibleVertexDiffuse )
-				{
-					Color diffuse = ( point as IFlexibleVertexDiffuse ).Diffuse;
-					GL.Color4 ( diffuse.RedValue, diffuse.GreenValue, diffuse.BlueValue, diffuse.AlphaValue );
-				}
-
-				if ( point is IFlexibleVertexTexture1 )
-				{
-					Vector2 uv = ( point as IFlexibleVertexTexture1 ).TextureUV1;
-					GL.TexCoord2 ( uv.X, uv.Y );
-				}
+				GL.EnableClientState ( ArrayCap.VertexArray );
+				GL.VertexPointer ( Utilities.IsSubtypeOf ( typeof ( T ), typeof ( IFlexibleVertexPositionXY ) ) ? 2 : 3,
+					VertexPointerType.Float, 0, ( primitive as Primitive<T> ).vertexArray );
 			}
-			if ( primitive.IsIndexPrimitive )
-				foreach ( int index in primitive.Indices )
-					GL.Index ( index );
-			GL.End ();
+			if ( ( primitive as Primitive<T> ).textureArray != null )
+			{
+				GL.Enable ( EnableCap.Texture2D );
+				GL.BindTexture ( TextureTarget.Texture2D, ( primitive.Texture as Image ).texture );
 
+				GL.EnableClientState ( ArrayCap.TextureCoordArray );
+				GL.TexCoordPointer ( 2, TexCoordPointerType.Float, 0, ( primitive as Primitive<T> ).textureArray );
+			}
+			if ( ( primitive as Primitive<T> ).normalArray != null )
+			{
+				GL.EnableClientState ( ArrayCap.NormalArray );
+				GL.NormalPointer ( NormalPointerType.Float, 0, ( primitive as Primitive<T> ).normalArray );
+			}
+			if ( ( primitive as Primitive<T> ).colorArray != null )
+			{
+				GL.EnableClientState ( ArrayCap.ColorArray );
+				GL.ColorPointer ( 4, ColorPointerType.Float, 0, ( primitive as Primitive<T> ).colorArray );
+			}
+			if ( primitive.Indices != null )
+			{
+				GL.EnableClientState ( ArrayCap.IndexArray );
+				GL.IndexPointer ( IndexPointerType.Int, 0, primitive.Indices );
+			}
+
+			GL.DrawArrays ( ConvertPrimitiveMode ( primitive.PrimitiveType ), 0, primitive.Vertices.Length );
+			{
+				GL.DisableClientState ( ArrayCap.IndexArray );
+				GL.DisableClientState ( ArrayCap.ColorArray );
+				GL.DisableClientState ( ArrayCap.NormalArray );
+				GL.DisableClientState ( ArrayCap.TextureCoordArray );
+				GL.DisableClientState ( ArrayCap.VertexArray );
+				GL.BindTexture ( TextureTarget.Texture2D, 0 );
+				GL.Disable ( EnableCap.Texture2D );
+			}
 		}
 
 		public IImage CreateImage ( ImageData imageData, Color colorKey )
 		{
 			return new Image ( imageData, colorKey );
+		}
+
+		public IPrimitive<T> CreatePrimitive<T> ( int vertexCount, int indexCount ) where T : IFlexibleVertex
+		{
+			return new Primitive<T> ( vertexCount, indexCount );
+		}
+
+		public IPrimitive<T> CreatePrimitive<T> ( T [] vertexArray, int [] indexArray ) where T : IFlexibleVertex
+		{
+			return new Primitive<T> ( vertexArray, indexArray );
 		}
 	}
 }

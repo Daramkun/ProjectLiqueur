@@ -64,6 +64,7 @@ namespace Daramkun.Liqueur.Platforms
 				"Project Liqueur", OpenTK.GameWindowFlags.Default,
 				OpenTK.DisplayDevice.Default );
 			window.ClientSize = new System.Drawing.Size ( 800, 600 );
+			window.WindowBorder = WindowBorder.Fixed;
 		}
 
 		public void Dispose ()

@@ -17,7 +17,5 @@ namespace Daramkun.Liqueur.Math
 		T1 ScaleCenter { get; set; }
 		T2 Rotation { get; set; }
 		T1 RotationCenter { get; set; }
-
-		Matrix4x4 Matrix { get; }
 	}
 }

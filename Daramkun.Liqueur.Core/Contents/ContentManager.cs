@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Contents.Loaders;
 using Daramkun.Liqueur.Exceptions;
 
@@ -53,7 +54,7 @@ namespace Daramkun.Liqueur.Contents
 			{
 				foreach ( Type type in assembly.GetTypes () )
 				{
-					if ( IsSubtypeOf ( type, typeof ( IContentLoader ) ) && type != typeof ( IContentLoader )
+					if ( Utilities.IsSubtypeOf ( type, typeof ( IContentLoader ) ) && type != typeof ( IContentLoader )
 						&& !type.IsAbstract && !type.IsInterface && type.IsPublic )
 						AddContentLoader ( Activator.CreateInstance ( type ) as IContentLoader );
 				}
@@ -71,19 +72,6 @@ namespace Daramkun.Liqueur.Contents
 			if ( loadedContent [ filename ] is IDisposable )
 				( loadedContent [ filename ] as IDisposable ).Dispose ();
 			loadedContent.Remove ( filename );
-		}
-
-		private bool IsSubtypeOf ( Type majorType, Type minorType )
-		{
-			if ( majorType == minorType || majorType.IsSubclassOf ( minorType ) )
-				return true;
-			else if ( minorType.IsInterface )
-			{
-				foreach ( Type type in majorType.GetInterfaces () )
-					if ( type == minorType )
-						return true;
-			}
-			return false;
 		}
 
 		private string PathCombine ( string path, string filename )
@@ -123,7 +111,7 @@ namespace Daramkun.Liqueur.Contents
 
 			foreach ( IContentLoader contentLoader in contentLoaders )
 			{
-				if ( IsSubtypeOf ( typeof ( T ), contentLoader.ContentType ) )
+				if ( Utilities.IsSubtypeOf ( typeof ( T ), contentLoader.ContentType ) )
 				{
 					Stream stream = FileSystem.OpenFile ( filename );
 					object data = contentLoader.Load ( stream, args );

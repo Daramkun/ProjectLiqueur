@@ -24,16 +24,23 @@ using Daramkun.Liqueur.Scenes;
 using Daramkun.Walnut;
 using Daramkun.Walnut.Nodes;
 using Daramkun.Walnut.Scripts;
+using Daramkun.Liqueur.Graphics.Vertices;
 
 namespace Test
 {
+	struct MyVertex : IFlexibleVertexPositionXY, IFlexibleVertexDiffuse
+	{
+		public Vector2 Position { get; set; }
+		public Color Diffuse { get; set; }
+	}
+
 	static class Program
 	{
 		class MyScene : Scene
 		{
-			BaseFont font;
-
 			FpsCalculator fpsCalc;
+
+			IPrimitive<MyVertex> primitive;
 
 			public MyScene ()
 			{
@@ -43,11 +50,16 @@ namespace Test
 			{
 				LiqueurSystem.Window.Title = "Test Window";
 
-				font = WalnutSystem.MainContents.Load<LsfFont> ( "test.lsf" );
-
 				fpsCalc = new FpsCalculator ();
 				AddChild ( fpsCalc );
-
+				
+				primitive = LiqueurSystem.Renderer.CreatePrimitive<MyVertex> ( 3, 0 );
+				primitive.Vertices [ 0 ] = new MyVertex () { Position = new Vector2 ( 200, 100 ), Diffuse = Color.Red };
+				primitive.Vertices [ 1 ] = new MyVertex () { Position = new Vector2 ( 100, 300 ), Diffuse = Color.Green };
+				primitive.Vertices [ 2 ] = new MyVertex () { Position = new Vector2 ( 300, 300 ), Diffuse = Color.Blue };
+				primitive.PrimitiveType = PrimitiveType.TriangleList;
+				primitive.PrimitiveCount = 1;
+				
 				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "a02.bmp", Color.Magenta ) )
 				{
 					Position = new Vector2 ( 20, 20 ),
@@ -56,6 +68,7 @@ namespace Test
 				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "a02.bmp", Color.Magenta ) )
 				{
 					Position = new Vector2 ( 140, 20 ),
+					OverlayColor = new Color ( 127, 0, 0, 255 ),
 				} );
 				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "square.png" ) )
 				{
@@ -95,7 +108,7 @@ namespace Test
 			public override void OnDraw ( GameTime gameTime )
 			{
 				LiqueurSystem.Renderer.Clear ( Color.Black );
-
+				LiqueurSystem.Renderer.DrawPrimitive<MyVertex> ( primitive );
 				base.OnDraw ( gameTime );
 			}
 		}
