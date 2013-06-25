@@ -32,14 +32,10 @@ namespace Daramkun.Liqueur.Platforms
 				return new PlatformInformation ()
 				{
 					Platform = ( os.Platform == PlatformID.Win32NT ) ? Platform.WindowsNT :
-								( os.Platform == PlatformID.Xbox ) ? Platform.Xbox360 :
 								( os.Platform == PlatformID.Unix ) ? Platform.Unix :
 								( os.Platform == PlatformID.MacOSX ) ? Platform.OSX :
 								Platform.Unknown,
 					PlatformVersion = os.Version,
-
-					Is64BitPlatform = Environment.Is64BitOperatingSystem ? BooleanState.True : BooleanState.False,
-					Is64BitProcess = Environment.Is64BitProcess ? BooleanState.True : BooleanState.False,
 
 					UserName = Environment.UserName,
 					MachineUniqueIdentifier = NetworkInterface.GetAllNetworkInterfaces () [ 0 ].GetPhysicalAddress ().ToString (),

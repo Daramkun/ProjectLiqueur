@@ -11,9 +11,6 @@ namespace Daramkun.Liqueur.Platforms
 		public Platform Platform { get; set; }
 		public Version PlatformVersion { get; set; }
 
-		public BooleanState Is64BitPlatform { get; set; }
-		public BooleanState Is64BitProcess { get; set; }
-
 		public string UserName { get; set; }
 		public string MachineUniqueIdentifier { get; set; }
 	}
