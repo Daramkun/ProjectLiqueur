@@ -27,7 +27,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 			GC.SuppressFinalize ( true );
 		}
 
-		protected abstract IImage this [ char ch ] { get; }
+		protected abstract ITexture2D this [ char ch ] { get; }
 
 		public void DrawFont ( string text, Color color, Vector2 position )
 		{
@@ -36,6 +36,8 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 
 		public void DrawFont ( string text, Color color, Vector2 position, Vector2 area )
 		{
+			if ( text == null ) return;
+
 			List<Vector2> lines = new List<Vector2> ();
 			int i = 0;
 			float height = 0;
@@ -47,7 +49,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 					lines.Add ( new Vector2 () );
 					continue;
 				}
-				IImage image = this [ ch ];
+				ITexture2D image = this [ ch ];
 				if ( image == null ) image = this [ '?' ];
 
 				if ( lines.Count == 0 || lines [ lines.Count - 1 ].X + image.Width > area.X )
@@ -74,6 +76,8 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 
 		public Vector2 MeasureString ( string text )
 		{
+			if ( text == null ) return new Vector2 ();
+
 			List<Vector2> lines = new List<Vector2> ();
 			
 			foreach ( char ch in text )
@@ -83,7 +87,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 					lines.Add ( new Vector2 () );
 					continue;
 				}
-				IImage image = this [ ch ];
+				ITexture2D image = this [ ch ];
 				if ( image == null ) image = this [ '?' ];
 				
 				if ( lines.Count == 0 )
@@ -106,6 +110,8 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 
 		public int MeasureString ( string text, Vector2 area )
 		{
+			if ( text == null ) return 0;
+
 			List<Vector2> lines = new List<Vector2> ();
 			int i = 0;
 			float height = 0;
@@ -117,7 +123,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 					lines.Add ( new Vector2 () );
 					continue;
 				}
-				IImage image = this [ ch ];
+				ITexture2D image = this [ ch ];
 				if ( image == null ) image = this [ '?' ];
 
 				if ( lines.Count == 0 || lines [ lines.Count - 1 ].X + image.Width > area.X )

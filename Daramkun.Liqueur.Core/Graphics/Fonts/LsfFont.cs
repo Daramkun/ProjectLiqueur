@@ -12,9 +12,9 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 {
 	public class LsfFont : BaseFont
 	{
-		Dictionary<char, IImage> readedImage = new Dictionary<char, IImage> ();
+		Dictionary<char, ITexture2D> readedImage = new Dictionary<char, ITexture2D> ();
 		List<char> noneList = new List<char> ();
-		ImageContentLoader imageContentLoader;
+		Texture2DContentLoader imageContentLoader;
 
 		ZipFileSystem fileSystem;
 
@@ -35,14 +35,14 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 			FontFamily = entry [ "fontfamily" ].Data as string;
 			FontSize = ( int ) entry [ "fontsize" ].Data;
 
-			imageContentLoader = new ImageContentLoader ();
+			imageContentLoader = new Texture2DContentLoader ();
 		}
 
 		protected override void Dispose(bool isDisposing)
 		{
 			if ( isDisposing )
 			{
-				foreach ( KeyValuePair<char, IImage> image in readedImage )
+				foreach ( KeyValuePair<char, ITexture2D> image in readedImage )
 					image.Value.Dispose ();
 				readedImage.Clear ();
 				fileSystem.Dispose ();
@@ -67,7 +67,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 			return null;
 		}
 
-		protected override IImage this [ char ch ]
+		protected override ITexture2D this [ char ch ]
 		{
 			get
 			{
@@ -86,7 +86,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 					}
 
 					ImageData imageData = ImageDecoders.GetImageData ( fileSystem.OpenFile ( filename ) ).Value;
-					IImage fontImage = imageContentLoader.Instantiate ( imageData.Width, imageData.Height,
+					ITexture2D fontImage = imageContentLoader.Instantiate ( imageData.Width, imageData.Height,
 						imageData.ImageDecoder.GetPixels ( imageData, Color.Magenta ) );
 					readedImage.Add ( ch, fontImage );
 					return fontImage;

@@ -13,6 +13,7 @@ namespace Daramkun.Liqueur.Graphics
 	class Effect : IEffect
 	{
 		int programId, vertexShader, fragmentShader;
+		ITexture2D texture;
 
 		public Effect ( Stream stream )
 		{
@@ -46,13 +47,15 @@ namespace Daramkun.Liqueur.Graphics
 		public void Dispose ()
 		{
 			GL.DetachShader ( programId, 0 );
+			GL.DeleteShader ( fragmentShader );
+			GL.DeleteShader ( vertexShader );
 			GL.DeleteProgram ( programId );
 		}
 
 		public void Dispatch ( Action<IEffect, int> dispatchEvent )
 		{
 			GL.UseProgram ( programId );
-			dispatchEvent ( this, 0 );
+			dispatchEvent ( this, 1 );
 			GL.UseProgram ( 0 );
 		}
 
@@ -62,6 +65,11 @@ namespace Daramkun.Liqueur.Graphics
 		}
 
 		public void EndPass ()
+		{
+
+		}
+
+		public void Commit ()
 		{
 
 		}
@@ -134,6 +142,21 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				Matrix4x4 v = ( Matrix4x4 ) ( object ) argument;
 				GL.UniformMatrix4 ( uniform, 0, false, v.ToArray () );
+			}
+		}
+
+		public ITexture2D Texture
+		{
+			get
+			{
+				return texture;
+			}
+			set
+			{
+				texture = value;
+				if ( texture != null ) GL.Enable ( EnableCap.Texture2D );
+				else GL.Disable ( EnableCap.Texture2D );
+				GL.BindTexture ( TextureTarget.Texture2D, ( texture as Texture2D ).texture );
 			}
 		}
 	}

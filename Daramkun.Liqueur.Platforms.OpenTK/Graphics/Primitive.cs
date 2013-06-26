@@ -18,6 +18,7 @@ namespace Daramkun.Liqueur.Graphics
 		internal float [] normalArray;
 		internal float [] colorArray;
 		internal float [] textureArray;
+		internal float [] subTextureArray;
 
 		public FlexibleVertexArray<T> Vertices
 		{
@@ -31,7 +32,8 @@ namespace Daramkun.Liqueur.Graphics
 
 		public PrimitiveType PrimitiveType { get; set; }
 		public int PrimitiveCount { get; set; }
-		public IImage Texture { get; set; }
+		public ITexture2D Texture { get; set; }
+		public ITexture2D SubTexture { get; set; }
 
 		public Primitive ( int vertexCount, int indexCount )
 		{
@@ -86,6 +88,9 @@ namespace Daramkun.Liqueur.Graphics
 			if ( Utilities.IsSubtypeOf ( typeof ( T ), typeof ( IFlexibleVertexTexture1 ) ) )
 				textureArray = new float [ vertexBuffer.Length * 2 ];
 
+			if ( Utilities.IsSubtypeOf ( typeof ( T ), typeof ( IFlexibleVertexTexture2 ) ) )
+				subTextureArray = new float [ vertexBuffer.Length * 2 ];
+
 			int index = 0;
 			foreach ( T vertex in Vertices )
 			{
@@ -123,6 +128,13 @@ namespace Daramkun.Liqueur.Graphics
 				Vector2 vec = ( vertex as IFlexibleVertexTexture1 ).TextureUV1;
 				textureArray [ index * 2 + 0 ] = vec.X;
 				textureArray [ index * 2 + 1 ] = vec.Y;
+			}
+
+			if ( vertex is IFlexibleVertexTexture2 )
+			{
+				Vector2 vec = ( vertex as IFlexibleVertexTexture2 ).TextureUV2;
+				subTextureArray [ index * 2 + 0 ] = vec.X;
+				subTextureArray [ index * 2 + 1 ] = vec.Y;
 			}
 
 			if ( vertex is IFlexibleVertexDiffuse )

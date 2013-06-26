@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Contents\FileSystems\LocalFileSystem.cs" />
     <Compile Include="Graphics\Effect.cs" />
-    <Compile Include="Graphics\Image.cs" />
+    <Compile Include="Graphics\Texture2D.cs" />
     <Compile Include="Graphics\Primitive.cs" />
     <Compile Include="Graphics\Renderer.cs" />
     <Compile Include="Inputs\Devices\Accelerometer.cs" />

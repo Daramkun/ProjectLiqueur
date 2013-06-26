@@ -13,6 +13,8 @@ using Microsoft.Phone.Net.NetworkInformation;
 #if OPENTK
 using OpenTK;
 using System.Net.NetworkInformation;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics;
 #endif
 
 namespace Daramkun.Liqueur.Platforms
@@ -55,7 +57,7 @@ namespace Daramkun.Liqueur.Platforms
 			window = new Window ();
 			renderer = new Renderer ( window as Window );
 
-			ImageContentLoader.ImageType = typeof ( Image );
+			Texture2DContentLoader.ImageType = typeof ( Texture2D );
 			SoundContentLoader.SoundType = typeof ( SoundPlayer );
 
 			Initialized = true;
@@ -70,16 +72,38 @@ namespace Daramkun.Liqueur.Platforms
 
 		public void Run ( Action initialize, Action updateLogic, Action drawLogic, Action resize, Action activated, Action deactivated, params object [] arguments )
 		{
+			OpenTK.Graphics.GraphicsContext.ShareContexts = true;
 			GameWindow window = LiqueurSystem.Window.Handle as GameWindow;
+
+			if ( int.Parse ( GL.GetString ( StringName.Version ) [ 0 ].ToString () ) <= 2 )
+				throw new PlatformNotSupportedException ( 
+					"Project Liqueur OpenTK Platform Extension is not support OpenGL 2.0 or lower." );
+
 			window.Resize += ( object sender, EventArgs e ) => { resize (); };
 			window.FocusedChanged += ( object sender, EventArgs e ) =>
 			{
 				if ( window.Focused ) activated ();
 				else deactivated ();
 			};
+			window.Context.SwapInterval = 0;
+
 			initialize ();
-			window.RenderFrame += ( object sender, FrameEventArgs e ) => { drawLogic (); };
-			updateThread = new Thread ( () => { while ( true ) { updateLogic (); Thread.Sleep ( 1 ); } } );
+			window.RenderFrame += ( object sender, FrameEventArgs e ) =>
+			{
+				window.Context.MakeCurrent ( window.WindowInfo );
+				drawLogic ();
+			};
+			updateThread = new Thread ( () =>
+			{
+				GraphicsContext context = new GraphicsContext ( GraphicsMode.Default,
+					window.WindowInfo, 4, 0, GraphicsContextFlags.Default );
+				while ( true )
+				{
+					context.MakeCurrent ( window.WindowInfo );
+					updateLogic ();
+					Thread.Sleep ( 1 );
+				}
+			} );
 			updateThread.Start ();
 			window.Run ();
 		}

@@ -13,7 +13,11 @@ namespace Daramkun.Liqueur.Graphics
 		void BeginPass ( int pass );
 		void EndPass ();
 
+		void Commit ();
+
 		T GetArgument<T> ( string parameter );
 		void SetArgument<T> ( string parameter, T argument );
+
+		ITexture2D Texture { get; set; }
 	}
 }

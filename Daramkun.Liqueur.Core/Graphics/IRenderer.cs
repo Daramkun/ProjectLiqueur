@@ -31,13 +31,19 @@ namespace Daramkun.Liqueur.Graphics
 		CullingMode CullingMode { get; set; }
 		FillMode FillMode { get; set; }
 		Viewport Viewport { get; set; }
+		bool IsZWriteEnable { get; set; }
+		bool BlendState { get; set; }
+		bool StencilState { get; set; }
+		Stencil StencilParameter { get; set; }
+
+		void SetBlendParameter ( BlendParameter sourceParameter, BlendParameter destinationParameter );
 
 		void Clear ( Color color );
 		void Present ();
 
 		void DrawPrimitive<T> ( IPrimitive<T> primitive ) where T : IFlexibleVertex;
 
-		IImage CreateImage ( ImageData imageData, Color colorKey );
+		ITexture2D CreateImage ( ImageData imageData, Color colorKey );
 		IPrimitive<T> CreatePrimitive<T> ( int vertexCount, int indexCount ) where T : IFlexibleVertex;
 		IPrimitive<T> CreatePrimitive<T> ( T [] vertexArray, int [] indexArray ) where T : IFlexibleVertex;
 	}

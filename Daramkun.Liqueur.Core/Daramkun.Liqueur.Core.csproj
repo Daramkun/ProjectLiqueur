@@ -126,10 +126,13 @@
     <Compile Include="Exceptions\CommonException.cs" />
     <Compile Include="Exceptions\DecodingFailedException.cs" />
     <Compile Include="Exceptions\NullOfFileSystemException.cs" />
+    <Compile Include="Exceptions\PlatformNotSupportException.cs" />
     <Compile Include="Exceptions\ShaderCompileFailedException.cs" />
     <Compile Include="Exceptions\VersionMismatchException.cs" />
+    <Compile Include="Graphics\BlendParameter.cs" />
     <Compile Include="Graphics\FlexibleVertexArray.cs" />
     <Compile Include="Graphics\IPrimitive.cs" />
+    <Compile Include="Graphics\Stencil.cs" />
     <Compile Include="Graphics\Viewport.cs" />
     <Compile Include="Math\Projection.cs" />
     <Compile Include="Graphics\Vertices\FlexibleVertex.cs" />
@@ -140,7 +143,7 @@
     <Compile Include="Graphics\Fonts\BaseFont.cs" />
     <Compile Include="Contents\ContentManager.cs" />
     <Compile Include="Contents\IContentLoader.cs" />
-    <Compile Include="Contents\Loaders\ImageContentLoader.cs" />
+    <Compile Include="Contents\Loaders\Texture2DContentLoader.cs" />
     <Compile Include="Contents\Loaders\SoundContentLoader.cs" />
     <Compile Include="Contents\Loaders\TextContentLoader.cs" />
     <Compile Include="Decoders\IDecoder.cs" />
@@ -243,7 +246,7 @@
     <Compile Include="Math\Rectangle.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Graphics\Color.cs" />
-    <Compile Include="Graphics\IImage.cs" />
+    <Compile Include="Graphics\ITexture2D.cs" />
     <Compile Include="Graphics\IFont.cs" />
     <Compile Include="Graphics\IRenderer.cs" />
     <Compile Include="Math\Transform2.cs" />

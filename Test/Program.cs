@@ -42,6 +42,8 @@ namespace Test
 
 			IPrimitive<MyVertex> primitive;
 
+			Sprite sprite;
+
 			public MyScene ()
 			{
 			}
@@ -60,26 +62,26 @@ namespace Test
 				primitive.PrimitiveType = PrimitiveType.TriangleList;
 				primitive.PrimitiveCount = 1;
 				
-				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "a02.bmp", Color.Magenta ) )
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<ITexture2D> ( "a02.bmp", Color.Magenta ) )
 				{
 					Position = new Vector2 ( 20, 20 ),
 					SourceRectangle = new Rectangle ( new Vector2 ( 20, 20 ), new Vector2 ( 100, 100 ) )
 				} );
-				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "a02.bmp", Color.Magenta ) )
+				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<ITexture2D> ( "a02.bmp", Color.Magenta ) )
 				{
 					Position = new Vector2 ( 140, 20 ),
-					OverlayColor = new Color ( 127, 0, 0, 255 ),
+					OverlayColor = new Color ( 127, 0, 0, 127 ),
 				} );
-				AddChild ( new Sprite ( WalnutSystem.MainContents.Load<IImage> ( "square.png" ) )
+				sprite = AddChild ( new Sprite ( null )
 				{
 					Position = new Vector2 ( 340, 100 ),
-				} );
+				} ) as Sprite;
 
 				AddChild ( new Label ( WalnutSystem.MainContents.Load<BaseFont> ( "test.lsf" ) )
 				{
 					Text = "Test한글도 잘 나옴★ひらかなもキラン☆0123漢字`!@#$%?.,ⓕ\\\n" +
 					"LSF 폰트 파일 로드가 좀 느리네\n" + "ZIPLSF 파일 로드 엄청 빨라짐\n" + "뷁뷝뿗颬",
-					Position = new Vector2 ( 10, 400 ),
+					Position = new Vector2 ( 10, 380 ),
 					ForeColor = Color.White
 				} );
 				AddChild ( new Label ( WalnutSystem.MainContents.Load<BaseFont> ( "test.lsf" ) )
@@ -89,7 +91,9 @@ namespace Test
 					ObjectOffset = ObjectOffset.BottomLeft
 				} ).Update += ( object sender, GameTimeEventArgs e ) =>
 				{
-					( sender as Label ).Text = String.Format ( "Update FPS: {0}\nRender FPS: {1}", fpsCalc.UpdateFPS, fpsCalc.DrawFPS );
+					( sender as Label ).Text = String.Format ( "Update FPS: {0}\nRender FPS: {1}\nBlend State: {2}\nStencil State:{3}\nViewport:{4}", 
+						fpsCalc.UpdateFPS, fpsCalc.DrawFPS, LiqueurSystem.Renderer.BlendState, LiqueurSystem.Renderer.StencilState,
+						LiqueurSystem.Renderer.Viewport );
 				};
 
 				base.OnInitialize ();
@@ -102,12 +106,14 @@ namespace Test
 
 			public override void OnUpdate ( GameTime gameTime )
 			{
+				sprite.Image = WalnutSystem.MainContents.Load<ITexture2D> ( "square.png" );
 				base.OnUpdate ( gameTime );
 			}
 
 			public override void OnDraw ( GameTime gameTime )
 			{
 				LiqueurSystem.Renderer.Clear ( Color.Black );
+				LiqueurSystem.Renderer.BlendState = true;
 				LiqueurSystem.Renderer.DrawPrimitive<MyVertex> ( primitive );
 				base.OnDraw ( gameTime );
 			}

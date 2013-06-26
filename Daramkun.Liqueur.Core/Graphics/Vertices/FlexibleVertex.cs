@@ -12,4 +12,5 @@ namespace Daramkun.Liqueur.Graphics.Vertices
 	public interface IFlexibleVertexDiffuse : IFlexibleVertex { Color Diffuse { get; set; } }
 	public interface IFlexibleVertexNormal : IFlexibleVertex { Vector3 Normal { get; set; } }
 	public interface IFlexibleVertexTexture1 : IFlexibleVertex { Vector2 TextureUV1 { get; set; } }
+	public interface IFlexibleVertexTexture2 : IFlexibleVertex { Vector2 TextureUV2 { get; set; } }
 }

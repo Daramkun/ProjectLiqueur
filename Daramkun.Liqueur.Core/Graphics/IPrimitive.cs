@@ -24,6 +24,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		PrimitiveType PrimitiveType { get; set; }
 		int PrimitiveCount { get; set; }
-		IImage Texture { get; set; }
+		ITexture2D Texture { get; set; }
+		ITexture2D SubTexture { get; set; }
 	}
 }

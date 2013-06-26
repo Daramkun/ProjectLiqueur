@@ -19,7 +19,7 @@ namespace Daramkun.Walnut.Nodes
 	{
 		Transform2 transform;
 
-		public virtual IImage Image { get; set; }
+		public virtual ITexture2D Image { get; set; }
 		public Rectangle? SourceRectangle { get; set; }
 		public Color OverlayColor { get; set; }
 
@@ -61,7 +61,7 @@ namespace Daramkun.Walnut.Nodes
 
 		public ObjectOffset ObjectOffset { get; set; }
 
-		public Sprite ( IImage image )
+		public Sprite ( ITexture2D image )
 			: base ()
 		{
 			Image = image;
@@ -72,7 +72,7 @@ namespace Daramkun.Walnut.Nodes
 		public Sprite ( ContentManager contentManager, string filename )
 			: base ()
 		{
-			Image = contentManager.Load<IImage> ( filename );
+			Image = contentManager.Load<ITexture2D> ( filename );
 			transform = Transform2.Identity;
 			OverlayColor = Color.White;
 		}
@@ -80,7 +80,7 @@ namespace Daramkun.Walnut.Nodes
 		public Sprite ( ContentManager contentManager, string filename, Color colorKey )
 			: base ()
 		{
-			Image = contentManager.Load<IImage> ( filename, colorKey );
+			Image = contentManager.Load<ITexture2D> ( filename, colorKey );
 			transform = Transform2.Identity;
 			OverlayColor = Color.White;
 		}
@@ -105,7 +105,7 @@ namespace Daramkun.Walnut.Nodes
 		public Sprite ( JsonEntry jsonEntry, ContentManager contentManager )
 			: base ( jsonEntry, contentManager )
 		{
-			Image = contentManager.Load<IImage> ( jsonEntry [ "resource" ].Data as string );
+			Image = contentManager.Load<ITexture2D> ( jsonEntry [ "resource" ].Data as string );
 			Position = GetVector2 ( jsonEntry [ "position" ].Data as JsonArray );
 			Size = GetVector2 ( jsonEntry [ "size" ].Data as JsonArray );
 			Center = GetVector2 ( jsonEntry [ "center" ].Data as JsonArray );
@@ -120,6 +120,8 @@ namespace Daramkun.Walnut.Nodes
 
 		public override void OnDraw ( GameTime gameTime )
 		{
+			if ( Image == null ) return;
+
 			Transform2 transform = this.transform;
 			transform.Translate -= CalculatedAnchorPoint;
 			Vector2 imageSize = ( SourceRectangle != null ) ? SourceRectangle.Value.Size : Image.Size;

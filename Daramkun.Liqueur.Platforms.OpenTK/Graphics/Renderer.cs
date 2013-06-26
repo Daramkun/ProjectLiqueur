@@ -79,14 +79,75 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
-		Viewport viewPort = new Viewport () { X = 0, Y = 0, Width = 800, Height = 600 };
 		public Viewport Viewport
 		{
-			get { return viewPort; }
+			get
+			{
+				int [] viewport = new int [ 4 ];
+				GL.GetInteger ( GetPName.Viewport, viewport );
+				return new Viewport () { X = viewport [ 0 ], Y = viewport [ 1 ],
+					Width = viewport [ 2 ], Height = viewport [ 3 ] };
+			}
 			set
 			{
-				viewPort = value;
 				GL.Viewport ( value.X, value.Y, value.Width, value.Height );
+			}
+		}
+
+		public bool IsZWriteEnable
+		{
+			get
+			{
+				bool isZWriteEnable;
+				GL.GetBoolean ( GetPName.DepthTest, out isZWriteEnable );
+				return isZWriteEnable;
+			}
+			set
+			{
+				if ( value ) GL.Enable ( EnableCap.DepthTest );
+				else GL.Disable ( EnableCap.DepthTest );
+			}
+		}
+
+		public bool BlendState
+		{
+			get
+			{
+				bool blendState;
+				GL.GetBoolean ( GetPName.DepthTest, out blendState );
+				return blendState;
+			}
+			set
+			{
+				if ( value ) GL.Enable ( EnableCap.Blend );
+				else GL.Disable ( EnableCap.Blend );
+			}
+		}
+
+		public bool StencilState
+		{
+			get
+			{
+				bool stencilState;
+				GL.GetBoolean ( GetPName.DepthTest, out stencilState );
+				return stencilState;
+			}
+			set
+			{
+				if ( value ) GL.Enable ( EnableCap.StencilTest );
+				else GL.Disable ( EnableCap.StencilTest );
+			}
+		}
+
+		Stencil stencilParameter = new Stencil ();
+		public Stencil StencilParameter
+		{
+			get { return stencilParameter; }
+			set
+			{
+				stencilParameter = value;
+				GL.StencilFunc ( ConvertStencilFunction ( value.Function ), value.Reference, value.Mask );
+				GL.StencilOp ( ConvertStencilOperation ( value.Fail ), ConvertStencilOperation ( value.ZFail ), ConvertStencilOperation ( value.Pass ) );
 			}
 		}
 
@@ -103,15 +164,20 @@ namespace Daramkun.Liqueur.Graphics
 
 		}
 
+		public void SetBlendParameter ( BlendParameter sourceParameter, BlendParameter destinationParameter )
+		{
+			GL.BlendFunc ( ConvertBlendSourceFactor ( sourceParameter ), ConvertBlendDestinationFactor ( destinationParameter ) );
+		}
+
 		public void Begin2D ()
 		{
 			GL.MatrixMode ( MatrixMode.Modelview );
 			GL.LoadIdentity ();
 
 			GL.Enable ( EnableCap.Texture2D );
-			GL.Enable ( EnableCap.Blend );
 
-			GL.BlendFunc ( BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha );
+			BlendState = true;
+			SetBlendParameter ( BlendParameter.SourceAlpha, BlendParameter.InvertSourceAlpha );
 
 			GL.EnableClientState ( ArrayCap.VertexArray );
 			GL.EnableClientState ( ArrayCap.TextureCoordArray );
@@ -122,7 +188,7 @@ namespace Daramkun.Liqueur.Graphics
 			GL.DisableClientState ( ArrayCap.TextureCoordArray );
 			GL.DisableClientState ( ArrayCap.VertexArray );
 
-			GL.Disable ( EnableCap.Blend );
+			BlendState = false;
 			GL.Disable ( EnableCap.Texture2D );
 		}
 
@@ -159,13 +225,21 @@ namespace Daramkun.Liqueur.Graphics
 				GL.VertexPointer ( Utilities.IsSubtypeOf ( typeof ( T ), typeof ( IFlexibleVertexPositionXY ) ) ? 2 : 3,
 					VertexPointerType.Float, 0, ( primitive as Primitive<T> ).vertexArray );
 			}
-			if ( ( primitive as Primitive<T> ).textureArray != null )
+			if ( ( primitive as Primitive<T> ).textureArray != null && primitive.Texture != null )
 			{
+				GL.ActiveTexture ( TextureUnit.Texture0 );
 				GL.Enable ( EnableCap.Texture2D );
-				GL.BindTexture ( TextureTarget.Texture2D, ( primitive.Texture as Image ).texture );
-
+				GL.BindTexture ( TextureTarget.Texture2D, ( primitive.Texture as Texture2D ).texture );
 				GL.EnableClientState ( ArrayCap.TextureCoordArray );
 				GL.TexCoordPointer ( 2, TexCoordPointerType.Float, 0, ( primitive as Primitive<T> ).textureArray );
+			}
+			if ( ( primitive as Primitive<T> ).subTextureArray != null && primitive.SubTexture != null )
+			{
+				GL.ActiveTexture ( TextureUnit.Texture1 );
+				GL.Enable ( EnableCap.Texture2D );
+				GL.BindTexture ( TextureTarget.Texture2DArray, ( primitive.SubTexture as Texture2D ).texture );
+				GL.EnableClientState ( ArrayCap.TextureCoordArray );
+				GL.TexCoordPointer ( 2, TexCoordPointerType.Float, 0, ( primitive as Primitive<T> ).subTextureArray );
 			}
 			if ( ( primitive as Primitive<T> ).normalArray != null )
 			{
@@ -190,14 +264,18 @@ namespace Daramkun.Liqueur.Graphics
 				GL.DisableClientState ( ArrayCap.NormalArray );
 				GL.DisableClientState ( ArrayCap.TextureCoordArray );
 				GL.DisableClientState ( ArrayCap.VertexArray );
+				GL.ActiveTexture ( TextureUnit.Texture1 );
+				GL.BindTexture ( TextureTarget.Texture2D, 0 );
+				GL.Disable ( EnableCap.Texture2D );
+				GL.ActiveTexture ( TextureUnit.Texture0 );
 				GL.BindTexture ( TextureTarget.Texture2D, 0 );
 				GL.Disable ( EnableCap.Texture2D );
 			}
 		}
 
-		public IImage CreateImage ( ImageData imageData, Color colorKey )
+		public ITexture2D CreateImage ( ImageData imageData, Color colorKey )
 		{
-			return new Image ( imageData, colorKey );
+			return new Texture2D ( imageData, colorKey );
 		}
 
 		public IPrimitive<T> CreatePrimitive<T> ( int vertexCount, int indexCount ) where T : IFlexibleVertex
@@ -208,6 +286,70 @@ namespace Daramkun.Liqueur.Graphics
 		public IPrimitive<T> CreatePrimitive<T> ( T [] vertexArray, int [] indexArray ) where T : IFlexibleVertex
 		{
 			return new Primitive<T> ( vertexArray, indexArray );
+		}
+
+		private BlendingFactorSrc ConvertBlendSourceFactor ( BlendParameter sourceParameter )
+		{
+			switch ( sourceParameter )
+			{
+				case BlendParameter.Zero: return BlendingFactorSrc.Zero;
+				case BlendParameter.One: return BlendingFactorSrc.One;
+				case BlendParameter.SourceAlpha: return BlendingFactorSrc.SrcAlpha;
+				case BlendParameter.InvertSourceAlpha: return BlendingFactorSrc.OneMinusSrcAlpha;
+				case BlendParameter.DestinationColor: return BlendingFactorSrc.DstColor;
+				case BlendParameter.DestinationAlpha: return BlendingFactorSrc.DstAlpha;
+				case BlendParameter.InvertDestinationColor: return BlendingFactorSrc.OneMinusDstColor;
+				case BlendParameter.InvertDestinationAlpha: return BlendingFactorSrc.OneMinusDstAlpha;
+			}
+			throw new ArgumentException ();
+		}
+
+		private BlendingFactorDest ConvertBlendDestinationFactor ( BlendParameter destinationParameter )
+		{
+			switch ( destinationParameter )
+			{
+				case BlendParameter.Zero: return BlendingFactorDest.Zero;
+				case BlendParameter.One: return BlendingFactorDest.One;
+				case BlendParameter.SourceColor: return BlendingFactorDest.SrcColor;
+				case BlendParameter.SourceAlpha: return BlendingFactorDest.SrcAlpha;
+				case BlendParameter.InvertSourceColor: return BlendingFactorDest.OneMinusSrcColor;
+				case BlendParameter.InvertSourceAlpha: return BlendingFactorDest.OneMinusSrcAlpha;
+				case BlendParameter.DestinationAlpha: return BlendingFactorDest.DstAlpha;
+				case BlendParameter.InvertDestinationAlpha: return BlendingFactorDest.OneMinusDstAlpha;
+			}
+			throw new ArgumentException ();
+		}
+
+		private OpenTK.Graphics.OpenGL.StencilFunction ConvertStencilFunction ( StencilFunction stencilFunction )
+		{
+			switch ( stencilFunction )
+			{
+				case StencilFunction.Never: return OpenTK.Graphics.OpenGL.StencilFunction.Never;
+				case StencilFunction.Equal: return OpenTK.Graphics.OpenGL.StencilFunction.Equal;
+				case StencilFunction.Less: return OpenTK.Graphics.OpenGL.StencilFunction.Less;
+				case StencilFunction.LessEqual: return OpenTK.Graphics.OpenGL.StencilFunction.Lequal;
+				case StencilFunction.Greater: return OpenTK.Graphics.OpenGL.StencilFunction.Greater;
+				case StencilFunction.GreaterEqual: return OpenTK.Graphics.OpenGL.StencilFunction.Gequal;
+				case StencilFunction.Always: return OpenTK.Graphics.OpenGL.StencilFunction.Always;
+				case StencilFunction.NotEqual: return OpenTK.Graphics.OpenGL.StencilFunction.Notequal;
+			}
+			throw new ArgumentException ();
+		}
+
+		private StencilOp ConvertStencilOperation ( StencilOperation stencilOperation )
+		{
+			switch ( stencilOperation )
+			{
+				case StencilOperation.Zero: return StencilOp.Zero;
+				case StencilOperation.Keep: return StencilOp.Keep;
+				case StencilOperation.Replace: return StencilOp.Replace;
+				case StencilOperation.Invert: return StencilOp.Invert;
+				case StencilOperation.Increase: return StencilOp.Incr;
+				case StencilOperation.IncreaseSAT: return StencilOp.IncrWrap;
+				case StencilOperation.Decrease: return StencilOp.Decr;
+				case StencilOperation.DecreaseSAT: return StencilOp.DecrWrap;
+			}
+			throw new ArgumentException ();
 		}
 	}
 }
