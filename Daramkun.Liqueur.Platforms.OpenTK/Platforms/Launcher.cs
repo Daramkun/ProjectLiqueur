@@ -99,7 +99,11 @@ namespace Daramkun.Liqueur.Platforms
 					window.WindowInfo, 4, 0, GraphicsContextFlags.Default );
 				while ( true )
 				{
-					context.MakeCurrent ( window.WindowInfo );
+					try
+					{
+						context.MakeCurrent ( window.WindowInfo );
+					}
+					catch { }
 					updateLogic ();
 					Thread.Sleep ( 1 );
 				}

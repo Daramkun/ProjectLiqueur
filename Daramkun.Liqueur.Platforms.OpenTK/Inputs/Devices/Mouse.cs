@@ -9,7 +9,7 @@ using Daramkun.Liqueur.Platforms;
 using OpenTK;
 #endif
 
-namespace Daramkun.Liqueur.Inputs
+namespace Daramkun.Liqueur.Inputs.Devices
 {
 	public class Mouse : RawMouse
 	{

@@ -8,10 +8,7 @@ namespace Daramkun.Liqueur.Graphics
 {
 	public interface IEffect : IDisposable
 	{
-		void Dispatch ( Action<IEffect, int> dispatchEvent );
-
-		void BeginPass ( int pass );
-		void EndPass ();
+		void Dispatch ( Action<IEffect> dispatchEvent );
 
 		void Commit ();
 

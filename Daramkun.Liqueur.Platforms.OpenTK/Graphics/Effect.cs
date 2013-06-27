@@ -52,21 +52,11 @@ namespace Daramkun.Liqueur.Graphics
 			GL.DeleteProgram ( programId );
 		}
 
-		public void Dispatch ( Action<IEffect, int> dispatchEvent )
+		public void Dispatch ( Action<IEffect> dispatchEvent )
 		{
 			GL.UseProgram ( programId );
-			dispatchEvent ( this, 1 );
+			dispatchEvent ( this );
 			GL.UseProgram ( 0 );
-		}
-
-		public void BeginPass ( int pass )
-		{
-
-		}
-
-		public void EndPass ()
-		{
-
 		}
 
 		public void Commit ()

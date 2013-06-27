@@ -15,6 +15,7 @@ using Daramkun.Liqueur.Decoders.Sounds;
 using Daramkun.Liqueur.Math;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Graphics.Fonts;
+using Daramkun.Liqueur.Graphics.Vertices;
 using Daramkun.Liqueur.Inputs;
 using Daramkun.Liqueur.Inputs.Devices;
 using Daramkun.Liqueur.Inputs.States;
@@ -24,7 +25,6 @@ using Daramkun.Liqueur.Scenes;
 using Daramkun.Walnut;
 using Daramkun.Walnut.Nodes;
 using Daramkun.Walnut.Scripts;
-using Daramkun.Liqueur.Graphics.Vertices;
 
 namespace Test
 {
@@ -50,7 +50,7 @@ namespace Test
 
 			public override void OnInitialize ()
 			{
-				LiqueurSystem.Window.Title = "Test Window";
+				LiqueurSystem.Window.Title = "Test Window in C#";
 
 				fpsCalc = new FpsCalculator ();
 				AddChild ( fpsCalc );
@@ -91,6 +91,7 @@ namespace Test
 					ObjectOffset = ObjectOffset.BottomLeft
 				} ).Update += ( object sender, GameTimeEventArgs e ) =>
 				{
+					LiqueurSystem.Renderer.BlendState = true;
 					( sender as Label ).Text = String.Format ( "Update FPS: {0}\nRender FPS: {1}\nBlend State: {2}\nStencil State:{3}\nViewport:{4}", 
 						fpsCalc.UpdateFPS, fpsCalc.DrawFPS, LiqueurSystem.Renderer.BlendState, LiqueurSystem.Renderer.StencilState,
 						LiqueurSystem.Renderer.Viewport );
