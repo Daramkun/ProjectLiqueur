@@ -27,7 +27,7 @@ namespace Daramkun.Liqueur.Graphics
 					programId = GL.CreateProgram ();
 					GL.ShaderSource ( programId, program );
 					GL.CompileShader ( programId );
-
+					 
 					int compileState;
 					GL.GetShader ( programId, ShaderParameter.CompileStatus, out compileState );
 					if ( compileState == 0 )
