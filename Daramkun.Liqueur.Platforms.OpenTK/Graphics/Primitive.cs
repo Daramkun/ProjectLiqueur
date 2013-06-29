@@ -32,6 +32,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		public PrimitiveType PrimitiveType { get; set; }
 		public int PrimitiveCount { get; set; }
+		public IEffect Effect { get; set; }
 		public ITexture2D Texture { get; set; }
 		public ITexture2D SubTexture { get; set; }
 

@@ -98,9 +98,7 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			get
 			{
-				bool isZWriteEnable;
-				GL.GetBoolean ( GetPName.DepthTest, out isZWriteEnable );
-				return isZWriteEnable;
+				return GL.IsEnabled ( EnableCap.DepthTest );
 			}
 			set
 			{
@@ -113,9 +111,7 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			get
 			{
-				bool blendState;
-				GL.GetBoolean ( GetPName.DepthTest, out blendState );
-				return blendState;
+				return GL.IsEnabled ( EnableCap.Blend );
 			}
 			set
 			{
@@ -128,9 +124,7 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			get
 			{
-				bool stencilState;
-				GL.GetBoolean ( GetPName.DepthTest, out stencilState );
-				return stencilState;
+				return GL.IsEnabled ( EnableCap.StencilTest );
 			}
 			set
 			{

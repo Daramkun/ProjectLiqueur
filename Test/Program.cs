@@ -91,7 +91,8 @@ namespace Test
 					ObjectOffset = ObjectOffset.BottomLeft
 				} ).Update += ( object sender, GameTimeEventArgs e ) =>
 				{
-					LiqueurSystem.Renderer.BlendState = true;
+					LiqueurSystem.Renderer.BlendState = false;
+					LiqueurSystem.Renderer.StencilState = false;
 					( sender as Label ).Text = String.Format ( "Update FPS: {0}\nRender FPS: {1}\nBlend State: {2}\nStencil State:{3}\nViewport:{4}", 
 						fpsCalc.UpdateFPS, fpsCalc.DrawFPS, LiqueurSystem.Renderer.BlendState, LiqueurSystem.Renderer.StencilState,
 						LiqueurSystem.Renderer.Viewport );

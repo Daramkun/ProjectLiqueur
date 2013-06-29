@@ -134,6 +134,7 @@
     <Compile Include="Graphics\IPrimitive.cs" />
     <Compile Include="Graphics\Stencil.cs" />
     <Compile Include="Graphics\Viewport.cs" />
+    <Compile Include="Math\Matrix2x2.cs" />
     <Compile Include="Math\Projection.cs" />
     <Compile Include="Graphics\Vertices\FlexibleVertex.cs" />
     <Compile Include="Math\ITransform.cs" />
