@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Math;
+using Daramkun.Liqueur.Math.Transforms;
 
 namespace Daramkun.Liqueur.Graphics.Fonts
 {
@@ -65,7 +66,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 
 				image.DrawBitmap ( color,
 					//new Transform2 ( position + new Vector2 ( lines [ lines.Count - 1 ].X - image.Width, height - image.Height ) )
-					new Transform2 ()
+					new World2 ()
 					{
 						Translate = position + new Vector2 ( lines [ lines.Count - 1 ].X - image.Width, height - image.Height ),
 						Scale = new Vector2 ( 1 ),

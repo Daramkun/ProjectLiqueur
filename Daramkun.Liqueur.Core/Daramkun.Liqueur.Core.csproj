@@ -132,14 +132,29 @@
     <Compile Include="Graphics\BlendParameter.cs" />
     <Compile Include="Graphics\FlexibleVertexArray.cs" />
     <Compile Include="Graphics\IPrimitive.cs" />
+    <Compile Include="Graphics\Shaders\Composer\HighLevelShaderLanguageComposer.cs" />
+    <Compile Include="Graphics\Shaders\Composer\OpenGLShaderLanguageComposer.cs" />
+    <Compile Include="Graphics\Shaders\Function.cs" />
+    <Compile Include="Graphics\Shaders\IExpression.cs" />
+    <Compile Include="Graphics\Shaders\IShaderComposer.cs" />
+    <Compile Include="Graphics\Shaders\IShaderParser.cs" />
+    <Compile Include="Graphics\Shaders\Parameter.cs" />
+    <Compile Include="Graphics\Shaders\Shader.cs" />
+    <Compile Include="Graphics\Shaders\DataType.cs" />
+    <Compile Include="Graphics\Shaders\Variable.cs" />
     <Compile Include="Graphics\Stencil.cs" />
     <Compile Include="Graphics\Viewport.cs" />
     <Compile Include="Math\Matrix2x2.cs" />
-    <Compile Include="Math\Projection.cs" />
+    <Compile Include="Math\Transforms\PerspectiveFieldOfViewProjection.cs" />
+    <Compile Include="Math\Transforms\IWorld.cs" />
+    <Compile Include="Math\Transforms\OrthographicProjection.cs" />
+    <Compile Include="Math\Transforms\IPerspectiveProjection.cs" />
+    <Compile Include="Math\Transforms\PerspectiveOffCenterProjection.cs" />
+    <Compile Include="Math\Transforms\IProjection.cs" />
     <Compile Include="Graphics\Vertices\FlexibleVertex.cs" />
-    <Compile Include="Math\ITransform.cs" />
+    <Compile Include="Math\Transforms\ITransform.cs" />
     <Compile Include="Math\Matrix4x4.cs" />
-    <Compile Include="Math\Transform3.cs" />
+    <Compile Include="Math\Transforms\World3.cs" />
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Graphics\Fonts\BaseFont.cs" />
     <Compile Include="Contents\ContentManager.cs" />
@@ -185,7 +200,7 @@
     <Compile Include="Logging\LogWriters\DebugLogWriter.cs" />
     <Compile Include="Logging\LogWriters\StreamLogWriter.cs" />
     <Compile Include="Logging\MessageFormat.cs" />
-    <Compile Include="Math\View.cs" />
+    <Compile Include="Math\Transforms\View.cs" />
     <Compile Include="Medias\ISoundPlayer.cs" />
     <Compile Include="Nodes\FpsCalculator.cs" />
     <Compile Include="Nodes\Node.cs" />
@@ -250,7 +265,7 @@
     <Compile Include="Graphics\ITexture2D.cs" />
     <Compile Include="Graphics\IFont.cs" />
     <Compile Include="Graphics\IRenderer.cs" />
-    <Compile Include="Math\Transform2.cs" />
+    <Compile Include="Math\Transforms\World2.cs" />
     <Compile Include="Inputs\GamePadButton.cs" />
     <Compile Include="Inputs\InputState.cs" />
     <Compile Include="Inputs\KeyboardKey.cs" />
@@ -275,6 +290,9 @@
   <ItemGroup>
     <Content Include="Decoders\Images\PngCsCore\LICENSE.txt" />
     <Content Include="Decoders\Sounds\OggVorbisCore\LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Graphics\Shaders\Parser\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

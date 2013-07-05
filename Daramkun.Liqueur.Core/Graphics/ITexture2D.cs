@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Math;
+using Daramkun.Liqueur.Math.Transforms;
 
 namespace Daramkun.Liqueur.Graphics
 {
@@ -12,7 +13,7 @@ namespace Daramkun.Liqueur.Graphics
 		int Height { get; }
 		Vector2 Size { get; }
 
-		void DrawBitmap ( Color overlay, Transform2 transform );
-		void DrawBitmap ( Color overlay, Transform2 transform, Rectangle sourceRectangle );
+		void DrawBitmap ( Color overlay, World2 transform );
+		void DrawBitmap ( Color overlay, World2 transform, Rectangle sourceRectangle );
 	}
 }

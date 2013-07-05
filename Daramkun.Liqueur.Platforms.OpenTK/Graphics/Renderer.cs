@@ -8,6 +8,7 @@ using Daramkun.Liqueur.Graphics.Vertices;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using Daramkun.Liqueur.Common;
+using Daramkun.Liqueur.Math.Transforms;
 
 namespace Daramkun.Liqueur.Graphics
 {
@@ -145,6 +146,30 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
+		ITransform [] transforms = new ITransform [ 3 ];
+		public ITransform this [ TransformType index ]
+		{
+			get
+			{
+				return transforms [ ( int ) index ];
+			}
+			set
+			{
+				transforms [ ( int ) index ] = value;
+				if ( value is IProjection )
+				{
+					GL.MatrixMode ( MatrixMode.Projection );
+					GL.LoadMatrix ( value.Matrix.ToArray () );
+					GL.MatrixMode ( MatrixMode.Modelview );
+				}
+				else if ( value is View )
+				{
+					GL.MatrixMode ( MatrixMode.Modelview );
+					GL.LoadMatrix ( value.Matrix.ToArray () );
+				}
+			}
+		}
+
 		public Renderer ( Window window )
 		{
 			this.window = window;
@@ -251,7 +276,18 @@ namespace Daramkun.Liqueur.Graphics
 				GL.IndexPointer ( IndexPointerType.Int, 0, primitive.Indices );
 			}
 
-			GL.DrawArrays ( ConvertPrimitiveMode ( primitive.PrimitiveType ), 0, primitive.Vertices.Length );
+			GL.PushMatrix ();
+			GL.MatrixMode ( MatrixMode.Modelview );
+			if ( this [ TransformType.World ] != null )
+				GL.LoadMatrix ( this [ TransformType.World ].Matrix.ToArray () );
+			if ( primitive.Effect != null )
+			{
+				primitive.Effect.Dispatch ( ( IEffect effect ) =>
+				{
+					GL.DrawArrays ( ConvertPrimitiveMode ( primitive.PrimitiveType ), 0, primitive.Vertices.Length );
+				} );
+			}
+			GL.PopMatrix ();
 			{
 				GL.DisableClientState ( ArrayCap.IndexArray );
 				GL.DisableClientState ( ArrayCap.ColorArray );

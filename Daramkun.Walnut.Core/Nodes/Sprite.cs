@@ -12,12 +12,13 @@ using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Graphics.Fonts;
 using Daramkun.Liqueur.Nodes;
 using Daramkun.Walnut.Contents;
+using Daramkun.Liqueur.Math.Transforms;
 
 namespace Daramkun.Walnut.Nodes
 {
 	public class Sprite : WalnutNode
 	{
-		Transform2 transform;
+		World2 transform;
 
 		public virtual ITexture2D Image { get; set; }
 		public Rectangle? SourceRectangle { get; set; }
@@ -53,7 +54,7 @@ namespace Daramkun.Walnut.Nodes
 			set { transform.Rotation = value; }
 		}
 
-		public Transform2 Transform
+		public World2 Transform
 		{
 			get { return transform; }
 			set { transform = value; }
@@ -65,7 +66,7 @@ namespace Daramkun.Walnut.Nodes
 			: base ()
 		{
 			Image = image;
-			transform = Transform2.Identity;
+			transform = World2.Identity;
 			OverlayColor = Color.White;
 		}
 
@@ -73,7 +74,7 @@ namespace Daramkun.Walnut.Nodes
 			: base ()
 		{
 			Image = contentManager.Load<ITexture2D> ( filename );
-			transform = Transform2.Identity;
+			transform = World2.Identity;
 			OverlayColor = Color.White;
 		}
 
@@ -81,7 +82,7 @@ namespace Daramkun.Walnut.Nodes
 			: base ()
 		{
 			Image = contentManager.Load<ITexture2D> ( filename, colorKey );
-			transform = Transform2.Identity;
+			transform = World2.Identity;
 			OverlayColor = Color.White;
 		}
 
@@ -122,7 +123,7 @@ namespace Daramkun.Walnut.Nodes
 		{
 			if ( Image == null ) return;
 
-			Transform2 transform = this.transform;
+			World2 transform = this.transform;
 			transform.Translate -= CalculatedAnchorPoint;
 			Vector2 imageSize = ( SourceRectangle != null ) ? SourceRectangle.Value.Size : Image.Size;
 			imageSize *= transform.Scale;

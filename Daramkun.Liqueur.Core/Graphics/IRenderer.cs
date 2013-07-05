@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Graphics.Vertices;
 using Daramkun.Liqueur.Math;
+using Daramkun.Liqueur.Math.Transforms;
 
 namespace Daramkun.Liqueur.Graphics
 {
@@ -22,6 +23,13 @@ namespace Daramkun.Liqueur.Graphics
 		Solid,
 	}
 
+	public enum TransformType
+	{
+		Projection,
+		View,
+		World,
+	}
+
 	public interface IRenderer : IDisposable
 	{
 		Vector2 [] AvailableScreenSize { get; }
@@ -35,6 +43,8 @@ namespace Daramkun.Liqueur.Graphics
 		bool BlendState { get; set; }
 		bool StencilState { get; set; }
 		Stencil StencilParameter { get; set; }
+
+		ITransform this [ TransformType index ] { get; set; }
 
 		void SetBlendParameter ( BlendParameter sourceParameter, BlendParameter destinationParameter );
 

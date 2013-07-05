@@ -9,6 +9,7 @@ using Daramkun.Liqueur.Decoders.Images;
 using Daramkun.Liqueur.Math;
 #if OPENTK
 using OpenTK.Graphics.OpenGL;
+using Daramkun.Liqueur.Math.Transforms;
 #elif XNA
 using Microsoft.Xna.Framework.Graphics;
 #endif
@@ -104,12 +105,12 @@ namespace Daramkun.Liqueur.Graphics
 			GC.SuppressFinalize ( true );
 		}
 
-		public void DrawBitmap ( Color overlay, Transform2 transform )
+		public void DrawBitmap ( Color overlay, World2 transform )
 		{
 			DrawBitmap ( overlay, transform, new Rectangle ( Vector2.Zero, Size ) );
 		}
 
-		public void DrawBitmap ( Color overlay, Transform2 transform, Rectangle sourceRectangle )
+		public void DrawBitmap ( Color overlay, World2 transform, Rectangle sourceRectangle )
 		{
 			( LiqueurSystem.Renderer as Renderer ).Begin2D ();
 
