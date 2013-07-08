@@ -132,16 +132,6 @@
     <Compile Include="Graphics\BlendParameter.cs" />
     <Compile Include="Graphics\FlexibleVertexArray.cs" />
     <Compile Include="Graphics\IPrimitive.cs" />
-    <Compile Include="Graphics\Shaders\Composer\HighLevelShaderLanguageComposer.cs" />
-    <Compile Include="Graphics\Shaders\Composer\OpenGLShaderLanguageComposer.cs" />
-    <Compile Include="Graphics\Shaders\Function.cs" />
-    <Compile Include="Graphics\Shaders\IExpression.cs" />
-    <Compile Include="Graphics\Shaders\IShaderComposer.cs" />
-    <Compile Include="Graphics\Shaders\IShaderParser.cs" />
-    <Compile Include="Graphics\Shaders\Parameter.cs" />
-    <Compile Include="Graphics\Shaders\Shader.cs" />
-    <Compile Include="Graphics\Shaders\DataType.cs" />
-    <Compile Include="Graphics\Shaders\Variable.cs" />
     <Compile Include="Graphics\Stencil.cs" />
     <Compile Include="Graphics\Viewport.cs" />
     <Compile Include="Math\Matrix2x2.cs" />
@@ -291,8 +281,6 @@
     <Content Include="Decoders\Images\PngCsCore\LICENSE.txt" />
     <Content Include="Decoders\Sounds\OggVorbisCore\LICENSE.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphics\Shaders\Parser\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
