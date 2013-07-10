@@ -15,33 +15,26 @@ namespace Daramkun.Liqueur.Graphics
 		int programId, vertexShader, fragmentShader;
 		ITexture2D texture;
 
-		public Effect ( Stream stream )
+		public Effect ( string vs, string ps )
 		{
-			ZipFileSystem fileSystem = new ZipFileSystem ( stream );
-			if ( fileSystem.IsFileExist ( "GLSL/main.glsl" ) )
-			{
-				using ( Stream programStream = fileSystem.OpenFile ( "GLSL/main.glsl" ) )
-				{
-					byte [] data = new byte [ programStream.Length ];
-					string program = Encoding.UTF8.GetString ( data, 0, data.Length );
-					programId = GL.CreateProgram ();
-					GL.ShaderSource ( programId, program );
-					GL.CompileShader ( programId );
-					 
-					int compileState;
-					GL.GetShader ( programId, ShaderParameter.CompileStatus, out compileState );
-					if ( compileState == 0 )
-						throw new ShaderCompileFailedException ();
+			programId = GL.CreateProgram ();
 
-					vertexShader = GL.CreateShader ( ShaderType.VertexShader );
-					fragmentShader = GL.CreateShader ( ShaderType.FragmentShader );
+			vertexShader = GL.CreateShader ( ShaderType.VertexShader );
+			fragmentShader = GL.CreateShader ( ShaderType.FragmentShader );
 
-					GL.AttachShader ( programId, vertexShader );
-					GL.AttachShader ( programId, fragmentShader );
-					GL.LinkProgram ( programId );
-				}
-			}
-			else throw new ArgumentException ();
+			GL.AttachShader ( programId, vertexShader );
+			GL.AttachShader ( programId, fragmentShader );
+
+			GL.ShaderSource ( programId, vs );
+			GL.ShaderSource ( programId, ps );
+			GL.CompileShader ( programId );
+
+			int compileState;
+			GL.GetShader ( programId, ShaderParameter.CompileStatus, out compileState );
+			if ( compileState == 0 )
+				throw new ShaderCompileFailedException ();
+
+			GL.LinkProgram ( programId );
 		}
 
 		public void Dispose ()
