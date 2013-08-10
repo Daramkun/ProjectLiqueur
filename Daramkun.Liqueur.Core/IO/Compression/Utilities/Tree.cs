@@ -1,11 +1,14 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Daramkun.Liqueur.IO.Compression.Algorithms;
 
 namespace Daramkun.Liqueur.IO.Compression.Utilities
 {
 	sealed class Tree
 	{
-		private static readonly int HEAP_SIZE = ( 2 * InternalConstants.L_CODES + 1 );
+		private static readonly int HEAP_SIZE = ( 2 * ZlibConstants.L_CODES + 1 );
 
 		internal static readonly int [] ExtraLengthBits = new int []
         {
@@ -118,7 +121,7 @@ namespace Daramkun.Liqueur.IO.Compression.Utilities
 			short f;
 			int overflow = 0;
 
-			for ( bits = 0; bits <= InternalConstants.MAX_BITS; bits++ )
+			for ( bits = 0; bits <= ZlibConstants.MAX_BITS; bits++ )
 				s.bl_count [ bits ] = 0;
 
 			tree [ s.heap [ s.heap_max ] * 2 + 1 ] = 0;
@@ -246,12 +249,12 @@ namespace Daramkun.Liqueur.IO.Compression.Utilities
 
 		internal static void gen_codes ( short [] tree, int max_code, short [] bl_count )
 		{
-			short [] next_code = new short [ InternalConstants.MAX_BITS + 1 ];
+			short [] next_code = new short [ ZlibConstants.MAX_BITS + 1 ];
 			short code = 0;
 			int bits;
 			int n;
 
-			for ( bits = 1; bits <= InternalConstants.MAX_BITS; bits++ )
+			for ( bits = 1; bits <= ZlibConstants.MAX_BITS; bits++ )
 				unchecked
 				{
 					next_code [ bits ] = code = ( short ) ( ( code + bl_count [ bits - 1 ] ) << 1 );

@@ -1,4 +1,8 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Daramkun.Liqueur.IO.Compression.Algorithms;
 
 namespace Daramkun.Liqueur.IO.Compression.Utilities
 {

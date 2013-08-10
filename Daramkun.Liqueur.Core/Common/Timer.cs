@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Daramkun.Liqueur.Common
 {
-	public struct Timer
+	public struct Timer : IUpdatable
 	{
 		TimeSpan delay;
 		TimeSpan lastTimeSpan;

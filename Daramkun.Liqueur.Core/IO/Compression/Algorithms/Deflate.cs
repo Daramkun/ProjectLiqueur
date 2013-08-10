@@ -1,6 +1,9 @@
-using System;
-using Daramkun.Liqueur.IO.Compression.Utilities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Daramkun.Liqueur.Exceptions;
+using Daramkun.Liqueur.IO.Compression.Utilities;
 
 namespace Daramkun.Liqueur.IO.Compression.Algorithms
 {
@@ -107,7 +110,7 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 
 		private static readonly int MIN_LOOKAHEAD = ( MAX_MATCH + MIN_MATCH + 1 );
 
-		private static readonly int HEAP_SIZE = ( 2 * InternalConstants.L_CODES + 1 );
+		private static readonly int HEAP_SIZE = ( 2 * ZlibConstants.L_CODES + 1 );
 
 		private static readonly int END_BLOCK = 256;
 
@@ -163,14 +166,14 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 		internal Tree treeDistances = new Tree ();
 		internal Tree treeBitLengths = new Tree ();
 
-		internal short [] bl_count = new short [ InternalConstants.MAX_BITS + 1 ];
+		internal short [] bl_count = new short [ ZlibConstants.MAX_BITS + 1 ];
 
-		internal int [] heap = new int [ 2 * InternalConstants.L_CODES + 1 ];
+		internal int [] heap = new int [ 2 * ZlibConstants.L_CODES + 1 ];
 
 		internal int heap_len;
 		internal int heap_max;
 
-		internal sbyte [] depth = new sbyte [ 2 * InternalConstants.L_CODES + 1 ];
+		internal sbyte [] depth = new sbyte [ 2 * ZlibConstants.L_CODES + 1 ];
 
 		internal int _lengthOffset;
 
@@ -192,8 +195,8 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 		internal DeflateManager ()
 		{
 			dyn_ltree = new short [ HEAP_SIZE * 2 ];
-			dyn_dtree = new short [ ( 2 * InternalConstants.D_CODES + 1 ) * 2 ];
-			bl_tree = new short [ ( 2 * InternalConstants.BL_CODES + 1 ) * 2 ];
+			dyn_dtree = new short [ ( 2 * ZlibConstants.D_CODES + 1 ) * 2 ];
+			bl_tree = new short [ ( 2 * ZlibConstants.BL_CODES + 1 ) * 2 ];
 		}
 
 		private void _InitializeLazyMatch ()
@@ -233,11 +236,11 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 
 		internal void _InitializeBlocks ()
 		{
-			for ( int i = 0; i < InternalConstants.L_CODES; i++ )
+			for ( int i = 0; i < ZlibConstants.L_CODES; i++ )
 				dyn_ltree [ i * 2 ] = 0;
-			for ( int i = 0; i < InternalConstants.D_CODES; i++ )
+			for ( int i = 0; i < ZlibConstants.D_CODES; i++ )
 				dyn_dtree [ i * 2 ] = 0;
-			for ( int i = 0; i < InternalConstants.BL_CODES; i++ )
+			for ( int i = 0; i < ZlibConstants.BL_CODES; i++ )
 				bl_tree [ i * 2 ] = 0;
 
 			dyn_ltree [ END_BLOCK * 2 ] = 1;
@@ -302,15 +305,15 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 				{
 					if ( curlen != prevlen )
 						bl_tree [ curlen * 2 ]++;
-					bl_tree [ InternalConstants.REP_3_6 * 2 ]++;
+					bl_tree [ ZlibConstants.REP_3_6 * 2 ]++;
 				}
 				else if ( count <= 10 )
 				{
-					bl_tree [ InternalConstants.REPZ_3_10 * 2 ]++;
+					bl_tree [ ZlibConstants.REPZ_3_10 * 2 ]++;
 				}
 				else
 				{
-					bl_tree [ InternalConstants.REPZ_11_138 * 2 ]++;
+					bl_tree [ ZlibConstants.REPZ_11_138 * 2 ]++;
 				}
 				count = 0; prevlen = curlen;
 				if ( nextlen == 0 )
@@ -336,7 +339,7 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 			scan_tree ( dyn_dtree, treeDistances.max_code );
 
 			treeBitLengths.build_tree ( this );
-			for ( max_blindex = InternalConstants.BL_CODES - 1; max_blindex >= 3; max_blindex-- )
+			for ( max_blindex = ZlibConstants.BL_CODES - 1; max_blindex >= 3; max_blindex-- )
 			{
 				if ( bl_tree [ Tree.bl_order [ max_blindex ] * 2 + 1 ] != 0 )
 					break;
@@ -397,17 +400,17 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 					{
 						send_code ( curlen, bl_tree ); count--;
 					}
-					send_code ( InternalConstants.REP_3_6, bl_tree );
+					send_code ( ZlibConstants.REP_3_6, bl_tree );
 					send_bits ( count - 3, 2 );
 				}
 				else if ( count <= 10 )
 				{
-					send_code ( InternalConstants.REPZ_3_10, bl_tree );
+					send_code ( ZlibConstants.REPZ_3_10, bl_tree );
 					send_bits ( count - 3, 3 );
 				}
 				else
 				{
-					send_code ( InternalConstants.REPZ_11_138, bl_tree );
+					send_code ( ZlibConstants.REPZ_11_138, bl_tree );
 					send_bits ( count - 11, 7 );
 				}
 				count = 0; prevlen = curlen;
@@ -492,7 +495,7 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 			{
 				matches++;
 				dist--;
-				dyn_ltree [ ( Tree.LengthCode [ lc ] + InternalConstants.LITERALS + 1 ) * 2 ]++;
+				dyn_ltree [ ( Tree.LengthCode [ lc ] + ZlibConstants.LITERALS + 1 ) * 2 ]++;
 				dyn_dtree [ Tree.DistanceCode ( dist ) * 2 ]++;
 			}
 
@@ -501,7 +504,7 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 				int out_length = last_lit << 3;
 				int in_length = strstart - block_start;
 				int dcode;
-				for ( dcode = 0; dcode < InternalConstants.D_CODES; dcode++ )
+				for ( dcode = 0; dcode < ZlibConstants.D_CODES; dcode++ )
 				{
 					out_length = ( int ) ( out_length + ( int ) dyn_dtree [ dcode * 2 ] * ( 5L + Tree.ExtraDistanceBits [ dcode ] ) );
 				}
@@ -539,7 +542,7 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 					{
 						code = Tree.LengthCode [ lc ];
 
-						send_code ( code + InternalConstants.LITERALS + 1, ltree );
+						send_code ( code + ZlibConstants.LITERALS + 1, ltree );
 						extra = Tree.ExtraLengthBits [ code ];
 						if ( extra != 0 )
 						{
@@ -579,7 +582,7 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 			{
 				ascii_freq += dyn_ltree [ n * 2 ]; n++;
 			}
-			while ( n < InternalConstants.LITERALS )
+			while ( n < ZlibConstants.LITERALS )
 			{
 				bin_freq += dyn_ltree [ n * 2 ]; n++;
 			}
@@ -1371,13 +1374,12 @@ namespace Daramkun.Liqueur.IO.Compression.Algorithms
 			pending [ pendingCount++ ] = ( byte ) ( ( _codec.adler32 & 0x00FF0000 ) >> 16 );
 			pending [ pendingCount++ ] = ( byte ) ( ( _codec.adler32 & 0x0000FF00 ) >> 8 );
 			pending [ pendingCount++ ] = ( byte ) ( _codec.adler32 & 0x000000FF );
-			
+
 			_codec.flush_pending ();
 
 			Rfc1950BytesEmitted = true;
 
 			return pendingCount != 0 ? ZlibConstants.Z_OK : ZlibConstants.Z_STREAM_END;
 		}
-
 	}
 }

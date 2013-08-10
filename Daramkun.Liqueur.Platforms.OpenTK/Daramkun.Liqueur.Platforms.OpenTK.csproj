@@ -4,39 +4,35 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2B207CEC-300C-4E87-A1DB-75188B3D2F9A}</ProjectGuid>
+    <ProjectGuid>{B4799777-35C6-44F0-B18A-350A9BCEF41E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Daramkun.Liqueur</RootNamespace>
     <AssemblyName>Daramkun.Liqueur.Platforms.OpenTK</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;OPENTK</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;OPENTK</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
-      <HintPath>..\packages\OpenTKWithOpenAL.1.1.1160.61462\lib\NET40\OpenTK.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,37 +40,33 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\Audio.cs" />
+    <Compile Include="Audio\AudioDevice.cs" />
     <Compile Include="Contents\FileSystems\LocalFileSystem.cs" />
     <Compile Include="Graphics\Effect.cs" />
+    <Compile Include="Graphics\GraphicsDevice.cs" />
+    <Compile Include="Graphics\IndexBuffer.cs" />
+    <Compile Include="Graphics\RenderBuffer.cs" />
+    <Compile Include="Graphics\Shader.cs" />
     <Compile Include="Graphics\Texture2D.cs" />
-    <Compile Include="Graphics\Primitive.cs" />
-    <Compile Include="Graphics\Renderer.cs" />
-    <Compile Include="Inputs\Devices\Accelerometer.cs" />
-    <Compile Include="Inputs\Devices\GamePad.cs" />
-    <Compile Include="Inputs\Devices\Keyboard.cs" />
-    <Compile Include="Inputs\Devices\Mouse.cs" />
-    <Compile Include="Inputs\Devices\TouchPanel.cs" />
-    <Compile Include="Medias\SoundPlayer.cs" />
+    <Compile Include="Graphics\VertexBuffer.cs" />
+    <Compile Include="Inputs\Keyboard.cs" />
+    <Compile Include="Inputs\Mouse.cs" />
+    <Compile Include="Logging\LogWriters\ConsoleLogWriter.cs" />
     <Compile Include="Platforms\Launcher.cs" />
     <Compile Include="Platforms\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{24D173E0-CAFD-43D5-B1B8-1C76C08421C1}</Project>
+      <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Shaders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-xcopy /s /y "$(SolutionDir)packages\OpenTKWithOpenAL.1.1.1160.61462\NativeBinaries\x86\*.*" "$(TargetDir)"</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

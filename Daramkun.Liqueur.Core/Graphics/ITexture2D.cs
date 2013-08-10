@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Daramkun.Liqueur.Math;
-using Daramkun.Liqueur.Math.Transforms;
+using Daramkun.Liqueur.Common;
+using Daramkun.Liqueur.Mathematics;
 
 namespace Daramkun.Liqueur.Graphics
 {
+	public struct TextureArgument
+	{
+		public string Uniform { get; set; }
+		public ITexture2D Texture { get; set; }
+	}
+
 	public interface ITexture2D : IDisposable
 	{
 		int Width { get; }
 		int Height { get; }
 		Vector2 Size { get; }
 
-		void DrawBitmap ( Color overlay, World2 transform );
-		void DrawBitmap ( Color overlay, World2 transform, Rectangle sourceRectangle );
+		Color [] Buffer { get; set; }
 	}
 }

@@ -3,80 +3,74 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Daramkun.Liqueur.Audio;
 using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Graphics;
-using Daramkun.Liqueur.Inputs;
-using Daramkun.Liqueur.Inputs.RawDevices;
+using Daramkun.Liqueur.Inputs.RawDevice;
+using Daramkun.Liqueur.Nodes;
 using Daramkun.Liqueur.Platforms;
-using Daramkun.Liqueur.Scenes;
 
 namespace Daramkun.Liqueur
 {
 	public static class LiqueurSystem
 	{
 		public static IWindow Window { get; private set; }
-		public static IRenderer Renderer { get; private set; }
+		public static IGraphicsDevice GraphicsDevice { get; private set; }
+		public static IAudioDevice AudioDevice { get; private set; }
 
-		public static FrameScene FrameScene { get; private set; }
+		public static KeyboardDevice Keyboard { get; set; }
+		public static MouseDevice Mouse { get; set; }
+		public static GamePadDevice GamePad { get; set; }
+		public static TouchDevice TouchPanel { get; set; }
+		public static AccelerometerDevice Accelerometer { get; set; }
 
-		public static RawKeyboard Keyboard { get; set; }
-		public static RawMouse Mouse { get; set; }
-		public static GamePadCollection GamePads { get; set; }
-		public static RawTouchPanel TouchPanel { get; set; }
-		public static RawAccelerometer Accelerometer { get; set; }
+		public static CultureInfo CurrentCulture { get; set; }
 
-		public static EventHandler Initialize, Finalize;
-		public static EventHandler<GameTimeEventArgs> Update, Draw;
-		public static EventHandler Resize, Activated, Deactivated;
+		public static Node MainNode { get; private set; }
 
 		public static TimeSpan FixedUpdateTimeStep { get; set; }
 		public static TimeSpan FixedDrawTimeStep { get; set; }
 
-		internal static ILauncher Launcher { get; set; }
-		public static PlatformInformation PlatformInformation { get { return Launcher.PlatformInformation; } }
-
-		public static CultureInfo CurrentCulture { get; set; }
-
-		private static GameTime updateGameTime = new GameTime (),
-								drawGameTime = new GameTime ();
-
 		static LiqueurSystem ()
 		{
 			CurrentCulture = CultureInfo.CurrentCulture;
-			GamePads = new GamePadCollection ();
 			FixedUpdateTimeStep = new TimeSpan ();
 			FixedDrawTimeStep = new TimeSpan ();
 		}
 
-		public static void Run ( ILauncher launcher, Scene firstScene, params object [] arguments )
+		public static void Run ( ILauncher launcher, Node mainNode, params object [] args )
 		{
-			Launcher = launcher;
+			IWindow window; IGraphicsDevice graphicsDevice; IAudioDevice audioDevice;
 
-			IWindow window; IRenderer renderer;
-			Launcher.LauncherInitialize ( out window, out renderer );
-			Window = window; Renderer = renderer;
+			launcher.LauncherInitialize ( out window, out graphicsDevice, out audioDevice );
+			Window = window;
+			GraphicsDevice = graphicsDevice;
+			AudioDevice = audioDevice;
+
+			MainNode = mainNode;
 
 			TimeSpan elapsedUpdateTimeStep = new TimeSpan (),
 				elapsedDrawTimeStep = new TimeSpan ();
 			TimeSpan lastUpdateTimeStep = TimeSpan.FromMilliseconds ( Environment.TickCount ),
 				lastDrawTimeStep = TimeSpan.FromMilliseconds ( Environment.TickCount );
 
-			Launcher.Run (
-				() =>
+			GameTime updateGameTime = new GameTime (), drawGameTime = new GameTime ();
+
+			launcher.LauncherRun ( new LauncherArgument ()
+			{
+				Initialize = () =>
 				{
-					if ( Initialize != null )
-						Initialize ( null, EventArgs.Empty );
-					FrameScene = new FrameScene ( firstScene );
-					FrameScene.OnInitialize ();
+					if ( mainNode != null )
+						mainNode.Intro ( args );
 				},
-				() =>
+				UpdateLogic = () =>
 				{
+					LiqueurSystem.AudioDevice.Update ();
 					if ( elapsedUpdateTimeStep >= FixedUpdateTimeStep )
 					{
 						updateGameTime.Update ();
-						FrameScene.OnUpdate ( updateGameTime );
-						if ( Update != null )
-							Update ( null, new GameTimeEventArgs ( updateGameTime ) );
+						if ( mainNode != null )
+							mainNode.Update ( updateGameTime );
 						elapsedUpdateTimeStep -= FixedUpdateTimeStep;
 					}
 					else
@@ -86,15 +80,14 @@ namespace Daramkun.Liqueur
 						lastUpdateTimeStep = temp;
 					}
 				},
-				() =>
+				DrawLogic = () =>
 				{
 					if ( elapsedDrawTimeStep >= FixedDrawTimeStep )
 					{
 						drawGameTime.Update ();
-						FrameScene.OnDraw ( drawGameTime );
-						if ( Draw != null )
-							Draw ( null, new GameTimeEventArgs ( drawGameTime ) );
-						LiqueurSystem.Renderer.Present ();
+						if ( mainNode != null )
+							mainNode.Draw ( drawGameTime );
+						LiqueurSystem.GraphicsDevice.SwapBuffer ();
 						elapsedDrawTimeStep -= FixedDrawTimeStep;
 					}
 					else
@@ -104,31 +97,26 @@ namespace Daramkun.Liqueur
 						lastDrawTimeStep = temp;
 					}
 				},
-				() =>
+				Resize = () =>
 				{
-					FrameScene.OnResize ();
-					if ( Resize != null )
-						Resize ( null, EventArgs.Empty );
+					if ( mainNode != null && mainNode is IWindowEvent )
+						( mainNode as IWindowEvent ).WindowResize ();
 				},
-				() =>
+				Activated = () =>
 				{
-					FrameScene.OnActivated ();
-					if ( Activated != null )
-						Activated ( null, EventArgs.Empty );
+					if ( mainNode != null && mainNode is IWindowEvent )
+						( mainNode as IWindowEvent ).WindowActivated ();
 				},
-				() =>
+				Deactivated = () =>
 				{
-					FrameScene.OnDeactivated ();
-					if ( Deactivated != null )
-						Deactivated ( null, EventArgs.Empty );
-				},
-				arguments
-			);
+					if ( mainNode != null && mainNode is IWindowEvent )
+						( mainNode as IWindowEvent ).WindowDeactivated ();
+				}
+			} );
 
-			FrameScene.OnFinalize ();
-			if ( Finalize != null )
-				Finalize ( null, EventArgs.Empty );
-			Launcher.LauncherFinalize ( Window, Renderer );
+			if ( mainNode != null )
+				mainNode.Outro ();
+			launcher.LauncherFinalize ( Window, GraphicsDevice, AudioDevice );
 		}
 	}
 }

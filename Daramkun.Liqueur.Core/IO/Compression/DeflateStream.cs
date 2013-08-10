@@ -1,16 +1,17 @@
-using System;
+ï»¿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using Daramkun.Liqueur.Exceptions;
+using Daramkun.Liqueur.IO.Compression.Utilities;
 
 namespace Daramkun.Liqueur.IO.Compression
 {
-	/// <summary>
-	/// Deflate ½ºÆ®¸²
-	/// </summary>
 	public class DeflateStream : Stream
 	{
 		internal ZlibBaseStream baseStream;
-		internal System.IO.Stream innerStream;
+		internal Stream innerStream;
 		bool disposed;
 
 		public DeflateStream ( Stream stream, CompressionMode mode )
@@ -31,7 +32,7 @@ namespace Daramkun.Liqueur.IO.Compression
 		public DeflateStream ( Stream stream, CompressionMode mode, CompressionLevel level, bool leaveOpen )
 		{
 			innerStream = stream;
-			baseStream = new ZlibBaseStream ( stream, mode, level, ZlibStreamFlavor.DEFLATE, leaveOpen );
+			baseStream = new ZlibBaseStream ( stream, mode, level, leaveOpen );
 		}
 
 		#region Zlib properties

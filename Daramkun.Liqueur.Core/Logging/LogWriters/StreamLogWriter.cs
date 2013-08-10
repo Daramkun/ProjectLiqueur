@@ -19,7 +19,7 @@ namespace Daramkun.Liqueur.Logging.LogWriters
 		{
 			if ( BaseStream != null )
 			{
-				byte [] messageData = Encoding.UTF8.GetBytes ( message + "\n" );
+				byte [] messageData = Encoding.UTF8.GetBytes ( message + Environment.NewLine );
 				BaseStream.Write ( messageData, 0, messageData.Length );
 			}
 		}

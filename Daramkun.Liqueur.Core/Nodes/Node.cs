@@ -7,10 +7,12 @@ using Daramkun.Liqueur.Common;
 
 namespace Daramkun.Liqueur.Nodes
 {
-	public class Node : IComparable<Node>
+	public class Node : IUpdatable
 	{
 		List<Node> children;
 		uint zOrder;
+
+		GameTimeEventArgs updateGameTimeEventArgs = null, drawGameTimeEventArgs = null;
 
 		public Node Parent { get; private set; }
 		public IEnumerable<Node> Children { get { return children; } }
@@ -20,7 +22,7 @@ namespace Daramkun.Liqueur.Nodes
 			get { return zOrder; }
 			set
 			{
-				zOrder = value; 
+				zOrder = value;
 				Parent.children.Sort ();
 			}
 		}
@@ -31,7 +33,7 @@ namespace Daramkun.Liqueur.Nodes
 		public T Instantiate<T> ( params object [] args ) where T : Node
 		{
 			T instantiate = Activator.CreateInstance ( typeof ( T ), args ) as T;
-			AddChild ( instantiate );
+			Add ( instantiate );
 			return instantiate;
 		}
 
@@ -47,18 +49,18 @@ namespace Daramkun.Liqueur.Nodes
 				LiqueurSystem.Window.DoEvents ();
 		}
 
-		public Node AddChild ( Node node )
+		public Node Add ( Node node, params object [] args )
 		{
 			children.Add ( node );
 			children.Sort ();
 			node.Parent = this;
-			node.OnInitialize ();
+			node.Intro ( args );
 			return node;
 		}
 
-		public void RemoveChild ( Node node )
+		public void Remove ( Node node )
 		{
-			node.OnFinalize ();
+			node.Outro ();
 			node.Parent = null;
 			children.Remove ( node );
 		}
@@ -69,47 +71,52 @@ namespace Daramkun.Liqueur.Nodes
 			IsEnabled = IsVisible = true;
 		}
 
-		public event EventHandler Initialize, Finalize;
-		public event EventHandler<GameTimeEventArgs> Update, Draw;
+		public event EventHandler IntroEvent, OutroEvent;
+		public event EventHandler<GameTimeEventArgs> UpdateEvent, DrawEvent;
 
-		public virtual void OnInitialize ()
+		public virtual void Intro ( params object [] args )
 		{
-			if ( Initialize != null )
-				Initialize ( this, EventArgs.Empty );
+			if ( IntroEvent != null )
+				IntroEvent ( this, EventArgs.Empty );
 		}
 
-		public virtual void OnFinalize ()
+		public virtual void Outro ()
 		{
-			if ( Finalize != null )
-				Finalize ( this, EventArgs.Empty );
+			if ( OutroEvent != null )
+				OutroEvent ( this, EventArgs.Empty );
 			Node [] nodes = children.ToArray ();
 			foreach ( Node node in nodes )
-				RemoveChild ( node );
+				Remove ( node );
 			children.Clear ();
 		}
 
-		public virtual void OnUpdate ( GameTime gameTime )
+		public virtual void Update ( GameTime gameTime )
 		{
-			if ( Update != null )
-				Update ( this, new GameTimeEventArgs ( gameTime ) );
+			if(updateGameTimeEventArgs == null)
+				updateGameTimeEventArgs = new GameTimeEventArgs () { GameTime = gameTime };
+
+			if ( UpdateEvent != null )
+				UpdateEvent ( this, updateGameTimeEventArgs );
 
 			foreach ( Node node in children.ToArray () )
 			{
 				if ( node.IsEnabled )
-					node.OnUpdate ( gameTime );
+					node.Update ( gameTime );
 			}
 		}
 
-		public virtual void OnDraw ( GameTime gameTime )
+		public virtual void Draw ( GameTime gameTime )
 		{
-			if ( Draw != null )
-				Draw ( this, new GameTimeEventArgs ( gameTime ) );
+			if ( drawGameTimeEventArgs == null )
+				drawGameTimeEventArgs = new GameTimeEventArgs () { GameTime = gameTime };
 
-			Node [] nodes = children.ToArray ();
+			if ( DrawEvent != null )
+				DrawEvent ( this, drawGameTimeEventArgs );
+
 			foreach ( Node node in children.ToArray () )
 			{
 				if ( node.IsVisible )
-					node.OnDraw ( gameTime );
+					node.Draw ( gameTime );
 			}
 		}
 

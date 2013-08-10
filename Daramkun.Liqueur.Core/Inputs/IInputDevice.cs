@@ -7,7 +7,9 @@ namespace Daramkun.Liqueur.Inputs
 {
 	public interface IInputDevice<T> : IDisposable
 	{
+		bool IsSupport { get; }
 		bool IsConnected { get; }
-		T GetState ();
+
+		T GetState ( PlayerIndex playerIndex = PlayerIndex.Player1 );
 	}
 }

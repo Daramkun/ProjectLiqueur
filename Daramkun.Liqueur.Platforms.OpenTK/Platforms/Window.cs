@@ -2,22 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
-using Daramkun.Liqueur;
-using Daramkun.Liqueur.Common;
-using Daramkun.Liqueur.Math;
-using Daramkun.Liqueur.Inputs;
-using Daramkun.Liqueur.Inputs.States;
-using Daramkun.Liqueur.Platforms;
-using OpenTK;
+using Daramkun.Liqueur.Mathematics;
 
 namespace Daramkun.Liqueur.Platforms
 {
-    class Window : IWindow, IDisposable
-    {
-		internal OpenTK.GameWindow window;
-		List<Action> dispatcherAction = new List<Action> ();
+	class Window : IWindow
+	{
+		OpenTK.GameWindow window;
 
 		public string Title
 		{
@@ -34,14 +25,8 @@ namespace Daramkun.Liqueur.Platforms
 		public bool IsResizable
 		{
 			get { return window.WindowBorder == OpenTK.WindowBorder.Resizable; }
-			set
-			{ 
-				if ( value ) window.WindowBorder = OpenTK.WindowBorder.Resizable;
-				else window.WindowBorder = OpenTK.WindowBorder.Fixed;
-			}
+			set { window.WindowBorder = value ? OpenTK.WindowBorder.Resizable : OpenTK.WindowBorder.Fixed; }
 		}
-
-		public object Handle { get { return window; } }
 
 		public object Icon
 		{
@@ -49,37 +34,49 @@ namespace Daramkun.Liqueur.Platforms
 			set { window.Icon = value as System.Drawing.Icon; }
 		}
 
-		public Daramkun.Liqueur.Math.Vector2 ClientSize
+		public Vector2 ClientSize
 		{
-			get
-			{
-				return new Math.Vector2 ( window.ClientSize.Width, window.ClientSize.Height );
-			}
+			get { return new Vector2 ( window.ClientSize.Width, window.ClientSize.Height ); }
 		}
 
-		internal Window ()
+		public object Handle
+		{
+			get { return window; }
+		}
+
+		public Window ()
 		{
 			window = new OpenTK.GameWindow ( 800, 600,
-				new OpenTK.Graphics.GraphicsMode ( new OpenTK.Graphics.ColorFormat ( 8, 8, 8, 8 ), 0, 0 ),
-				"Project Liqueur", OpenTK.GameWindowFlags.Default,
-				OpenTK.DisplayDevice.Default );
+				new OpenTK.Graphics.GraphicsMode ( new OpenTK.Graphics.ColorFormat ( 32 ), 24, 8 ),
+				"Project Liqueur", OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default,
+				4, 0, OpenTK.Graphics.GraphicsContextFlags.Default );
 			window.ClientSize = new System.Drawing.Size ( 800, 600 );
-			window.WindowBorder = WindowBorder.Fixed;
+			window.WindowBorder = OpenTK.WindowBorder.Fixed;
+		}
+
+		~Window ()
+		{
+			Dispose ( false );
+		}
+
+		protected virtual void Dispose ( bool isDisposing )
+		{
+			if ( isDisposing )
+			{
+				window.Dispose ();
+				window = null;
+			}
 		}
 
 		public void Dispose ()
 		{
-			window.Dispose ();
+			Dispose ( true );
+			GC.SuppressFinalize ( this );
 		}
 
 		public void DoEvents ()
 		{
 			window.ProcessEvents ();
-		}
-
-		public void FailFast ( string message, Exception exception )
-		{
-			Environment.FailFast ( message, exception );
 		}
 	}
 }

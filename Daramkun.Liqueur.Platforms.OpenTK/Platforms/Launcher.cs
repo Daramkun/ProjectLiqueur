@@ -1,29 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
-using Daramkun.Liqueur.Common;
-using Daramkun.Liqueur.Contents.Loaders;
+using Daramkun.Liqueur.Audio;
 using Daramkun.Liqueur.Graphics;
-using Daramkun.Liqueur.Medias;
-#if WINDOWS_PHONE
-using Microsoft.Phone.Net.NetworkInformation;
-#endif
-#if OPENTK
+using Daramkun.Liqueur.Logging;
 using OpenTK;
-using System.Net.NetworkInformation;
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
-#endif
+using OpenTK.Graphics.OpenGL;
 
 namespace Daramkun.Liqueur.Platforms
 {
 	public class Launcher : ILauncher
 	{
-#if OPENTK
 		Thread updateThread;
-#endif
+		IGraphicsContext updateContext;
+
+		public bool IsInitialized { get; private set; }
 
 		public PlatformInformation PlatformInformation
 		{
@@ -33,10 +28,10 @@ namespace Daramkun.Liqueur.Platforms
 
 				return new PlatformInformation ()
 				{
-					Platform = ( os.Platform == PlatformID.Win32NT ) ? Platform.WindowsNT :
-								( os.Platform == PlatformID.Unix ) ? Platform.Unix :
-								( os.Platform == PlatformID.MacOSX ) ? Platform.OSX :
-								Platform.Unknown,
+					PlatformType = ( os.Platform == PlatformID.Win32NT ) ? PlatformType.WindowsNT :
+								( os.Platform == PlatformID.Unix ) ? PlatformType.Unix :
+								( os.Platform == PlatformID.MacOSX ) ? PlatformType.OSX :
+								PlatformType.Unknown,
 					PlatformVersion = os.Version,
 
 					UserName = Environment.UserName,
@@ -45,71 +40,78 @@ namespace Daramkun.Liqueur.Platforms
 			}
 		}
 
-		public bool Initialized { get; private set; }
-
 		public Launcher ()
 		{
-			Initialized = false;
+			IsInitialized = false;
 		}
 
-		public void LauncherInitialize ( out IWindow window, out IRenderer renderer )
+		public void LauncherInitialize ( out IWindow window, out IGraphicsDevice graphicsDevice, out IAudioDevice audioDevice )
 		{
 			window = new Window ();
-			renderer = new Renderer ( window as Window );
+			graphicsDevice = new GraphicsDevice ( window );
+			audioDevice = new AudioDevice ( window );
 
-			Texture2DContentLoader.ImageType = typeof ( Texture2D );
-			SoundContentLoader.SoundType = typeof ( SoundPlayer );
-
-			Initialized = true;
+			IsInitialized = true;
 		}
 
-		public void LauncherFinalize ( IWindow window, IRenderer renderer )
+		public void LauncherRun ( LauncherArgument args )
 		{
-			updateThread.Abort ();
-			( renderer as Renderer ).Dispose ();
-			( window as Window ).Dispose ();
-		}
-
-		public void Run ( Action initialize, Action updateLogic, Action drawLogic, Action resize, Action activated, Action deactivated, params object [] arguments )
-		{
-			OpenTK.Graphics.GraphicsContext.ShareContexts = true;
+			GraphicsContext.ShareContexts = true;
 			GameWindow window = LiqueurSystem.Window.Handle as GameWindow;
 
 			if ( int.Parse ( GL.GetString ( StringName.Version ) [ 0 ].ToString () ) <= 2 )
-				throw new PlatformNotSupportedException ( 
+				throw new PlatformNotSupportedException (
 					"Project Liqueur OpenTK Platform Extension is not support OpenGL 2.0 or lower." );
 
-			window.Resize += ( object sender, EventArgs e ) => { resize (); };
+			window.Resize += ( object sender, EventArgs e ) => { args.Resize (); };
 			window.FocusedChanged += ( object sender, EventArgs e ) =>
 			{
-				if ( window.Focused ) activated ();
-				else deactivated ();
+				if ( window.Focused ) args.Activated ();
+				else args.Deactivated ();
 			};
 			window.Context.SwapInterval = 0;
 
-			initialize ();
+			window.Load += ( object sender, EventArgs e ) =>
+			{
+				args.Initialize ();
+			};
 			window.RenderFrame += ( object sender, FrameEventArgs e ) =>
 			{
+				if ( !window.Context.IsCurrent )
 				window.Context.MakeCurrent ( window.WindowInfo );
-				drawLogic ();
+				args.DrawLogic ();
 			};
 			updateThread = new Thread ( () =>
 			{
-				GraphicsContext context = new GraphicsContext ( GraphicsMode.Default,
-					window.WindowInfo, 4, 0, GraphicsContextFlags.Default );
+				updateContext = new GraphicsContext ( GraphicsMode.Default,
+					window.WindowInfo, 3, 0, GraphicsContextFlags.ForwardCompatible );
 				while ( true )
 				{
 					try
 					{
-						context.MakeCurrent ( window.WindowInfo );
+						if ( !updateContext.IsCurrent )
+							updateContext.MakeCurrent ( window.WindowInfo );
 					}
-					catch { }
-					updateLogic ();
+					catch ( Exception e )
+					{
+						Logger.Write ( LogLevel.Level1, "{0}", e );
+					}
+					args.UpdateLogic ();
 					Thread.Sleep ( 1 );
 				}
 			} );
 			updateThread.Start ();
 			window.Run ();
+		}
+
+		public void LauncherFinalize ( IWindow window, IGraphicsDevice graphicsDevice, IAudioDevice audioDevice )
+		{
+			updateThread.Abort ();
+			updateThread = null;
+			audioDevice.Dispose ();
+			updateContext.Dispose ();
+			graphicsDevice.Dispose ();
+			window.Dispose ();
 		}
 	}
 }

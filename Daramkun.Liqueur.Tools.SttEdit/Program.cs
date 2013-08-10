@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Daramkun.Liqueur.Datas.Json;
+using Daramkun.Liqueur.Data.Json;
 
 namespace Daramkun.Liqueur.Tools.SttEdit
 {
@@ -56,11 +56,11 @@ namespace Daramkun.Liqueur.Tools.SttEdit
 									Console.Write ( "VALUE>" );
 									string value = Console.ReadLine ();
 									if ( !entry.Contains ( cultureInfo.Name ) )
-										entry.Add ( new JsonItem ( cultureInfo.Name, new JsonEntry () ) );
-									JsonEntry json = entry [ cultureInfo.Name ].Data as JsonEntry;
+										entry.Add ( cultureInfo.Name, new JsonEntry () );
+									JsonEntry json = entry [ cultureInfo.Name ] as JsonEntry;
 									if ( !json.Contains ( key ) )
-										json.Add ( new JsonItem ( key, value ) );
-									else json [ key ].Data = value;
+										json.Add ( key, value );
+									else json [ key ] = value;
 								}
 								break;
 							case 2:
@@ -69,7 +69,7 @@ namespace Daramkun.Liqueur.Tools.SttEdit
 									string key = Console.ReadLine ();
 									if ( !entry.Contains ( cultureInfo.Name ) )
 										break;
-									JsonEntry json = entry [ cultureInfo.Name ].Data as JsonEntry;
+									JsonEntry json = entry [ cultureInfo.Name ] as JsonEntry;
 									if ( !json.Contains ( key ) )
 										break;
 									json.Remove ( key );
@@ -79,9 +79,9 @@ namespace Daramkun.Liqueur.Tools.SttEdit
 								{
 									if ( !entry.Contains ( cultureInfo.Name ) )
 										break;
-									JsonEntry json = entry [ cultureInfo.Name ].Data as JsonEntry;
-									foreach ( JsonItem item in json )
-										Console.WriteLine ( "{0}: {1}", item.Name, item.Data );
+									JsonEntry json = entry [ cultureInfo.Name ] as JsonEntry;
+									foreach ( KeyValuePair<string, object> item in json )
+										Console.WriteLine ( "{0}: {1}", item.Key, item.Value );
 								}
 								break;
 							case 4:

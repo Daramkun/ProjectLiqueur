@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-#if WINDOWS_PHONE
-using System.IO.IsolatedStorage;
-#elif NETFX_CORE
-using Windows.Storage;
-#endif
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Daramkun.Liqueur.Contents.FileSystems
 {

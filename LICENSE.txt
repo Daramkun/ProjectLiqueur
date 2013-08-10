@@ -10,25 +10,17 @@ http://license.daram.pe.kr/MIT-License
 Some of source code referenced MonoXNA, MonoGame.
 
 -------------------------------------------------------------------
-2. Project Walnut
+2. SoundParty 1.1 (in Project Liqueur)
 -------------------------------------------------------------------
-Project Walnut using the MIT-license.
+Project SoundParty 1.1 using the MIT-license.
 
 License Details:
 http://license.daram.pe.kr/MIT-License
 
 -------------------------------------------------------------------
-3. SoundParty (in Project Liqueur)
+3. JsonLite 2.0 (in Project Liqueur)
 -------------------------------------------------------------------
-Project SoundParty using the MIT-license.
-
-License Details:
-http://license.daram.pe.kr/MIT-License
-
--------------------------------------------------------------------
-4. JsonLite (in Project Liqueur)
--------------------------------------------------------------------
-Project JsonLite using the MIT-license.
+Project JsonLite 2.0 using the MIT-license.
 
 License Details:
 http://license.daram.pe.kr/MIT-License

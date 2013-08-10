@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Contents.FileSystems;
 using Daramkun.Liqueur.Contents.Loaders;
-using Daramkun.Liqueur.Datas.Json;
-using Daramkun.Liqueur.Decoders;
+using Daramkun.Liqueur.Data.Json;
 
 namespace Daramkun.Liqueur.Graphics.Fonts
 {
-	public class LsfFont : BaseFont
+	public class LsfFont : Font
 	{
 		Dictionary<char, ITexture2D> readedImage = new Dictionary<char, ITexture2D> ();
 		List<char> noneList = new List<char> ();
-		Texture2DContentLoader imageContentLoader;
+		Texture2DLoader imageContentLoader;
 
 		ZipFileSystem fileSystem;
 
@@ -32,13 +32,13 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 			fileSystem = new ZipFileSystem ( stream );
 			Stream file = fileSystem.OpenFile ( "info.json" );
 			JsonEntry entry = JsonParser.Parse ( file );
-			FontFamily = entry [ "fontfamily" ].Data as string;
-			FontSize = ( int ) entry [ "fontsize" ].Data;
+			FontFamily = entry [ "fontfamily" ] as string;
+			FontSize = ( int ) entry [ "fontsize" ];
 
-			imageContentLoader = new Texture2DContentLoader ();
+			imageContentLoader = new Texture2DLoader ();
 		}
 
-		protected override void Dispose(bool isDisposing)
+		protected override void Dispose ( bool isDisposing )
 		{
 			if ( isDisposing )
 			{
@@ -47,7 +47,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 				readedImage.Clear ();
 				fileSystem.Dispose ();
 			}
- 			base.Dispose(isDisposing);
+			base.Dispose ( isDisposing );
 		}
 
 		private string IsExistCharFile ( char ch )
@@ -85,9 +85,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 						return null;
 					}
 
-					ImageData imageData = ImageDecoders.GetImageData ( fileSystem.OpenFile ( filename ) ).Value;
-					ITexture2D fontImage = imageContentLoader.Instantiate ( imageData.Width, imageData.Height,
-						imageData.ImageDecoder.GetPixels ( imageData, Color.Magenta ) );
+					ITexture2D fontImage = imageContentLoader.Load ( fileSystem.OpenFile ( filename ), Color.Magenta ) as ITexture2D;
 					readedImage.Add ( ch, fontImage );
 					return fontImage;
 				}

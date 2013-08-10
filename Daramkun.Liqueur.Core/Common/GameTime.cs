@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Daramkun.Liqueur.Common
 {
@@ -30,5 +33,10 @@ namespace Daramkun.Liqueur.Common
 		{
 			elapsedTimeSpan = new TimeSpan ();
 		}
+	}
+
+	public class GameTimeEventArgs : EventArgs
+	{
+		public GameTime GameTime { get; internal set; }
 	}
 }

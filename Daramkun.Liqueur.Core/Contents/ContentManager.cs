@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
 using Daramkun.Liqueur.Common;
-using Daramkun.Liqueur.Contents.Loaders;
-using Daramkun.Liqueur.Exceptions;
 
 namespace Daramkun.Liqueur.Contents
 {
@@ -17,7 +17,6 @@ namespace Daramkun.Liqueur.Contents
 		Dictionary<string, object> loadedContent = new Dictionary<string, object> ();
 
 		public IFileSystem FileSystem { get; set; }
-		public bool IsCultureMode { get; set; }
 
 		static ContentManager ()
 		{
@@ -28,13 +27,11 @@ namespace Daramkun.Liqueur.Contents
 		public ContentManager ()
 		{
 			FileSystem = null;
-			IsCultureMode = true;
 		}
 
 		public ContentManager ( IFileSystem fileSystem )
 		{
 			FileSystem = fileSystem;
-			IsCultureMode = true;
 		}
 
 		public void AddContentLoader ( IContentLoader contentLoader )
@@ -94,35 +91,69 @@ namespace Daramkun.Liqueur.Contents
 
 		public T Load<T> ( string filename, params object [] args )
 		{
+			string temp;
+			return Load<T> ( filename, out temp, args );
+		}
+
+		public T Load<T> ( string filename, out string realname, params object [] args )
+		{
 			if ( FileSystem == null )
-				throw new NullOfFileSystemException ();
+				throw new ArgumentNullException ();
 
-			if ( IsCultureMode )
-			{
-				if ( FileSystem.IsFileExist ( PathCombine ( LiqueurSystem.CurrentCulture.Name, filename ) ) )
-					filename = PathCombine ( LiqueurSystem.CurrentCulture.Name, filename );
-				else if ( FileSystem.IsFileExist ( PathCombine ( CultureInfo.InvariantCulture.Name, filename ) ) )
-					filename = PathCombine ( CultureInfo.InvariantCulture.Name, filename );
-				else throw new FileNotFoundException ();
-			}
-
-			if ( loadedContent.ContainsKey ( filename ) )
-				return ( T ) loadedContent [ filename ];
-
+			IContentLoader loader = null;
 			foreach ( IContentLoader contentLoader in contentLoaders )
 			{
 				if ( Utilities.IsSubtypeOf ( typeof ( T ), contentLoader.ContentType ) )
+					loader = contentLoader;
+			}
+
+			realname = null;
+
+			if ( loader == null )
+				throw new ArgumentException ();
+
+			if ( !FileSystem.IsFileExist ( filename ) )
+			{
+				if ( FileSystem.IsFileExist ( PathCombine ( LiqueurSystem.CurrentCulture.Name, filename ) ) )
+					realname = PathCombine ( LiqueurSystem.CurrentCulture.Name, filename );
+				else
 				{
-					Stream stream = FileSystem.OpenFile ( filename );
-					object data = contentLoader.Load ( stream, args );
-					loadedContent.Add ( filename, data );
-					if ( !contentLoader.IsSelfStreamDispose )
-						stream.Dispose ();
-					return ( T ) data;
+					bool exist = false;
+					foreach ( string ext in loader.FileExtensions )
+					{
+						if ( FileSystem.IsFileExist ( string.Format ( "{0}.{1}", filename, ext.ToLower () ) ) )
+						{
+							realname = string.Format ( "{0}.{1}", filename, ext.ToLower () );
+							exist = true;
+							break;
+						}
+						else if ( FileSystem.IsFileExist ( PathCombine ( LiqueurSystem.CurrentCulture.Name, string.Format ( "{0}.{1}", filename, ext.ToLower () ) ) ) )
+						{
+							realname = PathCombine ( LiqueurSystem.CurrentCulture.Name, string.Format ( "{0}.{1}", filename, ext.ToLower () ) );
+							exist = true;
+							break;
+						}
+					}
+
+					if ( !exist )
+						throw new FileNotFoundException ();
 				}
 			}
-			
-			throw new FileNotFoundException ();
+
+			if ( loadedContent.ContainsKey ( realname ) )
+			{
+				realname = filename;
+				return ( T ) loadedContent [ realname ];
+			}
+			else
+			{
+				Stream stream = FileSystem.OpenFile ( realname );
+				object data = loader.Load ( stream, args );
+				loadedContent.Add ( realname, data );
+				if ( !loader.IsSelfStreamDispose )
+					stream.Dispose ();
+				return ( T ) data;
+			}
 		}
 
 		public void Reset ()

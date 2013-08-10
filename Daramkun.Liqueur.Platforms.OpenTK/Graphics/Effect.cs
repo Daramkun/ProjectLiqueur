@@ -1,48 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using Daramkun.Liqueur.Contents.FileSystems;
 using Daramkun.Liqueur.Exceptions;
-using Daramkun.Liqueur.Math;
+using Daramkun.Liqueur.Mathematics;
 using OpenTK.Graphics.OpenGL;
 
 namespace Daramkun.Liqueur.Graphics
 {
 	class Effect : IEffect
 	{
-		int programId, vertexShader, fragmentShader;
-		ITexture2D texture;
+		internal int programId;
+		IShader [] shaders;
 
-		public Effect ( string vs, string ps )
+		public ShaderType AttachedShaders { get; private set; }
+
+		public Effect ( IGraphicsDevice graphicsDevice, params IShader [] shaders )
 		{
+			int effectState;
+
+			this.shaders = shaders;
+
 			programId = GL.CreateProgram ();
-
-			vertexShader = GL.CreateShader ( ShaderType.VertexShader );
-			fragmentShader = GL.CreateShader ( ShaderType.FragmentShader );
-
-			GL.AttachShader ( programId, vertexShader );
-			GL.AttachShader ( programId, fragmentShader );
-
-			GL.ShaderSource ( programId, vs );
-			GL.ShaderSource ( programId, ps );
-			GL.CompileShader ( programId );
-
-			int compileState;
-			GL.GetShader ( programId, ShaderParameter.CompileStatus, out compileState );
-			if ( compileState == 0 )
-				throw new ShaderCompileFailedException ();
-
+			foreach ( IShader shader in shaders )
+			{
+				shader.Attach ( this );
+				GL.GetProgram ( programId, ProgramParameter.AttachedShaders, out effectState );
+				if ( effectState == 0 )
+					throw new EffectConfigurationException ();
+				AttachedShaders |= shader.ShaderType;
+			}
+			
 			GL.LinkProgram ( programId );
+			GL.GetProgram ( programId, ProgramParameter.LinkStatus, out effectState );
+			if ( effectState == 0 )
+				throw new EffectConfigurationException ();
+		}
+
+		~Effect ()
+		{
+			Dispose ( false );
+		}
+
+		protected virtual void Dispose ( bool isDisposing )
+		{
+			if ( isDisposing )
+			{
+				foreach ( IShader shader in shaders )
+				{
+					AttachedShaders &= shader.ShaderType;
+					shader.Detach ( this );
+					shader.Dispose ();
+				}
+				GL.DeleteProgram ( programId );
+			}
 		}
 
 		public void Dispose ()
 		{
-			GL.DetachShader ( programId, 0 );
-			GL.DeleteShader ( fragmentShader );
-			GL.DeleteShader ( vertexShader );
-			GL.DeleteProgram ( programId );
+			Dispose ( true );
+			GC.SuppressFinalize ( this );
 		}
 
 		public void Dispatch ( Action<IEffect> dispatchEvent )
@@ -50,53 +67,6 @@ namespace Daramkun.Liqueur.Graphics
 			GL.UseProgram ( programId );
 			dispatchEvent ( this );
 			GL.UseProgram ( 0 );
-		}
-
-		public void Commit ()
-		{
-
-		}
-
-		public T GetArgument<T> ( string parameter )
-		{
-			int uniform = GL.GetUniformLocation ( programId, parameter );
-			Type baseType = typeof ( T );
-			if ( baseType == typeof ( int ) )
-			{
-				int ret;
-				GL.GetUniform ( programId, uniform, out ret );
-				return ( T ) ( object ) ret;
-			}
-			else if ( baseType == typeof ( float ) )
-			{
-				float ret;
-				GL.GetUniform ( programId, uniform, out ret );
-				return ( T ) ( object ) ret;
-			}
-			if ( baseType == typeof ( Vector2 ) )
-			{
-				float [] ret = new float [ 2 ];
-				GL.GetUniform ( programId, uniform, ret );
-				return ( T ) ( object ) new Vector2 ( ret [ 0 ], ret [ 1 ] );
-			}
-			else if ( baseType == typeof ( Vector3 ) )
-			{
-				float [] ret = new float [ 3 ];
-				GL.GetUniform ( programId, uniform, ret );
-				return ( T ) ( object ) new Vector3 ( ret [ 0 ], ret [ 1 ], ret [ 2 ] );
-			}
-			else if ( baseType == typeof ( Matrix4x4 ) )
-			{
-				float [] ret = new float [ 4 * 4 ];
-				GL.GetUniform ( programId, uniform, ret );
-				return ( T ) ( object ) new Matrix4x4 (
-					ret [ 0 ], ret [ 1 ], ret [ 2 ], ret [ 3 ],
-					ret [ 4 ], ret [ 5 ], ret [ 6 ], ret [ 7 ],
-					ret [ 8 ], ret [ 9 ], ret [ 10 ], ret [ 11 ],
-					ret [ 12 ], ret [ 13 ], ret [ 14 ], ret [ 15 ]
-					);
-			}
-			else return default ( T );
 		}
 
 		public void SetArgument<T> ( string parameter, T argument )
@@ -128,18 +98,21 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
-		public ITexture2D Texture
+		public void SetTextures ( params TextureArgument [] textures )
 		{
-			get
+			for ( int i = 0; i < textures.Length; i++ )
 			{
-				return texture;
-			}
-			set
-			{
-				texture = value;
-				if ( texture != null ) GL.Enable ( EnableCap.Texture2D );
-				else GL.Disable ( EnableCap.Texture2D );
-				GL.BindTexture ( TextureTarget.Texture2D, ( texture as Texture2D ).texture );
+				GL.ActiveTexture ( TextureUnit.Texture0 + i );
+				GL.BindTexture ( TextureTarget.Texture2D, ( textures [ i ].Texture as Texture2D ).texture );
+
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
+
+				int uniform = GL.GetUniformLocation ( programId, textures [ i ].Uniform );
+				GL.Uniform1 ( uniform, i );
 			}
 		}
 	}
