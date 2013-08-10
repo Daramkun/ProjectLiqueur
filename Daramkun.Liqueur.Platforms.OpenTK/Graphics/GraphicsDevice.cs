@@ -361,12 +361,12 @@ namespace Daramkun.Liqueur.Graphics
 
 		public IVertexBuffer<T> CreateVertexBuffer<T> ( FlexibleVertexFormat fvf, int vertexCount ) where T : struct
 		{
-			return new VertexBuffer<T> ( fvf, vertexCount );
+			return new VertexBuffer<T> ( this, fvf, vertexCount );
 		}
 
 		public IVertexBuffer<T> CreateVertexBuffer<T> ( FlexibleVertexFormat fvf, T [] vertices ) where T : struct
 		{
-			return new VertexBuffer<T> ( fvf, vertices );
+			return new VertexBuffer<T> ( this, fvf, vertices );
 		}
 
 		public IIndexBuffer CreateIndexBuffer ( int indexCount )
@@ -376,7 +376,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		public IIndexBuffer CreateIndexBuffer ( int [] indices )
 		{
-			return new IndexBuffer ( indices );
+			return new IndexBuffer ( this, indices );
 		}
 
 		public IShader CreateShader ( Stream stream, ShaderType shaderType )

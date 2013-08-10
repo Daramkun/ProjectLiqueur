@@ -41,7 +41,7 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
-		public VertexBuffer ( FlexibleVertexFormat fvf, int vertexCount )
+		public VertexBuffer ( IGraphicsDevice graphicsDevice, FlexibleVertexFormat fvf, int vertexCount )
 		{
 			FVF = fvf;
 			Length = vertexCount;
@@ -53,8 +53,8 @@ namespace Daramkun.Liqueur.Graphics
 			GL.BindBuffer ( BufferTarget.ArrayBuffer, 0 );
 		}
 
-		public VertexBuffer ( FlexibleVertexFormat fvf, T [] vertices )
-			: this ( fvf, vertices.Length )
+		public VertexBuffer ( IGraphicsDevice graphicsDevice, FlexibleVertexFormat fvf, T [] vertices )
+			: this ( graphicsDevice, fvf, vertices.Length )
 		{
 			Vertices = vertices;
 		}

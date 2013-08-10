@@ -45,7 +45,7 @@ namespace Daramkun.Liqueur.Graphics
 			GL.BindBuffer ( BufferTarget.ElementArrayBuffer, 0 );
 		}
 
-		public IndexBuffer ( int [] indices )
+		public IndexBuffer ( IGraphicsDevice graphicsDevice, int [] indices )
 			: this ( indices.Length )
 		{
 			Indices = indices;
