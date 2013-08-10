@@ -53,9 +53,13 @@ namespace Daramkun.Liqueur.Data.Json
 		{
 			string json = "{ ";
 
-			foreach ( object item in jsonItemsByDic )
+			foreach ( KeyValuePair<string, object> item in jsonItemsByDic )
 			{
-				json += item.ToString () + ", ";
+				string value;
+				if ( item.Value is string ) value = string.Format ( "\"{0}\"", item.Value );
+				else if ( item.Value is bool ) value = ( ( ( bool ) item.Value ) == true ) ? "true" : "false";
+				else value = item.Value.ToString ();
+				json += string.Format ( "\"{0}\" = {1}", item.Key, value ) + ", ";
 			}
 
 			return ( ( json == "{ " ) ? json : json.Substring ( 0, json.Length - 2 ) ) + " }";
