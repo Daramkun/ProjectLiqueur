@@ -13,8 +13,6 @@ namespace Daramkun.Liqueur.Graphics
 		internal int programId;
 		IShader [] shaders;
 
-		public ShaderType AttachedShaders { get; private set; }
-
 		public Effect ( IGraphicsDevice graphicsDevice, params IShader [] shaders )
 		{
 			int effectState;
@@ -28,7 +26,6 @@ namespace Daramkun.Liqueur.Graphics
 				GL.GetProgram ( programId, ProgramParameter.AttachedShaders, out effectState );
 				if ( effectState == 0 )
 					throw new EffectConfigurationException ();
-				AttachedShaders |= shader.ShaderType;
 			}
 			
 			GL.LinkProgram ( programId );
@@ -48,7 +45,6 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				foreach ( IShader shader in shaders )
 				{
-					AttachedShaders &= shader.ShaderType;
 					shader.Detach ( this );
 					shader.Dispose ();
 				}

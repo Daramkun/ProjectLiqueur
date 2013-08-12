@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using Daramkun.Liqueur;
-using Daramkun.Liqueur.Audio;
 using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Contents;
-using Daramkun.Liqueur.Contents.Decoder.Audios;
 using Daramkun.Liqueur.Contents.Decoder.Images;
 using Daramkun.Liqueur.Graphics;
-using Daramkun.Liqueur.Logging;
 using Daramkun.Liqueur.Mathematics;
-using Daramkun.Liqueur.Mathematics.Transforms;
 using Daramkun.Liqueur.Nodes;
 using Daramkun.Liqueur.Platforms;
 
@@ -21,7 +15,6 @@ namespace Test.Windows.CSharp
 {
 	static class Program
 	{
-		[StructLayout ( LayoutKind.Sequential )]
 		public struct Vertex
 		{
 			Vector2 position;
@@ -67,7 +60,8 @@ void main () {
 					", ShaderType.FragmentShader );
 				effect = LiqueurSystem.GraphicsDevice.CreateEffect ( vertexShader, fragShader );
 
-				vertexBuffer = LiqueurSystem.GraphicsDevice.CreateVertexBuffer<Vertex> ( FlexibleVertexFormat.PositionXY | FlexibleVertexFormat.Diffuse, new Vertex []
+				vertexBuffer = LiqueurSystem.GraphicsDevice.CreateVertexBuffer<Vertex> ( FlexibleVertexFormat.PositionXY |
+					FlexibleVertexFormat.Diffuse, new Vertex []
 				{
 					new Vertex ( new Vector2 ( -0.5f, +0.5f ), new Vector2 ( 0, 1 ) ),
 					new Vertex ( new Vector2 ( +0.5f, -0.5f ), new Vector2 ( 1, 0 ) ),
@@ -85,9 +79,8 @@ void main () {
 
 			public override void Draw ( GameTime gameTime )
 			{
-				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, new Color ( 0.2f, 0.5f, 0.4f, 1.0f ) );
-
 				LiqueurSystem.GraphicsDevice.RenderTarget = renderBuffer;
+				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, Color.White );
 				effect.Dispatch ( ( IEffect ef ) =>
 				{
 					effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = texture } );
@@ -95,6 +88,7 @@ void main () {
 				} );
 
 				LiqueurSystem.GraphicsDevice.RenderTarget = null;
+				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, new Color ( 0.2f, 0.5f, 0.4f, 1.0f ) );
 				effect.Dispatch ( ( IEffect ef ) =>
 				{
 					effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = renderBuffer } );
@@ -119,7 +113,6 @@ void main () {
 		[STAThread]
 		static void Main ()
 		{
-			Logger.AddDefaultLogWriter ();
 			LiqueurSystem.Run ( new Launcher (), new InternalScene () );
 		}
 	}

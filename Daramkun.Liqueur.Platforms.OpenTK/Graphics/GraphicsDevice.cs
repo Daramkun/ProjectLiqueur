@@ -298,18 +298,18 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
-		private void UnsettingVertexBuffer<T> ( IVertexBuffer<T> vertexBuffer ) where T : struct
+		private void UnsettingVertexBuffer<T> ( FlexibleVertexFormat fvf ) where T : struct
 		{
 			int index = 0;
 
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.PositionXY ) != 0 ||
-				( vertexBuffer.FVF & FlexibleVertexFormat.PositionXYZ ) != 0 )
+			if ( ( fvf & FlexibleVertexFormat.PositionXY ) != 0 ||
+				( fvf & FlexibleVertexFormat.PositionXYZ ) != 0 )
 				index++;
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.Normal ) != 0 )
+			if ( ( fvf & FlexibleVertexFormat.Normal ) != 0 )
 				index++;
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.Diffuse ) != 0 )
+			if ( ( fvf & FlexibleVertexFormat.Diffuse ) != 0 )
 				index++;
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.TextureUV1 ) != 0 )
+			if ( ( fvf & FlexibleVertexFormat.TextureUV1 ) != 0 )
 				index++;
 
 			for ( ; index >= 0; index-- )
@@ -333,7 +333,7 @@ namespace Daramkun.Liqueur.Graphics
 
 			GL.DrawArrays ( ConvertPrimitiveMode ( primitiveType ), 0, vertexBuffer.Length );
 
-			UnsettingVertexBuffer<T> ( vertexBuffer );
+			UnsettingVertexBuffer<T> ( vertexBuffer.FVF );
 		}
 
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer, IIndexBuffer indexBuffer ) where T : struct
@@ -346,7 +346,7 @@ namespace Daramkun.Liqueur.Graphics
 			GL.DrawElements ( ConvertPrimitiveMode ( primitiveType ), indexBuffer.Length, DrawElementsType.UnsignedInt, 0 );
 
 			GL.BindBuffer ( BufferTarget.ElementArrayBuffer, 0 );
-			UnsettingVertexBuffer<T> ( vertexBuffer );
+			UnsettingVertexBuffer<T> ( vertexBuffer.FVF );
 		}
 
 		public ITexture2D CreateTexture2D ( ImageInfo imageInfo, Color? colorKey = null )

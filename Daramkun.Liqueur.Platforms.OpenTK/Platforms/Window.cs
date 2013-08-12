@@ -49,7 +49,7 @@ namespace Daramkun.Liqueur.Platforms
 			window = new OpenTK.GameWindow ( 800, 600,
 				new OpenTK.Graphics.GraphicsMode ( new OpenTK.Graphics.ColorFormat ( 32 ), 24, 8 ),
 				"Project Liqueur", OpenTK.GameWindowFlags.Default, OpenTK.DisplayDevice.Default,
-				4, 0, OpenTK.Graphics.GraphicsContextFlags.Default );
+				3, 0, OpenTK.Graphics.GraphicsContextFlags.Default );
 			window.ClientSize = new System.Drawing.Size ( 800, 600 );
 			window.WindowBorder = OpenTK.WindowBorder.Fixed;
 		}

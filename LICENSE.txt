@@ -10,9 +10,11 @@ http://license.daram.pe.kr/MIT-License
 Some of source code referenced MonoXNA, MonoGame.
 
 -------------------------------------------------------------------
-2. SoundParty 1.1 (in Project Liqueur)
+2. SoundParty 1.1 (in Project Liqueur, Merged)
 -------------------------------------------------------------------
 Project SoundParty 1.1 using the MIT-license.
+
+Part of Decoders-Audio, Platform-AudioDevice, Audio.
 
 License Details:
 http://license.daram.pe.kr/MIT-License
