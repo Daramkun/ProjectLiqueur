@@ -9,13 +9,22 @@ using Daramkun.Liqueur.Common;
 
 namespace Daramkun.Liqueur.Contents
 {
+	/// <summary>
+	/// Content Manager class
+	/// </summary>
 	public sealed class ContentManager : IDisposable
 	{
+		/// <summary>
+		/// .NET Assemblies included Content Loader classes
+		/// </summary>
 		public static List<Assembly> ContentLoaderAssemblies { get; private set; }
 
 		List<IContentLoader> contentLoaders = new List<IContentLoader> ();
 		Dictionary<string, object> loadedContent = new Dictionary<string, object> ();
 
+		/// <summary>
+		/// Main File System of Content Manager
+		/// </summary>
 		public IFileSystem FileSystem { get; set; }
 
 		static ContentManager ()
@@ -24,27 +33,45 @@ namespace Daramkun.Liqueur.Contents
 			ContentLoaderAssemblies.Add ( Assembly.GetExecutingAssembly () );
 		}
 
+		/// <summary>
+		/// Constructor of Content Manager
+		/// </summary>
 		public ContentManager ()
 		{
 			FileSystem = null;
 		}
 
+		/// <summary>
+		/// Constructor of Content Manager
+		/// </summary>
+		/// <param name="fileSystem">Main File System of Content Manager</param>
 		public ContentManager ( IFileSystem fileSystem )
 		{
 			FileSystem = fileSystem;
 		}
 
+		/// <summary>
+		/// Add Content Loader
+		/// </summary>
+		/// <param name="contentLoader">Content Loader</param>
 		public void AddContentLoader ( IContentLoader contentLoader )
 		{
 			if ( contentLoaders.Contains ( contentLoader ) ) return;
 			contentLoaders.Add ( contentLoader );
 		}
 
+		/// <summary>
+		/// Remove Content Loader
+		/// </summary>
+		/// <param name="contentLoader">Content Loader</param>
 		public void RemoveContentLoader ( IContentLoader contentLoader )
 		{
 			contentLoaders.Remove ( contentLoader );
 		}
 
+		/// <summary>
+		/// Add Default Content Loader from .NET Assemblies
+		/// </summary>
 		public void AddDefaultContentLoader ()
 		{
 			foreach ( Assembly assembly in ContentLoaderAssemblies )
@@ -58,11 +85,20 @@ namespace Daramkun.Liqueur.Contents
 			}
 		}
 
+		/// <summary>
+		/// Add User Content
+		/// </summary>
+		/// <param name="filename">Filename</param>
+		/// <param name="obj">User Content</param>
 		public void AddContent ( string filename, object obj )
 		{
 			loadedContent.Add ( filename, obj );
 		}
 
+		/// <summary>
+		/// Remove User Content
+		/// </summary>
+		/// <param name="filename">Filename</param>
 		public void RemoveContent ( string filename )
 		{
 			if ( !loadedContent.ContainsKey ( filename ) ) return;
@@ -89,12 +125,27 @@ namespace Daramkun.Liqueur.Contents
 			}
 		}
 
+		/// <summary>
+		/// Load Content
+		/// </summary>
+		/// <typeparam name="T">Content Type</typeparam>
+		/// <param name="filename">Filename</param>
+		/// <param name="args">Argument, if you need</param>
+		/// <returns>Loaded content</returns>
 		public T Load<T> ( string filename, params object [] args )
 		{
 			string temp;
 			return Load<T> ( filename, out temp, args );
 		}
 
+		/// <summary>
+		/// Load Content
+		/// </summary>
+		/// <typeparam name="T">Content Type</typeparam>
+		/// <param name="filename">Filename</param>
+		/// <param name="realname">Real filename</param>
+		/// <param name="args">Argument, if you need</param>
+		/// <returns>Loaded content</returns>
 		public T Load<T> ( string filename, out string realname, params object [] args )
 		{
 			if ( FileSystem == null )
@@ -156,6 +207,9 @@ namespace Daramkun.Liqueur.Contents
 			}
 		}
 
+		/// <summary>
+		/// Remove all loaded contents
+		/// </summary>
 		public void Reset ()
 		{
 			foreach ( KeyValuePair<string, object> obj in loadedContent )
@@ -164,6 +218,9 @@ namespace Daramkun.Liqueur.Contents
 			loadedContent.Clear ();
 		}
 
+		/// <summary>
+		/// Dispose
+		/// </summary>
 		public void Dispose ()
 		{
 			Reset ();

@@ -9,6 +9,9 @@ using Daramkun.Liqueur.IO.Compression;
 
 namespace Daramkun.Liqueur.Contents.FileSystems
 {
+	/// <summary>
+	/// ZIP File System class
+	/// </summary>
 	public class ZipFileSystem : IFileSystem, IDirectorableFileSystem, IDisposable
 	{
 		XUnzip xUnzip;
@@ -16,6 +19,10 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 		string [] dirnameCache;
 		Dictionary<string, int> indexInfo;
 
+		/// <summary>
+		/// Constructor of Zip File System
+		/// </summary>
+		/// <param name="stream">ZIP stream</param>
 		public ZipFileSystem ( Stream stream )
 		{
 			xUnzip = new XUnzip ();
@@ -48,6 +55,10 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			Dispose ( false );
 		}
 
+		/// <summary>
+		/// Disposing
+		/// </summary>
+		/// <param name="isDisposing">Is Disposing</param>
 		protected virtual void Dispose ( bool isDisposing )
 		{
 			if ( isDisposing )
@@ -57,12 +68,20 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			}
 		}
 
+		/// <summary>
+		/// Dispose Zip File System
+		/// </summary>
 		public void Dispose ()
 		{
 			Dispose ( true );
 			GC.SuppressFinalize ( this );
 		}
 
+		/// <summary>
+		/// Is File exist?
+		/// </summary>
+		/// <param name="filename">Filename with path</param>
+		/// <returns>True when file is exist, False when elsecase</returns>
 		public bool IsFileExist ( string filename )
 		{
 			foreach ( XUnzipFileInfo info in xUnzip.FileInfo )
@@ -71,6 +90,11 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			return false;
 		}
 
+		/// <summary>
+		/// Is Directory exist?
+		/// </summary>
+		/// <param name="filename">Directory name with path</param>
+		/// <returns>True when directory is exist, False when elsecase</returns>
 		public bool IsDirectoryExist ( string directoryname )
 		{
 			foreach ( string dir in Directories )
@@ -78,6 +102,11 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			return false;
 		}
 
+		/// <summary>
+		/// Open file stream
+		/// </summary>
+		/// <param name="filename">Filename with path</param>
+		/// <returns>Opened stream</returns>
 		public Stream OpenFile ( string filename )
 		{
 			lock ( xUnzip )
@@ -91,7 +120,13 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 			}
 		}
 
+		/// <summary>
+		/// Filenames with path
+		/// </summary>
 		public string [] Files { get { return filenameCache; } }
+		/// <summary>
+		/// Directory names
+		/// </summary>
 		public string [] Directories { get { return dirnameCache; } }
 	}
 

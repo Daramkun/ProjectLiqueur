@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Exceptions;
 using Daramkun.Liqueur.Graphics;
 
 namespace Daramkun.Liqueur.Contents.Decoder.Images
 {
+	/// <summary>
+	/// Portable network graphics image decoder
+	/// </summary>
+	[FileFormat ( "PNG" )]
 	public class PngDecoder : IImageDecoder
 	{
+		/// <summary>
+		/// PNG image decode
+		/// </summary>
+		/// <param name="stream">PNG file</param>
+		/// <param name="args">argument, don't set this</param>
+		/// <returns>Image information and pixel data</returns>
 		public ImageInfo Decode ( Stream stream, params object [] args )
 		{
 			try
@@ -29,6 +40,12 @@ namespace Daramkun.Liqueur.Contents.Decoder.Images
 			catch { throw new FileFormatMismatchException (); }
 		}
 
+		/// <summary>
+		/// Get PNG pixels
+		/// </summary>
+		/// <param name="imageInfo">Image information</param>
+		/// <param name="colorKey">Color key (if you need)</param>
+		/// <returns>Image pixels</returns>
 		public Color [] GetPixel ( ImageInfo imageInfo, Color? colorKey )
 		{
 			Hjg.Pngcs.PngReader reader = ( ( object ) imageInfo.Data ) as Hjg.Pngcs.PngReader;
@@ -52,6 +69,10 @@ namespace Daramkun.Liqueur.Contents.Decoder.Images
 			return colors;
 		}
 
+		/// <summary>
+		/// Decoder information string
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString ()
 		{
 			return "Portable Network Graphics(PNG) Decoder by PngCs";

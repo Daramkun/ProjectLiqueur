@@ -10,23 +10,39 @@ using Daramkun.Liqueur.Graphics;
 
 namespace Daramkun.Liqueur.Contents.Loaders
 {
-	public class Texture2DLoader : IContentLoader
+	/// <summary>
+	/// Texture2D Content Loader
+	/// </summary>
+	public class Texture2DContentLoader : IContentLoader
 	{
+		/// <summary>
+		/// Image Decoders
+		/// </summary>
 		public static List<IImageDecoder> Decoders { get; private set; }
 
-		static Texture2DLoader ()
+		static Texture2DContentLoader ()
 		{
 			Decoders = new List<IImageDecoder> ();
 		}
 
+		/// <summary>
+		/// Add Default Decoders
+		/// (BMP, PNG)
+		/// </summary>
 		public static void AddDefaultDecoders ()
 		{
 			Decoders.Add ( new BitmapDecoder () );
 			Decoders.Add ( new PngDecoder () );
 		}
 
+		/// <summary>
+		/// Content Type (ITexture2D)
+		/// </summary>
 		public Type ContentType { get { return typeof ( ITexture2D ); } }
 
+		/// <summary>
+		/// File Extensions
+		/// </summary>
 		public IEnumerable<string> FileExtensions
 		{
 			get
@@ -38,8 +54,17 @@ namespace Daramkun.Liqueur.Contents.Loaders
 			}
 		}
 
+		/// <summary>
+		/// Is loaded content will be auto disposing?
+		/// </summary>
 		public bool IsSelfStreamDispose { get { return true; } }
 
+		/// <summary>
+		/// Load Texture2D Content
+		/// </summary>
+		/// <param name="stream">Image stream</param>
+		/// <param name="args">If you need Color key value, set this argument</param>
+		/// <returns>Loaded Texture2D</returns>
 		public object Load ( Stream stream, params object [] args )
 		{
 			bool isLoadComplete = false;

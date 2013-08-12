@@ -38,6 +38,7 @@ namespace Test.Windows.CSharp
 
 			public override void Intro ( params object [] args )
 			{
+				LiqueurSystem.GraphicsDevice.ScreenSize = new Vector2 ( 1024, 768 );
 				vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 150
 layout(location = 0) in vec4 a_position;
 layout(location = 1) in vec2 a_texcoord;

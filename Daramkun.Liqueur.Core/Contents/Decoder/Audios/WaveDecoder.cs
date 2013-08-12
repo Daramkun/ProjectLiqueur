@@ -9,6 +9,9 @@ using Daramkun.Liqueur.Exceptions;
 
 namespace Daramkun.Liqueur.Contents.Decoder.Audios
 {
+	/// <summary>
+	/// Wave audio decoder
+	/// </summary>
 	[FileFormat ( "WAV" )]
 	public class WaveDecoder : IAudioDecoder
 	{
@@ -89,6 +92,12 @@ namespace Daramkun.Liqueur.Contents.Decoder.Audios
 			return true;
 		}
 
+		/// <summary>
+		/// WAV audio decode
+		/// </summary>
+		/// <param name="stream">WAV file</param>
+		/// <param name="args">argument, don't set this</param>
+		/// <returns>Audio information and PCM data</returns>
 		public AudioInfo Decode ( Stream stream, params object [] args )
 		{
 			AudioInfo audioInfo = new AudioInfo ();
@@ -110,6 +119,12 @@ namespace Daramkun.Liqueur.Contents.Decoder.Audios
 			return audioInfo;
 		}
 
+		/// <summary>
+		/// Get WAV samples
+		/// </summary>
+		/// <param name="audioInfo">Audio information</param>
+		/// <param name="timeSpan">Audio position (if you need)</param>
+		/// <returns>Audio sample</returns>
 		public byte [] GetSample ( AudioInfo audioInfo, TimeSpan? timeSpan )
 		{
 			SampleInfo sampleInfo = audioInfo.Samples as SampleInfo;
@@ -127,6 +142,10 @@ namespace Daramkun.Liqueur.Contents.Decoder.Audios
 			return data;
 		}
 
+		/// <summary>
+		/// Decoder information string
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString ()
 		{
 			return "Wave Decoder";

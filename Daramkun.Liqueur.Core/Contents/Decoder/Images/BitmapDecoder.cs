@@ -10,6 +10,9 @@ using Daramkun.Liqueur.Graphics;
 
 namespace Daramkun.Liqueur.Contents.Decoder.Images
 {
+	/// <summary>
+	/// Bitmap image decoder
+	/// </summary>
 	[FileFormat ( "BMP", "DIB" )]
 	public class BitmapDecoder : IImageDecoder
 	{
@@ -80,6 +83,12 @@ namespace Daramkun.Liqueur.Contents.Decoder.Images
 			return true;
 		}
 
+		/// <summary>
+		/// BMP image decode
+		/// </summary>
+		/// <param name="stream">BMP file</param>
+		/// <param name="args">argument, don't set this</param>
+		/// <returns>Image information and pixel data</returns>
 		public ImageInfo Decode ( Stream stream, params object [] args )
 		{
 			BinaryReader reader = new BinaryReader ( stream );
@@ -104,6 +113,12 @@ namespace Daramkun.Liqueur.Contents.Decoder.Images
 			return imageInfo;
 		}
 
+		/// <summary>
+		/// Get BMP pixels
+		/// </summary>
+		/// <param name="imageInfo">Image information</param>
+		/// <param name="colorKey">Color key (if you need)</param>
+		/// <returns>Image pixels</returns>
 		public Color [] GetPixel ( ImageInfo imageInfo, Color? colorKey )
 		{
 			object [] imageDataData = ( ( object ) imageInfo.Data ) as object [];
@@ -141,6 +156,10 @@ namespace Daramkun.Liqueur.Contents.Decoder.Images
 			return convPixels;
 		}
 
+		/// <summary>
+		/// Decoder information string
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString ()
 		{
 			return "Default 24bit/32bit Bitmap Decoder";

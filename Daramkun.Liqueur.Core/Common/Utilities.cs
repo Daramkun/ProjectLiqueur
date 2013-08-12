@@ -6,8 +6,17 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Common
 {
+	/// <summary>
+	/// Liqueur utilities
+	/// </summary>
 	public static class Utilities
 	{
+		/// <summary>
+		/// subtype checker method
+		/// </summary>
+		/// <param name="majorType">Major type (child)</param>
+		/// <param name="minorType">Minor type (parent)</param>
+		/// <returns>subtype state</returns>
 		public static bool IsSubtypeOf ( Type majorType, Type minorType )
 		{
 			if ( majorType == minorType || majorType.IsSubclassOf ( minorType ) )

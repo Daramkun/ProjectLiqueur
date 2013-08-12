@@ -7,7 +7,7 @@ using Daramkun.Liqueur.Common;
 
 namespace Daramkun.Liqueur.Nodes
 {
-	public class Node : IUpdatable
+	public class Node
 	{
 		List<Node> children;
 		uint zOrder;

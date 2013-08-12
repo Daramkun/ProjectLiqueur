@@ -78,7 +78,6 @@
     <Compile Include="Common\FileFormatAttribute.cs" />
     <Compile Include="Common\GameTime.cs" />
     <Compile Include="Common\ICollision.cs" />
-    <Compile Include="Common\IUpdatable.cs" />
     <Compile Include="Common\Timer.cs" />
     <Compile Include="Common\Utilities.cs" />
     <Compile Include="Contents\AudioInfo.cs" />
@@ -198,6 +197,7 @@
     <Compile Include="Graphics\IRenderBuffer.cs" />
     <Compile Include="Graphics\ITexture2D.cs" />
     <Compile Include="Graphics\IVertexBuffer.cs" />
+    <Compile Include="Graphics\PassedEffect.cs" />
     <Compile Include="Graphics\StencilOperation.cs" />
     <Compile Include="Inputs\IInputDevice.cs" />
     <Compile Include="Inputs\PlayerIndex.cs" />

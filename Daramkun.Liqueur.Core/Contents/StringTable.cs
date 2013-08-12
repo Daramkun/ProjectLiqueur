@@ -9,12 +9,23 @@ using Daramkun.Liqueur.Exceptions;
 
 namespace Daramkun.Liqueur.Contents
 {
+	/// <summary>
+	/// String Table class
+	/// </summary>
 	public sealed class StringTable
 	{
 		JsonEntry stringTable;
 
+		/// <summary>
+		/// Is Culture mode?
+		/// (If this property true then String Table acquire LiqueurSystem.CurrentCulture, otherwise acquire Default culture)
+		/// </summary>
 		public bool IsCultureMode { get; set; }
 
+		/// <summary>
+		/// Constructor of String Table
+		/// </summary>
+		/// <param name="stream">String table stream</param>
 		public StringTable ( Stream stream )
 		{
 			stringTable = JsonParser.Parse ( stream );
@@ -22,6 +33,10 @@ namespace Daramkun.Liqueur.Contents
 				throw new VersionMismatchException ();
 		}
 
+		/// <summary>
+		/// Constructor of String Table
+		/// </summary>
+		/// <param name="jsonEntry">String table Json Entry</param>
 		public StringTable ( JsonEntry jsonEntry )
 		{
 			stringTable = jsonEntry;
@@ -29,6 +44,11 @@ namespace Daramkun.Liqueur.Contents
 				throw new VersionMismatchException ();
 		}
 
+		/// <summary>
+		/// Get or set string
+		/// </summary>
+		/// <param name="key">Table key</param>
+		/// <returns>Table value</returns>
 		public string this [ string key ]
 		{
 			get
@@ -46,6 +66,11 @@ namespace Daramkun.Liqueur.Contents
 			}
 		}
 
+		/// <summary>
+		/// Check contains key
+		/// </summary>
+		/// <param name="key">Table key</param>
+		/// <returns>Contain state</returns>
 		public bool Contains ( string key )
 		{
 			if ( IsCultureMode )

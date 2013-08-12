@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Mathematics;
@@ -44,11 +45,15 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				screenSize = value;
 				GL.MatrixMode ( MatrixMode.Projection );
-				GL.LoadIdentity ();
-				if ( window != null )
+				if ( !FullscreenMode )
+				{
 					( window.Handle as OpenTK.GameWindow ).ClientSize =
 						new System.Drawing.Size ( ( int ) value.X, ( int ) value.Y );
-				GL.Ortho ( 0, screenSize.X, screenSize.Y, 0, 0.0001f, 1000.0f );
+					( window.Handle as OpenTK.GameWindow ).X = Screen.PrimaryScreen.WorkingArea.Width / 2 -
+						( window.Handle as OpenTK.GameWindow ).Width / 2;
+					( window.Handle as OpenTK.GameWindow ).Y = Screen.PrimaryScreen.WorkingArea.Height / 2 -
+						( window.Handle as OpenTK.GameWindow ).Height / 2;
+				}
 			}
 		}
 

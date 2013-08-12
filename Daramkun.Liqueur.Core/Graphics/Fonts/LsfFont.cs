@@ -14,7 +14,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 	{
 		Dictionary<char, ITexture2D> readedImage = new Dictionary<char, ITexture2D> ();
 		List<char> noneList = new List<char> ();
-		Texture2DLoader imageContentLoader;
+		Texture2DContentLoader imageContentLoader;
 
 		ZipFileSystem fileSystem;
 
@@ -35,7 +35,7 @@ namespace Daramkun.Liqueur.Graphics.Fonts
 			FontFamily = entry [ "fontfamily" ] as string;
 			FontSize = ( int ) entry [ "fontsize" ];
 
-			imageContentLoader = new Texture2DLoader ();
+			imageContentLoader = new Texture2DContentLoader ();
 		}
 
 		protected override void Dispose ( bool isDisposing )

@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Data.Checksums
 {
+	/// <summary>
+	/// Adler32 Checksum class
+	/// </summary>
 	public class Adler32 : IChecksum<uint>
 	{
 		public uint Result { get; private set; }
