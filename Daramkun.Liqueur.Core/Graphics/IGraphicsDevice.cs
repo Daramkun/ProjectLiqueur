@@ -76,8 +76,22 @@ namespace Daramkun.Liqueur.Graphics
 	}
 	#endregion
 
+	public enum BaseRenderer
+	{
+		Unknown,
+
+		DirectX,
+		XNA,
+
+		OpenGL,
+		OpenGLES,
+
+
+	}
+
 	public interface IGraphicsDevice : IDisposable
 	{
+		BaseRenderer BaseRenderer { get; }
 		Version RendererVersion { get; }
 
 		Vector2 [] AvailableScreenSize { get; }

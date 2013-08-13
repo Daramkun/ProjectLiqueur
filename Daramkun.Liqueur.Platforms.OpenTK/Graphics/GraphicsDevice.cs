@@ -18,6 +18,8 @@ namespace Daramkun.Liqueur.Graphics
 		IWindow window;
 		Vector2 screenSize;
 
+		public BaseRenderer BaseRenderer { get { return Graphics.BaseRenderer.OpenGL; } }
+
 		public Version RendererVersion
 		{
 			get
