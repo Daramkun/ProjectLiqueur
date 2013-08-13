@@ -39,6 +39,9 @@
     <Compile Include="Audio\AudioChannel.cs" />
     <Compile Include="Audio\IAudio.cs" />
     <Compile Include="Audio\IAudioDevice.cs" />
+    <Compile Include="Contents\Decoder\Videos\IVideoDecoder.cs" />
+    <Compile Include="Contents\VideoInfo.cs" />
+    <Compile Include="Video\IVideo.cs" />
     <Compile Include="Common\ExternLib\CsVorbis\csogg\Buffer.cs" />
     <Compile Include="Common\ExternLib\CsVorbis\csogg\Packet.cs" />
     <Compile Include="Common\ExternLib\CsVorbis\csogg\Page.cs" />

@@ -354,6 +354,11 @@ namespace Daramkun.Liqueur.Graphics
 			UnsettingVertexBuffer<T> ( vertexBuffer.FVF );
 		}
 
+		public ITexture2D CreateTexture2D ( int width, int height )
+		{
+			return new Texture2D ( this, width, height );
+		}
+
 		public ITexture2D CreateTexture2D ( ImageInfo imageInfo, Color? colorKey = null )
 		{
 			return new Texture2D ( this, imageInfo, colorKey );

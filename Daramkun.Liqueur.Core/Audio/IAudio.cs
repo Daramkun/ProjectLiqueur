@@ -41,5 +41,10 @@ namespace Daramkun.Liqueur.Audio
 		/// (-1.0 ~ 0.0 : Left, 0 : Same, 0.0 ~ 1.0 : Right)
 		/// </summary>
 		float Balance { get; set; }
+
+		/// <summary>
+		/// Streaming audio
+		/// </summary>
+		bool Update ();
 	}
 }

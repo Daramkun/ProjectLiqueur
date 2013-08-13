@@ -108,6 +108,7 @@ namespace Daramkun.Liqueur.Graphics
 		void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer ) where T : struct;
 		void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer, IIndexBuffer indexBuffer ) where T : struct;
 
+		ITexture2D CreateTexture2D ( int width, int height );
 		ITexture2D CreateTexture2D ( ImageInfo imageInfo, Color? colorKey = null );
 		IRenderBuffer CreateRenderBuffer ( int width, int height );
 

@@ -112,7 +112,7 @@ namespace Daramkun.Liqueur.Audio
 			GC.SuppressFinalize ( this );
 		}
 
-		internal bool Update ()
+		public bool Update ()
 		{
 			byte [] data = audioInfo.GetSample ( null );
 			if ( data == null ) return true;

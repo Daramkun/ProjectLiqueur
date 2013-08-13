@@ -31,6 +31,8 @@ namespace Daramkun.Liqueur
 		public static TimeSpan FixedUpdateTimeStep { get; set; }
 		public static TimeSpan FixedDrawTimeStep { get; set; }
 
+		public static ILauncher Launcher { get; private set; }
+
 		static LiqueurSystem ()
 		{
 			CurrentCulture = CultureInfo.CurrentCulture;
@@ -41,6 +43,8 @@ namespace Daramkun.Liqueur
 		public static void Run ( ILauncher launcher, Node mainNode, params object [] args )
 		{
 			IWindow window; IGraphicsDevice graphicsDevice; IAudioDevice audioDevice;
+
+			Launcher = launcher;
 
 			launcher.LauncherInitialize ( out window, out graphicsDevice, out audioDevice );
 			Window = window;
