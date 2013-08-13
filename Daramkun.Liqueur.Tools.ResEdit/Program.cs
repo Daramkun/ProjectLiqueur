@@ -117,8 +117,6 @@ namespace Daramkun.Liqueur.Tools.ResEdit
 							case 5:
 								return;
 							default:
-								archive.Dispose ();
-								stream.Dispose ();
 								return;
 						}
 					}

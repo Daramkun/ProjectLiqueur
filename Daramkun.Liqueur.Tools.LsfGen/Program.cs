@@ -366,19 +366,17 @@ namespace Daramkun.Liqueur.Tools.LsfGen
 				{
 					string fontInformation = String.Format ( "{{ \"fontfamily\" : \"{0}\", \"fontsize\" : {1} }}",
 						fontname, fontsize );
-					using ( FileStream fileStream = new FileStream ( destination, FileMode.Create ) )
+					using ( ZipArchive archive = new ZipArchive ( new FileStream ( destination, FileMode.Create ), ZipArchiveMode.Create, false, Encoding.UTF8 ) )
 					{
-						using ( ZipArchive archive = new ZipArchive ( fileStream, ZipArchiveMode.Create, false, Encoding.UTF8 ) )
+						AddFileToZipArchive ( archive, "info.json", new MemoryStream ( Encoding.UTF8.GetBytes ( fontInformation ) ) );
+						foreach ( KeyValuePair<char, Bitmap> ch in charBitmapDictionary )
 						{
-							AddFileToZipArchive ( archive, "info.json", new MemoryStream ( Encoding.UTF8.GetBytes ( fontInformation ) ) );
-							foreach ( KeyValuePair<char, Bitmap> ch in charBitmapDictionary )
+							using ( MemoryStream tempStream = new MemoryStream () )
 							{
-								MemoryStream tempStream = new MemoryStream ();
 								ch.Value.Save ( tempStream, isBitmap ? ImageFormat.Bmp : ImageFormat.Png );
 								tempStream.Position = 0;
 								AddFileToZipArchive ( archive, String.Format ( "{0}.{1}", ( int ) ch.Key, isBitmap ? "bmp" : "png" ),
 									tempStream );
-								tempStream.Dispose ();
 							}
 						}
 					}

@@ -6,15 +6,28 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Data.Checksums
 {
+	/// <summary>
+	/// CRC32 Checksum class
+	/// </summary>
 	public class CRC32 : IChecksum<uint>
 	{
+		/// <summary>
+		/// Checksum result
+		/// </summary>
 		public uint Result { get; private set; }
 
+		/// <summary>
+		/// Constructor of CRC32 Checksum
+		/// </summary>
 		public CRC32 ()
 		{
 			Reset ();
 		}
 
+		/// <summary>
+		/// Update value
+		/// </summary>
+		/// <param name="value">value</param>
 		public void Update ( int value )
 		{
 			Result ^= 0xffffffff;
@@ -22,6 +35,10 @@ namespace Daramkun.Liqueur.Data.Checksums
 			Result ^= 0xffffffff;
 		}
 
+		/// <summary>
+		/// Update stream
+		/// </summary>
+		/// <param name="stream">stream</param>
 		public void Update ( Stream stream )
 		{
 			byte [] buffer = new byte [ stream.Length ];
@@ -29,11 +46,21 @@ namespace Daramkun.Liqueur.Data.Checksums
 			Update ( buffer );
 		}
 
+		/// <summary>
+		/// Update data
+		/// </summary>
+		/// <param name="buffer">data</param>
 		public void Update ( byte [] buffer )
 		{
 			Update ( buffer, 0, buffer.Length );
 		}
 
+		/// <summary>
+		/// Update data
+		/// </summary>
+		/// <param name="buffer">data</param>
+		/// <param name="offset">offset</param>
+		/// <param name="length">length</param>
 		public void Update ( byte [] buffer, int offset, int length )
 		{
 			if ( buffer == null )
@@ -47,6 +74,9 @@ namespace Daramkun.Liqueur.Data.Checksums
 			Result ^= 0xffffffff;
 		}
 
+		/// <summary>
+		/// Reset Checksum calculation
+		/// </summary>
 		public void Reset ()
 		{
 			Result = 0;

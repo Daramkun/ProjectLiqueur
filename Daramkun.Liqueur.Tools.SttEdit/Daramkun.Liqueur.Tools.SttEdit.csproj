@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{24d173e0-cafd-43d5-b1b8-1c76c08421c1}</Project>
+      <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
   </ItemGroup>
