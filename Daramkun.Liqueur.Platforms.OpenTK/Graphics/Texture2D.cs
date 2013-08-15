@@ -15,6 +15,8 @@ namespace Daramkun.Liqueur.Graphics
 		public int Width { get { return ( int ) Size.X; } }
 		public int Height { get { return ( int ) Size.Y; } }
 
+		public object Handle { get { return texture; } }
+
 		public Vector2 Size { get; private set; }
 
 		public Color [] Buffer

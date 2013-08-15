@@ -34,6 +34,8 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
+		public object Handle { get { return indexBuffer; } }
+
 		public IndexBuffer ( int indexCount )
 		{
 			Length = indexCount;

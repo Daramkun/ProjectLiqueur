@@ -23,12 +23,16 @@ namespace Daramkun.Liqueur.Graphics
 	{
 		ShaderType ShaderType { get; }
 
+		object Handle { get; }
+
 		void Attach ( IEffect effect );
 		void Detach ( IEffect effect );
 	}
 
 	public interface IEffect : IDisposable
 	{
+		object Handle { get; }
+
 		void Dispatch ( Action<IEffect> dispatchEvent );
 
 		void SetArgument<T> ( string parameter, T argument );

@@ -40,5 +40,7 @@ namespace Daramkun.Liqueur.Audio
 		/// <param name="audioInfo">Audio information & PCM data</param>
 		/// <returns>Audio resource</returns>
 		IAudio CreateAudio ( AudioInfo audioInfo );
+
+		object Handle { get; }
 	}
 }

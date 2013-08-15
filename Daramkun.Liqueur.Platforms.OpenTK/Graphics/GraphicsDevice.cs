@@ -18,6 +18,8 @@ namespace Daramkun.Liqueur.Graphics
 		IWindow window;
 		Vector2 screenSize;
 
+		public object Handle { get { return ( window.Handle as OpenTK.GameWindow ).Context; } }
+
 		public BaseRenderer BaseRenderer { get { return Graphics.BaseRenderer.OpenGL; } }
 
 		public Version RendererVersion
@@ -303,6 +305,30 @@ namespace Daramkun.Liqueur.Graphics
 				offset += sizeof ( float ) * 2;
 				index++;
 			}
+
+			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.TextureUV2 ) != 0 )
+			{
+				GL.EnableVertexAttribArray ( index );
+				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, Marshal.SizeOf ( typeof ( T ) ), offset );
+				offset += sizeof ( float ) * 2;
+				index++;
+			}
+
+			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.TextureUV3 ) != 0 )
+			{
+				GL.EnableVertexAttribArray ( index );
+				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, Marshal.SizeOf ( typeof ( T ) ), offset );
+				offset += sizeof ( float ) * 2;
+				index++;
+			}
+
+			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.TextureUV4 ) != 0 )
+			{
+				GL.EnableVertexAttribArray ( index );
+				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, Marshal.SizeOf ( typeof ( T ) ), offset );
+				offset += sizeof ( float ) * 2;
+				index++;
+			}
 		}
 
 		private void UnsettingVertexBuffer<T> ( FlexibleVertexFormat fvf ) where T : struct
@@ -317,6 +343,12 @@ namespace Daramkun.Liqueur.Graphics
 			if ( ( fvf & FlexibleVertexFormat.Diffuse ) != 0 )
 				index++;
 			if ( ( fvf & FlexibleVertexFormat.TextureUV1 ) != 0 )
+				index++;
+			if ( ( fvf & FlexibleVertexFormat.TextureUV2 ) != 0 )
+				index++;
+			if ( ( fvf & FlexibleVertexFormat.TextureUV3 ) != 0 )
+				index++;
+			if ( ( fvf & FlexibleVertexFormat.TextureUV4 ) != 0 )
 				index++;
 
 			for ( ; index >= 0; index-- )

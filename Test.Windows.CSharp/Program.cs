@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Daramkun.Liqueur;
+using Daramkun.Liqueur.Audio;
 using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Contents;
+using Daramkun.Liqueur.Contents.Decoder.Audios;
 using Daramkun.Liqueur.Contents.Decoder.Images;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Mathematics;
@@ -75,6 +77,7 @@ void main () {
 					texture = LiqueurSystem.GraphicsDevice.CreateTexture2D ( new PngDecoder ().Decode ( fs ) );
 
 				renderBuffer = LiqueurSystem.GraphicsDevice.CreateRenderBuffer ( 800, 600 );
+
 				base.Intro ( args );
 			}
 

@@ -17,6 +17,8 @@ namespace Daramkun.Liqueur.Graphics
 
 		public FlexibleVertexFormat FVF { get; private set; }
 
+		public object Handle { get { return vertexBuffer; } }
+
 		public T [] Vertices
 		{
 			get

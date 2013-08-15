@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Common;
@@ -43,8 +44,17 @@ namespace Daramkun.Liqueur.Audio
 		float Balance { get; set; }
 
 		/// <summary>
+		/// Native handle
+		/// </summary>
+		object Handle { get; }
+
+		/// <summary>
 		/// Streaming audio
 		/// </summary>
 		bool Update ();
+
+		void BufferData ( byte [] data );
+
+		event EventHandler<CancelEventArgs> BufferEnded;
 	}
 }

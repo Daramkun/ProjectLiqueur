@@ -10,5 +10,7 @@ namespace Daramkun.Liqueur.Graphics
 		int Length { get; }
 
 		int [] Indices { get; set; }
+
+		object Handle { get; }
 	}
 }

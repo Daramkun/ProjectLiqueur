@@ -134,7 +134,6 @@ namespace Daramkun.Liqueur.Contents.Decoder.Audios
 
 			if ( ( int ) sampleInfo.DataSize <= ( int ) sampleInfo.Offset )
 			{
-				audioInfo.AudioStream.Dispose ();
 				return null;
 			}
 			byte [] data = sampleInfo.Reader.ReadBytes ( audioInfo.SampleRate );

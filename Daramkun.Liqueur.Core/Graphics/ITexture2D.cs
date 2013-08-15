@@ -20,5 +20,7 @@ namespace Daramkun.Liqueur.Graphics
 		Vector2 Size { get; }
 
 		Color [] Buffer { get; set; }
+
+		object Handle { get; }
 	}
 }

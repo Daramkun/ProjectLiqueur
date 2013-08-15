@@ -13,6 +13,8 @@ namespace Daramkun.Liqueur.Graphics
 		internal int programId;
 		IShader [] shaders;
 
+		public object Handle { get { return programId; } }
+
 		public Effect ( IGraphicsDevice graphicsDevice, params IShader [] shaders )
 		{
 			int effectState;

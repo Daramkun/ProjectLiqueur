@@ -15,6 +15,8 @@ namespace Daramkun.Liqueur.Audio
 		internal AudioContext audioContext;
 		internal List<IAudio> audioList;
 
+		public object Handle { get { return audioContext; } }
+
 		public AudioDevice ( IWindow window )
 		{
 			audioContext = new AudioContext ( AudioContext.DefaultDevice );
@@ -44,25 +46,25 @@ namespace Daramkun.Liqueur.Audio
 		public void Update ()
 		{
 			foreach ( IAudio audio in audioList.ToArray () )
-				( audio as Audio ).Update ();
+				audio.Update ();
 		}
 
 		public void Play ( IAudio audio )
 		{
 			( audio as Audio ).isPlaying = true;
-			AL.SourcePlay ( ( audio as Audio ).sourceId );
+			AL.SourcePlay ( ( int ) audio.Handle );
 		}
 
 		public void Pause ( IAudio audio )
 		{
 			( audio as Audio ).isPlaying = false;
-			AL.SourcePause ( ( audio as Audio ).sourceId );
+			AL.SourcePause ( ( int ) audio.Handle );
 		}
 
 		public void Stop ( IAudio audio )
 		{
 			( audio as Audio ).isPlaying = false;
-			AL.SourceStop ( ( audio as Audio ).sourceId );
+			AL.SourceStop ( ( int ) audio.Handle );
 		}
 
 		public IAudio CreateAudio ( AudioInfo audioInfo )

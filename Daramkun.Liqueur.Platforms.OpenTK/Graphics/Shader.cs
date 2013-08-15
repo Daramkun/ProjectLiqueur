@@ -14,6 +14,8 @@ namespace Daramkun.Liqueur.Graphics
 
 		public ShaderType ShaderType { get; private set; }
 
+		public object Handle { get { return shaderId; } }
+
 		private Shader ( IGraphicsDevice graphicsDevice, Graphics.ShaderType shaderType )
 		{
 			ShaderType = shaderType;

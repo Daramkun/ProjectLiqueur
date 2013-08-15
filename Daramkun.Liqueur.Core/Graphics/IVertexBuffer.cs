@@ -15,12 +15,17 @@ namespace Daramkun.Liqueur.Graphics
 		Normal = 1 << 3,
 
 		TextureUV1 = 1 << 4,
+		TextureUV2 = 1 << 5,
+		TextureUV3 = 1 << 6,
+		TextureUV4 = 1 << 7,
 	}
 
 	public interface IVertexBuffer<T> : IDisposable where T : struct
 	{
 		int Length { get; }
 		int TotalBytesize { get; }
+
+		object Handle { get; }
 
 		FlexibleVertexFormat FVF { get; }
 

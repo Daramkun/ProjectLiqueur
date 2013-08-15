@@ -91,6 +91,8 @@ namespace Daramkun.Liqueur.Graphics
 
 	public interface IGraphicsDevice : IDisposable
 	{
+		object Handle { get; }
+
 		BaseRenderer BaseRenderer { get; }
 		Version RendererVersion { get; }
 

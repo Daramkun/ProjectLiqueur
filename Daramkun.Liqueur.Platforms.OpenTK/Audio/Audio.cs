@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace Daramkun.Liqueur.Audio
 		TimeSpan lastPosition;
 
 		WeakReference audioDevice;
+
+		public object Handle { get { return sourceId; } }
 
 		public TimeSpan Position
 		{
@@ -115,12 +118,23 @@ namespace Daramkun.Liqueur.Audio
 		public bool Update ()
 		{
 			byte [] data = audioInfo.GetSample ( null );
-			if ( data == null ) return true;
+			if ( data == null )
+			{
+				if ( isPlaying && !IsPlaying )
+				{
+					if ( BufferEnded != null )
+					{
+						CancelEventArgs cancelEvent = new CancelEventArgs ();
+						BufferEnded ( this, cancelEvent );
+						if ( cancelEvent.Cancel ) return true;
+						else return false;
+					}
+					else return true;
+				}
+				else return true;
+			}
 
-			int bufferId = AL.GenBuffer ();
-			AL.BufferData ( bufferId, alFormat, data, data.Length, audioInfo.SampleRate );
-			AL.SourceQueueBuffer ( sourceId, bufferId );
-			bufferIds.Add ( bufferId );
+			BufferData ( data );
 
 			if ( isPlaying && !IsPlaying )
 			{
@@ -130,5 +144,15 @@ namespace Daramkun.Liqueur.Audio
 			lastPosition = Position;
 			return false;
 		}
+
+		public void BufferData ( byte [] data )
+		{
+			int bufferId = AL.GenBuffer ();
+			AL.BufferData ( bufferId, alFormat, data, data.Length, audioInfo.SampleRate );
+			AL.SourceQueueBuffer ( sourceId, bufferId );
+			bufferIds.Add ( bufferId );
+		}
+
+		public event EventHandler<CancelEventArgs> BufferEnded;
 	}
 }

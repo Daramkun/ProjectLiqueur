@@ -11,6 +11,8 @@ namespace Daramkun.Liqueur.Graphics
 
 		public int Count { get { return effects.Length; } }
 
+		public object Handle { get { return effects; } }
+
 		public PassedEffect ( params IEffect [] effect )
 		{
 			effects = effect.Clone () as IEffect [];
