@@ -10,6 +10,8 @@ namespace Daramkun.Liqueur.Inputs.RawDevice
 	{
 		public abstract bool IsSupportVibration { get; }
 
+		public abstract bool IsConnectedPlayer ( PlayerIndex playerIndex = PlayerIndex.Player1 );
+
 		protected abstract GamePadState GenerateState ( PlayerIndex playerIndex );
 
 		public override GamePadState GetState ( PlayerIndex playerIndex = PlayerIndex.Player1 )
@@ -17,6 +19,6 @@ namespace Daramkun.Liqueur.Inputs.RawDevice
 			return GenerateState ( playerIndex );
 		}
 
-		public abstract void Vibrate ( float leftMotorSpeed, float rightMotorSpeed );
+		public abstract void Vibrate ( PlayerIndex playerIndex, float leftMotorSpeed, float rightMotorSpeed );
 	}
 }
