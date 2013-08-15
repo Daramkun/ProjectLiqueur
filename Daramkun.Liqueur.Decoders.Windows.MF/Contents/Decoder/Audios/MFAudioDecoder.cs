@@ -10,7 +10,7 @@ using SharpDX.MediaFoundation;
 
 namespace Daramkun.Liqueur.Contents.Decoder.Audios
 {
-	[FileFormat("WAV","MP3","WMA")]
+	[FileFormat ( "WAV", "MP3", "WMA", "AAC", "ACM" )]
 	public class MFAudioDecoder : IAudioDecoder
 	{
 		private class SampleStruct
