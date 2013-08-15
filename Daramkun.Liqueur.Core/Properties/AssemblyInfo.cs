@@ -8,11 +8,11 @@ using System.Runtime.InteropServices;
 // 어셈블리와 관련된 정보를 수정하려면
 // 이 특성 값을 변경하십시오.
 [assembly: AssemblyTitle ( "Daramkun.Liqueur.Core" )]
-[assembly: AssemblyDescription ( "Liqueur Core Framework" )]
+[assembly: AssemblyDescription ( "Project Liqueur Core Framework" )]
 [assembly: AssemblyConfiguration ( "" )]
 [assembly: AssemblyCompany ( "Daramkun's NEST" )]
 [assembly: AssemblyProduct ( "Daramkun.Liqueur.Core" )]
-[assembly: AssemblyCopyright ( "Copyright © 2013 Daramkun" )]
+[assembly: AssemblyCopyright ( "Copyright © 2013 Daramkun, Powered by csVorbis, csOgg, PngCs, ZLibPortable" )]
 [assembly: AssemblyTrademark ( "Project Liqueur®" )]
 [assembly: AssemblyCulture ( "" )]
 [assembly: NeutralResourcesLanguage ( "ko" )]
