@@ -35,5 +35,13 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 				return matrix;
 			}
 		}
+
+		public View ( Vector3 position, Vector3 target, Vector3 upVector )
+			: this ()
+		{
+			Position = position;
+			Target = target;
+			UpVector = upVector;
+		}
 	}
 }

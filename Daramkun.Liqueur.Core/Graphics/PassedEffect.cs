@@ -50,6 +50,11 @@ namespace Daramkun.Liqueur.Graphics
 			effects [ pass ].Dispatch ( dispatchEvent );
 		}
 
+		public T GetArgument<T> ( string parameter )
+		{
+			return effects [ 0 ].GetArgument<T> ( parameter );
+		}
+
 		public void SetArgument<T> ( string parameter, T argument )
 		{
 			foreach ( IEffect ef in effects )

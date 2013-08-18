@@ -66,8 +66,19 @@ namespace Daramkun.Liqueur.Platforms
 			window.Resize += ( object sender, EventArgs e ) => { args.Resize (); };
 			window.FocusedChanged += ( object sender, EventArgs e ) =>
 			{
-				if ( window.Focused ) args.Activated ();
-				else args.Deactivated ();
+				if ( window.Focused )
+				{
+					if ( LiqueurSystem.GraphicsDevice.FullscreenMode )
+						OpenTK.DisplayDevice.Default.ChangeResolution ( OpenTK.DisplayDevice.Default.SelectResolution ( ( int )
+							LiqueurSystem.GraphicsDevice.ScreenSize.X, ( int ) LiqueurSystem.GraphicsDevice.ScreenSize.Y, 32, 60 ) );
+					args.Activated ();
+				}
+				else
+				{
+					args.Deactivated ();
+					OpenTK.DisplayDevice.Default.RestoreResolution ();
+					OpenTK.DisplayDevice.Default.ChangeResolution ( ( LiqueurSystem.GraphicsDevice as GraphicsDevice ).originalResolution );
+				}
 			};
 			window.Context.SwapInterval = 0;
 

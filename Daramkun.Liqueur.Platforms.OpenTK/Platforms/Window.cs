@@ -6,7 +6,7 @@ using Daramkun.Liqueur.Mathematics;
 
 namespace Daramkun.Liqueur.Platforms
 {
-	class Window : IWindow
+	class Window : IWindow, IDesktopWindow
 	{
 		OpenTK.GameWindow window;
 

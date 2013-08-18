@@ -35,6 +35,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		void Dispatch ( Action<IEffect> dispatchEvent );
 
+		T GetArgument<T> ( string parameter );
 		void SetArgument<T> ( string parameter, T argument );
 		void SetTextures ( params TextureArgument [] textures );
 	}

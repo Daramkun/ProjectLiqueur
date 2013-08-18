@@ -18,6 +18,8 @@ namespace Daramkun.Liqueur.Graphics
 		IWindow window;
 		Vector2 screenSize;
 
+		internal OpenTK.DisplayResolution originalResolution;
+
 		public object Handle { get { return ( window.Handle as OpenTK.GameWindow ).Context; } }
 
 		public BaseRenderer BaseRenderer { get { return Graphics.BaseRenderer.OpenGL; } }
@@ -42,22 +44,27 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
+		private Vector2 ChangeToVector ( System.Drawing.Size size )
+		{
+			return new Vector2 ( size.Width, size.Height );
+		}
+
 		public Vector2 ScreenSize
 		{
-			get { return screenSize; }
+			get { return ( FullscreenMode ) ? screenSize : ChangeToVector ( ( window.Handle as OpenTK.GameWindow ).ClientSize ); }
 			set
 			{
 				screenSize = value;
-				GL.MatrixMode ( MatrixMode.Projection );
+				( window.Handle as OpenTK.GameWindow ).ClientSize =
+					new System.Drawing.Size ( ( int ) value.X, ( int ) value.Y );
 				if ( !FullscreenMode )
 				{
-					( window.Handle as OpenTK.GameWindow ).ClientSize =
-						new System.Drawing.Size ( ( int ) value.X, ( int ) value.Y );
 					( window.Handle as OpenTK.GameWindow ).X = Screen.PrimaryScreen.WorkingArea.Width / 2 -
 						( window.Handle as OpenTK.GameWindow ).Width / 2;
 					( window.Handle as OpenTK.GameWindow ).Y = Screen.PrimaryScreen.WorkingArea.Height / 2 -
 						( window.Handle as OpenTK.GameWindow ).Height / 2;
 				}
+				Viewport = new Viewport () { X = 0, Y = 0, Width = ( int ) value.X, Height = ( int ) value.Y };
 			}
 		}
 
@@ -70,6 +77,10 @@ namespace Daramkun.Liqueur.Graphics
 			set
 			{
 				( window.Handle as OpenTK.GameWindow ).WindowState = value ? OpenTK.WindowState.Fullscreen : OpenTK.WindowState.Normal;
+				if ( value )
+					OpenTK.DisplayDevice.Default.ChangeResolution ( OpenTK.DisplayDevice.Default.SelectResolution ( ( int ) screenSize.X, ( int ) screenSize.Y, 32, 60 ) );
+				else
+					OpenTK.DisplayDevice.Default.RestoreResolution ();
 			}
 		}
 
@@ -202,22 +213,40 @@ namespace Daramkun.Liqueur.Graphics
 		}
 
 		IRenderBuffer renderBuffer;
+		Viewport mainViewport;
 		public IRenderBuffer RenderTarget
 		{
 			get { return renderBuffer; }
 			set
 			{
-				renderBuffer = value;
-				if ( renderBuffer == null )
+				if ( value == null )
+				{
+					renderBuffer = null;
 					GL.BindFramebuffer ( FramebufferTarget.Framebuffer, 0 );
+					Viewport = mainViewport;
+				}
 				else
+				{
+					if ( renderBuffer == null )
+						mainViewport = Viewport;
+					renderBuffer = value;
 					GL.BindFramebuffer ( FramebufferTarget.Framebuffer, ( value as RenderBuffer ).frameBuffer );
+					Viewport = new Viewport () { X = 0, Y = 0, Width = value.Width, Height = value.Height };
+				}
 			}
 		}
 
 		public GraphicsDevice ( IWindow window )
 		{
 			this.window = window;
+
+			( window.Handle as OpenTK.GameWindow ).Resize += ( object sender, EventArgs e ) =>
+			{
+				Viewport = new Viewport () { X = 0, Y = 0, Width = ( int ) window.ClientSize.X, Height = ( int ) window.ClientSize.Y };
+			};
+
+			originalResolution = OpenTK.DisplayDevice.Default.SelectResolution ( OpenTK.DisplayDevice.Default.Width, OpenTK.DisplayDevice.Default.Height,
+				OpenTK.DisplayDevice.Default.BitsPerPixel, OpenTK.DisplayDevice.Default.RefreshRate );
 		}
 
 		~GraphicsDevice ()
@@ -227,7 +256,10 @@ namespace Daramkun.Liqueur.Graphics
 
 		protected virtual void Dispose ( bool isDisposing )
 		{
-			
+			if ( isDisposing )
+			{
+				OpenTK.DisplayDevice.Default.RestoreResolution ();
+			}
 		}
 
 		public void Dispose ()
@@ -271,7 +303,7 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				GL.EnableVertexAttribArray ( index );
 				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, Marshal.SizeOf ( typeof ( T ) ), offset );
-				offset += sizeof ( float ) * 2;
+				offset += sizeof ( float ) * 2; 
 				index++;
 			}
 			else if ( ( vertexBuffer.FVF & FlexibleVertexFormat.PositionXYZ ) != 0 )
