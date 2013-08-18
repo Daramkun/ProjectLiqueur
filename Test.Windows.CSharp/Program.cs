@@ -44,7 +44,7 @@ namespace Test.Windows.CSharp
 				//LiqueurSystem.GraphicsDevice.FullscreenMode = true;
 				LiqueurSystem.GraphicsDevice.ScreenSize = new Vector2 ( 1024, 768 );
 				//( LiqueurSystem.Window as IDesktopWindow ).IsResizable = true;
-				LiqueurSystem.GraphicsDevice.CullingMode = CullingMode.None;
+				LiqueurSystem.GraphicsDevice.CullingMode = CullingMode.CounterClockWise;
 				LiqueurSystem.GraphicsDevice.Viewport = new Viewport () { X = 0, Y = 0, Width = 1024, Height = 768 };
 
 				vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 150
@@ -74,7 +74,7 @@ void main () {
 }
 					", ShaderType.FragmentShader );
 				effect = LiqueurSystem.GraphicsDevice.CreateEffect ( vertexShader, fragShader );
-				effect.SetArgument<Matrix4x4> ( "modelView", Matrix4x4.Identity * new View ( new Vector3 ( 10, 10, 10 ), 
+				effect.SetArgument<Matrix4x4> ( "modelView", Matrix4x4.Identity * new View ( new Vector3 ( -7, 7, 10 ), 
 					new Vector3 ( 0f, 0f, 0f ), 
 					new Vector3 ( 0, 1, 0 ) ).Matrix );
 				effect.SetArgument<Matrix4x4> ( "proj", new PerspectiveFieldOfViewProjection ( ( float ) Math.PI / 4, 800 / 600.0f, 0.0001f, 1000.0f ).Matrix );
@@ -89,12 +89,15 @@ void main () {
 					new Vertex ( new Vector2 ( -5.0f, -5.0f ), new Vector2 ( 0, 0 ) ),
 					new Vertex ( new Vector2 ( +5.0f, +5.0f ), new Vector2 ( 1, 1 ) ),
 				} );
-				indexBuffer = LiqueurSystem.GraphicsDevice.CreateIndexBuffer ( new int [] { 0, 1, 2, 0, 1, 3, } );
+				indexBuffer = LiqueurSystem.GraphicsDevice.CreateIndexBuffer ( new int [] { 0, 2, 1, 0, 1, 3, } );
 
 				using ( FileStream fs = new FileStream ( "temp.png", FileMode.Open ) )
 					texture = LiqueurSystem.GraphicsDevice.CreateTexture2D ( new PngDecoder ().Decode ( fs ) );
 
 				renderBuffer = LiqueurSystem.GraphicsDevice.CreateRenderBuffer ( 800, 600 );
+
+				LiqueurSystem.GraphicsDevice.BlendState = true;
+				LiqueurSystem.GraphicsDevice.BlendOperation = BlendOperation.AlphaBlend;
 
 				base.Intro ( args );
 			}

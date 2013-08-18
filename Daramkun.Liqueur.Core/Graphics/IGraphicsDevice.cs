@@ -97,6 +97,7 @@ namespace Daramkun.Liqueur.Graphics
 		Version RendererVersion { get; }
 
 		Vector2 [] AvailableScreenSize { get; }
+
 		Vector2 ScreenSize { get; set; }
 		bool FullscreenMode { get; set; }
 		bool VerticalSyncMode { get; set; }

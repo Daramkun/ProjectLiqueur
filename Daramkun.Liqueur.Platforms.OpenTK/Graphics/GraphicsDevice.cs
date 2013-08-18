@@ -182,6 +182,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		BlendOperation blendOperation = new BlendOperation ()
 		{
+			Operator = BlendOperator.Add,
 			SourceParameter = BlendParameter.One, 
 			DestinationParameter = BlendParameter.One
 		};
@@ -196,6 +197,7 @@ namespace Daramkun.Liqueur.Graphics
 				blendOperation = value;
 				GL.BlendFunc ( ConvertBlendSourceFactor ( value.SourceParameter ),
 					ConvertBlendDestinationFactor ( value.DestinationParameter ) );
+				GL.BlendEquation ( ConvertBlendEquationMode ( value.Operator ) );
 			}
 		}
 
@@ -501,6 +503,19 @@ namespace Daramkun.Liqueur.Graphics
 				case BlendParameter.InvertDestinationAlpha: return BlendingFactorDest.OneMinusDstAlpha;
 			}
 			throw new ArgumentException ();
+		}
+
+		private BlendEquationMode ConvertBlendEquationMode ( BlendOperator blendOperator )
+		{
+			switch ( blendOperator )
+			{
+				case BlendOperator.Add: return BlendEquationMode.FuncAdd;
+				case BlendOperator.Subtract: return BlendEquationMode.FuncSubtract;
+				case BlendOperator.ReverseSubtract: return BlendEquationMode.FuncReverseSubtract;
+				case BlendOperator.Minimum: return BlendEquationMode.Min;
+				case BlendOperator.Maximum: return BlendEquationMode.Max;
+			}
+			return ( BlendEquationMode ) ( -1 );
 		}
 
 		private OpenTK.Graphics.OpenGL.StencilFunction ConvertStencilFunction ( StencilFunction stencilFunction )
