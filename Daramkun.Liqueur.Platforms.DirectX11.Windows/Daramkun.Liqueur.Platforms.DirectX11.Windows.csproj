@@ -30,6 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharpDX">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Windows\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Windows\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XAudio2">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Windows\SharpDX.XAudio2.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +52,14 @@
       <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Audio\" />
+    <Folder Include="Contents\" />
+    <Folder Include="Graphics\" />
+    <Folder Include="Inputs\" />
+    <Folder Include="Logging\" />
+    <Folder Include="Platforms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
