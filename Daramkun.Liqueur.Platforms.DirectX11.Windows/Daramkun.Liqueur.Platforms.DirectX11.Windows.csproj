@@ -42,9 +42,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Windows\SharpDX.XAudio2.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Windows\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Windows\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\GraphicsDevice.cs" />
+    <Compile Include="Platforms\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,10 +68,8 @@
   <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="Contents\" />
-    <Folder Include="Graphics\" />
     <Folder Include="Inputs\" />
     <Folder Include="Logging\" />
-    <Folder Include="Platforms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
