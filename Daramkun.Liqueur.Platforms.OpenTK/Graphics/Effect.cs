@@ -154,13 +154,7 @@ namespace Daramkun.Liqueur.Graphics
 			else if ( baseType == typeof ( Matrix4x4 ) )
 			{
 				Matrix4x4 v = ( Matrix4x4 ) ( object ) argument;
-				OpenTK.Matrix4 matrix = new OpenTK.Matrix4 (
-					v.M11, v.M12, v.M13, v.M14,
-					v.M21, v.M22, v.M23, v.M24, 
-					v.M31, v.M32, v.M33, v.M34,
-					v.M41, v.M42, v.M43, v.M44 
-				);
-				GL.UniformMatrix4 ( uniform, false, ref matrix );
+				GL.UniformMatrix4 ( uniform, 1, true, v.ToArray () );
 			}
 			GL.UseProgram ( lastProgram );
 		}
