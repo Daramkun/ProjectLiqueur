@@ -113,13 +113,16 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 			get
 			{
 				Matrix4x4 matrix = Matrix4x4.Identity;
-				matrix *= TranslationMatrix ( RotationCenter );
-				matrix *= RotateMatrix ( Rotation );
-				matrix *= TranslationMatrix ( -RotationCenter );
-				matrix *= TranslationMatrix ( ScaleCenter );
-				matrix *= ScaleMatrix ( Scale );
-				matrix *= TranslationMatrix ( -ScaleCenter );
+
 				matrix *= TranslationMatrix ( Translate );
+
+				matrix *= TranslationMatrix ( -RotationCenter );
+				matrix *= RotateMatrix ( Rotation );
+				matrix *= TranslationMatrix ( RotationCenter );
+
+				matrix *= TranslationMatrix ( -ScaleCenter );
+				matrix *= ScaleMatrix ( Scale );
+				matrix *= TranslationMatrix ( ScaleCenter );
 				return matrix;
 			}
 		}

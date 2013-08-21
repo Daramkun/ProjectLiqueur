@@ -18,7 +18,7 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 			get { return new World2 () { Scale = new Vector2 ( 1, 1 ) }; }
 		}
 
-		public World2 ( Vector2 translate, Vector2 scaleCenter, Vector2 scale, float rotation, Vector2 rotationCenter )
+		public World2 ( Vector2 translate, Vector2 scale, Vector2 scaleCenter, float rotation, Vector2 rotationCenter )
 			: this ()
 		{
 			Translate = translate;
@@ -77,13 +77,17 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 			get
 			{
 				Matrix4x4 matrix = Matrix4x4.Identity;
-				matrix *= TranslationMatrix ( RotationCenter );
-				matrix *= RotateMatrix ( Rotation );
-				matrix *= TranslationMatrix ( -RotationCenter );
-				matrix *= TranslationMatrix ( ScaleCenter );
-				matrix *= ScaleMatrix ( Scale );
-				matrix *= TranslationMatrix ( -ScaleCenter );
+
 				matrix *= TranslationMatrix ( Translate );
+
+				matrix *= TranslationMatrix ( -RotationCenter );
+				matrix *= RotateMatrix ( Rotation );
+				matrix *= TranslationMatrix ( RotationCenter );
+
+				matrix *= TranslationMatrix ( -ScaleCenter );
+				matrix *= ScaleMatrix ( Scale );
+				matrix *= TranslationMatrix ( ScaleCenter );
+				
 				return matrix;
 			}
 		}
