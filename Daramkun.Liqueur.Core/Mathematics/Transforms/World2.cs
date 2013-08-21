@@ -55,23 +55,21 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 			return new Matrix4x4 (
 				scale.X, 0, 0, 0,
 				0, scale.Y, 0, 0,
-				0, 0, 0, 0,
+				0, 0, 1, 0,
 				0, 0, 0, 1 );
 		}
 
 		private Matrix4x4 RotateMatrix ( float rotation )
 		{
-			Matrix4x4 ret = Matrix4x4.Identity;
-
 			var val1 = ( float ) System.Math.Cos ( rotation );
 			var val2 = ( float ) System.Math.Sin ( rotation );
 
-			ret.M11 = val1;
-			ret.M12 = val2;
-			ret.M21 = -val2;
-			ret.M22 = val1;
-
-			return ret;
+			return new Matrix4x4 (
+				val1, val2, 0, 0,
+				-val2, val1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1
+			);
 		}
 
 		public Matrix4x4 Matrix
@@ -79,11 +77,13 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 			get
 			{
 				Matrix4x4 matrix = Matrix4x4.Identity;
-				matrix *= TranslationMatrix ( Translate );
+				matrix *= TranslationMatrix ( RotationCenter );
 				matrix *= RotateMatrix ( Rotation );
-				matrix *= TranslationMatrix ( new Vector2 ( -RotationCenter.X + ScaleCenter.X, -RotationCenter.Y + ScaleCenter.Y ) );
+				matrix *= TranslationMatrix ( -RotationCenter );
+				matrix *= TranslationMatrix ( ScaleCenter );
 				matrix *= ScaleMatrix ( Scale );
 				matrix *= TranslationMatrix ( -ScaleCenter );
+				matrix *= TranslationMatrix ( Translate );
 				return matrix;
 			}
 		}
