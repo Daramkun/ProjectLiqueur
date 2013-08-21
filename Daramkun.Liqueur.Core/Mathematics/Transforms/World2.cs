@@ -78,8 +78,6 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 			{
 				Matrix4x4 matrix = Matrix4x4.Identity;
 
-				matrix *= TranslationMatrix ( Translate );
-
 				matrix *= TranslationMatrix ( -RotationCenter );
 				matrix *= RotateMatrix ( Rotation );
 				matrix *= TranslationMatrix ( RotationCenter );
@@ -87,7 +85,9 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 				matrix *= TranslationMatrix ( -ScaleCenter );
 				matrix *= ScaleMatrix ( Scale );
 				matrix *= TranslationMatrix ( ScaleCenter );
-				
+
+				matrix *= TranslationMatrix ( Translate );
+
 				return matrix;
 			}
 		}

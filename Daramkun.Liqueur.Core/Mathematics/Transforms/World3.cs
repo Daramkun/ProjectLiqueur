@@ -75,32 +75,28 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 
 		private Matrix4x4 RotateY ( float value )
 		{
-			Matrix4x4 ret = Matrix4x4.Identity;
-
 			var val1 = ( float ) System.Math.Cos ( value );
 			var val2 = ( float ) System.Math.Sin ( value );
 
-			ret.M11 = val1;
-			ret.M13 = -val2;
-			ret.M31 = val2;
-			ret.M33 = val1;
-
-			return ret;
+			return new Matrix4x4 (
+				val1, 0, -val2, 0,
+				0, 1, 0, 0,
+				val2, 0, val1, 0,
+				0, 0, 0, 1
+			);
 		}
 
 		private Matrix4x4 RotateZ ( float value )
 		{
-			Matrix4x4 ret = Matrix4x4.Identity;
-
 			var val1 = ( float ) System.Math.Cos ( value );
 			var val2 = ( float ) System.Math.Sin ( value );
 
-			ret.M11 = val1;
-			ret.M12 = val2;
-			ret.M21 = -val2;
-			ret.M22 = val1;
-
-			return ret;
+			return new Matrix4x4 (
+				val1, val2, 0, 0,
+				-val2, val1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1
+			);
 		}
 
 		private Matrix4x4 RotateMatrix ( Vector3 rotation )
@@ -114,8 +110,6 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 			{
 				Matrix4x4 matrix = Matrix4x4.Identity;
 
-				matrix *= TranslationMatrix ( Translate );
-
 				matrix *= TranslationMatrix ( -RotationCenter );
 				matrix *= RotateMatrix ( Rotation );
 				matrix *= TranslationMatrix ( RotationCenter );
@@ -123,6 +117,9 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 				matrix *= TranslationMatrix ( -ScaleCenter );
 				matrix *= ScaleMatrix ( Scale );
 				matrix *= TranslationMatrix ( ScaleCenter );
+
+				matrix *= TranslationMatrix ( Translate );
+
 				return matrix;
 			}
 		}

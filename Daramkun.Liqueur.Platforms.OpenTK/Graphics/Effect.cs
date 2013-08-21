@@ -154,7 +154,7 @@ namespace Daramkun.Liqueur.Graphics
 			else if ( baseType == typeof ( Matrix4x4 ) )
 			{
 				Matrix4x4 v = ( Matrix4x4 ) ( object ) argument;
-				GL.UniformMatrix4 ( uniform, 1, true, v.ToArray () );
+				GL.UniformMatrix4 ( uniform, 1, false, v.ToArray () );
 			}
 			GL.UseProgram ( lastProgram );
 		}
@@ -169,8 +169,8 @@ namespace Daramkun.Liqueur.Graphics
 				GL.ActiveTexture ( TextureUnit.Texture0 + i );
 				GL.BindTexture ( TextureTarget.Texture2D, ( textures [ i ].Texture as Texture2D ).texture );
 
-				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Nearest );
-				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Nearest );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
 
 				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
 				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
