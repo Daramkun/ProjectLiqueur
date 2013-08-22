@@ -165,7 +165,6 @@
     <Compile Include="Contents\ImageInfo.cs" />
     <Compile Include="Contents\Loaders\AudioContentLoader.cs" />
     <Compile Include="Contents\Loaders\JsonContentLoader.cs" />
-    <Compile Include="Contents\Loaders\LsfFontContentLoader.cs" />
     <Compile Include="Contents\Loaders\StringTableContentLoader.cs" />
     <Compile Include="Contents\Loaders\TextContentLoader.cs" />
     <Compile Include="Contents\Loaders\Texture2DContentLoader.cs" />
@@ -189,8 +188,6 @@
     <Compile Include="Exceptions\VersionMismatchException.cs" />
     <Compile Include="Graphics\BlendOperation.cs" />
     <Compile Include="Graphics\Color.cs" />
-    <Compile Include="Graphics\Font.cs" />
-    <Compile Include="Graphics\Fonts\LsfFont.cs" />
     <Compile Include="Graphics\IEffect.cs" />
     <Compile Include="Graphics\IGraphicsDevice.cs" />
     <Compile Include="Graphics\IIndexBuffer.cs" />

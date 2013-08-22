@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Daramkun.Liqueur.Graphics.Fonts;
+using Daramkun.Liqueur.Spirit.Graphics;
 
 namespace Daramkun.Liqueur.Contents.Loaders
 {

@@ -68,6 +68,10 @@
       <Project>{b4799777-35c6-44f0-b18a-350a9bcef41e}</Project>
       <Name>Daramkun.Liqueur.Platforms.OpenTK</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Daramkun.Liqueur.Spirit\Daramkun.Liqueur.Spirit.csproj">
+      <Project>{5037f5ca-5fb2-47e3-af5c-81d40ec439a9}</Project>
+      <Name>Daramkun.Liqueur.Spirit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

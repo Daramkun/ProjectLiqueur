@@ -34,9 +34,27 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
+      <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
+      <Name>Daramkun.Liqueur.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contents\Loaders\LsfFontContentLoader.cs" />
+    <Compile Include="Graphics\Font.cs" />
+    <Compile Include="Graphics\Fonts\LsfFont.cs" />
+    <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="Graphics\SpriteEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\BaseSpriteEffect\DirectX\" />
+    <Folder Include="Resources\BaseSpriteEffect\OpenGLES\" />
+    <Folder Include="Resources\BaseSpriteEffect\XNA\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGL\PixelShader.shader" />
+    <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGL\VertexShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

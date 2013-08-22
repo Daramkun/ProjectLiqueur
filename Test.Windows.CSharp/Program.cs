@@ -13,6 +13,7 @@ using Daramkun.Liqueur.Mathematics;
 using Daramkun.Liqueur.Mathematics.Transforms;
 using Daramkun.Liqueur.Nodes;
 using Daramkun.Liqueur.Platforms;
+using Daramkun.Liqueur.Spirit.Graphics;
 
 namespace Test.Windows.CSharp
 {
@@ -38,13 +39,14 @@ namespace Test.Windows.CSharp
 			IIndexBuffer indexBuffer;
 			ITexture2D texture;
 			IRenderBuffer renderBuffer;
+			Sprite sprite;
+			float angle;
 
 			public override void Intro ( params object [] args )
 			{
 				//LiqueurSystem.GraphicsDevice.FullscreenMode = true;
 				LiqueurSystem.GraphicsDevice.ScreenSize = new Vector2 ( 1024, 768 );
 				//( LiqueurSystem.Window as IDesktopWindow ).IsResizable = true;
-				LiqueurSystem.GraphicsDevice.CullingMode = CullingMode.CounterClockWise;
 				LiqueurSystem.GraphicsDevice.Viewport = new Viewport () { X = 0, Y = 0, Width = 1024, Height = 768 };
 
 				vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 150
@@ -96,10 +98,20 @@ void main () {
 
 				renderBuffer = LiqueurSystem.GraphicsDevice.CreateRenderBuffer ( 800, 600 );
 
+				LiqueurSystem.GraphicsDevice.CullingMode = CullingMode.None;
 				LiqueurSystem.GraphicsDevice.BlendState = true;
 				LiqueurSystem.GraphicsDevice.BlendOperation = BlendOperation.AlphaBlend;
 
+				sprite = new Sprite ( texture );
+
 				base.Intro ( args );
+			}
+
+			public override void Update ( GameTime gameTime )
+			{
+				angle += gameTime.ElapsedGameTime.Milliseconds / 10000.0f;
+
+				base.Update ( gameTime );
 			}
 
 			public override void Draw ( GameTime gameTime )
@@ -114,16 +126,23 @@ void main () {
 
 				LiqueurSystem.GraphicsDevice.RenderTarget = null;
 				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, new Color ( 0.2f, 0.5f, 0.4f, 1.0f ) );
+				
 				effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = renderBuffer } );
 				effect.Dispatch ( ( IEffect ef ) =>
 				{
 					LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
 				} );
+
+				World2 world = new World2 ( LiqueurSystem.GraphicsDevice.ScreenSize / 2 - sprite.Texture.Size / 2,
+					new Vector2 ( 1 + angle ), sprite.Texture.Size / 2, angle, sprite.Texture.Size / 2 );
+				sprite.Draw ( world );
+
 				base.Draw ( gameTime );
 			}
 
 			public override void Outro ()
 			{
+				sprite.Dispose ();
 				renderBuffer.Dispose ();
 				texture.Dispose ();
 				indexBuffer.Dispose ();

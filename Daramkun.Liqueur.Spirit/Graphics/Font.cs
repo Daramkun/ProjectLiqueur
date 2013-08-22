@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Mathematics;
 
-namespace Daramkun.Liqueur.Graphics
+namespace Daramkun.Liqueur.Spirit.Graphics
 {
 	public abstract class Font
 	{

@@ -7,8 +7,9 @@ using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Contents.FileSystems;
 using Daramkun.Liqueur.Contents.Loaders;
 using Daramkun.Liqueur.Data.Json;
+using Daramkun.Liqueur.Graphics;
 
-namespace Daramkun.Liqueur.Graphics.Fonts
+namespace Daramkun.Liqueur.Spirit.Graphics
 {
 	public class LsfFont : Font
 	{
