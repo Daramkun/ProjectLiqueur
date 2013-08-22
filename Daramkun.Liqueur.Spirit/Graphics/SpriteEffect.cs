@@ -51,7 +51,9 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		public void Dispose ()
 		{
+			if ( baseEffect == null ) return;
 			baseEffect.Dispose ();
+			baseEffect = null;
 		}
 	}
 }
