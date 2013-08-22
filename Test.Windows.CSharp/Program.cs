@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using Daramkun.Liqueur;
 using Daramkun.Liqueur.Audio;
 using Daramkun.Liqueur.Common;
@@ -93,8 +94,9 @@ void main () {
 				} );
 				indexBuffer = LiqueurSystem.GraphicsDevice.CreateIndexBuffer ( new int [] { 0, 2, 1, 0, 1, 3, } );
 
-				using ( FileStream fs = new FileStream ( "temp.png", FileMode.Open ) )
-					texture = LiqueurSystem.GraphicsDevice.CreateTexture2D ( new PngDecoder ().Decode ( fs ) );
+				texture = LiqueurSystem.GraphicsDevice.CreateTexture2D ( new PngDecoder ().Decode (
+					Assembly.GetEntryAssembly ().GetManifestResourceStream ( "Test.Windows.CSharp.temp.png" ) )
+				);
 
 				renderBuffer = LiqueurSystem.GraphicsDevice.CreateRenderBuffer ( 800, 600 );
 
