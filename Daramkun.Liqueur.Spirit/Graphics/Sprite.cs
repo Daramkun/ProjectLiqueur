@@ -91,18 +91,28 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		public void Dispose ()
 		{
-			if ( Effect is SpriteEffect )
-				Effect.Dispose ();
-			Effect = null;
-
-			indexReference--;
-			if ( indexReference == 0 )
+			if ( Effect != null )
 			{
-				indexBuffer.Dispose ();
-				indexBuffer = null;
+				if ( Effect is SpriteEffect )
+					Effect.Dispose ();
+				Effect = null;
 			}
-			vertexBuffer.Dispose ();
-			vertexBuffer = null;
+
+			if ( indexReference != 0 )
+			{
+				indexReference--;
+				if ( indexReference == 0 )
+				{
+					indexBuffer.Dispose ();
+					indexBuffer = null;
+				}
+			}
+
+			if ( vertexBuffer != null )
+			{
+				vertexBuffer.Dispose ();
+				vertexBuffer = null;
+			}
 		}
 
 		public void Draw ( World2 transform )
