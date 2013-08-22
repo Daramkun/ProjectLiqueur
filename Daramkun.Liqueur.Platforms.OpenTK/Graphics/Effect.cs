@@ -24,7 +24,7 @@ namespace Daramkun.Liqueur.Graphics
 			programId = GL.CreateProgram ();
 			foreach ( IShader shader in shaders )
 			{
-				shader.Attach ( this );
+				( shader as Shader ).Attach ( this );
 				GL.GetProgram ( programId, ProgramParameter.AttachedShaders, out effectState );
 				if ( effectState == 0 )
 					throw new EffectConfigurationException ();
@@ -47,7 +47,7 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				foreach ( IShader shader in shaders )
 				{
-					shader.Detach ( this );
+					( shader as Shader ).Detach ( this );
 					shader.Dispose ();
 				}
 				GL.DeleteProgram ( programId );
