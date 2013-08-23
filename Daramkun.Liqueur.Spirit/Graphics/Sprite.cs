@@ -35,7 +35,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 		Color overlayColor;
 
 		public IEffect Effect { get; set; }
-		public ITexture2D Texture { get; set; }
+		public ITexture2D Texture { get; private set; }
 
 		public Rectangle ClippingArea
 		{
@@ -73,6 +73,9 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			Texture = texture;
 			Effect = effect;
 
+			int width = 1, height = 1;
+			if ( texture != null ) { width = texture.Width; height = texture.Height; }
+
 			vertexBuffer = LiqueurSystem.GraphicsDevice.CreateVertexBuffer<SpriteVertex> ( SpriteVertexFormat, 4 );
 			if ( indexBuffer == null )
 				indexBuffer = LiqueurSystem.GraphicsDevice.CreateIndexBuffer ( new int [] { 0, 1, 2, 1, 3, 2 } );
@@ -81,12 +84,12 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			vertexBuffer.Vertices = new SpriteVertex []
 			{
 				new SpriteVertex ( new Vector2 ( 0, 0 ), Color.White, new Vector2 ( 0, 0 ) ),
-				new SpriteVertex ( new Vector2 ( texture.Width, 0 ), Color.White, new Vector2 ( 1, 0 ) ),
-				new SpriteVertex ( new Vector2 ( 0, texture.Height ), Color.White, new Vector2 ( 0, 1 ) ),
-				new SpriteVertex ( new Vector2 ( texture.Width, texture.Height ), Color.White, new Vector2 ( 1, 1 ) ),
+				new SpriteVertex ( new Vector2 ( width, 0 ), Color.White, new Vector2 ( 1, 0 ) ),
+				new SpriteVertex ( new Vector2 ( 0, height ), Color.White, new Vector2 ( 0, 1 ) ),
+				new SpriteVertex ( new Vector2 ( width, height ), Color.White, new Vector2 ( 1, 1 ) ),
 			};
 
-			clippingArea = new Rectangle ( 0, 0, texture.Width, texture.Height );
+			clippingArea = new Rectangle ( 0, 0, width, height );
 		}
 
 		public void Dispose ()
@@ -129,9 +132,17 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			} );
 		}
 
-		public void ResetClippingArea ()
+		public void Reset ( ITexture2D texture )
 		{
-			ClippingArea = new Rectangle ( new Vector2 (), Texture.Size );
+			Texture = texture;
+			vertexBuffer.Vertices = new SpriteVertex []
+			{
+				new SpriteVertex ( new Vector2 ( 0, 0 ), Color.White, new Vector2 ( 0, 0 ) ),
+				new SpriteVertex ( new Vector2 ( Texture.Width, 0 ), Color.White, new Vector2 ( 1, 0 ) ),
+				new SpriteVertex ( new Vector2 ( 0, Texture.Height ), Color.White, new Vector2 ( 0, 1 ) ),
+				new SpriteVertex ( new Vector2 ( Texture.Width, Texture.Height ), Color.White, new Vector2 ( 1, 1 ) ),
+			};
+			clippingArea = new Rectangle ( new Vector2 (), Texture.Size );
 		}
 	}
 }

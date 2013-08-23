@@ -42,6 +42,7 @@ namespace Test.Windows.CSharp
 			IRenderBuffer renderBuffer;
 			Sprite sprite;
 			float angle;
+			LsfFont font;
 
 			public override void Intro ( params object [] args )
 			{
@@ -105,13 +106,14 @@ void main () {
 				LiqueurSystem.GraphicsDevice.BlendOperation = BlendOperation.AlphaBlend;
 
 				sprite = new Sprite ( texture );
+				font = new LsfFont ( Assembly.GetEntryAssembly ().GetManifestResourceStream ( "Test.Windows.CSharp.temp.lsf" ) );
 
 				base.Intro ( args );
 			}
 
 			public override void Update ( GameTime gameTime )
 			{
-				angle += gameTime.ElapsedGameTime.Milliseconds / 10000.0f;
+				angle += gameTime.ElapsedGameTime.Milliseconds / 20000.0f;
 
 				base.Update ( gameTime );
 			}
@@ -138,6 +140,8 @@ void main () {
 				World2 world = new World2 ( LiqueurSystem.GraphicsDevice.ScreenSize / 2 - sprite.Texture.Size / 2,
 					new Vector2 ( 1 + angle ), sprite.Texture.Size / 2, angle, sprite.Texture.Size / 2 );
 				sprite.Draw ( world );
+
+				font.DrawFont ( "Test (문자열 출력 테스트!)", Color.White, new Vector2 ( 0, 0 ) );
 
 				base.Draw ( gameTime );
 			}

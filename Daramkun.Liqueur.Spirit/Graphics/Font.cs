@@ -4,15 +4,23 @@ using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Mathematics;
+using Daramkun.Liqueur.Mathematics.Transforms;
 
 namespace Daramkun.Liqueur.Spirit.Graphics
 {
-	public abstract class Font
+	public abstract class Font : IDisposable
 	{
 		public string FontFamily { get; protected set; }
 		public float FontSize { get; protected set; }
 
-		public Action<Font, char, Vector2> RenderEngine { get; set; }
+		Sprite spriteEngine;
+
+		public IEffect Effect { get { return spriteEngine.Effect; } set { spriteEngine.Effect = value; } }
+
+		public Font ()
+		{
+			spriteEngine = new Sprite ( null );
+		}
 
 		~Font ()
 		{
@@ -21,7 +29,14 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		protected virtual void Dispose ( bool isDisposing )
 		{
-
+			if ( isDisposing )
+			{
+				if ( spriteEngine != null )
+				{
+					spriteEngine.Dispose ();
+					spriteEngine = null;
+				}
+			}
 		}
 
 		public void Dispose ()
@@ -66,8 +81,13 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 					height += image.Height;
 				}
 
-				if ( RenderEngine != null )
-					RenderEngine ( this, ch, position + new Vector2 ( lines [ lines.Count - 1 ].X - image.Width, height - image.Height ) );
+				spriteEngine.OverlayColor = color;
+				spriteEngine.Reset ( image );
+				spriteEngine.Draw ( new World2 ()
+				{
+					Translate = position + new Vector2 ( lines [ lines.Count - 1 ].X - image.Width, height - image.Height ),
+					Scale = new Vector2 ( 1 ),
+				} );
 			}
 		}
 

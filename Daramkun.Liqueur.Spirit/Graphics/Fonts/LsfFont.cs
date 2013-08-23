@@ -36,6 +36,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			FontFamily = entry [ "fontfamily" ] as string;
 			FontSize = ( int ) entry [ "fontsize" ];
 
+			Texture2DContentLoader.AddDefaultDecoders ();
 			imageContentLoader = new Texture2DContentLoader ();
 		}
 
