@@ -141,7 +141,7 @@ void main () {
 					new Vector2 ( 1 + angle ), sprite.Texture.Size / 2, angle, sprite.Texture.Size / 2 );
 				sprite.Draw ( world );
 
-				font.DrawFont ( "Test (문자열 출력 테스트!)", Color.White, new Vector2 ( 0, 0 ) );
+				font.DrawFont ( "Test (문자열 출력 테스트!) 日本語テスト ♣", Color.White, new Vector2 ( 0, 0 ) );
 
 				base.Draw ( gameTime );
 			}
