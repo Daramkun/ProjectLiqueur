@@ -61,7 +61,7 @@ namespace Daramkun.Liqueur.Platforms
 
 			if ( int.Parse ( GL.GetString ( StringName.Version ) [ 0 ].ToString () ) <= 2 )
 				throw new PlatformNotSupportedException (
-					"Project Liqueur OpenTK Platform Extension is not support OpenGL 3.0 or lower." );
+					"Project Liqueur OpenTK Platform Extension is not support OpenGL 3.0 or OpenAL." );
 			
 			window.Resize += ( object sender, EventArgs e ) => { args.Resize (); };
 			window.FocusedChanged += ( object sender, EventArgs e ) =>
