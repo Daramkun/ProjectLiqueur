@@ -49,22 +49,22 @@ namespace Daramkun.Liqueur.Inputs
 
 		private void ButtonDownEvent ( object sender, OpenTK.Input.MouseButtonEventArgs e )
 		{
-			if ( ( e.Button & OpenTK.Input.MouseButton.Left ) != 0 )
+			if ( e.Button == OpenTK.Input.MouseButton.Left )
 				MouseButton |= MouseButton.Left;
-			if ( ( e.Button & OpenTK.Input.MouseButton.Right ) != 0 )
+			if ( e.Button == OpenTK.Input.MouseButton.Right )
 				MouseButton |= MouseButton.Right;
-			if ( ( e.Button & OpenTK.Input.MouseButton.Middle ) != 0 )
+			if ( e.Button == OpenTK.Input.MouseButton.Middle )
 				MouseButton |= MouseButton.Middle;
 			Position = new Daramkun.Liqueur.Mathematics.Vector2 ( e.X, e.Y );
 		}
 
 		private void ButtonUpEvent ( object sender, OpenTK.Input.MouseButtonEventArgs e )
 		{
-			if ( ( e.Button & OpenTK.Input.MouseButton.Left ) != 0 )
+			if ( e.Button == OpenTK.Input.MouseButton.Left )
 				MouseButton &= MouseButton.Left;
-			if ( ( e.Button & OpenTK.Input.MouseButton.Right ) != 0 )
+			if ( e.Button == OpenTK.Input.MouseButton.Right )
 				MouseButton &= MouseButton.Right;
-			if ( ( e.Button & OpenTK.Input.MouseButton.Middle ) != 0 )
+			if ( e.Button == OpenTK.Input.MouseButton.Middle )
 				MouseButton &= MouseButton.Middle;
 			Position = new Daramkun.Liqueur.Mathematics.Vector2 ( e.X, e.Y );
 		}

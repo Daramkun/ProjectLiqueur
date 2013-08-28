@@ -11,9 +11,11 @@
     <RootNamespace>Daramkun.Liqueur.Spirit</RootNamespace>
     <AssemblyName>Daramkun.Liqueur.Spirit</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile1</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile136</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,7 +37,7 @@
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
+      <Project>{032EC8FF-8AA5-4ACE-8147-D7F0FCECFF04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
   </ItemGroup>

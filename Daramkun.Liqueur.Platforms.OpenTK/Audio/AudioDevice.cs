@@ -19,7 +19,31 @@ namespace Daramkun.Liqueur.Audio
 
 		public AudioDevice ( IWindow window )
 		{
-			audioContext = new AudioContext ( AudioContext.DefaultDevice );
+			IList<string> availableDevices;
+			try
+			{
+				availableDevices = AudioContext.AvailableDevices;
+			}
+			catch (AudioContextException e)
+			{
+				throw new PlatformNotSupportedException ( string.Format (
+					"Audio device is not available for OpenAL: {0}", e.Message ) );
+			}
+			foreach ( string device in availableDevices )
+			{
+				try
+				{
+					audioContext = new AudioContext ( device );
+				}
+				catch
+				{
+					audioContext = null;
+					continue;
+				}
+				break;
+			}
+			if ( audioContext == null )
+				throw new PlatformNotSupportedException ( "Audio device is not available for OpenAL." );
 			audioList = new List<IAudio> ();
 		}
 

@@ -11,6 +11,8 @@
     <AssemblyName>Daramkun.Liqueur.Platforms.DirectX11.Windows</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,23 +33,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpDX">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Windows\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D11">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Windows\SharpDX.Direct3D11.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.XAudio2">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Windows\SharpDX.XAudio2.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.DXGI">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Windows\SharpDX.DXGI.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.D3DCompiler">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Windows\SharpDX.D3DCompiler.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -61,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
+      <Project>{032EC8FF-8AA5-4ACE-8147-D7F0FCECFF04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
   </ItemGroup>
