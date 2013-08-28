@@ -108,6 +108,15 @@ void main () {
 				sprite = new Sprite ( texture );
 				font = new LsfFont ( Assembly.GetEntryAssembly ().GetManifestResourceStream ( "Test.Windows.CSharp.temp.lsf" ) );
 
+				FpsCalculator calc = new FpsCalculator ();
+				calc.DrawEvent += ( object sender, GameTimeEventArgs e ) =>
+				{
+					string fpsString = string.Format ( "Update FPS: {0:0.00}\nRender FPS: {1:0.00}", calc.UpdateFPS, calc.DrawFPS );
+					font.DrawFont ( fpsString, Color.Black,
+						new Vector2 ( 0, LiqueurSystem.GraphicsDevice.ScreenSize.Y - font.MeasureString ( fpsString ).Y ) );
+				};
+				Add ( calc );
+
 				base.Intro ( args );
 			}
 
