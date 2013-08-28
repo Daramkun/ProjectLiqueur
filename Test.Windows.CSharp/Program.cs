@@ -83,8 +83,6 @@ void main () {
 					new Vector3 ( 0, 1, 0 ) ).Matrix );
 				effect.SetArgument<Matrix4x4> ( "proj", new PerspectiveFieldOfViewProjection ( ( float ) Math.PI / 4, 800 / 600.0f, 0.0001f, 1000.0f ).Matrix );
 
-				Matrix4x4 test = effect.GetArgument<Matrix4x4> ( "proj" );
-
 				vertexBuffer = LiqueurSystem.GraphicsDevice.CreateVertexBuffer<Vertex> ( FlexibleVertexFormat.PositionXY |
 					FlexibleVertexFormat.Diffuse, new Vertex []
 				{
