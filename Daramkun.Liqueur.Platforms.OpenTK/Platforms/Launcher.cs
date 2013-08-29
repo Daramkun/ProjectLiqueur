@@ -94,8 +94,7 @@ namespace Daramkun.Liqueur.Platforms
 			};
 			updateThread = new Thread ( () =>
 			{
-				updateContext = new GraphicsContext ( GraphicsMode.Default,
-					window.WindowInfo, 3, 0, GraphicsContextFlags.ForwardCompatible );
+				updateContext = new GraphicsContext ( GraphicsMode.Default, window.WindowInfo );
 				while ( true )
 				{
 					try
