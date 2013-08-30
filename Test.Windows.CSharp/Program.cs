@@ -49,7 +49,6 @@ namespace Test.Windows.CSharp
 				LiqueurSystem.GraphicsDevice.IsZWriteEnable = true;
 				LiqueurSystem.GraphicsDevice.CullingMode = CullingMode.None;
 				LiqueurSystem.GraphicsDevice.ScreenSize = new Vector2 ( 800, 600 );
-				LiqueurSystem.GraphicsDevice.Viewport = new Viewport () { X = 0, Y = 0, Width = 1024, Height = 768 };
 				LiqueurSystem.GraphicsDevice.BlendState = true;
 				LiqueurSystem.GraphicsDevice.BlendOperation = BlendOperation.AlphaBlend;
 
@@ -74,16 +73,8 @@ void main () {
 				{
 					AttributeOrdering = new ShaderOption.AttributeOrder []
 					{
-						new ShaderOption.AttributeOrder ()
-						{
-							Name = "a_position",
-							VertexType = FlexibleVertexFormat.PositionXYZ
-						},
-						new ShaderOption.AttributeOrder ()
-						{
-							Name = "a_texcoord",
-							VertexType = FlexibleVertexFormat.TextureUV1
-						}
+						new ShaderOption.AttributeOrder () { Name = "a_position", VertexType = FlexibleVertexFormat.PositionXYZ },
+						new ShaderOption.AttributeOrder () { Name = "a_texcoord", VertexType = FlexibleVertexFormat.TextureUV1 }
 					}
 				};
 				fragShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 120
@@ -96,7 +87,7 @@ void main () {
 }
 					", ShaderType.FragmentShader );
 				effect = LiqueurSystem.GraphicsDevice.CreateEffect ( vertexShader, fragShader );
-				effect.SetArgument<Matrix4x4> ( "modelView", Matrix4x4.Identity * new View ( new Vector3 ( 0, 0, 15 ), 
+				effect.SetArgument<Matrix4x4> ( "modelView", Matrix4x4.Identity * new View ( new Vector3 ( -7, 7, 10 ), 
 					new Vector3 ( 0f, 0f, 0f ), 
 					new Vector3 ( 0, 1, 0 ) ).Matrix );
 				effect.SetArgument<Matrix4x4> ( "proj", new PerspectiveFieldOfViewProjection ( ( float ) Math.PI / 4, 800 / 600.0f, 0.0001f, 1000.0f ).Matrix );
@@ -115,7 +106,7 @@ void main () {
 					Assembly.GetEntryAssembly ().GetManifestResourceStream ( "Test.Windows.CSharp.temp.png" ) )
 				);
 
-				renderBuffer = LiqueurSystem.GraphicsDevice.CreateRenderBuffer ( 256, 256 );
+				renderBuffer = LiqueurSystem.GraphicsDevice.CreateRenderBuffer ( 1024, 1024 );
 
 				sprite = new Sprite ( texture );
 				font = new LsfFont ( Assembly.GetEntryAssembly ().GetManifestResourceStream ( "Test.Windows.CSharp.temp.lsf" ) );
@@ -140,7 +131,7 @@ void main () {
 			}
 
 			public override void Draw ( GameTime gameTime )
-			{/*
+			{
 				LiqueurSystem.GraphicsDevice.RenderTarget = renderBuffer;
 				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, Color.White );
 				effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = texture } );
@@ -149,21 +140,21 @@ void main () {
 					LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
 				} );
 
-				LiqueurSystem.GraphicsDevice.RenderTarget = null;*/
+				LiqueurSystem.GraphicsDevice.RenderTarget = null;
 				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, new Color ( 0.2f, 0.5f, 0.4f, 1.0f ) );
-				/*
+				
 				effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = renderBuffer } );
 				effect.Dispatch ( ( IEffect ef ) =>
 				{
 					LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
-				} );*/
+				} );
 
-				/*World2 world = new World2 ( LiqueurSystem.GraphicsDevice.ScreenSize / 2 - sprite.Texture.Size / 2,
+				World2 world = new World2 ( LiqueurSystem.GraphicsDevice.ScreenSize / 2 - sprite.Texture.Size / 2,
 					new Vector2 ( 1 + angle ), sprite.Texture.Size / 2, angle, sprite.Texture.Size / 2 );
 				sprite.Draw ( world );
 
 				font.DrawFont ( "Test (문자열 출력 테스트!) 日本語テスト ♣♪", Color.White, new Vector2 ( 0, 0 ) );
-				*/
+				
 				base.Draw ( gameTime );
 			}
 
