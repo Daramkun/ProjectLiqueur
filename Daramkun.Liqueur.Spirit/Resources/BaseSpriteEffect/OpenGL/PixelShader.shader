@@ -1,6 +1,6 @@
 #version 120
-in vec4 o_overlay;
-in vec2 o_texture;
+varying vec4 o_overlay;
+varying vec2 o_texture;
 
 uniform sampler2D texture0;
 
