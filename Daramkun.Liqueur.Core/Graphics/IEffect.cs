@@ -19,9 +19,16 @@ namespace Daramkun.Liqueur.Graphics
 		GeometryShader = 1 << 2,
 	}
 
+	public class ShaderOption
+	{
+		public struct AttributeOrder { public string Name { get; set; } public FlexibleVertexFormat VertexType { get; set; } }
+		public AttributeOrder [] AttributeOrdering { get; set; }
+	}
+
 	public interface IShader : IDisposable
 	{
 		ShaderType ShaderType { get; }
+		ShaderOption Option { get; set; }
 
 		object Handle { get; }
 	}

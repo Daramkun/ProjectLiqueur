@@ -13,8 +13,8 @@ namespace Daramkun.Liqueur.Graphics
 		int shaderId;
 
 		public ShaderType ShaderType { get; private set; }
-
 		public object Handle { get { return shaderId; } }
+		public ShaderOption Option { get; set; }
 
 		private Shader ( IGraphicsDevice graphicsDevice, Graphics.ShaderType shaderType )
 		{
@@ -73,6 +73,15 @@ namespace Daramkun.Liqueur.Graphics
 		public void Attach ( IEffect effect )
 		{
 			GL.AttachShader ( ( effect as Effect ).programId, shaderId );
+			if ( Option != null )
+			{
+				int count = 0;
+				foreach ( ShaderOption.AttributeOrder attr in from a in Option.AttributeOrdering orderby a.VertexType select a )
+				{
+					GL.BindAttribLocation ( ( int ) effect.Handle, count, attr.Name );
+					count++;
+				}
+			}
 		}
 
 		public void Detach ( IEffect effect )

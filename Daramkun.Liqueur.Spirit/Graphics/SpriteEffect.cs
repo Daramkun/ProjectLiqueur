@@ -22,15 +22,35 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 				case ShaderType.VertexShader: shaderTypeString = "VertexShader"; break;
 				case ShaderType.PixelShader: shaderTypeString = "PixelShader"; break;
 			}
+
+			string rendererType = LiqueurSystem.GraphicsDevice.BaseRenderer.ToString ();
+			if ( LiqueurSystem.GraphicsDevice.BaseRenderer == BaseRenderer.OpenGL )
+			{
+				if ( LiqueurSystem.GraphicsDevice.RendererVersion.Major <= 2 ) rendererType += "2";
+				else rendererType += "3";
+			}
+
 			return Assembly.GetExecutingAssembly ().GetManifestResourceStream (
 				string.Format ( "Daramkun.Liqueur.Spirit.Resources.BaseSpriteEffect.{0}.{1}.shader",
-				LiqueurSystem.GraphicsDevice.BaseRenderer.ToString (), shaderTypeString ) );
+				rendererType, shaderTypeString ) );
 		}
 
 		public SpriteEffect ()
 		{
 			IShader vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( GetBaseShaderStream ( ShaderType.VertexShader ),
 				ShaderType.VertexShader );
+			if ( LiqueurSystem.GraphicsDevice.RendererVersion.Major == 2 )
+			{
+				vertexShader.Option = new ShaderOption ()
+				{
+					AttributeOrdering = new ShaderOption.AttributeOrder []
+				{
+					new ShaderOption.AttributeOrder() { Name = "i_position", VertexType = FlexibleVertexFormat.PositionXY },
+					new ShaderOption.AttributeOrder() { Name = "i_overlay", VertexType = FlexibleVertexFormat.Diffuse },
+					new ShaderOption.AttributeOrder() { Name = "i_texture", VertexType = FlexibleVertexFormat.TextureUV1 },
+				}
+				};
+			}
 			IShader pixelShader = LiqueurSystem.GraphicsDevice.CreateShader ( GetBaseShaderStream ( ShaderType.PixelShader ),
 				ShaderType.PixelShader );
 			baseEffect = LiqueurSystem.GraphicsDevice.CreateEffect ( vertexShader, pixelShader );

@@ -316,19 +316,19 @@ namespace Daramkun.Liqueur.Graphics
 				index++;
 			}
 
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.Normal ) != 0 )
-			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 3, VertexAttribPointerType.Float, false, Marshal.SizeOf ( typeof ( T ) ), offset );
-				offset += sizeof ( float ) * 3;
-				index++;
-			}
-
 			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.Diffuse ) != 0 )
 			{
 				GL.EnableVertexAttribArray ( index );
 				GL.VertexAttribPointer ( index, 4, VertexAttribPointerType.Float, false, Marshal.SizeOf ( typeof ( T ) ), offset );
 				offset += sizeof ( float ) * 4;
+				index++;
+			}
+
+			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.Normal ) != 0 )
+			{
+				GL.EnableVertexAttribArray ( index );
+				GL.VertexAttribPointer ( index, 3, VertexAttribPointerType.Float, false, Marshal.SizeOf ( typeof ( T ) ), offset );
+				offset += sizeof ( float ) * 3;
 				index++;
 			}
 

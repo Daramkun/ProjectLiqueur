@@ -126,7 +126,8 @@ namespace Daramkun.Liqueur.Platforms
 		{
 			updateThread.Abort ();
 			updateThread = null;
-			audioDevice.Dispose ();
+			if ( audioDevice != null )
+				audioDevice.Dispose ();
 			updateContext.Dispose ();
 			graphicsDevice.Dispose ();
 			window.Dispose ();

@@ -85,8 +85,6 @@ namespace Daramkun.Liqueur.Graphics
 
 		OpenGL,
 		OpenGLES,
-
-
 	}
 
 	public interface IGraphicsDevice : IDisposable
