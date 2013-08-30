@@ -68,6 +68,22 @@ void main () {
 	v_texcoord = a_texcoord;
 }
 					", ShaderType.VertexShader );
+				vertexShader.Option = new ShaderOption ()
+				{
+					AttributeOrdering = new ShaderOption.AttributeOrder []
+					{
+						new ShaderOption.AttributeOrder ()
+						{
+							Name = "a_position",
+							VertexType = FlexibleVertexFormat.PositionXYZ
+						},
+						new ShaderOption.AttributeOrder ()
+						{
+							Name = "a_texcoord",
+							VertexType = FlexibleVertexFormat.TextureUV1
+						}
+					}
+				};
 				fragShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 120
 varying vec2 v_texcoord;
 
@@ -126,7 +142,7 @@ void main () {
 			}
 
 			public override void Draw ( GameTime gameTime )
-			{
+			{/*
 				LiqueurSystem.GraphicsDevice.RenderTarget = renderBuffer;
 				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, Color.White );
 				effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = texture } );
@@ -135,14 +151,14 @@ void main () {
 					LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
 				} );
 
-				LiqueurSystem.GraphicsDevice.RenderTarget = null;
+				LiqueurSystem.GraphicsDevice.RenderTarget = null;*/
 				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, new Color ( 0.2f, 0.5f, 0.4f, 1.0f ) );
-				
+				/*
 				effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = renderBuffer } );
 				effect.Dispatch ( ( IEffect ef ) =>
 				{
 					LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
-				} );
+				} );*/
 
 				World2 world = new World2 ( LiqueurSystem.GraphicsDevice.ScreenSize / 2 - sprite.Texture.Size / 2,
 					new Vector2 ( 1 + angle ), sprite.Texture.Size / 2, angle, sprite.Texture.Size / 2 );
