@@ -126,10 +126,7 @@ void main () {
 			public override void Update ( GameTime gameTime )
 			{
 				angle += gameTime.ElapsedGameTime.Milliseconds / 20000.0f;
-				try{
 				base.Update ( gameTime );
-				}catch{
-				}
 			}
 
 			public override void Draw ( GameTime gameTime )

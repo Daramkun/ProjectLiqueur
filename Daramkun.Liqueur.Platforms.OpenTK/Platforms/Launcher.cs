@@ -102,6 +102,8 @@ namespace Daramkun.Liqueur.Platforms
 			};
 			updateThread = new Thread ( () =>
 			{
+				while ( !window.Exists ) ;
+
 				updateContext = new GraphicsContext ( GraphicsMode.Default, window.WindowInfo );
 				while ( true )
 				{
@@ -114,7 +116,13 @@ namespace Daramkun.Liqueur.Platforms
 					{
 						Logger.Write ( LogLevel.Level1, "{0}", e );
 					}
-					args.UpdateLogic ();
+
+					try
+					{
+						args.UpdateLogic ();
+					}
+					catch { }
+
 					Thread.Sleep ( 1 );
 				}
 			} );
