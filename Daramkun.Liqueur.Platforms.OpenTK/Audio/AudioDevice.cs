@@ -25,7 +25,7 @@ namespace Daramkun.Liqueur.Audio
 			}
 			catch
 			{
-				throw new PlatformNotSupportedException ( "Audio device is not available for OpenAL." );
+				throw new PlatformNotSupportedException ( "Audio device is not available or OpenAL library is not exist." );
 			}
 
 			audioList = new List<IAudio> ();

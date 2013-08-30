@@ -40,13 +40,19 @@ namespace Daramkun.Liqueur
 			FixedDrawTimeStep = new TimeSpan ();
 		}
 
+		public static bool SkipInitializeException { get; set; }
+
 		public static void Run ( ILauncher launcher, Node mainNode, params object [] args )
 		{
-			IWindow window; IGraphicsDevice graphicsDevice; IAudioDevice audioDevice;
+			IWindow window = null; IGraphicsDevice graphicsDevice = null; IAudioDevice audioDevice = null;
 
 			Launcher = launcher;
 
-			launcher.LauncherInitialize ( out window, out graphicsDevice, out audioDevice );
+			try
+			{
+				launcher.LauncherInitialize ( out window, out graphicsDevice, out audioDevice );
+			}
+			catch ( Exception e ) { if ( !SkipInitializeException ) throw e; }
 			Window = window;
 			GraphicsDevice = graphicsDevice;
 			AudioDevice = audioDevice;

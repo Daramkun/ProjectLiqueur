@@ -51,7 +51,7 @@ namespace Test.Windows.CSharp
 				//( LiqueurSystem.Window as IDesktopWindow ).IsResizable = true;
 				LiqueurSystem.GraphicsDevice.Viewport = new Viewport () { X = 0, Y = 0, Width = 1024, Height = 768 };
 
-				vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 150
+				vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 120
 layout(location = 0) in vec3 a_position;
 layout(location = 1) in vec2 a_texcoord;
 
@@ -68,7 +68,7 @@ void main () {
 	v_texcoord = a_texcoord;
 }
 					", ShaderType.VertexShader );
-				fragShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 150
+				fragShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 120
 in vec2 v_texcoord;
 
 uniform sampler2D texture;
@@ -170,6 +170,7 @@ void main () {
 		[STAThread]
 		static void Main ()
 		{
+			LiqueurSystem.SkipInitializeException = true;
 			LiqueurSystem.Run ( new Launcher (), new InternalScene () );
 		}
 	}

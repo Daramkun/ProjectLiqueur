@@ -15,6 +15,12 @@ namespace Daramkun.Liqueur.Platforms
 {
 	public class Launcher : ILauncher
 	{
+#if OPENGL2
+		private const int SupportOpenGLVersion = 2;
+#else
+		private const int SupportOpenGLVersion = 3;
+#endif
+
 		Thread updateThread;
 		IGraphicsContext updateContext;
 
@@ -59,9 +65,11 @@ namespace Daramkun.Liqueur.Platforms
 			GraphicsContext.ShareContexts = true;
 			GameWindow window = LiqueurSystem.Window.Handle as GameWindow;
 
-			if ( int.Parse ( GL.GetString ( StringName.Version ) [ 0 ].ToString () ) <= 2 )
+			if ( int.Parse ( GL.GetString ( StringName.Version ) [ 0 ].ToString () ) <= SupportOpenGLVersion - 1 )
 				throw new PlatformNotSupportedException (
-					"Project Liqueur OpenTK Platform Extension is not support OpenGL 3.0 or OpenAL." );
+					string.Format ( "Platform is not support OpenGL {0}.0 (Support maximum OpenGL Version: {1})",
+					SupportOpenGLVersion, GL.GetString ( StringName.Version ) )
+				);
 			
 			window.Resize += ( object sender, EventArgs e ) => { args.Resize (); };
 			window.FocusedChanged += ( object sender, EventArgs e ) =>

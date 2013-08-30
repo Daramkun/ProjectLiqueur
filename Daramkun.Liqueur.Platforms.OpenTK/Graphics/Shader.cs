@@ -44,7 +44,10 @@ namespace Daramkun.Liqueur.Graphics
 			int compileState;
 			GL.GetShader ( shaderId, ShaderParameter.CompileStatus, out compileState );
 			if ( compileState == 0 )
-				throw new ShaderCompilationException ( string.Format ( "Compile failed: [Shader Type: {0}], {1}", ShaderType, shaderCode ) );
+			{
+				throw new ShaderCompilationException ( string.Format ( "Compile failed: [Shader Type: {0}]\nLog:\n{1}\nOriginal code:\n{2}",
+					ShaderType, GL.GetShaderInfoLog ( shaderId ), shaderCode ) );
+			}
 		}
 
 		~Shader ()
@@ -81,8 +84,9 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			switch ( shaderType )
 			{
-				case Graphics.ShaderType.VertexShader: return OpenTK.Graphics.OpenGL.ShaderType.VertexShader;
-				case Graphics.ShaderType.PixelShader: return OpenTK.Graphics.OpenGL.ShaderType.FragmentShader;
+				case ShaderType.VertexShader: return OpenTK.Graphics.OpenGL.ShaderType.VertexShader;
+				case ShaderType.PixelShader: return OpenTK.Graphics.OpenGL.ShaderType.FragmentShader;
+				case ShaderType.GeometryShader: return OpenTK.Graphics.OpenGL.ShaderType.GeometryShader;
 				default: return ( OpenTK.Graphics.OpenGL.ShaderType ) ( -1 );
 			}
 		}

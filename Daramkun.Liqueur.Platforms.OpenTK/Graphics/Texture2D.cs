@@ -31,6 +31,7 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				GL.BindTexture ( TextureTarget.Texture2D, texture );
 
+#if !OPENGL2
 				uint magFilter = ( uint ) TextureMagFilter.Linear;
 				GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ref magFilter );
 				uint minFilter = ( uint ) TextureMinFilter.Linear;
@@ -39,6 +40,7 @@ namespace Daramkun.Liqueur.Graphics
 				GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ref wrapS );
 				uint wrapT = ( uint ) TextureWrapMode.ClampToEdge;
 				GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ref wrapT );
+#endif
 
 				byte [] colorData = new byte [ Width * Height * 4 ];
 

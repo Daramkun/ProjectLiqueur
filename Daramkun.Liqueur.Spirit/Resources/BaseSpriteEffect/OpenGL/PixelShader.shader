@@ -1,4 +1,4 @@
-#version 150
+#version 120
 in vec4 o_overlay;
 in vec2 o_texture;
 
