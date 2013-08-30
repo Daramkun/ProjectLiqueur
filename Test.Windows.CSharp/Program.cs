@@ -174,7 +174,7 @@ void main () {
 		[STAThread]
 		static void Main ()
 		{
-			LiqueurSystem.SkipInitializeException = true;
+			//LiqueurSystem.SkipInitializeException = true;
 			LiqueurSystem.Run ( new Launcher (), new InternalScene () );
 		}
 	}

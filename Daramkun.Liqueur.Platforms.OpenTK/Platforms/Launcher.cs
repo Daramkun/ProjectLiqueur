@@ -117,11 +117,7 @@ namespace Daramkun.Liqueur.Platforms
 						Logger.Write ( LogLevel.Level1, "{0}", e );
 					}
 
-					try
-					{
-						args.UpdateLogic ();
-					}
-					catch { }
+					args.UpdateLogic ();
 
 					Thread.Sleep ( 1 );
 				}
