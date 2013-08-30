@@ -52,13 +52,13 @@ namespace Test.Windows.CSharp
 				LiqueurSystem.GraphicsDevice.Viewport = new Viewport () { X = 0, Y = 0, Width = 1024, Height = 768 };
 
 				vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 120
-layout(location = 0) in vec3 a_position;
-layout(location = 1) in vec2 a_texcoord;
+attribute vec3 a_position;
+attribute vec2 a_texcoord;
 
 uniform mat4 proj;
 uniform mat4 modelView;
 
-out vec2 v_texcoord;
+varying vec2 v_texcoord;
 
 void main () {
 	vec4 pos = vec4(a_position, 1);
@@ -69,7 +69,7 @@ void main () {
 }
 					", ShaderType.VertexShader );
 				fragShader = LiqueurSystem.GraphicsDevice.CreateShader ( @"#version 120
-in vec2 v_texcoord;
+varying vec2 v_texcoord;
 
 uniform sampler2D texture;
 

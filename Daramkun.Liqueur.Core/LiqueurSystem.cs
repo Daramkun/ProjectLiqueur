@@ -75,7 +75,8 @@ namespace Daramkun.Liqueur
 				},
 				UpdateLogic = () =>
 				{
-					LiqueurSystem.AudioDevice.Update ();
+					if ( LiqueurSystem.AudioDevice != null )
+						LiqueurSystem.AudioDevice.Update ();
 					if ( elapsedUpdateTimeStep >= FixedUpdateTimeStep )
 					{
 						updateGameTime.Update ();
