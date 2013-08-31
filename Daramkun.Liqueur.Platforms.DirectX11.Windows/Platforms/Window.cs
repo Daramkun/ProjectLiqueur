@@ -21,7 +21,7 @@ namespace Daramkun.Liqueur.Platforms
 		public bool IsResizable
 		{
 			get { return window.FormBorderStyle == FormBorderStyle.Sizable; }
-			set { if ( value )window.FormBorderStyle = FormBorderStyle.Sizable; else window.FormBorderStyle = FormBorderStyle.FixedSingle; }
+			set { if ( value ) window.FormBorderStyle = FormBorderStyle.Sizable; else window.FormBorderStyle = FormBorderStyle.FixedSingle; }
 		}
 
 		public object Icon
@@ -36,7 +36,11 @@ namespace Daramkun.Liqueur.Platforms
 			set { window.Text = value;  }
 		}
 
-		public Vector2 ClientSize { get { return new Vector2 ( window.ClientSize.Width, window.ClientSize.Height ); } }
+		public Vector2 ClientSize
+		{
+			get { return new Vector2 ( window.ClientSize.Width, window.ClientSize.Height ); }
+			set { window.ClientSize = new System.Drawing.Size ( ( int ) value.X, ( int ) value.Y ); }
+		}
 
 		public object Handle { get { return window; } }
 
@@ -44,6 +48,7 @@ namespace Daramkun.Liqueur.Platforms
 		{
 			window = new Form ();
 			window.Text = "Project Liqueur";
+			window.ClientSize = new System.Drawing.Size ( 800, 600 );
 			window.FormBorderStyle = FormBorderStyle.FixedSingle;
 			window.StartPosition = FormStartPosition.CenterScreen;
 		}
@@ -55,7 +60,10 @@ namespace Daramkun.Liqueur.Platforms
 
 		protected virtual void Dispose ( bool isDisposing )
 		{
-		
+			if ( isDisposing )
+			{
+				window.Dispose ();
+			}
 		}
 
 		public void Dispose ()

@@ -52,7 +52,7 @@ namespace Daramkun.Liqueur
 			{
 				launcher.LauncherInitialize ( out window, out graphicsDevice, out audioDevice );
 			}
-			catch ( Exception e ) { if ( !SkipInitializeException ) throw e; }
+			catch ( Exception e ) { if ( !SkipInitializeException ) throw new Exception ( "Initialization Exception", e ); }
 			Window = window;
 			GraphicsDevice = graphicsDevice;
 			AudioDevice = audioDevice;
@@ -124,10 +124,13 @@ namespace Daramkun.Liqueur
 						( mainNode as IWindowEvent ).WindowDeactivated ();
 				}
 			} );
+		}
 
-			if ( mainNode != null )
-				mainNode.Outro ();
-			launcher.LauncherFinalize ( Window, GraphicsDevice, AudioDevice );
+		public static void Exit ()
+		{
+			if ( MainNode != null )
+				MainNode.Outro ();
+			Launcher.LauncherFinalize ( Window, GraphicsDevice, AudioDevice );
 		}
 	}
 }
