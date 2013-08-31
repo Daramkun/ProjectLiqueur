@@ -193,12 +193,31 @@ namespace Daramkun.Liqueur.Graphics
 
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer ) where T : struct
 		{
-			throw new NotImplementedException ();
+			graphicsDevice.SetVertexBuffer ( vertexBuffer.Handle as Microsoft.Xna.Framework.Graphics.VertexBuffer );
+			int primitiveCount = vertexBuffer.Length;
+			if ( ConvertPrimitiveType ( primitiveType ) == Microsoft.Xna.Framework.Graphics.PrimitiveType.LineList ||
+				ConvertPrimitiveType ( primitiveType ) == Microsoft.Xna.Framework.Graphics.PrimitiveType.LineStrip )
+				primitiveCount /= 2;
+			else primitiveCount /= 3;
+			graphicsDevice.DrawPrimitives ( ConvertPrimitiveType ( primitiveType ), 0, primitiveCount );
 		}
 
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer, IIndexBuffer indexBuffer ) where T : struct
 		{
-			throw new NotImplementedException ();
+			graphicsDevice.SetVertexBuffer ( vertexBuffer.Handle as Microsoft.Xna.Framework.Graphics.VertexBuffer );
+			
+		}
+
+		private Microsoft.Xna.Framework.Graphics.PrimitiveType ConvertPrimitiveType ( PrimitiveType primitiveType )
+		{
+			switch ( primitiveType )
+			{
+				case PrimitiveType.LineList: return Microsoft.Xna.Framework.Graphics.PrimitiveType.LineList;
+				case PrimitiveType.LineStrip: return Microsoft.Xna.Framework.Graphics.PrimitiveType.LineStrip;
+				case PrimitiveType.TriangleList: return Microsoft.Xna.Framework.Graphics.PrimitiveType.TriangleList;
+				case PrimitiveType.TriangleStrip: return Microsoft.Xna.Framework.Graphics.PrimitiveType.TriangleStrip;
+				default: return ( Microsoft.Xna.Framework.Graphics.PrimitiveType ) ( -1 );
+			}
 		}
 
 		public ITexture2D CreateTexture2D ( int width, int height )

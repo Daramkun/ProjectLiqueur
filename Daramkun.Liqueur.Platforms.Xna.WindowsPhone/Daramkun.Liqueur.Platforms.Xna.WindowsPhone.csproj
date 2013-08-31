@@ -57,6 +57,9 @@
     <Compile Include="Audio\Audio.cs" />
     <Compile Include="Audio\AudioDevice.cs" />
     <Compile Include="Graphics\GraphicsDevice.cs" />
+    <Compile Include="Graphics\IndexBuffer.cs" />
+    <Compile Include="Graphics\Texture2D.cs" />
+    <Compile Include="Graphics\VertexBuffer.cs" />
     <Compile Include="Platforms\Launcher.cs" />
     <Compile Include="Platforms\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
