@@ -21,9 +21,6 @@ namespace Daramkun.Liqueur.Platforms
 		private const int SupportOpenGLVersion = 3;
 #endif
 
-		Thread updateThread;
-		IGraphicsContext updateContext;
-
 		public bool IsInitialized { get; private set; }
 
 		public PlatformInformation PlatformInformation
@@ -94,45 +91,21 @@ namespace Daramkun.Liqueur.Platforms
 			{
 				args.Initialize ();
 			};
+			window.UpdateFrame += ( object sender, FrameEventArgs e ) =>
+			{
+				args.UpdateLogic ();
+			};
 			window.RenderFrame += ( object sender, FrameEventArgs e ) =>
 			{
-				if ( !window.Context.IsCurrent )
-				window.Context.MakeCurrent ( window.WindowInfo );
 				args.DrawLogic ();
 			};
-			updateThread = new Thread ( () =>
-			{
-				while ( !window.Exists ) ;
-
-				updateContext = new GraphicsContext ( GraphicsMode.Default, window.WindowInfo );
-				while ( true )
-				{
-					try
-					{
-						if ( !updateContext.IsCurrent )
-							updateContext.MakeCurrent ( window.WindowInfo );
-					}
-					catch ( Exception e )
-					{
-						Logger.Write ( LogLevel.Level1, "{0}", e );
-					}
-
-					args.UpdateLogic ();
-
-					Thread.Sleep ( 1 );
-				}
-			} );
-			updateThread.Start ();
 			window.Run ();
 		}
 
 		public void LauncherFinalize ( IWindow window, IGraphicsDevice graphicsDevice, IAudioDevice audioDevice )
 		{
-			updateThread.Abort ();
-			updateThread = null;
 			if ( audioDevice != null )
 				audioDevice.Dispose ();
-			updateContext.Dispose ();
 			graphicsDevice.Dispose ();
 			window.Dispose ();
 		}
