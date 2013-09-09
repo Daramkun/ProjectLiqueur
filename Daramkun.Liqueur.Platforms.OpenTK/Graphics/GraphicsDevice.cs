@@ -59,10 +59,13 @@ namespace Daramkun.Liqueur.Graphics
 					new System.Drawing.Size ( ( int ) value.X, ( int ) value.Y );
 				if ( !FullscreenMode )
 				{
-					( window.Handle as OpenTK.GameWindow ).X = Screen.PrimaryScreen.WorkingArea.Width / 2 -
-						( window.Handle as OpenTK.GameWindow ).Width / 2;
-					( window.Handle as OpenTK.GameWindow ).Y = Screen.PrimaryScreen.WorkingArea.Height / 2 -
-						( window.Handle as OpenTK.GameWindow ).Height / 2;
+					( window.Handle as OpenTK.GameWindow ).Location = new System.Drawing.Point
+					(
+						Screen.PrimaryScreen.WorkingArea.Width / 2 -
+							( window.Handle as OpenTK.GameWindow ).Width / 2,
+						Screen.PrimaryScreen.WorkingArea.Height / 2 -
+							( window.Handle as OpenTK.GameWindow ).Height / 2
+					);
 				}
 				Viewport = new Viewport () { X = 0, Y = 0, Width = ( int ) value.X, Height = ( int ) value.Y };
 			}

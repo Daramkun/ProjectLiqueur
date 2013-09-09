@@ -89,6 +89,7 @@ namespace Daramkun.Liqueur.Platforms
 
 			window.Load += ( object sender, EventArgs e ) =>
 			{
+				LiqueurSystem.Window.Title = "Project Liqueur";
 				args.Initialize ();
 			};
 			window.UpdateFrame += ( object sender, FrameEventArgs e ) =>
