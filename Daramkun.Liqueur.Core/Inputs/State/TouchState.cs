@@ -12,7 +12,9 @@ namespace Daramkun.Liqueur.Inputs.State
 		public TouchState ( params TouchPointer [] pointers )
 			: this ()
 		{
-			Pointers = pointers.Clone () as TouchPointer [];
+			Pointers = new TouchPointer [ pointers.Length ];
+			for ( int i = 0; i < pointers.Length; i++ )
+				Pointers [ i ] = pointers [ i ];
 		}
 	}
 }
