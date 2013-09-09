@@ -62,10 +62,11 @@ namespace Daramkun.Liqueur.Platforms
 			GraphicsContext.ShareContexts = true;
 			GameWindow window = LiqueurSystem.Window.Handle as GameWindow;
 
-			if ( int.Parse ( GL.GetString ( StringName.Version ) [ 0 ].ToString () ) <= SupportOpenGLVersion - 1 )
+			string versionString = GL.GetString ( StringName.Version );
+			if ( int.Parse ( versionString [ 0 ].ToString () ) <= SupportOpenGLVersion - 1 )
 				throw new PlatformNotSupportedException (
 					string.Format ( "Platform is not support OpenGL {0}.0 (Support maximum OpenGL Version: {1})",
-					SupportOpenGLVersion, GL.GetString ( StringName.Version ) )
+					SupportOpenGLVersion, versionString )
 				);
 			
 			window.Resize += ( object sender, EventArgs e ) => { args.Resize (); };

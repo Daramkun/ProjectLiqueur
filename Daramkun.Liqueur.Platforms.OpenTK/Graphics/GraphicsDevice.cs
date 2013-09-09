@@ -29,7 +29,10 @@ namespace Daramkun.Liqueur.Graphics
 			get
 			{
 				string versionString = GL.GetString ( StringName.Version );
-				return new Version ( versionString.Substring ( 0, versionString.IndexOf ( ' ' ) ).Trim () );
+				int index = versionString.IndexOf ( ' ' );
+				if ( index <= -1 ) index = versionString.IndexOf ( '-' );
+				if ( index <= -1 ) index = versionString.Length;
+				return new Version ( versionString.Substring ( 0, index ).Trim () );
 			}
 		}
 
