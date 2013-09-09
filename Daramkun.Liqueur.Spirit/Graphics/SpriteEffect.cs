@@ -14,7 +14,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		public object Handle { get { return baseEffect.Handle; } }
 
-		private Stream GetBaseShaderStream ( ShaderType shaderType )
+		private Stream GetBaseShaderStream ( ShaderType shaderType, int glslVersion = 0 )
 		{
 			string shaderTypeString = null;
 			switch ( shaderType )
@@ -26,8 +26,10 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			string rendererType = LiqueurSystem.GraphicsDevice.BaseRenderer.ToString ();
 			if ( LiqueurSystem.GraphicsDevice.BaseRenderer == BaseRenderer.OpenGL )
 			{
-				if ( LiqueurSystem.GraphicsDevice.RendererVersion.Major <= 2 ) rendererType += "2";
-				else rendererType += "3";
+				if ( LiqueurSystem.GraphicsDevice.RendererVersion.Major <= 2 || glslVersion == 10200 )
+					rendererType += "2";
+				else
+					rendererType += "3";
 			}
 
 			return Assembly.GetExecutingAssembly ().GetManifestResourceStream (
@@ -37,8 +39,29 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		public SpriteEffect ()
 		{
-			IShader vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( GetBaseShaderStream ( ShaderType.VertexShader ),
-				ShaderType.VertexShader );
+			IShader vertexShader;
+			try
+			{
+				vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( GetBaseShaderStream ( ShaderType.VertexShader ),
+					ShaderType.VertexShader );
+			}
+			catch ( Exception ex )
+			{
+				if ( LiqueurSystem.GraphicsDevice.BaseRenderer == BaseRenderer.OpenGL )
+				{
+					try
+					{
+						vertexShader = LiqueurSystem.GraphicsDevice.CreateShader (
+							GetBaseShaderStream ( ShaderType.VertexShader, 10200 ), ShaderType.VertexShader
+						);
+					}
+					catch
+					{
+						throw ex;
+					}
+				}
+			}
+
 			if ( LiqueurSystem.GraphicsDevice.RendererVersion.Major == 2 )
 			{
 				vertexShader.Option = new ShaderOption ()
@@ -51,8 +74,28 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 				}
 				};
 			}
-			IShader pixelShader = LiqueurSystem.GraphicsDevice.CreateShader ( GetBaseShaderStream ( ShaderType.PixelShader ),
-				ShaderType.PixelShader );
+			IShader pixelShader;
+			try
+			{
+				pixelShader = LiqueurSystem.GraphicsDevice.CreateShader ( GetBaseShaderStream ( ShaderType.PixelShader ),
+					ShaderType.PixelShader );
+			}
+			catch ( Exception ex )
+			{
+				if ( LiqueurSystem.GraphicsDevice.BaseRenderer == BaseRenderer.OpenGL )
+				{
+					try
+					{
+						pixelShader = LiqueurSystem.GraphicsDevice.CreateShader ( 
+							GetBaseShaderStream ( ShaderType.PixelShader, 10200 ), ShaderType.PixelShader
+						);
+					}
+					catch
+					{
+						throw ex;
+					}
+				}
+			}
 			baseEffect = LiqueurSystem.GraphicsDevice.CreateEffect ( vertexShader, pixelShader );
 		}
 
