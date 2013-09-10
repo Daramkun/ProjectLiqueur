@@ -62,9 +62,11 @@ namespace Daramkun.Liqueur.Graphics
 
 		public void Dispatch ( Action<IEffect> dispatchEvent )
 		{
+			int lastProgram;
+			GL.GetInteger ( GetPName.CurrentProgram, out lastProgram );
 			GL.UseProgram ( programId );
 			dispatchEvent ( this );
-			GL.UseProgram ( 0 );
+			GL.UseProgram ( lastProgram );
 		}
 
 		public T GetArgument<T> ( string parameter )
