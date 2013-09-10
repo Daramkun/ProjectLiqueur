@@ -39,7 +39,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		public SpriteEffect ()
 		{
-			IShader vertexShader;
+			IShader vertexShader = null;
 			try
 			{
 				vertexShader = LiqueurSystem.GraphicsDevice.CreateShader ( GetBaseShaderStream ( ShaderType.VertexShader ),
@@ -67,15 +67,15 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 				vertexShader.Option = new ShaderOption ()
 				{
 					AttributeOrdering = new ShaderOption.AttributeOrder []
-				{
-					new ShaderOption.AttributeOrder() { Name = "i_position", VertexType = FlexibleVertexFormat.PositionXY },
-					new ShaderOption.AttributeOrder() { Name = "i_overlay", VertexType = FlexibleVertexFormat.Diffuse },
-					new ShaderOption.AttributeOrder() { Name = "i_texture", VertexType = FlexibleVertexFormat.TextureUV1 },
-				}
+					{
+						new ShaderOption.AttributeOrder() { Name = "i_position", VertexType = FlexibleVertexFormat.PositionXY },
+						new ShaderOption.AttributeOrder() { Name = "i_overlay", VertexType = FlexibleVertexFormat.Diffuse },
+						new ShaderOption.AttributeOrder() { Name = "i_texture", VertexType = FlexibleVertexFormat.TextureUV1 },
+					}
 				};
 			}
 
-			IShader pixelShader;
+			IShader pixelShader = null;
 			try
 			{
 				pixelShader = LiqueurSystem.GraphicsDevice.CreateShader ( GetBaseShaderStream ( ShaderType.PixelShader ),
