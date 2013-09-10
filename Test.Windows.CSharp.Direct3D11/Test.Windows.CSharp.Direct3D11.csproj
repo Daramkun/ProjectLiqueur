@@ -11,6 +11,8 @@
     <AssemblyName>Test.Windows.CSharp.Direct3D11</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -60,15 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
+      <Project>{032EC8FF-8AA5-4ACE-8147-D7F0FCECFF04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Daramkun.Liqueur.Platforms.DirectX11.Windows\Daramkun.Liqueur.Platforms.DirectX11.Windows.csproj">
-      <Project>{fc9c7b7f-0682-4482-8798-c864b2ceb6fe}</Project>
+      <Project>{FC9C7B7F-0682-4482-8798-C864B2CEB6FE}</Project>
       <Name>Daramkun.Liqueur.Platforms.DirectX11.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Daramkun.Liqueur.Spirit\Daramkun.Liqueur.Spirit.csproj">
-      <Project>{5037f5ca-5fb2-47e3-af5c-81d40ec439a9}</Project>
+      <Project>{5037F5CA-5FB2-47E3-AF5C-81D40EC439A9}</Project>
       <Name>Daramkun.Liqueur.Spirit</Name>
     </ProjectReference>
   </ItemGroup>

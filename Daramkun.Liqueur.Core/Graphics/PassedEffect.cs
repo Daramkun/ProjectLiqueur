@@ -15,7 +15,9 @@ namespace Daramkun.Liqueur.Graphics
 
 		public PassedEffect ( params IEffect [] effect )
 		{
-			effects = effect.Clone () as IEffect [];
+			effects = new IEffect [ effect.Length ];
+			for ( int i = 0; i < effect.Length; i++ )
+				effects [ i ] = effect [ i ];
 		}
 
 		~PassedEffect ()

@@ -74,6 +74,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 				}
 				};
 			}
+
 			IShader pixelShader;
 			try
 			{

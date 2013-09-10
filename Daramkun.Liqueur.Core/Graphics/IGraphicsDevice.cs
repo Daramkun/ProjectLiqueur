@@ -82,6 +82,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		DirectX,
 		XNA,
+		MonoGame,
 
 		OpenGL,
 		OpenGLES,
