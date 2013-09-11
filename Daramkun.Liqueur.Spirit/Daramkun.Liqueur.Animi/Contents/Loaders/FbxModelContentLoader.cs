@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Daramkun.Liqueur.Animi.Contents.Loaders
 {
-	public class FxModelContentLoader<T> : IContentLoader
+	public class FbxModelContentLoader<T> : IContentLoader
 	{
 		public Type ContentType { get { return typeof ( Model<T> ); } }
 		public IEnumerable<string> FileExtensions { get { yield return "FX"; } }
