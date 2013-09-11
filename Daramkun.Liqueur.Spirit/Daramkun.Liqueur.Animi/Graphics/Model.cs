@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace Daramkun.Liqueur.Animi.Graphics
 {
+	public class Model : Model<BaseAnimiVertex>
+	{
+		public Model ( params Mesh [] meshes )
+			: base ( meshes )
+		{ }
+	}
+
 	public class Model<T> : IDisposable where T : struct
 	{
 		private List<Mesh<T>> meshesList;

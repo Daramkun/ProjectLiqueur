@@ -40,6 +40,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Graphics\Mesh.cs" />
     <Compile Include="Graphics\Model.cs" />
+    <Compile Include="Graphics\Bone.cs" />
+    <Compile Include="Contents\Loaders\FxModelContentLoader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -52,5 +54,6 @@
     <Folder Include="Contents\" />
     <Folder Include="Graphics\" />
     <Folder Include="Resources\" />
+    <Folder Include="Contents\Loaders\" />
   </ItemGroup>
 </Project>

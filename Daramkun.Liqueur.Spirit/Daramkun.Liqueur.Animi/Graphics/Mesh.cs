@@ -1,8 +1,38 @@
 using System;
 using Daramkun.Liqueur.Graphics;
+using Daramkun.Liqueur.Mathematics;
 
 namespace Daramkun.Liqueur.Animi.Graphics
 {
+	public struct BaseAnimiVertex
+	{
+		public Vector3 Position { get; set; }
+		public Color Diffuse { get; set; }
+		public Vector3 Normal { get; set; }
+		public Vector2 TextureUV1 { get; set; }
+
+		public static FlexibleVertexFormat FVF { get { return FlexibleVertexFormat.PositionXYZ | 
+			FlexibleVertexFormat.Diffuse | FlexibleVertexFormat.Normal | FlexibleVertexFormat.TextureUV1; } }
+	}
+
+	public class Mesh : Mesh<BaseAnimiVertex>
+	{
+		public Mesh ( IVertexBuffer<BaseAnimiVertex> vertexBuffer, IIndexBuffer indexBuffer = null,
+			PrimitiveType primitiveType = PrimitiveType.TriangleList )
+			: base ( vertexBuffer, indexBuffer, primitiveType )
+		{ }
+
+		public Mesh ( PrimitiveType primitiveType = PrimitiveType.TriangleList,
+			params BaseAnimiVertex vertices )
+			: base ( BaseAnimiVertex.FVF, primitiveType, vertices )
+		{ }
+
+		public Mesh ( BaseAnimiVertex vertices, int [] indices,
+			PrimitiveType primitiveType = PrimitiveType.TriangleList )
+			: base ( BaseAnimiVertex.FVF, vertices, indices, primitiveType )
+		{ }
+	}
+
 	public class Mesh<T> : IDisposable where T : struct
 	{
 		public PrimitiveType PrimitiveType { get; set; }
