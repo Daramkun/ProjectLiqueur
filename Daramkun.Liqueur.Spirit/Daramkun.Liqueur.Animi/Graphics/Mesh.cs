@@ -23,11 +23,11 @@ namespace Daramkun.Liqueur.Animi.Graphics
 		{ }
 
 		public Mesh ( PrimitiveType primitiveType = PrimitiveType.TriangleList,
-			params BaseAnimiVertex vertices )
+			params BaseAnimiVertex [] vertices )
 			: base ( BaseAnimiVertex.FVF, primitiveType, vertices )
 		{ }
 
-		public Mesh ( BaseAnimiVertex vertices, int [] indices,
+		public Mesh ( BaseAnimiVertex [] vertices, int [] indices,
 			PrimitiveType primitiveType = PrimitiveType.TriangleList )
 			: base ( BaseAnimiVertex.FVF, vertices, indices, primitiveType )
 		{ }
