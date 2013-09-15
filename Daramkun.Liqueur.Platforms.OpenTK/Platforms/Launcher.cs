@@ -15,12 +15,6 @@ namespace Daramkun.Liqueur.Platforms
 {
 	public class Launcher : ILauncher
 	{
-#if OPENGL2
-		private const int SupportOpenGLVersion = 2;
-#else
-		private const int SupportOpenGLVersion = 3;
-#endif
-
 		public bool IsInitialized { get; private set; }
 
 		public PlatformInformation PlatformInformation
@@ -63,10 +57,10 @@ namespace Daramkun.Liqueur.Platforms
 			GameWindow window = LiqueurSystem.Window.Handle as GameWindow;
 
 			string versionString = GL.GetString ( StringName.Version );
-			if ( int.Parse ( versionString [ 0 ].ToString () ) <= SupportOpenGLVersion - 1 )
+			if ( int.Parse ( versionString [ 0 ].ToString () ) < 2 )
 				throw new PlatformNotSupportedException (
-					string.Format ( "Platform is not support OpenGL {0}.0 (Support maximum OpenGL Version: {1})",
-					SupportOpenGLVersion, versionString )
+					string.Format ( "Platform is not support OpenGL {0}.0 (Support maximum OpenGL Version of This platform: {1})",
+					2, versionString )
 				);
 			
 			window.Resize += ( object sender, EventArgs e ) => { args.Resize (); };

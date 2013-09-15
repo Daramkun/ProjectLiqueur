@@ -37,7 +37,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 				rendererType, shaderTypeString ) );
 		}
 
-		public SpriteEffect ()
+		public SpriteEffect () 
 		{
 			IShader vertexShader = null;
 			try

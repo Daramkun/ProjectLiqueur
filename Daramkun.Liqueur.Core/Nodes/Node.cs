@@ -84,8 +84,7 @@ namespace Daramkun.Liqueur.Nodes
 		{
 			if ( OutroEvent != null )
 				OutroEvent ( this, EventArgs.Empty );
-			Node [] nodes = children.ToArray ();
-			foreach ( Node node in nodes )
+			foreach ( Node node in children.ToArray () )
 				Remove ( node );
 			children.Clear ();
 		}
@@ -98,10 +97,13 @@ namespace Daramkun.Liqueur.Nodes
 			if ( UpdateEvent != null )
 				UpdateEvent ( this, updateGameTimeEventArgs );
 
-			foreach ( Node node in children.ToArray () )
+			if ( children.Count > 0 )
 			{
-				if ( node.IsEnabled )
-					node.Update ( gameTime );
+				foreach ( Node node in children.ToArray () )
+				{
+					if ( node.IsEnabled )
+						node.Update ( gameTime );
+				}
 			}
 		}
 
@@ -113,10 +115,13 @@ namespace Daramkun.Liqueur.Nodes
 			if ( DrawEvent != null )
 				DrawEvent ( this, drawGameTimeEventArgs );
 
-			foreach ( Node node in children.ToArray () )
+			if ( children.Count > 0 )
 			{
-				if ( node.IsVisible )
-					node.Draw ( gameTime );
+				foreach ( Node node in children.ToArray () )
+				{
+					if ( node.IsVisible )
+						node.Draw ( gameTime );
+				}
 			}
 		}
 

@@ -31,16 +31,10 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				GL.BindTexture ( TextureTarget.Texture2D, texture );
 
-#if !OPENGL2
-				uint magFilter = ( uint ) TextureMagFilter.Linear;
-				GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ref magFilter );
-				uint minFilter = ( uint ) TextureMinFilter.Linear;
-				GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ref minFilter );
-				uint wrapS = ( uint ) TextureWrapMode.ClampToEdge;
-				GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ref wrapS );
-				uint wrapT = ( uint ) TextureWrapMode.ClampToEdge;
-				GL.TexParameterI ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ref wrapT );
-#endif
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.ClampToEdge );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.ClampToEdge );
 
 				byte [] colorData = new byte [ Width * Height * 4 ];
 

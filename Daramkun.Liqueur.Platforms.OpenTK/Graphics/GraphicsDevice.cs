@@ -420,7 +420,6 @@ namespace Daramkun.Liqueur.Graphics
 			SettingVertexBuffer<T> ( vertexBuffer );
 
 			GL.BindBuffer ( BufferTarget.ElementArrayBuffer, ( indexBuffer as IndexBuffer ).indexBuffer );
-			GL.IndexPointer ( IndexPointerType.Int, 0, 0 );
 
 			GL.DrawElements ( ConvertPrimitiveMode ( primitiveType ), indexBuffer.Length, DrawElementsType.UnsignedInt, 0 );
 

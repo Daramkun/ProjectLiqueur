@@ -1,16 +1,17 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Android.App;
 
 // 어셈블리의 일반 정보는 다음 특성 집합을 통해 제어됩니다.
 // 어셈블리와 관련된 정보를 수정하려면
 // 이 특성 값을 변경하십시오.
-[assembly: AssemblyTitle ( "Daramkun.Liqueur.Platforms.OpenTK" )]
-[assembly: AssemblyDescription ( "Project Liqueur Platform Framework for Windows, Linux, OS X" )]
+[assembly: AssemblyTitle ( "Daramkun.Liqueur.Platforms.Android" )]
+[assembly: AssemblyDescription ( "Project Liqueur Platform Framework for Google Android" )]
 [assembly: AssemblyConfiguration ( "" )]
 [assembly: AssemblyCompany ( "Daramkun's NEST" )]
-[assembly: AssemblyProduct ( "Daramkun.Liqueur.Platforms.OpenTK" )]
-[assembly: AssemblyCopyright ( "Copyright © 2013 Daramkun, Powered by OpenTK (OpenGL, OpenAL)" )]
+[assembly: AssemblyProduct ( "Daramkun.Liqueur.Platforms.Android" )]
+[assembly: AssemblyCopyright ( "Copyright © 2013 Daramkun, Powered by OpenTK for Android, Xamarin Studio" )]
 [assembly: AssemblyTrademark ( "Project Liqueur®" )]
 [assembly: AssemblyCulture ( "" )]
 
@@ -18,9 +19,6 @@ using System.Runtime.InteropServices;
 // 표시되지 않습니다. COM에서 이 어셈블리의 형식에 액세스하려면 
 // 해당 형식에 대해 ComVisible 특성을 true로 설정하십시오.
 [assembly: ComVisible ( false )]
-
-// 이 프로젝트가 COM에 노출되는 경우 다음 GUID는 typelib의 ID를 나타냅니다.
-[assembly: Guid ( "60f2295b-4b60-4010-9c5c-2fcae5060721" )]
 
 // 어셈블리의 버전 정보는 다음 네 가지 값으로 구성됩니다.
 //
@@ -34,3 +32,7 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion ( "1.0.0.0" )]
 [assembly: AssemblyFileVersion ( "1.0.0.0" )]
+
+// Add some common permissions, these can be removed if not needed
+[assembly: UsesPermission ( Android.Manifest.Permission.Vibrate )]
+[assembly: UsesPermission ( Android.Manifest.Permission.WakeLock )]
