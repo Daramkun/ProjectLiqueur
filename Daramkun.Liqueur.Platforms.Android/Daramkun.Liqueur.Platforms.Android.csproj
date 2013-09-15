@@ -58,6 +58,7 @@
     <Compile Include="Inputs\Keyboard.cs" />
     <Compile Include="Inputs\TouchPanel.cs" />
     <Compile Include="Inputs\Accelerometer.cs" />
+    <Compile Include="Platforms\Launcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
