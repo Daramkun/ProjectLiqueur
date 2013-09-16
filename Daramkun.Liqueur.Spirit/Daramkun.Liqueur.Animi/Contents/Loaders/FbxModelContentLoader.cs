@@ -1,8 +1,9 @@
 using System;
-using Daramkun.Liqueur.Contents;
-using Daramkun.Liqueur.Animi.Graphics;
 using System.IO;
 using System.Collections.Generic;
+using System.Text;
+using Daramkun.Liqueur.Contents;
+using Daramkun.Liqueur.Animi.Graphics;
 
 namespace Daramkun.Liqueur.Animi.Contents.Loaders
 {
@@ -19,7 +20,12 @@ namespace Daramkun.Liqueur.Animi.Contents.Loaders
 
 		public object Load ( Stream stream, params object[] args )
 		{
-			throw new NotImplementedException ();
+			byte [] buffer = new byte [ 21 ];
+			stream.Read ( buffer, 0, 21 );
+			if ( !Encoding.UTF8.GetBytes ( "Kaydara FBX Binary  \0" ).Equals ( buffer ) )
+			{
+
+			}
 		}
 	}
 }

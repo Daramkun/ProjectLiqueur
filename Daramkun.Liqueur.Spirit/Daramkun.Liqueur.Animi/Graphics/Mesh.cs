@@ -39,7 +39,9 @@ namespace Daramkun.Liqueur.Animi.Graphics
 		public IVertexBuffer<T> VertexBuffer { get; private set; }
 		public IIndexBuffer IndexBuffer { get; private set; }
 
-		public Mesh ( IVertexBuffer<T> vertexBuffer, IIndexBuffer indexBuffer = null,
+		public int BoneIndex { get; set; }
+
+		public Mesh ( IVertexBuffer<T> vertexBuffer, int boneIndex = 0, IIndexBuffer indexBuffer = null,
 			PrimitiveType primitiveType = PrimitiveType.TriangleList )
 		{
 			VertexBuffer = vertexBuffer;
