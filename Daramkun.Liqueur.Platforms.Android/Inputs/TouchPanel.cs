@@ -28,14 +28,14 @@ namespace Daramkun.Liqueur.Inputs
 							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( 0 ) ), new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Pressed );
 							break;
 						case Android.Views.MotionEventActions.PointerDown:
-							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( ( action & Android.Views.MotionEventActions.PointerIdMask ) >> Android.Views.MotionEventActions.PointerIdShift ) ),
+							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( ( int ) ( action & Android.Views.MotionEventActions.PointerIdMask ) >> ( int ) Android.Views.MotionEventActions.PointerIdShift ) ),
 							                         new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Pressed );
 							break;
 						case Android.Views.MotionEventActions.Up:
 							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( 0 ) ), new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Released );
 							break;
 						case Android.Views.MotionEventActions.PointerUp:
-							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( ( action & Android.Views.MotionEventActions.PointerIdMask ) >> Android.Views.MotionEventActions.PointerIdShift ) ),
+							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( ( int ) ( action & Android.Views.MotionEventActions.PointerIdMask ) >> ( int ) Android.Views.MotionEventActions.PointerIdShift ) ),
 							                        new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Released );
 							break;
 					}
