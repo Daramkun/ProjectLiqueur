@@ -26,6 +26,8 @@ namespace Daramkun.Liqueur.Animi.Contents.Loaders
 			{
 
 			}
+
+			return null;
 		}
 	}
 }

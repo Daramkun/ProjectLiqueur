@@ -25,14 +25,16 @@ namespace Daramkun.Liqueur
 			}
 		}
 
-		public Launcher ()
+		Android.Content.Context context;
+		public Launcher ( Android.Content.Context context )
 		{
 			IsInitialized = false;
+			this.context = context;
 		}
 
 		public void LauncherInitialize ( out IWindow window, out IGraphicsDevice graphicsDevice, out IAudioDevice audioDevice )
 		{
-			window = new Window ();
+			window = new Window ( context );
 			graphicsDevice = new GraphicsDevice ( window );
 			audioDevice = new AudioDevice ( window );
 

@@ -17,9 +17,9 @@ namespace Daramkun.Liqueur.Animi.Graphics
 
 	public class Mesh : Mesh<BaseAnimiVertex>
 	{
-		public Mesh ( IVertexBuffer<BaseAnimiVertex> vertexBuffer, IIndexBuffer indexBuffer = null,
+		public Mesh ( IVertexBuffer<BaseAnimiVertex> vertexBuffer, int boneIndex = 0, IIndexBuffer indexBuffer = null,
 			PrimitiveType primitiveType = PrimitiveType.TriangleList )
-			: base ( vertexBuffer, indexBuffer, primitiveType )
+			: base ( vertexBuffer, boneIndex, indexBuffer, primitiveType )
 		{ }
 
 		public Mesh ( PrimitiveType primitiveType = PrimitiveType.TriangleList,

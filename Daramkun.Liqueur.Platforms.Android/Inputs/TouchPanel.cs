@@ -25,34 +25,18 @@ namespace Daramkun.Liqueur.Inputs
 					switch ( action & Android.Views.MotionEventActions.Mask )
 					{
 						case Android.Views.MotionEventActions.Down:
-							{
-								tec.Mode = PointerMode.Pressed;
-								tec.Id = e.GetPointerId ( 0 );
-								tec.Position = new Vector2 ( e.GetX (), e.GetY () );
-							}
+							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( 0 ) ), new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Pressed );
 							break;
 						case Android.Views.MotionEventActions.PointerDown:
-							{
-								tec.Mode = PointerMode.Pressed;
-								tec.Id = ( action & Android.Views.MotionEventActions.PointerIdMask ) >> Android.Views.MotionEventActions.PointerIdShift;
-								tec.Id = e.GetPointerId ( tec.Id );
-								tec.Position = new Vector2 ( e.GetX (), e.GetY () );
-							}
+							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( ( action & Android.Views.MotionEventActions.PointerIdMask ) >> Android.Views.MotionEventActions.PointerIdShift ) ),
+							                         new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Pressed );
 							break;
 						case Android.Views.MotionEventActions.Up:
-							{
-								tec.Mode = PointerMode.Released;
-								tec.Id = e.GetPointerId ( 0 );
-								tec.Position = new Vector2 ( e.GetX (), e.GetY () );
-							}
+							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( 0 ) ), new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Released );
 							break;
 						case Android.Views.MotionEventActions.PointerUp:
-							{
-								tec.Mode = PointerMode.Released;
-								tec.Id = ( action & Android.Views.MotionEventActions.PointerIdMask ) >> Android.Views.MotionEventActions.PointerIdShift;
-								int id = e.GetPointerId ( tec.Id );
-								tec.Position = new Vector2 ( e.GetX (), e.GetY () );
-							}
+							tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( ( action & Android.Views.MotionEventActions.PointerIdMask ) >> Android.Views.MotionEventActions.PointerIdShift ) ),
+							                        new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Released );
 							break;
 					}
 
@@ -74,10 +58,7 @@ namespace Daramkun.Liqueur.Inputs
 				{
 					for ( int i = 0; i < e.PointerCount; i++ )
 					{
-						TouchPointer tec = new TouchPointer ();
-						tec.Mode = PointerMode.Moved;
-						tec.Id = e.GetPointerId ( i );
-						tec.Position = new Vector2 ( e.GetX (), e.GetY () );
+						TouchPointer tec = new TouchPointer ( new IntPtr ( e.GetPointerId ( i ) ), new Vector2 ( e.GetX (), e.GetY () ), PointerMode.Moved );
 						touchPointers [ i ] = tec;
 					}
 				}
@@ -86,7 +67,7 @@ namespace Daramkun.Liqueur.Inputs
 			}
 
 			public void Dispose () { }
-			public IntPtr Handle { get { return 0; } }
+			public IntPtr Handle { get { return new IntPtr ( 0 ); } }
 		}
 
 		InternalTouchListener touchListener;

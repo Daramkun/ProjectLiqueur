@@ -16,14 +16,14 @@ namespace Daramkun.Liqueur.Inputs
 				if ( e.Action == Android.Views.KeyEventActions.Down )
 				{
 					KeyboardKey key = ConvertKeys ( keyCode );
-					if ( key == KeyboardKey.Unknown ) return;
-					if ( pressedKeys.Contains ( key ) ) return;
+					if ( key == KeyboardKey.Unknown ) return false;
+					if ( pressedKeys.Contains ( key ) ) return false;
 					pressedKeys.Add ( key );
 				}
 				else if ( e.Action == Android.Views.KeyEventActions.Up )
 				{
 					KeyboardKey key = ConvertKeys ( keyCode );
-					if ( key == KeyboardKey.Unknown ) return;
+					if ( key == KeyboardKey.Unknown ) return false;
 					if ( pressedKeys.Contains ( key ) ) pressedKeys.Remove ( key );
 				}
 				return true;
@@ -34,7 +34,7 @@ namespace Daramkun.Liqueur.Inputs
 
 			}
 
-			public IntPtr Handle { get { return 0; } }
+			public IntPtr Handle { get { return new IntPtr ( 0 ); } }
 
 			#region Converter
 			private KeyboardKey ConvertKeys ( Android.Views.Keycode key )

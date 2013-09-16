@@ -8,14 +8,14 @@ namespace Daramkun.Liqueur.Inputs
 {
 	public class Accelerometer : AccelerometerDevice
 	{
-		private class InternalAccelerometerListener : Android.Hardware.ISensorListener
+		private class InternalAccelerometerListener : Android.Hardware.ISensorEventListener
 		{
 			public float x, y, z;
-			public void OnAccuracyChanged ( Android.Hardware.SensorType sensor, Android.Hardware.SensorStatus accuracy ) { }
-			public void OnSensorChanged ( Android.Hardware.SensorType sensor, float[] values )
-			{ x = values [ 0 ]; y = values [ 1 ]; z = values [ 2 ]; }
+			public void OnAccuracyChanged ( Android.Hardware.Sensor sensor, Android.Hardware.SensorStatus accuracy ) { }
+			public void OnSensorChanged ( Android.Hardware.SensorEvent e )
+			{ x = e.Values [ 0 ]; y = e.Values [ 1 ]; z = e.Values [ 2 ]; }
 			public void Dispose () { }
-			public IntPtr Handle { get { return 0; } }
+			public IntPtr Handle { get { return new IntPtr ( 0 ); } }
 		}
 
 		Android.Hardware.SensorManager sensorManager;
