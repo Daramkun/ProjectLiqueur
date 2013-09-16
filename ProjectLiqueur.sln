@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Liqueur Super Framework", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daramkun.Liqueur.Spirit", "Daramkun.Liqueur.Spirit\Daramkun.Liqueur.Spirit.csproj", "{5037F5CA-5FB2-47E3-AF5C-81D40EC439A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daramkun.Liqueur.Animi", "Daramkun.Liqueur.Spirit\Daramkun.Liqueur.Animi\Daramkun.Liqueur.Animi.csproj", "{06276AAB-58E0-4126-9154-CD6CC398D0CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daramkun.Liqueur.Animi", "Daramkun.Liqueur.Animi\Daramkun.Liqueur.Animi.csproj", "{06276AAB-58E0-4126-9154-CD6CC398D0CC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Liqueur Platform Subframework", "Liqueur Platform Subframework", "{B820D9C8-3DDC-4514-AC4A-DB0E00AF060B}"
 EndProject
