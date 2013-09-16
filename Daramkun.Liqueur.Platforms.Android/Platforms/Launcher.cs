@@ -38,6 +38,8 @@ namespace Daramkun.Liqueur
 			graphicsDevice = new GraphicsDevice ( window );
 			audioDevice = new AudioDevice ( window );
 
+			( context as Android.App.Activity ).SetContentView ( window.Handle as Android.Views.View );
+
 			IsInitialized = true;
 		}
 
