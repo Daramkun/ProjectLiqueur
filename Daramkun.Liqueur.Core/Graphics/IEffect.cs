@@ -16,7 +16,7 @@ namespace Daramkun.Liqueur.Graphics
 		PixelShader = 1 << 1,
 		FragmentShader = PixelShader,
 
-		GeometryShader = 1 << 2,
+		//GeometryShader = 1 << 2,
 	}
 
 	public class ShaderOption

@@ -7,10 +7,13 @@ namespace Daramkun.Liqueur.Graphics
 {
 	class Effect : IEffect
 	{
+		List<IShader> list = new List<IShader> ();
 
-		public object Handle
+		public object Handle { get { return list; } }
+
+		public Effect ( IGraphicsDevice graphicsDevice, params IShader [] shaders )
 		{
-			get { throw new NotImplementedException (); }
+			
 		}
 
 		public void Dispose ()

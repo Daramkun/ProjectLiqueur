@@ -9,12 +9,10 @@ namespace Daramkun.Liqueur.Graphics
 {
 	class Shader : IShader
 	{
-		object shader;
+		IDisposable shader;
 
 		public ShaderType ShaderType { get { throw new NotImplementedException (); } }
-
 		public ShaderOption Option { get; set; }
-
 		public object Handle { get { return shader; } }
 
 		public Shader ( IGraphicsDevice graphicsDevice, string code, ShaderType shaderType )
@@ -29,16 +27,8 @@ namespace Daramkun.Liqueur.Graphics
 		}
 
 		public Shader ( IGraphicsDevice graphicsDevice, Stream stream, ShaderType shaderType )
-		{
-			StreamReader reader = new StreamReader ( stream );
-			byte [] shaderData = SharpDX.D3DCompiler.ShaderBytecode.Compile ( Encoding.UTF8.GetBytes ( reader.ReadToEnd () ),
-				( shaderType == ShaderType.VertexShader ) ? "vs_5_0" : "ps_5_0" );
-			switch ( shaderType )
-			{
-				case ShaderType.VertexShader: shader = new VertexShader ( graphicsDevice.Handle as Device, shaderData ); break;
-				case ShaderType.PixelShader: shader = new PixelShader ( graphicsDevice.Handle as Device, shaderData ); break;
-			}
-		}
+			: this ( graphicsDevice, new StreamReader ( stream ).ReadToEnd (), shaderType )
+		{ }
 
 		~Shader ()
 		{
@@ -49,7 +39,8 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			if ( isDisposing )
 			{
-			
+				shader.Dispose ();
+				shader = null;
 			}
 		}
 

@@ -12,7 +12,7 @@ namespace Daramkun.Liqueur.Graphics
 	class GraphicsDevice : IGraphicsDevice
 	{
 		SharpDX.Direct3D11.Device d3dDevice;
-		SharpDX.Direct3D11.DeviceContext d3dContext;
+		internal SharpDX.Direct3D11.DeviceContext d3dContext;
 		SharpDX.Direct3D11.RenderTargetView d3dRenderTarget;
 		SharpDX.Direct3D11.DepthStencilView d3dDepthStencil;
 		SharpDX.Direct3D11.Texture2D d3dDepthStencilBuffer;
@@ -337,7 +337,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		public IEffect CreateEffect ( params IShader [] shaders )
 		{
-			throw new NotImplementedException ();
+			return new Effect ( this, shaders );
 		}
 	}
 }
