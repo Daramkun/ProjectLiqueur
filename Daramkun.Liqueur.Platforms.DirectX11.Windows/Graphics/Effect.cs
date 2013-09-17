@@ -7,23 +7,40 @@ namespace Daramkun.Liqueur.Graphics
 {
 	class Effect : IEffect
 	{
-		List<IShader> list = new List<IShader> ();
+		IGraphicsDevice graphicsDevice;
+		List<IShader> list;
 
 		public object Handle { get { return list; } }
 
 		public Effect ( IGraphicsDevice graphicsDevice, params IShader [] shaders )
 		{
-			
+			this.graphicsDevice = graphicsDevice;
+			list = new List<IShader> ( shaders );
 		}
 
 		public void Dispose ()
 		{
-			throw new NotImplementedException ();
+
 		}
 
 		public void Dispatch ( Action<IEffect> dispatchEvent )
 		{
-			throw new NotImplementedException ();
+			foreach(IShader shader in list)
+				switch ( shader.ShaderType )
+				{
+					case ShaderType.VertexShader:
+						( graphicsDevice.Handle as SharpDX.Direct3D11.Device ).ImmediateContext.VertexShader.Set (
+						shader.Handle as SharpDX.Direct3D11.VertexShader );
+						break;
+					case ShaderType.PixelShader: 
+						( graphicsDevice.Handle as SharpDX.Direct3D11.Device ).ImmediateContext.PixelShader.Set (
+						shader.Handle as SharpDX.Direct3D11.PixelShader );
+						break;
+				}
+
+			dispatchEvent ( this );
+
+
 		}
 
 		public T GetArgument<T> ( string parameter )
