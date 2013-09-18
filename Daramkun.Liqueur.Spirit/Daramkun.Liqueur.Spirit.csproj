@@ -57,6 +57,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGL2\PixelShader.shader" />
     <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGL2\VertexShader.shader" />
+    <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGLES\PixelShader.shader" />
+    <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGLES\VertexShader.shader" />
+    <EmbeddedResource Include="Resources\BaseSpriteEffect\DirectX\PixelShader.shader" />
+    <EmbeddedResource Include="Resources\BaseSpriteEffect\DirectX\VertexShader.shader" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGL3\PixelShader.shader" />
