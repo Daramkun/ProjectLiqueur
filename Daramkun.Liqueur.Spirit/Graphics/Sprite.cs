@@ -136,6 +136,11 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			} );
 		}
 
+		public void Reset ()
+		{
+			Reset ( this.Texture );
+		}
+
 		public void Reset ( ITexture2D texture )
 		{
 			Texture = texture;

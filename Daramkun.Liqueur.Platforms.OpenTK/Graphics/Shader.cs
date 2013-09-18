@@ -95,7 +95,7 @@ namespace Daramkun.Liqueur.Graphics
 			{
 				case ShaderType.VertexShader: return OpenTK.Graphics.OpenGL.ShaderType.VertexShader;
 				case ShaderType.PixelShader: return OpenTK.Graphics.OpenGL.ShaderType.FragmentShader;
-				case ShaderType.GeometryShader: return OpenTK.Graphics.OpenGL.ShaderType.GeometryShader;
+				//case ShaderType.GeometryShader: return OpenTK.Graphics.OpenGL.ShaderType.GeometryShader;
 				default: return ( OpenTK.Graphics.OpenGL.ShaderType ) ( -1 );
 			}
 		}
