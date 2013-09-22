@@ -237,6 +237,7 @@
     <Compile Include="Logging\MessageFormat.cs" />
     <Compile Include="Mathematics\Line.cs" />
     <Compile Include="Mathematics\Matrix2x2.cs" />
+    <Compile Include="Mathematics\Matrix3x3.cs" />
     <Compile Include="Mathematics\Matrix4x4.cs" />
     <Compile Include="Mathematics\Rectangle.cs" />
     <Compile Include="Mathematics\Transforms\IPerspectiveProjection.cs" />
