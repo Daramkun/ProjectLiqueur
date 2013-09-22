@@ -40,8 +40,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collision\Collision.cs" />
+    <Compile Include="Collision\Shapes\ChainShape.cs" />
+    <Compile Include="Collision\Shapes\Shape.cs" />
     <Compile Include="Common\b2Math\Rotation.cs" />
+    <Compile Include="Common\b2Math\Transform.cs" />
+    <Compile Include="Common\b2Math\Sweep.cs" />
+    <Compile Include="Common\Draw.cs" />
+    <Compile Include="Common\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dynamics\" />
+    <Folder Include="Rope\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
