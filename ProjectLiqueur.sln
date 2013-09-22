@@ -46,6 +46,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daramkun.Liqueur.Decoders.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daramkun.Liqueur.Inputs.Windows.XInput", "Daramkun.Liqueur.Inputs.Windows.XInput\Daramkun.Liqueur.Inputs.Windows.XInput.csproj", "{7689BA77-BAAD-4949-8B89-6EBE57C57447}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daramkun.Liqueur.Marionette", "Daramkun.Liqueur.Marionette\Daramkun.Liqueur.Marionette.csproj", "{8A3A424C-59EA-4757-BA0D-86385289C3C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Liqueur Porting Framework", "Liqueur Porting Framework", "{B654604A-88B9-4155-9812-A33128B63E07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daramkun.Liqueur.Box2D", "Daramkun.Liqueur.Box2D\Daramkun.Liqueur.Box2D.csproj", "{66EB3918-E59C-496B-91BD-AFB8878AE1B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -212,6 +218,26 @@ Global
 		{7689BA77-BAAD-4949-8B89-6EBE57C57447}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7689BA77-BAAD-4949-8B89-6EBE57C57447}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7689BA77-BAAD-4949-8B89-6EBE57C57447}.Release|Windows Phone.ActiveCfg = Release|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Debug|Windows Phone.ActiveCfg = Debug|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4}.Release|Windows Phone.ActiveCfg = Release|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Debug|Windows Phone.ActiveCfg = Debug|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6}.Release|Windows Phone.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -230,8 +256,10 @@ Global
 		{1DE525B0-5AD3-4660-A642-59EA1FC683E7} = {6F77F08E-9740-4377-AFD9-2D671D0C1021}
 		{5037F5CA-5FB2-47E3-AF5C-81D40EC439A9} = {1F942A10-9436-44CB-8CF7-F775088432FD}
 		{06276AAB-58E0-4126-9154-CD6CC398D0CC} = {1F942A10-9436-44CB-8CF7-F775088432FD}
+		{8A3A424C-59EA-4757-BA0D-86385289C3C4} = {1F942A10-9436-44CB-8CF7-F775088432FD}
 		{8DAB5FF6-8BCD-4A36-B551-32665AED72BE} = {B820D9C8-3DDC-4514-AC4A-DB0E00AF060B}
 		{7689BA77-BAAD-4949-8B89-6EBE57C57447} = {B820D9C8-3DDC-4514-AC4A-DB0E00AF060B}
+		{66EB3918-E59C-496B-91BD-AFB8878AE1B6} = {B654604A-88B9-4155-9812-A33128B63E07}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Test.Windows.CSharp\Test.Windows.CSharp.csproj
