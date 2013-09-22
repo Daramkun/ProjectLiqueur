@@ -19,6 +19,10 @@ namespace Daramkun.Liqueur.Common
 		/// </summary>
 		public TimeSpan Delay { get { return delay; } set { delay = value; } }
 		/// <summary>
+		/// Delta Time
+		/// </summary>
+		public TimeSpan DeltaTime { get { return lastTimeSpan - delay; } }
+		/// <summary>
 		/// Is time difference greater than delay value?
 		/// </summary>
 		public bool Check { get { return delay <= lastTimeSpan; } }
