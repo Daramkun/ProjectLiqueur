@@ -85,6 +85,16 @@ namespace Daramkun.Liqueur.Mathematics
 			return new Vector2 ( v1.X * v2.Y, v1.Y * v2.X );
 		}
 
+		public static Vector2 Skew ( Vector2 value )
+		{
+			return new Vector2 ( -value.Y, value.X );
+		}
+
+		public Vector2 Skew ()
+		{
+			return Vector2.Skew ( this );
+		}
+
 		public static Vector2 Transform ( Vector2 position, Matrix4x4 matrix )
 		{
 			return new Vector2 (

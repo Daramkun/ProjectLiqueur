@@ -104,6 +104,19 @@ namespace Daramkun.Liqueur.Mathematics
 			return v1;
 		}
 
+		public static Vector2 Solve ( Matrix2x2 matrix, Vector2 vector )
+		{
+			float a11 = matrix.M11, a12 = matrix.M21, a21 = matrix.M12, a22 = matrix.M22;
+			float det = a11 * a22 - a12 * a21;
+			if ( det != 0.0f ) det = 1.0f / det;
+			return new Vector2 ( det * ( a22 * vector.X - a12 * vector.Y ), det * ( a11 * vector.Y - a21 * vector.X ) );
+		}
+
+		public Vector2 Solve ( Vector2 value )
+		{
+			return Solve ( this, value );
+		}
+
 		public bool Equals ( Matrix2x2 other )
 		{
 			return ( M11 == other.M11 && M12 == other.M12 ) &&
