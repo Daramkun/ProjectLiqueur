@@ -22,8 +22,8 @@ namespace Test.Windows.CSharp
 	{
 		public struct Vertex
 		{
-			Vector2 position;
-			Vector2 texture;
+			public Vector2 position;
+			public Vector2 texture;
 
 			public Vertex ( Vector2 position, Vector2 texture )
 			{

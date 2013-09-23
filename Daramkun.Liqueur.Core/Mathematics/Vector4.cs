@@ -139,5 +139,37 @@ namespace Daramkun.Liqueur.Mathematics
 			else
 				return 0;
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ( "{{X={0}, Y={1}, Z={2}, W={3}}}", X, Y, Z, W );
+		}
+
+		public float [] ToArray () { return new float[] { X, Y, Z, W }; }
+
+		public float this [ int index ]
+		{
+			get { return ( index == 0 ) ? X : ( ( index == 1 ) ? Y : ( ( index == 2 ) ? Z : ( ( index == 3 ) ? W : float.NaN ) ) ); }
+			set
+			{
+				switch ( index )
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					case 3:
+						W = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException ();
+				}
+			}
+		}
 	}
 }

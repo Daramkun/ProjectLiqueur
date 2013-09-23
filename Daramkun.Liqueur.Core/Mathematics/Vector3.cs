@@ -141,6 +141,30 @@ namespace Daramkun.Liqueur.Mathematics
 			return String.Format ( "{{X:{0}, Y:{1}, Z:{2}}}", X, Y, Z );
 		}
 
+		public float [] ToArray () { return new float[] { X, Y, Z }; }
+
+		public float this [ int index ]
+		{
+			get { return ( index == 0 ) ? X : ( ( index == 1 ) ? Y : ( ( index == 2 ) ? Z : float.NaN ) ); }
+			set
+			{
+				switch ( index )
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException ();
+				}
+			}
+		}
+
 		public bool IsCollisionTo ( Vector3 obj )
 		{
 			return ( obj.X == X && obj.Y == Y && obj.Z == Z );

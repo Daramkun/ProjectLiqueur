@@ -22,8 +22,8 @@ namespace Test.Windows.CSharp.Direct3D11
 	{
 		public struct Vertex
 		{
-			Vector2 position;
-			Vector2 texture;
+			public Vector2 position;
+			public Vector2 texture;
 
 			public Vertex ( Vector2 position, Vector2 texture )
 			{

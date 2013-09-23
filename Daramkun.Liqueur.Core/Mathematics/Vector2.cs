@@ -146,6 +146,27 @@ namespace Daramkun.Liqueur.Mathematics
 			return String.Format ( "{{X:{0}, Y:{1}}}", X, Y );
 		}
 
+		public float [] ToArray () { return new float[] { X, Y }; }
+
+		public float this [ int index ]
+		{
+			get { return ( index == 0 ) ? X : ( ( index == 1 ) ? Y : float.NaN ); }
+			set
+			{
+				switch ( index )
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException ();
+				}
+			}
+		}
+
 		public bool IsCollisionTo ( Vector2 obj )
 		{
 			return ( obj.X == X && obj.Y == Y );
@@ -159,6 +180,16 @@ namespace Daramkun.Liqueur.Mathematics
 		public bool IsCollisionTo ( Rectangle obj )
 		{
 			return obj.IsCollisionTo ( this );
+		}
+
+		public bool IsValid
+		{
+			get
+			{
+				if ( float.IsNaN ( X ) || float.IsNaN ( Y ) ) return false;
+				if ( float.IsInfinity ( X ) || float.IsInfinity ( Y ) ) return false;
+				return true;
+			}
 		}
 	}
 }

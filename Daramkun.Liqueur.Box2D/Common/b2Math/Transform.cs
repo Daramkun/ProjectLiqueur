@@ -25,5 +25,13 @@ namespace Daramkun.Liqueur.Box2D.Common
 			p = position;
 			q.Set ( rotation );
 		}
+
+		public static Vector2 operator * ( Transform transform, Vector2 v )
+		{
+			return new Vector2 (
+				( transform.q.Cosine * v.X - transform.q.Sine * v.Y ) + transform.p.X,
+			    ( transform.q.Sine * v.X + transform.q.Cosine * v.Y ) + transform.p.Y
+			);
+		}
 	}
 }

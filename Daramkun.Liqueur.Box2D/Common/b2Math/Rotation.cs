@@ -30,5 +30,10 @@ namespace Daramkun.Liqueur.Box2D.Common
 			sine = ( float ) Math.Sin ( angle );
 			cosine = ( float ) Math.Cos ( angle );
 		}
+
+		public static Vector2 operator * ( Rotation q, Vector2 v)
+		{
+			return new Vector2 ( q.Cosine * v.X - q.Sine * v.Y, q.Sine * v.X + q.Cosine * v.Y );
+		}
 	}
 }
