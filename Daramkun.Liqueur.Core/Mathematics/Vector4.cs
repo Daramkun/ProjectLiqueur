@@ -126,6 +126,17 @@ Out[2]= {4 b - 8 c + 4 d, -4 a + 12 c - 8 d, 8 a - 12 b + 4 d, -4 a + 8 b - 4 c}
 			return value1;
 		}
 
+		public Vector4 Normalize ()
+		{
+			return this = Normalize ( this );
+		}
+
+		public static Vector4 Normalize ( Vector4 v )
+		{
+			float len = v.Length;
+			return v / len;
+		}
+
 		public override bool Equals ( object obj )
 		{
 			if ( !( obj is Vector4 ) ) return false;
@@ -186,7 +197,7 @@ Out[2]= {4 b - 8 c + 4 d, -4 a + 12 c - 8 d, 8 a - 12 b + 4 d, -4 a + 8 b - 4 c}
 						W = value;
 						break;
 					default:
-						throw new ArgumentOutOfRangeException ();
+						throw new IndexOutOfRangeException ();
 				}
 			}
 		}

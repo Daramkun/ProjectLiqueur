@@ -67,7 +67,7 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public Vector2 Normalize ()
 		{
-			return Normalize ( this );
+			return this = Normalize ( this );
 		}
 
 		public static Vector2 Normalize ( Vector2 value )
@@ -172,7 +172,7 @@ namespace Daramkun.Liqueur.Mathematics
 						Y = value;
 						break;
 					default:
-						throw new ArgumentOutOfRangeException ();
+						throw new IndexOutOfRangeException ();
 				}
 			}
 		}

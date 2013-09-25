@@ -75,7 +75,7 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public Vector3 Normalize ()
 		{
-			return Normalize ( this );
+			return this = Normalize ( this );
 		}
 
 		public static Vector3 Normalize ( Vector3 value )
@@ -160,7 +160,7 @@ namespace Daramkun.Liqueur.Mathematics
 						Z = value;
 						break;
 					default:
-						throw new ArgumentOutOfRangeException ();
+						throw new IndexOutOfRangeException ();
 				}
 			}
 		}

@@ -158,5 +158,51 @@ namespace Daramkun.Liqueur.Mathematics
 				M21, M22,
 			};
 		}
+
+		public float this [ int index ]
+		{
+			get
+			{
+				switch ( index )
+				{
+					case 0:
+						return M11;
+					case 1:
+						return M12;
+					case 2:
+						return M21;
+					case 3:
+						return M22;
+					default:
+						throw new IndexOutOfRangeException ();
+				}
+			}
+			set
+			{
+				switch ( index )
+				{
+					case 0:
+						M11 = value;
+						break;
+					case 1:
+						M12 = value;
+						break;
+					case 2:
+						M21 = value;
+						break;
+					case 3:
+						M22 = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException ();
+				}
+			}
+		}
+
+		public float this [ int x, int y ]
+		{
+			get { return this [ x + ( y * 2 ) ]; }
+			set { this [ x + ( y * 2 ) ] = value; }
+		}
 	}
 }
