@@ -53,9 +53,41 @@ namespace Daramkun.Liqueur.Box2D.Collision
 			get { return new Manifold () { Points = new ManifoldPoint [ Settings.MaxManifoldPoints ] }; }
 		}
 
-		public static void GetPointStates()
+		public static void GetPointStates ( PointState [] state1, PointState [] state2,
+					  Manifold manifold1, Manifold manifold2 )
 		{
+			for ( int i = 0; i < Settings.MaxManifoldPoints; ++i )
+				state1 [ i ] = state2 [ i ] = PointState.NullState;
 
+			for ( int i = 0; i < manifold1.PointCount; ++i )
+			{
+				ContactID id = manifold1.Points [ i ].Id;
+				state1 [ i ] = PointState.RemoveState;
+
+				for ( int j = 0; j < manifold2.PointCount; ++j )
+				{
+					if ( manifold2.Points [ j ].Id.Key == id.Key )
+					{
+						state1 [ i ] = PointState.PersistState;
+						break;
+					}
+				}
+			}
+
+			for ( int i = 0; i < manifold2.PointCount; ++i )
+			{
+				ContactID id = manifold2.Points [ i ].Id;
+				state2 [ i ] = PointState.AddState;
+
+				for ( int j = 0; j < manifold1.PointCount; ++j )
+				{
+					if ( manifold1.Points [ j ].Id.Key == id.Key )
+					{
+						state2 [ i ] = PointState.PersistState;
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -136,6 +168,36 @@ namespace Daramkun.Liqueur.Box2D.Collision
 	{
 		public Vector2 Vertex;
 		public ContactID Id;
+
+		public static int ClipSegmentToLine ( ClipVertex [] vOut, ClipVertex [] vIn, Vector2 normal, float offset, int vertexIndexA )
+		{
+			int numOut = 0;
+
+			// Calculate the distance of end points to the line
+			float distance0 = Vector2.Dot ( normal, vIn [ 0 ].Vertex ) - offset;
+			float distance1 = Vector2.Dot ( normal, vIn [ 1 ].Vertex ) - offset;
+
+			// If the points are behind the plane
+			if ( distance0 <= 0.0f ) vOut [ numOut++ ] = vIn [ 0 ];
+			if ( distance1 <= 0.0f ) vOut [ numOut++ ] = vIn [ 1 ];
+
+			// If the points are on different sides of the plane
+			if ( distance0 * distance1 < 0.0f )
+			{
+				// Find intersection point of edge and plane
+				float interp = distance0 / ( distance0 - distance1 );
+				vOut [ numOut ].Vertex = vIn [ 0 ].Vertex + interp * ( vIn [ 1 ].Vertex - vIn [ 0 ].Vertex );
+
+				// VertexA is hitting edgeB.
+				vOut [ numOut ].Id.ContactFeature.IndexA = ( byte ) vertexIndexA;
+				vOut [ numOut ].Id.ContactFeature.IndexB = vIn [ 0 ].Id.ContactFeature.IndexB;
+				vOut [ numOut ].Id.ContactFeature.TypeA = ( byte ) ContactFeatureType.Vertex;
+				vOut [ numOut ].Id.ContactFeature.TypeB = ( byte ) ContactFeatureType.Face;
+				++numOut;
+			}
+
+			return numOut;
+		}
 	}
 
 	public struct RayCastInput
