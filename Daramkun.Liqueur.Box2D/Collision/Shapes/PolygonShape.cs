@@ -9,10 +9,10 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 {
 	public class PolygonShape : Shape
 	{
-		Vector2 m_centroid;
-		Vector2 [] m_vertices;
-		Vector2 [] m_normals;
-		int m_vertexCount;
+		internal Vector2 m_centroid;
+		internal Vector2 [] m_vertices;
+		internal Vector2 [] m_normals;
+		internal int m_vertexCount;
 
 		public override int ChildCount { get { return 1; } }
 

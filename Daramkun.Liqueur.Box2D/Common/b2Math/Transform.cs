@@ -33,5 +33,13 @@ namespace Daramkun.Liqueur.Box2D.Common
 			    ( transform.q.Sine * v.X + transform.q.Cosine * v.Y ) + transform.p.Y
 			);
 		}
+
+		public static Transform operator * ( Transform xfA, Transform xfB )
+		{
+			Transform C = new Transform ();
+			C.q = xfA.q * xfB.q;
+			C.p = xfA.q * ( xfB.p - xfA.p );
+			return C;
+		}
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Daramkun.Liqueur.Box2D.Collision.Shapes;
 using Daramkun.Liqueur.Box2D.Common;
 using Daramkun.Liqueur.Mathematics;
 
@@ -15,8 +16,8 @@ namespace Daramkun.Liqueur.Box2D.Collision
 
 	public struct ContactFeature
 	{
-		public byte IndexA, IndexB;
-		public byte TypeA, TypeB;
+		public int IndexA, IndexB;
+		public ContactFeatureType TypeA, TypeB;
 	}
 
 	public struct ContactID
@@ -189,10 +190,10 @@ namespace Daramkun.Liqueur.Box2D.Collision
 				vOut [ numOut ].Vertex = vIn [ 0 ].Vertex + interp * ( vIn [ 1 ].Vertex - vIn [ 0 ].Vertex );
 
 				// VertexA is hitting edgeB.
-				vOut [ numOut ].Id.ContactFeature.IndexA = ( byte ) vertexIndexA;
+				vOut [ numOut ].Id.ContactFeature.IndexA = vertexIndexA;
 				vOut [ numOut ].Id.ContactFeature.IndexB = vIn [ 0 ].Id.ContactFeature.IndexB;
-				vOut [ numOut ].Id.ContactFeature.TypeA = ( byte ) ContactFeatureType.Vertex;
-				vOut [ numOut ].Id.ContactFeature.TypeB = ( byte ) ContactFeatureType.Face;
+				vOut [ numOut ].Id.ContactFeature.TypeA = ContactFeatureType.Vertex;
+				vOut [ numOut ].Id.ContactFeature.TypeB = ContactFeatureType.Face;
 				++numOut;
 			}
 

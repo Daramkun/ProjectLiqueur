@@ -9,9 +9,9 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 {
 	public class EdgeShape : Shape
 	{
-		Vector2 m_vertex1, m_vertex2;
-		Vector2 m_vertex0, m_vertex3;
-		bool m_hasVertex0, m_hasVertex3;
+		internal Vector2 m_vertex1, m_vertex2;
+		internal Vector2 m_vertex0, m_vertex3;
+		internal bool m_hasVertex0, m_hasVertex3;
 
 		public override int ChildCount { get { return 1; } }
 

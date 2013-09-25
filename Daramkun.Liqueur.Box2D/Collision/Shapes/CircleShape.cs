@@ -9,7 +9,7 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 {
 	public class CircleShape : Shape
 	{
-		Vector2 m_p;
+		internal Vector2 m_p;
 
 		public override int ChildCount { get { return 1; } }
 

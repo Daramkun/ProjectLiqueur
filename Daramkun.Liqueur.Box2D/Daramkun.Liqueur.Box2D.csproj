@@ -40,6 +40,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collision\Collide.Circle.cs" />
+    <Compile Include="Collision\Collide.Edge.cs" />
+    <Compile Include="Collision\Collide.Polygon.cs" />
     <Compile Include="Collision\Collision.cs" />
     <Compile Include="Collision\Shapes\ChainShape.cs" />
     <Compile Include="Collision\Shapes\CircleShape.cs" />
