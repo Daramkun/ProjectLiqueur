@@ -42,6 +42,9 @@
   <ItemGroup>
     <Compile Include="Collision\Collision.cs" />
     <Compile Include="Collision\Shapes\ChainShape.cs" />
+    <Compile Include="Collision\Shapes\CircleShape.cs" />
+    <Compile Include="Collision\Shapes\EdgeShape.cs" />
+    <Compile Include="Collision\Shapes\PolygonShape.cs" />
     <Compile Include="Collision\Shapes\Shape.cs" />
     <Compile Include="Common\b2Math\Rotation.cs" />
     <Compile Include="Common\b2Math\Transform.cs" />

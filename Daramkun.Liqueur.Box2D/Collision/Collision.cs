@@ -82,8 +82,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 						pointB = xfB * manifold.Points [ 0 ].LocalPoint;
 						if ( Math.Pow ( Vector2.Distance ( pointA, pointB ), 2 ) > float.Epsilon * float.Epsilon )
 						{
-							Normal = pointB - pointA;
-							Normal.Normalize ();
+							Normal = ( pointB - pointA ).Normalize ();
 						}
 
 						Points [ 0 ] = 0.5f * ( ( pointA + radiusA * Normal ) + ( pointB - radiusB * Normal ) );
