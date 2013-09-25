@@ -47,7 +47,7 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public static Vector2 operator * ( Vector2 v1, Vector2 v2 )
 		{
-			return Cross ( v1, v2 );
+			return Multiply ( v1, v2 );
 		}
 
 		public static Vector2 operator * ( float v1, Vector2 v2 )
@@ -80,7 +80,17 @@ namespace Daramkun.Liqueur.Mathematics
 			return v1.X * v2.X + v1.Y * v2.Y;
 		}
 
-		public static Vector2 Cross ( Vector2 v1, Vector2 v2 )
+		public static float Cross ( Vector2 v1, Vector2 v2 )
+		{
+			return v1.X * v2.Y - v1.Y * v2.X;
+		}
+
+		public static Vector2 Cross ( Vector2 v1, float v2 )
+		{
+			return new Vector2 ( v1.Y * v2, v1.X * -v2 );
+		}
+
+		public static Vector2 Multiply ( Vector2 v1, Vector2 v2 )
 		{
 			return new Vector2 ( v1.X * v2.Y, v1.Y * v2.X );
 		}

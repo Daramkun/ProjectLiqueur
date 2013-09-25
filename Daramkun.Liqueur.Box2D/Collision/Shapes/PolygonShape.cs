@@ -76,7 +76,7 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 			}
 		}
 
-		static Vector2 ComputeCentroid ( Vector2 [] vs, int count )
+		Vector2 ComputeCentroid ( Vector2 [] vs, int count )
 		{
 			Vector2 c = new Vector2 ();
 			float area = 0;
