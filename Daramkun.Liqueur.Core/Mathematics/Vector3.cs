@@ -6,7 +6,7 @@ using Daramkun.Liqueur.Common;
 
 namespace Daramkun.Liqueur.Mathematics
 {
-	public struct Vector3 : IComparer<Vector3>, ICollision<Vector3>
+	public struct Vector3 : IComparer<Vector3>, ICollision<Vector3>, IVector
 	{
 		public static readonly Vector3 Zero = new Vector3 ( 0 );
 
@@ -31,7 +31,8 @@ namespace Daramkun.Liqueur.Mathematics
 			Z = z;
 		}
 
-		public float Length { get { return ( float ) System.Math.Sqrt ( X * X + Y * Y + Z * Z ); } }
+		public float LengthSquared { get { return X * X + Y * Y + Z * Z; } } 
+		public float Length { get { return ( float ) System.Math.Sqrt ( LengthSquared ); } }
 
 		public static Vector3 operator + ( Vector3 v1, Vector3 v2 )
 		{
@@ -150,17 +151,10 @@ namespace Daramkun.Liqueur.Mathematics
 			{
 				switch ( index )
 				{
-					case 0:
-						X = value;
-						break;
-					case 1:
-						Y = value;
-						break;
-					case 2:
-						Z = value;
-						break;
-					default:
-						throw new IndexOutOfRangeException ();
+					case 0: X = value; break;
+					case 1: Y = value; break;
+					case 2: Z = value; break;
+					default: throw new IndexOutOfRangeException ();
 				}
 			}
 		}
@@ -168,6 +162,21 @@ namespace Daramkun.Liqueur.Mathematics
 		public bool IsCollisionTo ( Vector3 obj )
 		{
 			return ( obj.X == X && obj.Y == Y && obj.Z == Z );
+		}
+
+		public static Vector3 Max ( Vector3 v1, Vector3 v2 )
+		{
+			return new Vector3 ( ( float ) Math.Max ( v1.X, v2.X ), ( float ) Math.Max ( v1.Y, v2.Y ), ( float ) Math.Max ( v1.Z, v2.Z ) );
+		}
+
+		public static Vector3 Min ( Vector3 v1, Vector3 v2 )
+		{
+			return new Vector3 ( ( float ) Math.Min ( v1.X, v2.X ), ( float ) Math.Min ( v1.Y, v2.Y ), ( float ) Math.Min ( v1.Z, v2.Z ) );
+		}
+
+		public static Vector3 Clamp ( Vector3 v1, Vector3 v2, Vector3 v3 )
+		{
+			return Max ( v2, Min ( v1, v3 ) );
 		}
 	}
 }

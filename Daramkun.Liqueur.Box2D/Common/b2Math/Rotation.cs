@@ -8,7 +8,7 @@ namespace Daramkun.Liqueur.Box2D.Common
 {
 	public struct Rotation
 	{
-		float sine, cosine;
+		internal float sine, cosine;
 
 		public static Rotation Identity { get { return new Rotation () { sine = 0, cosine = 1 }; } }
 
@@ -42,6 +42,19 @@ namespace Daramkun.Liqueur.Box2D.Common
 			qr.sine = a.sine * b.cosine + a.cosine * b.sine;
 			qr.cosine = a.cosine * b.cosine - a.sine * b.sine;
 			return qr;
+		}
+
+		public static Rotation TransposeMultiply ( Rotation q, Rotation r )
+		{
+			Rotation qr = new Rotation ();
+			qr.sine = q.cosine * r.sine - q.sine * r.cosine;
+			qr.cosine = q.cosine * r.cosine + q.sine * r.sine;
+			return qr;
+		}
+
+		public static Vector2 TransposeMultiply ( Rotation q, Vector2 v)
+		{
+			return new Vector2 ( q.cosine * v.X + q.sine * v.Y, -q.sine * v.X + q.cosine * v.Y );
 		}
 	}
 }

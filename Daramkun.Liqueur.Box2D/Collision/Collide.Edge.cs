@@ -15,7 +15,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 			manifold = Manifold.Identity;
 			manifold.PointCount = 0;
 
-			Vector2 Q = xfA * ( xfB * circleB.m_p );
+			Vector2 Q = Transform.TransposeMultiply ( xfA, xfB * circleB.m_p );
 
 			Vector2 A = edgeA.m_vertex1, B = edgeA.m_vertex2;
 			Vector2 e = B - A;
@@ -197,7 +197,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 				Convex,
 			}
 
-			VertexType m_type1, m_type2;
+			//VertexType m_type1, m_type2;
 			Vector2 m_lowerLimit, m_upperLimit;
 			float m_radius;
 			bool m_front;
@@ -206,7 +206,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 			{
 				manifold = Manifold.Identity;
 
-				m_xf = xfA * xfB;
+				m_xf = Transform.TransposeMultiply ( xfA, xfB );
 
 				m_centroidB = m_xf * polygonB.m_centroid;
 
@@ -568,7 +568,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 
 						if ( primaryAxis.Type == EPAxisType.EdgeA )
 						{
-							cp.LocalPoint = m_xf * clipPoints2 [ i ].Vertex;
+							cp.LocalPoint = Transform.TransposeMultiply ( m_xf, clipPoints2 [ i ].Vertex );
 							cp.Id = clipPoints2 [ i ].Id;
 						}
 						else

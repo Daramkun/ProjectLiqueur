@@ -94,6 +94,17 @@ namespace Daramkun.Liqueur.Mathematics
 			return Transpose ( this );
 		}
 
+		public Matrix2x2 TransposeMultiply ( Matrix2x2 v1, Matrix2x2 v2 )
+		{
+			Vector2 ex = new Vector2 ( M11, M12 );
+			Vector2 ey = new Vector2 ( M21, M22 );
+
+			Vector2 c1 = new Vector2 ( Vector2.Dot ( ex, ex ), Vector2.Dot ( ey, ex ) );
+			Vector2 c2 = new Vector2 ( Vector2.Dot ( ex, ey ), Vector2.Dot ( ey, ey ) );
+
+			return new Matrix2x2 ( c1.X, c1.Y, c2.X, c2.Y );
+		}
+
 		public static Matrix2x2 Invert ( Matrix2x2 v1 )
 		{
 			float d = 1 / ( v1.M11 * v1.M22 - v1.M12 * v1.M21 );
@@ -165,36 +176,22 @@ namespace Daramkun.Liqueur.Mathematics
 			{
 				switch ( index )
 				{
-					case 0:
-						return M11;
-					case 1:
-						return M12;
-					case 2:
-						return M21;
-					case 3:
-						return M22;
-					default:
-						throw new IndexOutOfRangeException ();
+					case 0: return M11;
+					case 1: return M12;
+					case 2: return M21;
+					case 3: return M22;
+					default: throw new IndexOutOfRangeException ();
 				}
 			}
 			set
 			{
 				switch ( index )
 				{
-					case 0:
-						M11 = value;
-						break;
-					case 1:
-						M12 = value;
-						break;
-					case 2:
-						M21 = value;
-						break;
-					case 3:
-						M22 = value;
-						break;
-					default:
-						throw new IndexOutOfRangeException ();
+					case 0: M11 = value; break;
+					case 1: M12 = value; break;
+					case 2: M21 = value; break;
+					case 3: M22 = value; break;
+					default: throw new IndexOutOfRangeException ();
 				}
 			}
 		}

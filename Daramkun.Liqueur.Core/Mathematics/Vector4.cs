@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Mathematics
 {
-	public struct Vector4 : IComparer<Vector4>
+	public struct Vector4 : IComparer<Vector4>, IVector
 	{
 		public static readonly Vector4 Zero = new Vector4 ( 0 );
 
@@ -35,7 +35,8 @@ namespace Daramkun.Liqueur.Mathematics
 			W = value;
 		}
 
-		public float Length { get { return ( float ) System.Math.Sqrt ( X * X + Y * Y + Z * Z + W * W ); } }
+		public float LengthSquared { get { return X * X + Y * Y + Z * Z + W * W; } }
+		public float Length { get { return ( float ) System.Math.Sqrt ( LengthSquared ); } }
 
 		public static float Distance ( Vector4 v1, Vector4 v2 )
 		{
@@ -184,20 +185,11 @@ Out[2]= {4 b - 8 c + 4 d, -4 a + 12 c - 8 d, 8 a - 12 b + 4 d, -4 a + 8 b - 4 c}
 			{
 				switch ( index )
 				{
-					case 0:
-						X = value;
-						break;
-					case 1:
-						Y = value;
-						break;
-					case 2:
-						Z = value;
-						break;
-					case 3:
-						W = value;
-						break;
-					default:
-						throw new IndexOutOfRangeException ();
+					case 0: X = value; break;
+					case 1: Y = value; break;
+					case 2: Z = value; break;
+					case 3: W = value; break;
+					default: throw new IndexOutOfRangeException ();
 				}
 			}
 		}

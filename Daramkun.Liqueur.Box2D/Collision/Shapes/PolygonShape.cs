@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Box2D.Common;
 using Daramkun.Liqueur.Mathematics;
+using Daramkun.Liqueur.Exceptions;
 
 namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 {
@@ -134,6 +135,7 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 					if ( j == i1 || j == i2 ) continue;
 					Vector2 r = m_vertices [ j ] - m_vertices [ i1 ];
 					float s = Vector2.Cross ( edge, r );
+					if ( s > 0.0f ) throw new CommonException ( "Please ensure your polygon is convex and has a CCW winding order" );
 				}
 			}
 
@@ -142,7 +144,7 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 
 		public override bool TestPoint ( Transform xf, Vector2 p )
 		{
-			Vector2 pLocal = xf.q * ( p - xf.p );
+			Vector2 pLocal = Rotation.TransposeMultiply ( xf.q, p - xf.p );
 			for ( int i = 0; i < m_vertexCount; ++i )
 			{
 				float dot = Vector2.Dot ( m_normals [ i ], pLocal - m_vertices [ i ] );
@@ -155,8 +157,8 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 		{
 			output = new RayCastOutput ();
 
-			Vector2 p1 = transform.q * ( input.Point1 - transform.p );
-			Vector2 p2 = transform.q * ( input.Point2 - transform.p );
+			Vector2 p1 = Rotation.TransposeMultiply ( transform.q, input.Point1 - transform.p );
+			Vector2 p2 = Rotation.TransposeMultiply ( transform.q, input.Point2 - transform.p );
 			Vector2 d = p2 - p1;
 
 			float lower = 0.0f, upper = input.MaxFraction;

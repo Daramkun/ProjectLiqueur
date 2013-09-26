@@ -261,6 +261,7 @@
     <Compile Include="Platforms\IWindow.cs" />
     <Compile Include="Platforms\IWindowEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Mathematics\IVector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\ExternLib\CsVorbis\LICENSE.txt" />

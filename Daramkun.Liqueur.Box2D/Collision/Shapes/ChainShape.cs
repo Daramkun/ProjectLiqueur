@@ -90,6 +90,9 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 			int i2 = childIndex + 1;
 			if ( i2 == m_count ) i2 = 0;
 
+			edgeShape.m_vertex1 = m_vertices [ i1 ];
+			edgeShape.m_vertex2 = m_vertices [ i2 ];
+
 			return edgeShape.RayCast ( out output, input, transform, 0 );
 		}
 
@@ -104,8 +107,8 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 			Vector2 v2 = xf * m_vertices [ i2 ];
 
 			aabb = new AABB ();
-			aabb.LowerBound = new Vector2 ( ( float ) Math.Min ( v1.X, v2.X ), ( float ) Math.Min ( v1.Y, v2.Y ) );
-			aabb.UpperBound = new Vector2 ( ( float ) Math.Max ( v1.X, v2.X ), ( float ) Math.Max ( v1.Y, v2.Y ) );
+			aabb.LowerBound = Vector2.Min ( v1, v2 );
+			aabb.UpperBound = Vector2.Max ( v1, v2 );
 		}
 
 		public override void ComputeMass ( out MassData massData, float density )

@@ -41,5 +41,23 @@ namespace Daramkun.Liqueur.Box2D.Common
 			C.p = xfA.q * ( xfB.p - xfA.p );
 			return C;
 		}
+
+		public static Transform TransposeMultiply ( Transform xfA, Transform xfB )
+		{
+			Transform C = new Transform ();
+			C.q = Rotation.TransposeMultiply ( xfA.q, xfB.q );
+			C.p = Rotation.TransposeMultiply ( xfA.q, xfB.p - xfA.p );
+			return C;
+		}
+
+		public static Vector2 TransposeMultiply ( Transform T, Vector2 v )
+		{
+			float px = v.X - T.p.X;
+			float py = v.Y - T.p.Y;
+			float x = (T.q.cosine * px + T.q.sine * py);
+			float y = (-T.q.sine * px + T.q.cosine * py);
+
+			return new Vector2 ( x, y );
+		}
 	}
 }

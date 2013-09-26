@@ -6,7 +6,7 @@ using Daramkun.Liqueur.Common;
 
 namespace Daramkun.Liqueur.Mathematics
 {
-	public struct Vector2 : IComparer<Vector2>, ICollision<Vector2>, ICollision<Circle>, ICollision<Rectangle>
+	public struct Vector2 : IComparer<Vector2>, ICollision<Vector2>, ICollision<Circle>, ICollision<Rectangle>, IVector
 	{
 		public static readonly Vector2 Zero = new Vector2 ( 0 );
 
@@ -23,7 +23,8 @@ namespace Daramkun.Liqueur.Mathematics
 			this.Y = y;
 		}
 
-		public float Length { get { return ( float ) System.Math.Sqrt ( X * X + Y * Y ); } }
+		public float LengthSquared { get { return X * X + Y * Y; } }
+		public float Length { get { return ( float ) System.Math.Sqrt ( LengthSquared ); } }
 
 		public static Vector2 operator + ( Vector2 v1, Vector2 v2 )
 		{
@@ -95,6 +96,14 @@ namespace Daramkun.Liqueur.Mathematics
 			return new Vector2 ( v1.X * v2.Y, v1.Y * v2.X );
 		}
 
+		public static Vector2 TransposeMultiply ( Matrix2x2 v1, Vector2 v2 )
+		{
+			return new Vector2 (
+				Vector2.Dot ( v2, new Vector2 ( v1.M11, v1.M12 ) ),
+				Vector2.Dot ( v2, new Vector2 ( v1.M21, v1.M22 ) )
+			);
+		}
+
 		public static Vector2 Skew ( Vector2 value )
 		{
 			return new Vector2 ( -value.Y, value.X );
@@ -102,7 +111,7 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public Vector2 Skew ()
 		{
-			return Vector2.Skew ( this );
+			return this = Vector2.Skew ( this );
 		}
 
 		public static Vector2 Transform ( Vector2 position, Matrix4x4 matrix )
@@ -165,14 +174,9 @@ namespace Daramkun.Liqueur.Mathematics
 			{
 				switch ( index )
 				{
-					case 0:
-						X = value;
-						break;
-					case 1:
-						Y = value;
-						break;
-					default:
-						throw new IndexOutOfRangeException ();
+					case 0: X = value; break;
+					case 1: Y = value; break;
+					default: throw new IndexOutOfRangeException ();
 				}
 			}
 		}
@@ -200,6 +204,21 @@ namespace Daramkun.Liqueur.Mathematics
 				if ( float.IsInfinity ( X ) || float.IsInfinity ( Y ) ) return false;
 				return true;
 			}
+		}
+
+		public static Vector2 Max ( Vector2 v1, Vector2 v2 )
+		{
+			return new Vector2 ( ( float ) Math.Max ( v1.X, v2.X ), ( float ) Math.Max ( v1.Y, v2.Y ) );
+		}
+
+		public static Vector2 Min ( Vector2 v1, Vector2 v2 )
+		{
+			return new Vector2 ( ( float ) Math.Min ( v1.X, v2.X ), ( float ) Math.Min ( v1.Y, v2.Y ) );
+		}
+
+		public static Vector2 Clamp ( Vector2 v1, Vector2 v2, Vector2 v3 )
+		{
+			return Max ( v2, Min ( v1, v3 ) );
 		}
 	}
 }

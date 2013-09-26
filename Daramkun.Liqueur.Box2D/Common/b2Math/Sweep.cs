@@ -8,7 +8,7 @@ namespace Daramkun.Liqueur.Box2D.Common
 {
 	public struct Sweep
 	{
-		Vector2 localCenter;
+		public Vector2 LocalCenter;
 		Vector2 c0, c;
 		float a0, a;
 
@@ -20,8 +20,8 @@ namespace Daramkun.Liqueur.Box2D.Common
 			transform.p = ( 1.0f - beta ) * c0 + beta * c;
 			float angle = ( 1.0f - beta ) * a0 + beta * a;
 			transform.q.Set ( angle );
-			transform.p -= new Vector2 ( transform.q.Cosine * localCenter.X - transform.q.Sine * localCenter.Y,
-				transform.q.Sine * localCenter.X + transform.q.Cosine * localCenter.Y );
+			transform.p -= new Vector2 ( transform.q.Cosine * LocalCenter.X - transform.q.Sine * LocalCenter.Y,
+				transform.q.Sine * LocalCenter.X + transform.q.Cosine * LocalCenter.Y );
 			return transform;
 		}
 
