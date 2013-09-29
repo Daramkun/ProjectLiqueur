@@ -9,8 +9,8 @@ namespace Daramkun.Liqueur.Box2D.Collision.Shapes
 {
 	public class ChainShape : Shape
 	{
-		Vector2 [] m_vertices;
-		int m_count;
+		internal Vector2 [] m_vertices;
+		internal int m_count;
 		
 		Vector2 m_prevVertex, m_nextVertex;
 		bool m_hasPrevVertex, m_hasNextVertex;

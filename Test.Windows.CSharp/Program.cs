@@ -9,6 +9,7 @@ using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Contents.Decoder.Audios;
 using Daramkun.Liqueur.Contents.Decoder.Images;
+using Daramkun.Liqueur.Contents.Loaders;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Mathematics;
 using Daramkun.Liqueur.Mathematics.Transforms;
@@ -43,6 +44,8 @@ namespace Test.Windows.CSharp
 			Sprite sprite;
 			float angle;
 			LsfFont font;
+
+			IAudio audio;
 
 			public override void Intro ( params object [] args )
 			{
@@ -120,6 +123,10 @@ void main () {
 				};
 				Add ( calc );
 
+				AudioContentLoader.AddDefaultDecoders ();
+				audio = new AudioContentLoader ().Load ( new FileStream ( @"D:\인코딩\Fate.ogg", FileMode.Open ) ) as IAudio;
+				LiqueurSystem.AudioDevice.Play ( audio );
+
 				base.Intro ( args );
 			}
 
@@ -159,6 +166,7 @@ void main () {
 
 			public override void Outro ()
 			{
+				audio.Dispose ();
 				sprite.Dispose ();
 				renderBuffer.Dispose ();
 				texture.Dispose ();

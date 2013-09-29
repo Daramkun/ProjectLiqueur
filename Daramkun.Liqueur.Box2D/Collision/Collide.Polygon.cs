@@ -146,7 +146,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 
 			// Convert normal from poly1's frame into poly2's frame.
 			Vector2 normal1World = xfA.q * normals1 [ edge1 ];
-			Vector2 normal1 = xfB.q * normal1World;
+			Vector2 normal1 = Rotation.TransposeMultiply ( xfB.q, normal1World );
 
 			// Find support vertex on poly2 for -normal.
 			int index = 0;
@@ -174,7 +174,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 			Vector2 [] normals1 = poly1.m_normals;
 
 			Vector2 d = ( xfB * poly2.m_centroid ) - ( xfA * poly1.m_centroid );
-			Vector2 dLocal1 = xfA.q * d;
+			Vector2 dLocal1 = Rotation.TransposeMultiply ( xfA.q, d );
 
 			// Find edge normal on poly1 that has the largest projection onto d.
 			int edge = 0;
@@ -256,7 +256,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 			Vector2 [] normals2 = poly2.m_normals;
 
 			// Get the normal of the reference edge in poly2's frame.
-			Vector2 normal1 = xfB.q * ( xfA.q * normals1 [ edge1 ] );
+			Vector2 normal1 = Rotation.TransposeMultiply ( xfB.q, xfA.q * normals1 [ edge1 ] );
 
 			// Find the incident edge on poly2.
 			int index = 0;

@@ -106,7 +106,11 @@ namespace Daramkun.Liqueur.Audio
 						AL.DeleteBuffer ( bufferId );
 				bufferIds.Clear ();
 			}
-			( audioDevice.Target as AudioDevice ).audioList.Remove ( this );
+			if ( audioDevice.Target != null )
+			{
+				if ( ( audioDevice.Target as AudioDevice ).audioList.Contains ( this ) )
+					( audioDevice.Target as AudioDevice ).audioList.Remove ( this );
+			}
 		}
 
 		public void Dispose ()
@@ -117,6 +121,7 @@ namespace Daramkun.Liqueur.Audio
 
 		public bool Update ()
 		{
+			if ( sourceId == 0 ) return true;
 			byte [] data = audioInfo.GetSample ( null );
 			if ( data == null )
 			{

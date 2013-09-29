@@ -44,6 +44,7 @@
     <Compile Include="Collision\Collide.Edge.cs" />
     <Compile Include="Collision\Collide.Polygon.cs" />
     <Compile Include="Collision\Collision.cs" />
+    <Compile Include="Collision\Distance.cs" />
     <Compile Include="Collision\Shapes\ChainShape.cs" />
     <Compile Include="Collision\Shapes\CircleShape.cs" />
     <Compile Include="Collision\Shapes\EdgeShape.cs" />

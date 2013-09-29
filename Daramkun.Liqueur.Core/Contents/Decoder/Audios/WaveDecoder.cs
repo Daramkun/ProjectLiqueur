@@ -100,6 +100,7 @@ namespace Daramkun.Liqueur.Contents.Decoder.Audios
 		/// <returns>Audio information and PCM data</returns>
 		public AudioInfo Decode ( Stream stream, params object [] args )
 		{
+			stream.Position = 0;
 			AudioInfo audioInfo = new AudioInfo ();
 			BinaryReader br = new BinaryReader ( stream );
 			int chunkSize;

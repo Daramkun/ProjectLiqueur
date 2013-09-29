@@ -43,7 +43,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 
 			// Compute circle position in the frame of the polygon.
 			Vector2 c = xfB * circleB.m_p;
-			Vector2 cLocal = xfA * c;
+			Vector2 cLocal = Transform.TransposeMultiply ( xfA, c );
 
 			// Find the min separating edge.
 			int normalIndex = 0;
