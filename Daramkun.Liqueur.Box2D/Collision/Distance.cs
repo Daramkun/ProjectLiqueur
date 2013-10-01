@@ -117,7 +117,7 @@ namespace Daramkun.Liqueur.Box2D.Collision
 		public int Iterations;
 	}
 
-	struct SimplexVertrex
+	struct SimplexVertex
 	{
 		public Vector2 wA, wB, w;
 		public float a;
@@ -126,9 +126,141 @@ namespace Daramkun.Liqueur.Box2D.Collision
 
 	struct Simplex
 	{
+		int m_count;
+		SimplexVertex m_v1, m_v2, m_v3;
+
 		public void ReadCache ( SimplexCache cache, DistanceProxy proxyA, Transform transformA, DistanceProxy proxyB, Transform transformB )
 		{
+			if ( cache.Count <= 3 ) throw new Exception ();
+
+			m_count = cache.Count;
+			SimplexVertex [] vertices = new SimplexVertex [ 3 ] { m_v1, m_v2, m_v3 };
+			for ( int i = 0; i < m_count; ++i )
+			{
+				SimplexVertex v = vertices [ i ];
+				v.IndexA = cache.IndexA [ i ];
+				v.IndexB = cache.IndexB [ i ];
+				Vector2 wALocal = proxyA.GetVertex ( v.IndexA );
+				Vector2 wBLocal = proxyB.GetVertex ( v.IndexB );
+				v.wA = transformA * wALocal;
+				v.wB = transformB * wBLocal;
+				v.w = v.wB - v.wA;
+				v.a = 0;
+			}
+			m_v1 = vertices [ 0 ];
+			m_v2 = vertices [ 1 ];
+			m_v3 = vertices [ 2 ];
+
+			if ( m_count > 1 )
+			{
+				float metric1 = cache.Metric;
+				float metric2 = GetMetric ();
+				if ( metric2 < 0.5f * metric1 || 2.0f * metric1 < metric2 || metric2 < float.Epsilon )
+					m_count = 0;
+			}
+
+			if ( m_count == 0 )
+			{
+				SimplexVertex v = m_v1;
+				v.IndexA = 0;
+				v.IndexB = 0;
+				Vector2 wALocal = proxyA.GetVertex ( 0 );
+				Vector2 wBLocal = proxyB.GetVertex ( 0 );
+				v.wA = transformA * wALocal;
+				v.wB = transformB * wBLocal;
+				v.w = v.wB - v.wA;
+				m_count = 1;
+				m_v1 = v;
+			}
+		}
+
+		public void WriteCache ( ref SimplexCache cache )
+		{
+			cache.Metric = GetMetric ();
+			cache.Count = m_count;
+			SimplexVertex [] vertices = new SimplexVertex [ 3 ] { m_v1, m_v2, m_v3 };
+			for ( int i = 0; i < m_count; ++i )
+			{
+				cache.IndexA [ i ] = vertices [ i ].IndexA;
+				cache.IndexB [ i ] = vertices [ i ].IndexB;
+			}
+			m_v1 = vertices [ 0 ];
+			m_v2 = vertices [ 1 ];
+			m_v3 = vertices [ 2 ];
+		}
+
+		public Vector2 GetSearchDirection ()
+		{
+			switch ( m_count )
+			{
+				case 1:
+					return -m_v1.w;
+				case 2:
+					Vector2 e12 = m_v2.w - m_v1.w;
+					float sgn = Vector2.Cross ( e12, -m_v1.w );
+					if ( sgn > 0 )
+						return Vector2.Cross ( 1, e12 );
+					else
+						return Vector2.Cross ( e12, 1 );
+				default:
+					return new Vector2 ();
+			}
+		}
+
+		public Vector2 GetClosestPoint ()
+		{
+			switch ( m_count )
+			{
+				case 0: return new Vector2 ();
+				case 1: return m_v1.w;
+				case 2: return m_v1.a * m_v1.w + m_v2.a * m_v2.w;
+				case 3: return new Vector2 ();
+				default: return new Vector2 ();
+			}
+		}
+
+		public void GetWitnessPoints ( ref Vector2 pA, ref Vector2 pB )
+		{
+			switch ( m_count )
+			{
+				case 0: break;
+				case 1:
+					pA = m_v1.wA;
+					pB = m_v1.wB;
+					break;
+				case 2:
+					pA = m_v1.a * m_v1.wA + m_v2.a * m_v2.wA;
+					pB = m_v1.a * m_v1.wB + m_v2.a * m_v2.wB;
+					break;
+				case 3:
+					pA = m_v1.a * m_v1.wA + m_v2.a * m_v2.wA + m_v3.a * m_v3.wA;
+					pB = pA;
+					break;
+				default:
+					break;
+			}
+		}
+
+		public float GetMetric ()
+		{
+			switch ( m_count )
+			{
+				case 0: return 0;
+				case 1: return 0;
+				case 2: return Vector2.Distance ( m_v1.w, m_v2.w );
+				case 3: return Vector2.Cross ( m_v2.w - m_v1.w, m_v3.w - m_v1.w );
+				default: return 0;
+			}
+		}
+
+		public void Solve2 ()
+		{
 			
+		}
+
+		public void Solve3 ()
+		{
+		
 		}
 	}
 
