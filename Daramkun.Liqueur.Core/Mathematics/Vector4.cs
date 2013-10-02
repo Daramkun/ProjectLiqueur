@@ -38,12 +38,6 @@ namespace Daramkun.Liqueur.Mathematics
 		public float LengthSquared { get { return X * X + Y * Y + Z * Z + W * W; } }
 		public float Length { get { return ( float ) System.Math.Sqrt ( LengthSquared ); } }
 
-		public static float Distance ( Vector4 v1, Vector4 v2 )
-		{
-			return ( float ) System.Math.Sqrt ( System.Math.Pow ( v2.X - v1.X, 2 ) +
-				System.Math.Pow ( v2.Y - v1.Y, 2 ) + System.Math.Pow ( v2.Z - v1.Z, 2 ) +
-				System.Math.Pow ( v2.W - v1.W, 2 ) );
-		}
 		public static Vector4 operator + ( Vector4 value1, Vector4 value2 )
 		{
 			return Add ( value1, value2 );
