@@ -9,6 +9,10 @@ namespace Daramkun.Liqueur.Mathematics
 	{
 		public float M11, M12, M13, M21, M22, M23, M31, M32, M33;
 
+		public Vector3 Column1 { get { return new Vector3 ( M11, M12, M13 ); } set { M11 = value.X; M12 = value.Y; M13 = value.Z; } }
+		public Vector3 Column2 { get { return new Vector3 ( M21, M22, M23 ); } set { M21 = value.X; M22 = value.Y; M23 = value.Z; } }
+		public Vector3 Column3 { get { return new Vector3 ( M31, M32, M33 ); } set { M31 = value.X; M32 = value.Y; M33 = value.Z; } }
+
 		public static readonly Matrix3x3 Identity = new Matrix3x3 (
 																	1, 0, 0,
 																	0, 1, 0,
@@ -20,6 +24,16 @@ namespace Daramkun.Liqueur.Mathematics
 			M11 = m11; M12 = m12; M13 = m13;
 			M21 = m21; M22 = m22; M23 = m23;
 			M31 = m31; M32 = m32; M33 = m33;
+		}
+
+		public Matrix3x3 ( Vector3 column1, Vector3 column2, Vector3 column3 )
+			: this (
+				column1.X, column1.Y, column1.Z,
+				column2.X, column2.Y, column2.Z,
+				column3.X, column3.Y, column3.Z
+			)
+		{
+		
 		}
 
 		public static Matrix3x3 operator + ( Matrix3x3 v1, Matrix3x3 v2 )

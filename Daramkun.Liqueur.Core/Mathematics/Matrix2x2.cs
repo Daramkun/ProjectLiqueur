@@ -9,6 +9,9 @@ namespace Daramkun.Liqueur.Mathematics
 	{
 		public float M11, M12, M21, M22;
 
+		public Vector2 Column1 { get { return new Vector2 ( M11, M12 ); } set { M11 = value.X; M12 = value.Y; } }
+		public Vector2 Column2 { get { return new Vector2 ( M21, M22 ); } set { M21 = value.X; M22 = value.Y; } }
+
 		public static readonly Matrix2x2 Identity = new Matrix2x2 (
 																	1, 0,
 																	0, 1
@@ -18,6 +21,12 @@ namespace Daramkun.Liqueur.Mathematics
 		{
 			M11 = m11; M12 = m12;
 			M21 = m21; M22 = m22;
+		}
+
+		public Matrix2x2 ( Vector2 column1, Vector2 column2 )
+			: this ( column1.X, column1.Y, column2.X, column2.Y )
+		{
+			
 		}
 
 		public static Matrix2x2 operator + ( Matrix2x2 v1, Matrix2x2 v2 )
