@@ -36,6 +36,8 @@ namespace Daramkun.Liqueur.Mathematics
 		
 		}
 
+		public void SetIdentity () { this = Identity; }
+
 		public static Matrix3x3 operator + ( Matrix3x3 v1, Matrix3x3 v2 )
 		{
 			v1.M11 += v2.M11; v1.M12 += v2.M12; v1.M13 += v2.M13;

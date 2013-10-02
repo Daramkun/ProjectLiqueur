@@ -38,6 +38,8 @@ namespace Daramkun.Liqueur.Mathematics
 		public float LengthSquared { get { return X * X + Y * Y + Z * Z + W * W; } }
 		public float Length { get { return ( float ) System.Math.Sqrt ( LengthSquared ); } }
 
+		public void SetZero () { this = new Vector4 (); }
+
 		public static Vector4 operator + ( Vector4 value1, Vector4 value2 )
 		{
 			return Add ( value1, value2 );
@@ -247,6 +249,29 @@ namespace Daramkun.Liqueur.Mathematics
 					default: throw new IndexOutOfRangeException ();
 				}
 			}
+		}
+
+		public static Vector4 Max ( Vector4 v1, Vector4 v2 )
+		{
+			return new Vector4 ( ( float ) Math.Max ( v1.X, v2.X ), ( float ) Math.Max ( v1.Y, v2.Y ),
+				( float ) Math.Max ( v1.Z, v2.Z ), ( float ) Math.Max ( v1.W, v2.W ) );
+		}
+
+		public static Vector4 Min ( Vector4 v1, Vector4 v2 )
+		{
+			return new Vector4 ( ( float ) Math.Min ( v1.X, v2.X ), ( float ) Math.Min ( v1.Y, v2.Y ),
+				( float ) Math.Min ( v1.Z, v2.Z ), ( float ) Math.Min ( v1.W, v2.W ) );
+		}
+
+		public static Vector4 Clamp ( Vector4 v1, Vector4 v2, Vector4 v3 )
+		{
+			return Max ( v2, Min ( v1, v3 ) );
+		}
+
+		public static Vector4 Absolute ( Vector4 v )
+		{
+			return new Vector4 ( ( float ) Math.Abs ( v.X ), ( float ) Math.Abs ( v.Y ),
+				( float ) Math.Abs ( v.Z ), ( float ) Math.Abs ( v.W ) );
 		}
 	}
 }

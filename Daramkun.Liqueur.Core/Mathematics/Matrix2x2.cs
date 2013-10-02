@@ -29,6 +29,8 @@ namespace Daramkun.Liqueur.Mathematics
 			
 		}
 
+		public void SetIdentity () { this = Identity; }
+
 		public static Matrix2x2 operator + ( Matrix2x2 v1, Matrix2x2 v2 )
 		{
 			v1.M11 += v2.M11;

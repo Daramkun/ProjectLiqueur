@@ -23,6 +23,8 @@ namespace Daramkun.Liqueur.Mathematics
 			this.Y = y;
 		}
 
+		public void SetZero () { this = new Vector2 (); }
+
 		public float LengthSquared { get { return X * X + Y * Y; } }
 		public float Length { get { return ( float ) System.Math.Sqrt ( LengthSquared ); } }
 
@@ -264,6 +266,11 @@ namespace Daramkun.Liqueur.Mathematics
 		public static Vector2 Clamp ( Vector2 v1, Vector2 v2, Vector2 v3 )
 		{
 			return Max ( v2, Min ( v1, v3 ) );
+		}
+
+		public static Vector2 Absolute ( Vector2 v )
+		{
+			return new Vector2 ( ( float ) Math.Abs ( v.X ), ( float ) Math.Abs ( v.Y ) );
 		}
 	}
 }

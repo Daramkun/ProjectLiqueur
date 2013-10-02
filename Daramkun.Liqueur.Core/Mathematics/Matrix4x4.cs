@@ -49,6 +49,8 @@ namespace Daramkun.Liqueur.Mathematics
 
 		}
 
+		public void SetIdentity () { this = Identity; }
+
 		public static Matrix4x4 operator + ( Matrix4x4 matrix1, Matrix4x4 matrix2 )
 		{
 			matrix1.M11 += matrix2.M11;
