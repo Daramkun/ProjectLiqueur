@@ -28,22 +28,42 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public static Vector2 operator + ( Vector2 v1, Vector2 v2 )
 		{
+			return Add ( v1, v2 );
+		}
+
+		public static Vector2 Add ( Vector2 v1, Vector2 v2 )
+		{
 			return new Vector2 ( v1.X + v2.X, v1.Y + v2.Y );
 		}
 
 		public static Vector2 operator - ( Vector2 v1, Vector2 v2 )
 		{
-			return new Vector2 ( v1.X - v2.X, v1.Y - v2.Y );
+			return Subtract ( v1, v2 );
 		}
 
 		public static Vector2 operator - ( Vector2 v )
+		{
+			return Negate ( v );
+		}
+
+		public static Vector2 Subtract ( Vector2 v1, Vector2 v2 )
+		{
+			return new Vector2 ( v1.X - v2.X, v1.Y - v2.Y );
+		}
+
+		public static Vector2 Negate ( Vector2 v )
 		{
 			return new Vector2 ( -v.X, -v.Y );
 		}
 
 		public static Vector2 operator * ( Vector2 v1, float v2 )
 		{
-			return new Vector2 ( v1.X * v2, v1.Y * v2 );
+			return Multiply ( v1, v2 );
+		}
+
+		public static Vector2 operator * ( float v1, Vector2 v2 )
+		{
+			return Multiply ( v1, v2 );
 		}
 
 		public static Vector2 operator * ( Vector2 v1, Vector2 v2 )
@@ -51,24 +71,19 @@ namespace Daramkun.Liqueur.Mathematics
 			return Multiply ( v1, v2 );
 		}
 
-		public static Vector2 operator * ( float v1, Vector2 v2 )
-		{
-			return new Vector2 ( v2.X * v1, v2.Y * v1 );
-		}
-
 		public static Vector2 operator / ( Vector2 v1, float v2 )
 		{
-			return new Vector2 ( v1.X / v2, v1.Y / v2 );
+			return Divide ( v1, v2 );
 		}
 
 		public static Vector2 operator / ( Vector2 v1, Vector2 v2 )
 		{
-			return new Vector2 ( v1.X / v2.X, v1.Y / v2.Y );
+			return Divide ( v1, v2 );
 		}
 
-		public Vector2 Normalize ()
+		public void Normalize ()
 		{
-			return this = Normalize ( this );
+			this = Normalize ( this );
 		}
 
 		public static Vector2 Normalize ( Vector2 value )
@@ -101,6 +116,26 @@ namespace Daramkun.Liqueur.Mathematics
 			return new Vector2 ( v1.X * v2.Y, v1.Y * v2.X );
 		}
 
+		public static Vector2 Multiply ( Vector2 v1, float v2 )
+		{
+			return new Vector2 ( v1.X * v2, v1.Y * v2 );
+		}
+
+		public static Vector2 Multiply ( float v1, Vector2 v2 )
+		{
+			return Multiply ( v2, v1 );
+		}
+
+		public static Vector2 Divide ( Vector2 v1, Vector2 v2 )
+		{
+			return new Vector2 ( v1.X / v2.X, v1.Y / v2.Y );
+		}
+
+		public static Vector2 Divide ( Vector2 v1, float v2 )
+		{
+			return new Vector2 ( v1.X / v2, v1.Y / v2 );
+		}
+
 		public static Vector2 TransposeMultiply ( Matrix2x2 v1, Vector2 v2 )
 		{
 			return new Vector2 (
@@ -129,7 +164,12 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public static float Distance ( Vector2 v1, Vector2 v2 )
 		{
-			return ( float ) System.Math.Sqrt ( System.Math.Pow ( v2.X - v1.X, 2 ) + System.Math.Pow ( v2.Y - v1.Y, 2 ) );
+			return ( float ) System.Math.Sqrt ( DistanceSquared ( v1, v2 ) );
+		}
+
+		public static float DistanceSquared ( Vector2 v1, Vector2 v2 )
+		{
+			return ( float ) ( System.Math.Pow ( v2.X - v1.X, 2 ) + System.Math.Pow ( v2.Y - v1.Y, 2 ) );
 		}
 
 		public int Compare ( Vector2 x, Vector2 y )

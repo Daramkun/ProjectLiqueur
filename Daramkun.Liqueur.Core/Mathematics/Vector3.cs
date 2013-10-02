@@ -36,47 +36,87 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public static Vector3 operator + ( Vector3 v1, Vector3 v2 )
 		{
+			return Add ( v1, v2 );
+		}
+
+		public static Vector3 Add ( Vector3 v1, Vector3 v2 )
+		{
 			return new Vector3 ( v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z );
 		}
 
 		public static Vector3 operator - ( Vector3 v1, Vector3 v2 )
 		{
-			return new Vector3 ( v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z );
+			return Subtract ( v1, v2 );
 		}
 
 		public static Vector3 operator - ( Vector3 v )
+		{
+			return Negate ( v );
+		}
+
+		public static Vector3 Subtract ( Vector3 v1, Vector3 v2 )
+		{
+			return new Vector3 ( v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z );
+		}
+
+		public static Vector3 Negate ( Vector3 v )
 		{
 			return new Vector3 ( -v.X, -v.Y, -v.Z );
 		}
 
 		public static Vector3 operator * ( Vector3 v1, float v2 )
 		{
-			return new Vector3 ( v1.X * v2, v1.Y * v2, v1.Z * v2 );
+			return Multiply ( v1, v2 );
 		}
 
 		public static Vector3 operator * ( Vector3 v1, Vector3 v2 )
 		{
-			return new Vector3 ( v1.X * v2.X, v1.Y * v2.Y, v1.Z * v2.Z );
+			return Multiply ( v1, v2 );
 		}
 
 		public static Vector3 operator * ( float v1, Vector3 v2 )
+		{
+			return Multiply ( v1, v2 );
+		}
+
+		public static Vector3 Multiply ( Vector3 v1, float v2 )
+		{
+			return new Vector3 ( v1.X * v2, v1.Y * v2, v1.Z * v2 );
+		}
+
+		public static Vector3 Multiply ( Vector3 v1, Vector3 v2 )
+		{
+			return new Vector3 ( v1.X * v2.X, v1.Y * v2.Y, v1.Z * v2.Z );
+		}
+
+		public static Vector3 Multiply ( float v1, Vector3 v2 )
 		{
 			return new Vector3 ( v2.X * v1, v2.Y * v1, v2.Z * v1 );
 		}
 
 		public static Vector3 operator / ( Vector3 v1, float v2 )
 		{
-			return new Vector3 ( v1.X / v2, v1.Y / v2, v1.Z / v2 );
+			return Divide ( v1, v2 );
 		}
 
 		public static Vector3 operator / ( Vector3 v1, Vector3 v2 )
 		{
+			return Divide ( v1, v2 );
+		}
+
+		public static Vector3 Divide ( Vector3 v1, float v2 )
+		{
+			return new Vector3 ( v1.X / v2, v1.Y / v2, v1.Z / v2 );
+		}
+
+		public static Vector3 Divide ( Vector3 v1, Vector3 v2 )
+		{
 			return new Vector3 ( v1.X / v2.X, v1.Y / v2.Y, v1.Z / v2.Z );
 		}
 
-		public Vector3 Normalize ()
+		public void Normalize ()
 		{
-			return this = Normalize ( this );
+			this = Normalize ( this );
 		}
 
 		public static Vector3 Normalize ( Vector3 value )
@@ -100,7 +140,12 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public static float Distance ( Vector3 v1, Vector3 v2 )
 		{
-			return ( float ) System.Math.Sqrt ( System.Math.Pow ( v2.X - v1.X, 2 ) +
+			return ( float ) System.Math.Sqrt ( DistanceSquared ( v1, v2 ) );
+		}
+
+		public static float DistanceSquared ( Vector3 v1, Vector3 v2 )
+		{
+			return ( float ) ( System.Math.Pow ( v2.X - v1.X, 2 ) +
 				System.Math.Pow ( v2.Y - v1.Y, 2 ) + System.Math.Pow ( v2.Z - v1.Z, 2 ) );
 		}
 

@@ -13,6 +13,11 @@ namespace Daramkun.Liqueur.Mathematics
 			M31, M32, M33, M34,
 			M41, M42, M43, M44;
 
+		public Vector4 Column1 { get { return new Vector4 ( M11, M12, M13, M14 ); } set { M11 = value.X; M12 = value.Y; M13 = value.Z; M14 = value.W; } }
+		public Vector4 Column2 { get { return new Vector4 ( M21, M22, M23, M24 ); } set { M21 = value.X; M22 = value.Y; M23 = value.Z; M24 = value.W; } }
+		public Vector4 Column3 { get { return new Vector4 ( M31, M32, M33, M34 ); } set { M31 = value.X; M32 = value.Y; M33 = value.Z; M34 = value.W; } }
+		public Vector4 Column4 { get { return new Vector4 ( M41, M42, M43, M44 ); } set { M41 = value.X; M42 = value.Y; M43 = value.Z; M44 = value.W; } }
+
 		public static readonly Matrix4x4 Identity = new Matrix4x4 (
 														1f, 0f, 0f, 0f,
 														0f, 1f, 0f, 0f,
@@ -31,6 +36,17 @@ namespace Daramkun.Liqueur.Mathematics
 			M21 = m21; M22 = m22; M23 = m23; M24 = m24;
 			M31 = m31; M32 = m32; M33 = m33; M34 = m34;
 			M41 = m41; M42 = m42; M43 = m43; M44 = m44;
+		}
+
+		public Matrix4x4 ( Vector4 column1, Vector4 column2, Vector4 column3, Vector4 column4 )
+			: this (
+				column1.X, column1.Y, column1.Z, column1.W,
+				column2.X, column2.Y, column2.Z, column2.W,
+				column3.X, column3.Y, column3.Z, column3.W,
+				column4.X, column4.Y, column4.Z, column4.W
+			)
+		{
+
 		}
 
 		public static Matrix4x4 operator + ( Matrix4x4 matrix1, Matrix4x4 matrix2 )

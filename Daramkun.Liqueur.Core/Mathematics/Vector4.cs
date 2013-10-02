@@ -46,6 +46,11 @@ namespace Daramkun.Liqueur.Mathematics
 		}
 		public static Vector4 operator + ( Vector4 value1, Vector4 value2 )
 		{
+			return Add ( value1, value2 );
+		}
+
+		public static Vector4 Add ( Vector4 value1, Vector4 value2 )
+		{
 			value1.W += value2.W;
 			value1.X += value2.X;
 			value1.Y += value2.Y;
@@ -55,6 +60,16 @@ namespace Daramkun.Liqueur.Mathematics
 
 		public static Vector4 operator - ( Vector4 value1, Vector4 value2 )
 		{
+			return Subtract ( value1, value2 );
+		}
+
+		public static Vector4 operator - ( Vector4 value )
+		{
+			return Negate ( value );
+		}
+
+		public static Vector4 Subtract ( Vector4 value1, Vector4 value2 )
+		{
 			value1.W -= value2.W;
 			value1.X -= value2.X;
 			value1.Y -= value2.Y;
@@ -62,13 +77,14 @@ namespace Daramkun.Liqueur.Mathematics
 			return value1;
 		}
 
+		public static Vector4 Negate ( Vector4 value )
+		{
+			return new Vector4 ( -value.X, -value.Y, -value.Z, -value.W );
+		}
+
 		public static Vector4 operator * ( Vector4 value1, Vector4 value2 )
 		{
-			value1.W *= value2.W;
-			value1.X *= value2.X;
-			value1.Y *= value2.Y;
-			value1.Z *= value2.Z;
-			return value1;
+			return Multiply ( value1, value2 );
 		}
 
 		public static Vector4 operator * ( Vector4 value1, float scaleFactor )
@@ -89,26 +105,44 @@ namespace Daramkun.Liqueur.Mathematics
 			return value1;
 		}
 
-		public static float Dot ( Vector4 value1, Vector4 value2 )
+		public static Vector4 Multiply ( Vector4 value1, Vector4 value2 )
 		{
-			return value1.X * value2.X + value1.Y * value2.Y + value1.Z * value2.Z + value1.W * value2.W;
+			value1.W *= value2.W;
+			value1.X *= value2.X;
+			value1.Y *= value2.Y;
+			value1.Z *= value2.Z;
+			return value1;
 		}
 
-		public static Vector4 Cross ( Vector4 value1, Vector4 value2, Vector4 value3 )
+		public static Vector4 Multiply ( Vector4 value1, float scaleFactor )
 		{
-			/*
-In[2]:= Cross[{1, 2, 3, 4}, {5, 6, 7, 8}, {a, b, c, d}] 
-Out[2]= {4 b - 8 c + 4 d, -4 a + 12 c - 8 d, 8 a - 12 b + 4 d, -4 a + 8 b - 4 c}
-			 */
-			return new Vector4 (
-				value1.W * value3.Y - value2.W * value3.Z + value1.W * value3.W,
-				-value1.W * value3.X + value1.X * value1.Y * value3.Z - value2.W * value3.W,
-				value2.W * value3.X - value1.X * value1.Y * value3.Y + value1.W * value3.W,
-				-value1.W * value3.X + value2.W * value3.Y - value1.W - value3.Z
-			);
+			value1.W *= scaleFactor;
+			value1.X *= scaleFactor;
+			value1.Y *= scaleFactor;
+			value1.Z *= scaleFactor;
+			return value1;
+		}
+
+		public static Vector4 Multiply ( float scaleFactor, Vector4 value1 )
+		{
+			value1.W *= scaleFactor;
+			value1.X *= scaleFactor;
+			value1.Y *= scaleFactor;
+			value1.Z *= scaleFactor;
+			return value1;
 		}
 
 		public static Vector4 operator / ( Vector4 value1, Vector4 value2 )
+		{
+			return Divide ( value1, value2 );
+		}
+
+		public static Vector4 operator / ( Vector4 value1, float divider )
+		{
+			return Divide ( value1, divider );
+		}
+
+		public static Vector4 Divide ( Vector4 value1, Vector4 value2 )
 		{
 			value1.W /= value2.W;
 			value1.X /= value2.X;
@@ -117,7 +151,7 @@ Out[2]= {4 b - 8 c + 4 d, -4 a + 12 c - 8 d, 8 a - 12 b + 4 d, -4 a + 8 b - 4 c}
 			return value1;
 		}
 
-		public static Vector4 operator / ( Vector4 value1, float divider )
+		public static Vector4 Divide ( Vector4 value1, float divider )
 		{
 			float factor = 1f / divider;
 			value1.W *= factor;
@@ -127,15 +161,42 @@ Out[2]= {4 b - 8 c + 4 d, -4 a + 12 c - 8 d, 8 a - 12 b + 4 d, -4 a + 8 b - 4 c}
 			return value1;
 		}
 
-		public Vector4 Normalize ()
+		public void Normalize ()
 		{
-			return this = Normalize ( this );
+			this = Normalize ( this );
 		}
 
 		public static Vector4 Normalize ( Vector4 v )
 		{
 			float len = v.Length;
 			return v / len;
+		}
+
+		public static float Dot ( Vector4 value1, Vector4 value2 )
+		{
+			return value1.X * value2.X + value1.Y * value2.Y + value1.Z * value2.Z + value1.W * value2.W;
+		}
+
+		public static Vector4 Cross ( Vector4 value1, Vector4 value2, Vector4 value3 )
+		{
+			return new Vector4 (
+				value1.W * value3.Y - value2.W * value3.Z + value1.W * value3.W,
+				-value1.W * value3.X + value1.X * value1.Y * value3.Z - value2.W * value3.W,
+				value2.W * value3.X - value1.X * value1.Y * value3.Y + value1.W * value3.W,
+				-value1.W * value3.X + value2.W * value3.Y - value1.W - value3.Z
+			);
+		}
+
+		public static float Distance ( Vector4 v1, Vector4 v2 )
+		{
+			return ( float ) Math.Sqrt ( DistanceSquared ( v1, v2 ) );
+		}
+
+		public static float DistanceSquared ( Vector4 v1, Vector4 v2 )
+		{
+			return ( float ) ( System.Math.Pow ( v2.X - v1.X, 2 ) +
+				System.Math.Pow ( v2.Y - v1.Y, 2 ) + System.Math.Pow ( v2.Z - v1.Z, 2 ) +
+				System.Math.Pow ( v2.W - v1.W, 2 ) );
 		}
 
 		public override bool Equals ( object obj )
