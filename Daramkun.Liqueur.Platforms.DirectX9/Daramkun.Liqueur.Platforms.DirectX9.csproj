@@ -4,15 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FC9C7B7F-0682-4482-8798-C864B2CEB6FE}</ProjectGuid>
+    <ProjectGuid>{6F3ED846-08CA-4032-B524-3CBCB8B61BD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Daramkun.Liqueur</RootNamespace>
-    <AssemblyName>Daramkun.Liqueur.Platforms.DirectX11.Windows</AssemblyName>
+    <AssemblyName>Daramkun.Liqueur.Platforms.DirectX9</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,39 +36,39 @@
     <Reference Include="SharpDX.D3DCompiler">
       <HintPath>..\Dependencies\Windows\SharpDX.D3DCompiler.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>..\Dependencies\Windows\SharpDX.Direct3D11.dll</HintPath>
+    <Reference Include="SharpDX.Direct3D9">
+      <HintPath>..\Dependencies\Windows\Legacy\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.XAudio2">
-      <HintPath>..\Dependencies\Windows\SharpDX.XAudio2.dll</HintPath>
+    <Reference Include="SharpDX.DirectInput">
+      <HintPath>..\Dependencies\Windows\Legacy\SharpDX.DirectInput.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.DXGI">
-      <HintPath>..\Dependencies\Windows\SharpDX.DXGI.dll</HintPath>
+    <Reference Include="SharpDX.DirectSound">
+      <HintPath>..\Dependencies\Windows\Legacy\SharpDX.DirectSound.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Effect.cs" />
-    <Compile Include="Graphics\GraphicsDevice.cs" />
-    <Compile Include="Graphics\Shader.cs" />
-    <Compile Include="Graphics\Texture2D.cs" />
-    <Compile Include="Platforms\Launcher.cs" />
-    <Compile Include="Platforms\Window.cs" />
+    <Compile Include="Logging\LogWriters\ConsoleLogWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{032EC8FF-8AA5-4ACE-8147-D7F0FCECFF04}</Project>
+      <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="Contents\" />
+    <Folder Include="Graphics\" />
     <Folder Include="Inputs\" />
-    <Folder Include="Logging\" />
+    <Folder Include="Platforms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
