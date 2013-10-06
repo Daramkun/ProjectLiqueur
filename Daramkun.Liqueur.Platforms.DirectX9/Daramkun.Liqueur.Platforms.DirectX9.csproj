@@ -47,14 +47,17 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\GraphicsDevice.cs" />
+    <Compile Include="Graphics\Shader.cs" />
+    <Compile Include="Graphics\VertexBuffer.cs" />
     <Compile Include="Logging\LogWriters\ConsoleLogWriter.cs" />
+    <Compile Include="Platforms\Launcher.cs" />
+    <Compile Include="Platforms\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,9 +69,7 @@
   <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="Contents\" />
-    <Folder Include="Graphics\" />
     <Folder Include="Inputs\" />
-    <Folder Include="Platforms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

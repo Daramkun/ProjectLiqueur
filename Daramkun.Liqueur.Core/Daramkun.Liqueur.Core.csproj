@@ -235,7 +235,7 @@
     <Compile Include="Logging\LogWriters\DebugLogWriter.cs" />
     <Compile Include="Logging\LogWriters\StreamLogWriter.cs" />
     <Compile Include="Logging\MessageFormat.cs" />
-    <Compile Include="Mathematics\Line.cs" />
+    <Compile Include="Mathematics\Circle.cs" />
     <Compile Include="Mathematics\MathHelper.cs" />
     <Compile Include="Mathematics\Matrix2x2.cs" />
     <Compile Include="Mathematics\Matrix3x3.cs" />
