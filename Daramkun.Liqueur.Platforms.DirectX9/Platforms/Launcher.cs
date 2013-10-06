@@ -45,5 +45,11 @@ namespace Daramkun.Liqueur.Platforms
 		{
 
 		}
+
+
+		public void InvokeInMainThread ( Action action, bool waitForEndOfMethod = true )
+		{
+			throw new NotImplementedException ();
+		}
 	}
 }

@@ -53,6 +53,8 @@ namespace Daramkun.Liqueur.Platforms
 
 		PlatformInformation PlatformInformation { get; }
 
+		void InvokeInMainThread ( Action action, bool waitForEndOfMethod = true );
+
 		void LauncherInitialize ( out IWindow window, out IGraphicsDevice graphicsDevice, out IAudioDevice audioDevice );
 		void LauncherRun ( LauncherArgument args );
 		void LauncherFinalize ( IWindow window, IGraphicsDevice graphicsDevice, IAudioDevice audioDevice );

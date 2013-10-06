@@ -123,10 +123,6 @@ void main () {
 				};
 				Add ( calc );
 
-				AudioContentLoader.AddDefaultDecoders ();
-				audio = new AudioContentLoader ().Load ( new FileStream ( @"D:\인코딩\Fate.ogg", FileMode.Open ) ) as IAudio;
-				LiqueurSystem.AudioDevice.Play ( audio );
-
 				base.Intro ( args );
 			}
 
@@ -166,7 +162,6 @@ void main () {
 
 			public override void Outro ()
 			{
-				audio.Dispose ();
 				sprite.Dispose ();
 				renderBuffer.Dispose ();
 				texture.Dispose ();
@@ -183,7 +178,7 @@ void main () {
 		static void Main ()
 		{
 			LiqueurSystem.SkipInitializeException = true;
-			LiqueurSystem.Run ( new Launcher (), new InternalScene () );
+			LiqueurSystem.Run ( new Launcher ( true ), new InternalScene () );
 		}
 	}
 }

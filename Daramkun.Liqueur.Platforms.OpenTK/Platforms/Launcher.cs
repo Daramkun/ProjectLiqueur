@@ -15,6 +15,10 @@ namespace Daramkun.Liqueur.Platforms
 {
 	public class Launcher : ILauncher
 	{
+		List<object> invokedMethod = new List<object> ();
+		Thread thisThread, updateThread;
+		bool isMultithread;
+
 		public bool IsInitialized { get; private set; }
 
 		public PlatformInformation PlatformInformation
@@ -37,9 +41,10 @@ namespace Daramkun.Liqueur.Platforms
 			}
 		}
 
-		public Launcher ()
+		public Launcher ( bool isMultithread = false )
 		{
 			IsInitialized = false;
+			this.isMultithread = isMultithread;
 		}
 
 		public void LauncherInitialize ( out IWindow window, out IGraphicsDevice graphicsDevice, out IAudioDevice audioDevice )
@@ -55,6 +60,8 @@ namespace Daramkun.Liqueur.Platforms
 		{
 			GraphicsContext.ShareContexts = true;
 			GameWindow window = LiqueurSystem.Window.Handle as GameWindow;
+
+			thisThread = Thread.CurrentThread;
 
 			string versionString = GL.GetString ( StringName.Version );
 			if ( int.Parse ( versionString [ 0 ].ToString () ) < 2 )
@@ -89,12 +96,33 @@ namespace Daramkun.Liqueur.Platforms
 			};
 			window.UpdateFrame += ( object sender, FrameEventArgs e ) =>
 			{
-				args.UpdateLogic ();
+				if ( invokedMethod.Count > 0 )
+				{
+					foreach ( Action action in invokedMethod.ToArray () )
+					{
+						action ();
+						lock ( invokedMethod ) { invokedMethod.Remove ( action ); }
+					}
+				}
+				if ( !isMultithread )
+					args.UpdateLogic ();
 			};
 			window.RenderFrame += ( object sender, FrameEventArgs e ) =>
 			{
 				args.DrawLogic ();
 			};
+			if ( isMultithread )
+			{
+				updateThread = new Thread ( () =>
+				{
+					while ( !window.IsExiting )
+					{
+						args.UpdateLogic ();
+						Thread.Sleep ( 1 );
+					}
+				} );
+				updateThread.Start ();
+			}
 			window.Run ();
 		}
 
@@ -104,6 +132,13 @@ namespace Daramkun.Liqueur.Platforms
 				audioDevice.Dispose ();
 			graphicsDevice.Dispose ();
 			window.Dispose ();
+		}
+
+		public void InvokeInMainThread ( Action action, bool waitForEndOfMethod = true )
+		{
+			if ( thisThread == Thread.CurrentThread ) { action (); return; }
+			lock ( invokedMethod ) { invokedMethod.Add ( action ); }
+			while ( waitForEndOfMethod && invokedMethod.Contains ( action ) ) Thread.Sleep ( 1 );
 		}
 	}
 }
