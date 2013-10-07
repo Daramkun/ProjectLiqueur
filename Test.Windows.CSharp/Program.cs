@@ -178,6 +178,7 @@ void main () {
 		static void Main ()
 		{
 			LiqueurSystem.SkipInitializeException = true;
+			LiqueurSystem.FixedUpdateTimeStep = LiqueurSystem.FixedDrawTimeStep = new TimeSpan ();
 			LiqueurSystem.Run ( new Launcher ( true ), new InternalScene () );
 		}
 	}
