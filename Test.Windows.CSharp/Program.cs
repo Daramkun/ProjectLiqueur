@@ -43,9 +43,7 @@ namespace Test.Windows.CSharp
 			IRenderBuffer renderBuffer;
 			Sprite sprite;
 			float angle;
-			LsfFont font;
-
-			IAudio audio;
+			Font font;
 
 			public override void Intro ( params object [] args )
 			{
@@ -112,7 +110,7 @@ void main () {
 				renderBuffer = LiqueurSystem.GraphicsDevice.CreateRenderBuffer ( 1024, 1024 );
 
 				sprite = new Sprite ( texture );
-				font = new LsfFont ( Assembly.GetEntryAssembly ().GetManifestResourceStream ( "Test.Windows.CSharp.temp.lsf" ) );
+				font = new /*LsfFont*/TrueTypeFont ( Assembly.GetEntryAssembly ().GetManifestResourceStream ( "Test.Windows.CSharp.temp.ttf" ), 22 );
 
 				FpsCalculator calc = new FpsCalculator ();
 				calc.DrawEvent += ( object sender, GameTimeEventArgs e ) =>

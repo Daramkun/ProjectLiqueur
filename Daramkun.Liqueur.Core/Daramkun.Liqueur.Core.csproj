@@ -85,6 +85,7 @@
     <Compile Include="Contents\AudioInfo.cs" />
     <Compile Include="Contents\ContentManager.cs" />
     <Compile Include="Contents\Decoder\Audios\OggVorbisDecoder.cs" />
+    <Compile Include="Contents\Decoder\Audios\SoundDirectCopyDecoder.cs" />
     <Compile Include="Contents\Decoder\Audios\WaveDecoder.cs" />
     <Compile Include="Contents\Decoder\IDecoder.cs" />
     <Compile Include="Contents\Decoder\Images\BitmapDecoder.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Common\ExternLib\PngCs\Zlib\ZlibInputStreamMs.cs" />
     <Compile Include="Common\ExternLib\PngCs\Zlib\ZlibOutputStreamMs.cs" />
     <Compile Include="Common\ExternLib\PngCs\Zlib\ZlibStreamFactory.cs" />
+    <Compile Include="Contents\Decoder\Images\ImageDirectCopyDecoder.cs" />
     <Compile Include="Contents\Decoder\Images\PngDecoder.cs" />
     <Compile Include="Contents\Encoder\Audios\IAudioEncoder.cs" />
     <Compile Include="Contents\Encoder\IEncoder.cs" />

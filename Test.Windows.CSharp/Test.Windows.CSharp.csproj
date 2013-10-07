@@ -61,6 +61,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="temp.lsf" />
+    <EmbeddedResource Include="temp.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">

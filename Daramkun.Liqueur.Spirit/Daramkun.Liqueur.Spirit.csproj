@@ -42,16 +42,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ExternLib\TrueTypeSharp\BakedChar.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\BakedCharCollection.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\BakedQuad.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\ContourPoint.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\FakePtr.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\FontBitmap.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\GlyphVertex.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\GlyphVertexType.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\stb_truetype.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\TrueTypeFont.Codepoints.cs" />
+    <Compile Include="Common\ExternLib\TrueTypeSharp\TrueTypeFont.cs" />
     <Compile Include="Contents\Loaders\LsfFontContentLoader.cs" />
     <Compile Include="Graphics\Font.cs" />
     <Compile Include="Graphics\Fonts\LsfFont.cs" />
+    <Compile Include="Graphics\Fonts\TrueTypeFont.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\SpriteEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\BaseSpriteEffect\DirectX\" />
-    <Folder Include="Resources\BaseSpriteEffect\OpenGLES\" />
     <Folder Include="Resources\BaseSpriteEffect\XNA\" />
   </ItemGroup>
   <ItemGroup>
