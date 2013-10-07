@@ -49,6 +49,35 @@ namespace Daramkun.Liqueur.Mathematics
 
 		}
 
+		public Matrix4x4 ( Quaternion quaternion )
+		{
+			float num9 = quaternion.X * quaternion.X;
+			float num8 = quaternion.Y * quaternion.Y;
+			float num7 = quaternion.Z * quaternion.Z;
+			float num6 = quaternion.X * quaternion.Y;
+			float num5 = quaternion.Z * quaternion.W;
+			float num4 = quaternion.Z * quaternion.X;
+			float num3 = quaternion.Y * quaternion.W;
+			float num2 = quaternion.Y * quaternion.Z;
+			float num = quaternion.X * quaternion.W;
+			M11 = 1f - ( 2f * ( num8 + num7 ) );
+			M12 = 2f * ( num6 + num5 );
+			M13 = 2f * ( num4 - num3 );
+			M14 = 0f;
+			M21 = 2f * ( num6 - num5 );
+			M22 = 1f - ( 2f * ( num7 + num9 ) );
+			M23 = 2f * ( num2 + num );
+			M24 = 0f;
+			M31 = 2f * ( num4 + num3 );
+			M32 = 2f * ( num2 - num );
+			M33 = 1f - ( 2f * ( num8 + num9 ) );
+			M34 = 0f;
+			M41 = 0f;
+			M42 = 0f;
+			M43 = 0f;
+			M44 = 1f;
+		}
+
 		public void SetIdentity () { this = Identity; }
 
 		public static Matrix4x4 operator + ( Matrix4x4 matrix1, Matrix4x4 matrix2 )
@@ -192,50 +221,6 @@ namespace Daramkun.Liqueur.Mathematics
 			return Transpose ( this );
 		}
 
-		public static Matrix4x4 Invert ( Matrix4x4 matrix )
-		{
-			float det1 = matrix.M11 * matrix.M22 - matrix.M12 * matrix.M21;
-			float det2 = matrix.M11 * matrix.M23 - matrix.M13 * matrix.M21;
-			float det3 = matrix.M11 * matrix.M24 - matrix.M14 * matrix.M21;
-			float det4 = matrix.M12 * matrix.M23 - matrix.M13 * matrix.M22;
-			float det5 = matrix.M12 * matrix.M24 - matrix.M14 * matrix.M22;
-			float det6 = matrix.M13 * matrix.M24 - matrix.M14 * matrix.M23;
-			float det7 = matrix.M31 * matrix.M42 - matrix.M32 * matrix.M41;
-			float det8 = matrix.M31 * matrix.M43 - matrix.M33 * matrix.M41;
-			float det9 = matrix.M31 * matrix.M44 - matrix.M34 * matrix.M41;
-			float det10 = matrix.M32 * matrix.M43 - matrix.M33 * matrix.M42;
-			float det11 = matrix.M32 * matrix.M44 - matrix.M34 * matrix.M42;
-			float det12 = matrix.M33 * matrix.M44 - matrix.M34 * matrix.M43;
-
-			float detMatrix = ( float ) ( det1 * det12 - det2 * det11 + det3 * det10 + det4 * det9 - det5 * det8 + det6 * det7 );
-			float invDetMatrix = 1f / detMatrix;
-
-			Matrix4x4 ret;
-			ret.M11 = ( matrix.M22 * det12 - matrix.M23 * det11 + matrix.M24 * det10 ) * invDetMatrix;
-			ret.M12 = ( -matrix.M12 * det12 + matrix.M13 * det11 - matrix.M14 * det10 ) * invDetMatrix;
-			ret.M13 = ( matrix.M42 * det6 - matrix.M43 * det5 + matrix.M44 * det4 ) * invDetMatrix;
-			ret.M14 = ( -matrix.M32 * det6 + matrix.M33 * det5 - matrix.M34 * det4 ) * invDetMatrix;
-			ret.M21 = ( -matrix.M21 * det12 + matrix.M23 * det9 - matrix.M24 * det8 ) * invDetMatrix;
-			ret.M22 = ( matrix.M11 * det12 - matrix.M13 * det9 + matrix.M14 * det8 ) * invDetMatrix;
-			ret.M23 = ( -matrix.M41 * det6 + matrix.M43 * det3 - matrix.M44 * det2 ) * invDetMatrix;
-			ret.M24 = ( matrix.M31 * det6 - matrix.M33 * det3 + matrix.M34 * det2 ) * invDetMatrix;
-			ret.M31 = ( matrix.M21 * det11 - matrix.M22 * det9 + matrix.M24 * det7 ) * invDetMatrix;
-			ret.M32 = ( -matrix.M11 * det11 + matrix.M12 * det9 - matrix.M14 * det7 ) * invDetMatrix;
-			ret.M33 = ( matrix.M41 * det5 - matrix.M42 * det3 + matrix.M44 * det1 ) * invDetMatrix;
-			ret.M34 = ( -matrix.M31 * det5 + matrix.M32 * det3 - matrix.M34 * det1 ) * invDetMatrix;
-			ret.M41 = ( -matrix.M21 * det10 + matrix.M22 * det8 - matrix.M23 * det7 ) * invDetMatrix;
-			ret.M42 = ( matrix.M11 * det10 - matrix.M12 * det8 + matrix.M13 * det7 ) * invDetMatrix;
-			ret.M43 = ( -matrix.M41 * det4 + matrix.M42 * det2 - matrix.M43 * det1 ) * invDetMatrix;
-			ret.M44 = ( matrix.M31 * det4 - matrix.M32 * det2 + matrix.M33 * det1 ) * invDetMatrix;
-
-			return ret;
-		}
-
-		public Matrix4x4 Invert ()
-		{
-			return Invert ( this );
-		}
-
 		public static bool operator == ( Matrix4x4 matrix1, Matrix4x4 matrix2 )
 		{
 			return
@@ -348,6 +333,69 @@ namespace Daramkun.Liqueur.Mathematics
 		{
 			get { return this [ x + ( y * 4 ) ]; }
 			set { this [ x + ( y * 4 ) ] = value; }
+		}
+
+		public static float Determinant ( Matrix4x4 matrix )
+		{
+			float num22 = matrix.M11, num21 = matrix.M12, num20 = matrix.M13, num19 = matrix.M14;
+			float num12 = matrix.M21, num11 = matrix.M22, num10 = matrix.M23, num9 = matrix.M24;
+			float num8 = matrix.M31, num7 = matrix.M32, num6 = matrix.M33, num5 = matrix.M34;
+			float num4 = matrix.M41, num3 = matrix.M42, num2 = matrix.M43, num = matrix.M44;
+			float num18 = ( num6 * num ) - ( num5 * num2 ), num17 = ( num7 * num ) - ( num5 * num3 );
+			float num16 = ( num7 * num2 ) - ( num6 * num3 ), num15 = ( num8 * num ) - ( num5 * num4 );
+			float num14 = ( num8 * num2 ) - ( num6 * num4 ), num13 = ( num8 * num3 ) - ( num7 * num4 );
+			return (
+				( ( ( num22 * ( ( ( num11 * num18 ) - ( num10 * num17 ) ) + ( num9 * num16 ) ) ) -
+				( num21 * ( ( ( num12 * num18 ) - ( num10 * num15 ) ) + ( num9 * num14 ) ) ) ) +
+				( num20 * ( ( ( num12 * num17 ) - ( num11 * num15 ) ) + ( num9 * num13 ) ) ) ) -
+				( num19 * ( ( ( num12 * num16 ) - ( num11 * num14 ) ) + ( num10 * num13 ) ) )
+			);
+		}
+
+		public float Determinant () { return Determinant ( this ); }
+
+		public static Matrix4x4 Invert ( Matrix4x4 matrix )
+		{
+			float det1 = matrix.M11 * matrix.M22 - matrix.M12 * matrix.M21;
+			float det2 = matrix.M11 * matrix.M23 - matrix.M13 * matrix.M21;
+			float det3 = matrix.M11 * matrix.M24 - matrix.M14 * matrix.M21;
+			float det4 = matrix.M12 * matrix.M23 - matrix.M13 * matrix.M22;
+			float det5 = matrix.M12 * matrix.M24 - matrix.M14 * matrix.M22;
+			float det6 = matrix.M13 * matrix.M24 - matrix.M14 * matrix.M23;
+			float det7 = matrix.M31 * matrix.M42 - matrix.M32 * matrix.M41;
+			float det8 = matrix.M31 * matrix.M43 - matrix.M33 * matrix.M41;
+			float det9 = matrix.M31 * matrix.M44 - matrix.M34 * matrix.M41;
+			float det10 = matrix.M32 * matrix.M43 - matrix.M33 * matrix.M42;
+			float det11 = matrix.M32 * matrix.M44 - matrix.M34 * matrix.M42;
+			float det12 = matrix.M33 * matrix.M44 - matrix.M34 * matrix.M43;
+
+			float detMatrix = ( float ) ( det1 * det12 - det2 * det11 + det3 * det10 + det4 * det9 - det5 * det8 + det6 * det7 );
+			float invDetMatrix = 1f / detMatrix;
+
+			Matrix4x4 ret;
+			ret.M11 = ( matrix.M22 * det12 - matrix.M23 * det11 + matrix.M24 * det10 ) * invDetMatrix;
+			ret.M12 = ( -matrix.M12 * det12 + matrix.M13 * det11 - matrix.M14 * det10 ) * invDetMatrix;
+			ret.M13 = ( matrix.M42 * det6 - matrix.M43 * det5 + matrix.M44 * det4 ) * invDetMatrix;
+			ret.M14 = ( -matrix.M32 * det6 + matrix.M33 * det5 - matrix.M34 * det4 ) * invDetMatrix;
+			ret.M21 = ( -matrix.M21 * det12 + matrix.M23 * det9 - matrix.M24 * det8 ) * invDetMatrix;
+			ret.M22 = ( matrix.M11 * det12 - matrix.M13 * det9 + matrix.M14 * det8 ) * invDetMatrix;
+			ret.M23 = ( -matrix.M41 * det6 + matrix.M43 * det3 - matrix.M44 * det2 ) * invDetMatrix;
+			ret.M24 = ( matrix.M31 * det6 - matrix.M33 * det3 + matrix.M34 * det2 ) * invDetMatrix;
+			ret.M31 = ( matrix.M21 * det11 - matrix.M22 * det9 + matrix.M24 * det7 ) * invDetMatrix;
+			ret.M32 = ( -matrix.M11 * det11 + matrix.M12 * det9 - matrix.M14 * det7 ) * invDetMatrix;
+			ret.M33 = ( matrix.M41 * det5 - matrix.M42 * det3 + matrix.M44 * det1 ) * invDetMatrix;
+			ret.M34 = ( -matrix.M31 * det5 + matrix.M32 * det3 - matrix.M34 * det1 ) * invDetMatrix;
+			ret.M41 = ( -matrix.M21 * det10 + matrix.M22 * det8 - matrix.M23 * det7 ) * invDetMatrix;
+			ret.M42 = ( matrix.M11 * det10 - matrix.M12 * det8 + matrix.M13 * det7 ) * invDetMatrix;
+			ret.M43 = ( -matrix.M41 * det4 + matrix.M42 * det2 - matrix.M43 * det1 ) * invDetMatrix;
+			ret.M44 = ( matrix.M31 * det4 - matrix.M32 * det2 + matrix.M33 * det1 ) * invDetMatrix;
+
+			return ret;
+		}
+
+		public Matrix4x4 Invert ()
+		{
+			return Invert ( this );
 		}
 	}
 }
