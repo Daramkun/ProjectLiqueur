@@ -48,7 +48,7 @@ namespace csogg
 		int endbyte = 0;
 		int storage = 0;
 
-		public void writeinit() 
+		public void WriteInitialize() 
 		{
 			buffer = new byte[BUFFER_INCREMENT];
 			ptr = 0;
@@ -56,37 +56,37 @@ namespace csogg
 			storage = BUFFER_INCREMENT;
 		}
 
-		public void write(byte[] s) 
+		public void Write(byte[] s) 
 		{
 			for(int i = 0; i < s.Length; i++) 
 			{
 				if(s[i] == 0) break;
-				write(s[i], 8);
+				Write(s[i], 8);
 			}
 		}
 
-		public void read (byte[] s, int bytes)
+		public void Read (byte[] s, int bytes)
 		{
 			int i = 0;
 			while(bytes--!=0) 
 			{
-				s[i++]=(byte)(read(8));
+				s[i++]=(byte)(Read(8));
 			}
 		}
 
-		void reset() 
+		void Reset() 
 		{
 			ptr = 0;
 			buffer[0] = (byte)'\0';
 			endbit = endbyte = 0;
 		}
 
-		public void writeclear()
+		public void WriteClear()
 		{
 			buffer = null;
 		}
 
-		public void readinit(byte[] buf, int start, int bytes)
+		public void ReadInitialize(byte[] buf, int start, int bytes)
 		{
 			ptr = start;
 			buffer = buf;
@@ -94,7 +94,7 @@ namespace csogg
 			storage = bytes;
 		}
 
-		public void write(int vvalue, int bits)
+		public void Write(int vvalue, int bits)
 		{
 			if(endbyte + 4 >= storage) 
 			{
@@ -133,7 +133,7 @@ namespace csogg
 			endbit = bits & 7;
 		}
 
-		public int look(int bits)
+		public int Look(int bits)
 		{
 			int ret;
 			uint m = mask[bits];
@@ -168,14 +168,14 @@ namespace csogg
 			return (ret);
 		}
 
-		public int look1()
+		public int Look1()
 		{
 			if(endbyte >= storage)
 				return(-1);
 			return((buffer[ptr] >> endbit) & 1);
 		}
 
-		public void adv(int bits)
+		public void Adv(int bits)
 		{
 			bits += endbit;
 			ptr += bits / 8;
@@ -183,7 +183,7 @@ namespace csogg
 			endbit = bits & 7;
 		}
 
-		public void adv1()
+		public void Adv1()
 		{
 			++endbit;
 			if(endbit > 7)
@@ -194,7 +194,7 @@ namespace csogg
 			}
 		}
 
-		public int read(int bits)
+		public int Read(int bits)
 		{
 			int ret;
 			uint m=mask[bits];
@@ -240,7 +240,7 @@ namespace csogg
 			return(ret);
 		}
 
-		public int read1()
+		public int Read1()
 		{
 			int ret;
 			if(endbyte>=storage)
@@ -268,12 +268,12 @@ namespace csogg
 			return(ret);
 		}
 
-		public int bytes()
+		public int Bytes()
 		{
 			return(endbyte+(endbit+7)/8);
 		}
 
-		public int bits()
+		public int Bits()
 		{
 			return(endbyte*8+endbit);
 		}

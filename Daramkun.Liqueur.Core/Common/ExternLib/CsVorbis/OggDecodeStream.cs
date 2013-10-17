@@ -142,9 +142,7 @@ namespace Daramkun.Liqueur.Decoders.Sounds.OggVorbisCore
 						int result = oy.pageout ( og );
 						if ( result == 0 ) break;
 						if ( result == -1 )
-						{
 							throw new Exception ( "Corrupt or missing data in bitstream; continuing..." );
-						}
 						else
 						{
 							os.pagein ( og );

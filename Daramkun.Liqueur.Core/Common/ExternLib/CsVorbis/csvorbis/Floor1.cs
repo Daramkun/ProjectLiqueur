@@ -43,10 +43,10 @@ namespace csvorbis
 			int maxclass=-1;
 
 			/* save out partitions */
-			opb.write(info.partitions,5);          /* only 0 to 31 legal */
+			opb.Write(info.partitions,5);          /* only 0 to 31 legal */
 			for(int j=0;j<info.partitions;j++)
 			{
-				opb.write(info.partitionclass[j],4); /* only 0 to 15 legal */
+				opb.Write(info.partitionclass[j],4); /* only 0 to 15 legal */
 				if(maxclass<info.partitionclass[j])
 					maxclass=info.partitionclass[j];
 			}
@@ -54,21 +54,21 @@ namespace csvorbis
 			/* save out partition classes */
 			for(int j=0;j<maxclass+1;j++)
 			{
-				opb.write(info.class_dim[j]-1,3); /* 1 to 8 */
-				opb.write(info.class_subs[j],2); /* 0 to 3 */
+				opb.Write(info.class_dim[j]-1,3); /* 1 to 8 */
+				opb.Write(info.class_subs[j],2); /* 0 to 3 */
 				if(info.class_subs[j]!=0)
 				{
-					opb.write(info.class_book[j],8);
+					opb.Write(info.class_book[j],8);
 				}
 				for(int k=0;k<(1<<info.class_subs[j]);k++)
 				{
-					opb.write(info.class_subbook[j][k]+1,8);
+					opb.Write(info.class_subbook[j][k]+1,8);
 				}
 			}
 
 			/* save out the post list */
-			opb.write(info.mult-1,2);     /* only 1,2,3,4 legal now */
-			opb.write(ilog2(maxposit),4);
+			opb.Write(info.mult-1,2);     /* only 1,2,3,4 legal now */
+			opb.Write(ilog2(maxposit),4);
 			rangebits=ilog2(maxposit);
 
 			for(int j=0,k=0;j<info.partitions;j++)
@@ -76,7 +76,7 @@ namespace csvorbis
 				count+=info.class_dim[info.partitionclass[j]];
 				for(;k<count;k++)
 				{
-					opb.write(info.postlist[k+2],rangebits);
+					opb.Write(info.postlist[k+2],rangebits);
 				}
 			}
 		}
@@ -87,10 +87,10 @@ namespace csvorbis
 			InfoFloor1 info=new InfoFloor1();
 
 			/* read partitions */
-			info.partitions=opb.read(5);            /* only 0 to 31 legal */
+			info.partitions=opb.Read(5);            /* only 0 to 31 legal */
 			for(int j=0;j<info.partitions;j++)
 			{
-				info.partitionclass[j]=opb.read(4); /* only 0 to 15 legal */
+				info.partitionclass[j]=opb.Read(4); /* only 0 to 15 legal */
 				if(maxclass<info.partitionclass[j])
 					maxclass=info.partitionclass[j];
 			}
@@ -98,8 +98,8 @@ namespace csvorbis
 			/* read partition classes */
 			for(int j=0;j<maxclass+1;j++)
 			{
-				info.class_dim[j]=opb.read(3)+1; /* 1 to 8 */
-				info.class_subs[j]=opb.read(2);  /* 0,1,2,3 bits */
+				info.class_dim[j]=opb.Read(3)+1; /* 1 to 8 */
+				info.class_subs[j]=opb.Read(2);  /* 0,1,2,3 bits */
 				if(info.class_subs[j]<0)
 				{
 					//goto err_out;
@@ -108,7 +108,7 @@ namespace csvorbis
 				}
 				if(info.class_subs[j]!=0)
 				{
-					info.class_book[j]=opb.read(8);
+					info.class_book[j]=opb.Read(8);
 				}
 				if(info.class_book[j]<0 || info.class_book[j]>=vi.books)
 				{
@@ -118,7 +118,7 @@ namespace csvorbis
 				}
 				for(int k=0;k<(1<<info.class_subs[j]);k++)
 				{
-					info.class_subbook[j][k]=opb.read(8)-1;
+					info.class_subbook[j][k]=opb.Read(8)-1;
 					if(info.class_subbook[j][k]<-1 || info.class_subbook[j][k]>=vi.books)
 					{
 						//goto err_out;
@@ -129,15 +129,15 @@ namespace csvorbis
 			}
 
 			/* read the post list */
-			info.mult=opb.read(2)+1;     /* only 1,2,3,4 legal now */
-			rangebits=opb.read(4);
+			info.mult=opb.Read(2)+1;     /* only 1,2,3,4 legal now */
+			rangebits=opb.Read(4);
 
 			for(int j=0,k=0;j<info.partitions;j++)
 			{
 				count+=info.class_dim[info.partitionclass[j]];
 				for(;k<count;k++)
 				{
-					int t=info.postlist[k+2]=opb.read(rangebits);
+					int t=info.postlist[k+2]=opb.Read(rangebits);
 					if(t<0 || t>=(1<<rangebits))
 					{
 						//goto err_out;
@@ -283,7 +283,7 @@ namespace csvorbis
 			CodeBook[] books=vb.vd.fullbooks;
 
 			/* unpack wrapped/predicted values from stream */
-			if(vb.opb.read(1)==1)
+			if(vb.opb.Read(1)==1)
 			{
 				int[] fit_value=null;
 				if(memo is int[])
@@ -299,8 +299,8 @@ namespace csvorbis
 					for(int i=0; i<fit_value.Length; i++) fit_value[i]=0;
 				}
 
-				fit_value[0]=vb.opb.read(ilog(look.quant_q-1));
-				fit_value[1]=vb.opb.read(ilog(look.quant_q-1));
+				fit_value[0]=vb.opb.Read(ilog(look.quant_q-1));
+				fit_value[1]=vb.opb.Read(ilog(look.quant_q-1));
 
 				/* partition by partition */
 				for(int i=0,j=2;i<info.partitions;i++)

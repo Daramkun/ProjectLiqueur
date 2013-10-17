@@ -165,24 +165,24 @@ namespace csvorbis
 		// Header packing/unpacking
 		int unpack_info(csBuffer opb)
 		{
-			version=opb.read(32);
+			version=opb.Read(32);
 			if(version!=0)return(-1);
 
-			channels=opb.read(8);
-			rate=opb.read(32);
+			channels=opb.Read(8);
+			rate=opb.Read(32);
 
-			bitrate_upper=opb.read(32);
-			bitrate_nominal=opb.read(32);
-			bitrate_lower=opb.read(32);
+			bitrate_upper=opb.Read(32);
+			bitrate_nominal=opb.Read(32);
+			bitrate_lower=opb.Read(32);
 
-			blocksizes[0]=1<<opb.read(4);
-			blocksizes[1]=1<<opb.read(4);
+			blocksizes[0]=1<<opb.Read(4);
+			blocksizes[1]=1<<opb.Read(4);
   
 			if((rate<1) ||
 				(channels<1)||
 				(blocksizes[0]<8)||
 				(blocksizes[1]<blocksizes[0]) ||
-				(opb.read(1)!=1))
+				(opb.Read(1)!=1))
 			{
 				//goto err_out; // EOP check
 				clear();
@@ -200,7 +200,7 @@ namespace csvorbis
 		{
 
 			//d* codebooks
-			books=opb.read(8)+1;
+			books=opb.Read(8)+1;
 
 			if(book_param==null || book_param.Length!=books)
 				book_param=new StaticCodeBook[books];
@@ -216,13 +216,13 @@ namespace csvorbis
 			}
 
 			// time backend settings
-			times=opb.read(6)+1;
+			times=opb.Read(6)+1;
 			if(time_type==null || time_type.Length!=times) time_type=new int[times];
 			if(time_param==null || time_param.Length!=times)
 				time_param=new Object[times];
 			for(int i=0;i<times;i++)
 			{
-				time_type[i]=opb.read(16);
+				time_type[i]=opb.Read(16);
 				if(time_type[i]<0 || time_type[i]>=VI_TIMEB)
 				{
 					//goto err_out;
@@ -239,7 +239,7 @@ namespace csvorbis
 			}
 
 			// floor backend settings
-			floors=opb.read(6)+1;
+			floors=opb.Read(6)+1;
 			if(floor_type==null || floor_type.Length!=floors)
 				floor_type=new int[floors];
 			if(floor_param==null || floor_param.Length!=floors)
@@ -247,7 +247,7 @@ namespace csvorbis
 
 			for(int i=0;i<floors;i++)
 			{
-				floor_type[i]=opb.read(16);
+				floor_type[i]=opb.Read(16);
 				if(floor_type[i]<0 || floor_type[i]>=VI_FLOORB)
 				{
 					//goto err_out;
@@ -265,7 +265,7 @@ namespace csvorbis
 			}
 
 			// residue backend settings
-			residues=opb.read(6)+1;
+			residues=opb.Read(6)+1;
 
 			if(residue_type==null || residue_type.Length!=residues)
 				residue_type=new int[residues];
@@ -275,7 +275,7 @@ namespace csvorbis
 
 			for(int i=0;i<residues;i++)
 			{
-				residue_type[i]=opb.read(16);
+				residue_type[i]=opb.Read(16);
 				if(residue_type[i]<0 || residue_type[i]>=VI_RESB)
 				{
 					//	goto err_out;
@@ -292,12 +292,12 @@ namespace csvorbis
 			}
 
 			// map backend settings
-			maps=opb.read(6)+1;
+			maps=opb.Read(6)+1;
 			if(map_type==null || map_type.Length!=maps)  map_type=new int[maps];
 			if(map_param==null || map_param.Length!=maps)  map_param=new Object[maps];
 			for(int i=0;i<maps;i++)
 			{
-				map_type[i]=opb.read(16);
+				map_type[i]=opb.Read(16);
 				if(map_type[i]<0 || map_type[i]>=VI_MAPB)
 				{
 					//	goto err_out;
@@ -314,16 +314,16 @@ namespace csvorbis
 			}
 
 			// mode settings
-			modes=opb.read(6)+1;
+			modes=opb.Read(6)+1;
 			if(mode_param==null || mode_param.Length!=modes)
 				mode_param=new InfoMode[modes];
 			for(int i=0;i<modes;i++)
 			{
 				mode_param[i]=new InfoMode();
-				mode_param[i].blockflag=opb.read(1);
-				mode_param[i].windowtype=opb.read(16);
-				mode_param[i].transformtype=opb.read(16);
-				mode_param[i].mapping=opb.read(8);
+				mode_param[i].blockflag=opb.Read(1);
+				mode_param[i].windowtype=opb.Read(16);
+				mode_param[i].transformtype=opb.Read(16);
+				mode_param[i].mapping=opb.Read(8);
 
 				if((mode_param[i].windowtype>=VI_WINDOWB)||
 					(mode_param[i].transformtype>=VI_WINDOWB)||
@@ -335,7 +335,7 @@ namespace csvorbis
 				}
 			}
 
-			if(opb.read(1)!=1)
+			if(opb.Read(1)!=1)
 			{
 				//goto err_out; // top level EOP check
 				clear();
@@ -359,15 +359,15 @@ namespace csvorbis
 
 			if(op!=null)
 			{  
-				opb.readinit(op.packet_base, op.packet, op.bytes);
+				opb.ReadInitialize(op.packet_base, op.packet, op.bytes);
 
 				// Which of the three types of header is this?
 				// Also verify header-ness, vorbis
 			{
 				byte[] buffer=new byte[6];
-				int packtype=opb.read(8);
+				int packtype=opb.Read(8);
 				//memset(buffer,0,6);
-				opb.read(buffer,6);
+				opb.Read(buffer,6);
 				if(buffer[0]!='v' || buffer[1]!='o' || buffer[2]!='r' ||
 					buffer[3]!='b' || buffer[4]!='i' || buffer[5]!='s')
 				{
@@ -419,21 +419,21 @@ namespace csvorbis
 			byte[] _vorbis_byt = AE.GetBytes(_vorbis);
 
 			// preamble
-			opb.write(0x01,8);
-			opb.write(_vorbis_byt);
+			opb.Write(0x01,8);
+			opb.Write(_vorbis_byt);
 
 			// basic information about the stream
-			opb.write(0x00,32);
-			opb.write(channels,8);
-			opb.write(rate,32);
+			opb.Write(0x00,32);
+			opb.Write(channels,8);
+			opb.Write(rate,32);
 
-			opb.write(bitrate_upper,32);
-			opb.write(bitrate_nominal,32);
-			opb.write(bitrate_lower,32);
+			opb.Write(bitrate_upper,32);
+			opb.Write(bitrate_nominal,32);
+			opb.Write(bitrate_lower,32);
 
-			opb.write(ilog2(blocksizes[0]),4);
-			opb.write(ilog2(blocksizes[1]),4);
-			opb.write(1,1);
+			opb.Write(ilog2(blocksizes[0]),4);
+			opb.Write(ilog2(blocksizes[1]),4);
+			opb.Write(1,1);
 			return(0);
 		}
 
@@ -442,11 +442,11 @@ namespace csvorbis
 			Encoding AE = Encoding.UTF8;
 			byte[] _vorbis_byt = AE.GetBytes(_vorbis);
 			
-			opb.write(0x05,8);
-			opb.write(_vorbis_byt);
+			opb.Write(0x05,8);
+			opb.Write(_vorbis_byt);
 
 			// books
-			opb.write(books-1,8);
+			opb.Write(books-1,8);
 			for(int i=0;i<books;i++)
 			{
 				if(book_param[i].pack(opb)!=0)
@@ -457,47 +457,47 @@ namespace csvorbis
 			}
 
 			// times
-			opb.write(times-1,6);
+			opb.Write(times-1,6);
 			for(int i=0;i<times;i++)
 			{
-				opb.write(time_type[i],16);
+				opb.Write(time_type[i],16);
 				FuncTime.time_P[time_type[i]].pack(this.time_param[i],opb);
 			}
 
 			// floors
-			opb.write(floors-1,6);
+			opb.Write(floors-1,6);
 			for(int i=0;i<floors;i++)
 			{
-				opb.write(floor_type[i],16);
+				opb.Write(floor_type[i],16);
 				FuncFloor.floor_P[floor_type[i]].pack(floor_param[i],opb);
 			}
 
 			// residues
-			opb.write(residues-1,6);
+			opb.Write(residues-1,6);
 			for(int i=0;i<residues;i++)
 			{
-				opb.write(residue_type[i],16);
+				opb.Write(residue_type[i],16);
 				FuncResidue.residue_P[residue_type[i]].pack(residue_param[i],opb);
 			}
     
 			// maps
-			opb.write(maps-1,6);
+			opb.Write(maps-1,6);
 			for(int i=0;i<maps;i++)
 			{
-				opb.write(map_type[i],16);
+				opb.Write(map_type[i],16);
 				FuncMapping.mapping_P[map_type[i]].pack(this,map_param[i],opb);
 			}
 
 			// modes
-			opb.write(modes-1,6);
+			opb.Write(modes-1,6);
 			for(int i=0;i<modes;i++)
 			{
-				opb.write(mode_param[i].blockflag,1);
-				opb.write(mode_param[i].windowtype,16);
-				opb.write(mode_param[i].transformtype,16);
-				opb.write(mode_param[i].mapping,8);
+				opb.Write(mode_param[i].blockflag,1);
+				opb.Write(mode_param[i].windowtype,16);
+				opb.Write(mode_param[i].transformtype,16);
+				opb.Write(mode_param[i].mapping,8);
 			}
-			opb.write(1,1);
+			opb.Write(1,1);
 			return(0);
 			//err_out:
 			//return(-1);
@@ -525,10 +525,10 @@ namespace csvorbis
 			//    synchronized(opb_blocksize){
 			int mode;
  
-			opb.readinit(op.packet_base, op.packet, op.bytes);
+			opb.ReadInitialize(op.packet_base, op.packet, op.bytes);
 
 			/* Check the packet type */
-			if(opb.read(1)!=0)
+			if(opb.Read(1)!=0)
 			{
 				/* Oops.  This is not an audio data packet */
 				return(OV_ENOTAUDIO);
@@ -543,7 +543,7 @@ namespace csvorbis
 			}
 
 			/* read our mode and pre/post windowsize */
-			mode=opb.read(modebits);
+			mode=opb.Read(modebits);
 		}
 			if(mode==-1)return(OV_EBADPACKET);
 			return(blocksizes[mode_param[mode].blockflag]);

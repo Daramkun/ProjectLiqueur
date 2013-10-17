@@ -66,7 +66,7 @@ namespace csvorbis
 			//  localstore=null;
 			if(vd.analysisp!=0)
 			{
-				opb.writeinit();
+				opb.WriteInitialize();
 			}
 		}
 
@@ -129,7 +129,7 @@ namespace csvorbis
 			{
 				if(vd.analysisp!=0)
 				{
-					opb.writeclear();
+					opb.WriteClear();
 				}
 			}
 			//ripcord();
@@ -145,25 +145,25 @@ namespace csvorbis
  
 			// first things first.  Make sure decode is ready
 			// ripcord();
-			opb.readinit(op.packet_base, op.packet, op.bytes);
+			opb.ReadInitialize(op.packet_base, op.packet, op.bytes);
 
 			// Check the packet type
-			if(opb.read(1)!=0)
+			if(opb.Read(1)!=0)
 			{
 				// Oops.  This is not an audio data packet
 				return(-1);
 			}
 
 			// read our mode and pre/post windowsize
-			int _mode=opb.read(vd.modebits);
+			int _mode=opb.Read(vd.modebits);
 			if(_mode==-1)return(-1);
   
 			mode=_mode;
 			W=vi.mode_param[mode].blockflag;
 			if(W!=0)
 			{
-				lW=opb.read(1);
-				nW=opb.read(1);
+				lW=opb.Read(1);
+				nW=opb.Read(1);
 				if(nW==-1) return(-1);
 			}
 			else

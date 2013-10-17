@@ -42,7 +42,7 @@ namespace csvorbis
 		// returns the number of bits
 		internal int encode(int a, csBuffer b)
 		{
-			b.write(codelist[a], c.lengthlist[a]);
+			b.Write(codelist[a], c.lengthlist[a]);
 			return(c.lengthlist[a]);
 		}
 
@@ -219,13 +219,13 @@ namespace csvorbis
 		{
 			int ptr=0;
 			DecodeAux t=decode_tree;
-			int lok=b.look(t.tabn);
+			int lok=b.Look(t.tabn);
 			//System.err.println(this+" "+t+" lok="+lok+", tabn="+t.tabn);
 
 			if(lok>=0)
 			{
 				ptr=t.tab[lok];
-				b.adv(t.tabl[lok]);
+				b.Adv(t.tabl[lok]);
 				if(ptr<=0)
 				{
 					return -ptr;
@@ -233,7 +233,7 @@ namespace csvorbis
 			}
 			do
 			{
-				switch(b.read1())
+				switch(b.Read1())
 				{
 					case 0:
 						ptr=t.ptr0[ptr];

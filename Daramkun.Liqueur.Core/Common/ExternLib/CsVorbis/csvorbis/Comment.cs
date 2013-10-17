@@ -168,7 +168,7 @@ namespace csvorbis
 
 		internal int unpack(csBuffer opb)
 		{
-			int vendorlen=opb.read(32);
+			int vendorlen=opb.Read(32);
 			if(vendorlen<0)
 			{
 				//goto err_out;
@@ -176,8 +176,8 @@ namespace csvorbis
 				return(-1);
 			}
 			vendor=new byte[vendorlen+1];
-			opb.read(vendor,vendorlen);
-			comments=opb.read(32);
+			opb.Read(vendor,vendorlen);
+			comments=opb.Read(32);
 			if(comments<0)
 			{
 				//goto err_out;
@@ -189,7 +189,7 @@ namespace csvorbis
 	    
 			for(int i=0;i<comments;i++)
 			{
-				int len=opb.read(32);
+				int len=opb.Read(32);
 				if(len<0)
 				{
 					//goto err_out;
@@ -198,9 +198,9 @@ namespace csvorbis
 				}
 				comment_lengths[i]=len;
 				user_comments[i]=new byte[len+1];
-				opb.read(user_comments[i], len);
+				opb.Read(user_comments[i], len);
 			}	  
-			if(opb.read(1)!=1)
+			if(opb.Read(1)!=1)
 			{
 				//goto err_out; // EOP check
 				clear();
@@ -222,45 +222,45 @@ namespace csvorbis
 			byte[] _vorbis_byt = AE.GetBytes(_vorbis);
 			
 			// preamble
-			opb.write(0x03,8);
-			opb.write(_vorbis_byt);
+			opb.Write(0x03,8);
+			opb.Write(_vorbis_byt);
 
 			// vendor
-			opb.write(temp.Length,32);
-			opb.write(temp_byt);
+			opb.Write(temp.Length,32);
+			opb.Write(temp_byt);
 
 			// comments
 
-			opb.write(comments,32);
+			opb.Write(comments,32);
 			if(comments!=0)
 			{
 				for(int i=0;i<comments;i++)
 				{
 					if(user_comments[i]!=null)
 					{
-						opb.write(comment_lengths[i],32);
-						opb.write(user_comments[i]);
+						opb.Write(comment_lengths[i],32);
+						opb.Write(user_comments[i]);
 					}
 					else
 					{
-						opb.write(0,32);
+						opb.Write(0,32);
 					}
 				}
 			}
-			opb.write(1,1);
+			opb.Write(1,1);
 			return(0);
 		}
 
 		public int header_out(Packet op)
 		{
 			csBuffer opb=new csBuffer();
-			opb.writeinit();
+			opb.WriteInitialize();
 
 			if(pack(opb)!=0) return OV_EIMPL;
 
-			op.packet_base = new byte[opb.bytes()];
+			op.packet_base = new byte[opb.Bytes()];
 			op.packet=0;
-			op.bytes=opb.bytes();
+			op.bytes=opb.Bytes();
 			Array.Copy(opb.buf(), 0, op.packet_base, 0, op.bytes);
 			op.b_o_s=0;
 			op.e_o_s=0;

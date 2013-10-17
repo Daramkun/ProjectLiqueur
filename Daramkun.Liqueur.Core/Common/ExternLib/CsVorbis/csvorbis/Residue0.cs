@@ -34,13 +34,13 @@ namespace csvorbis
 		{
 			InfoResidue0 info=(InfoResidue0)vr;
 			int acc=0;
-			opb.write(info.begin,24);
-			opb.write(info.end,24);
+			opb.Write(info.begin,24);
+			opb.Write(info.end,24);
 
-			opb.write(info.grouping-1,24);  /* residue vectors to group and 
+			opb.Write(info.grouping-1,24);  /* residue vectors to group and 
 				     code with a partitioned book */
-			opb.write(info.partitions-1,6); /* possible partition choices */
-			opb.write(info.groupbook,8);  /* group huffman book */
+			opb.Write(info.partitions-1,6); /* possible partition choices */
+			opb.Write(info.groupbook,8);  /* group huffman book */
 
 			/* secondstages is a bitmask; as encoding progresses pass by pass, a
 			   bitmask of one indicates this partition class has bits to write
@@ -50,19 +50,19 @@ namespace csvorbis
 				if(ilog(info.secondstages[j])>3)
 				{
 					/* yes, this is a minor hack due to not thinking ahead */
-					opb.write(info.secondstages[j],3); 
-					opb.write(1,1);
-					opb.write(info.secondstages[j] >> 3,5); 
+					opb.Write(info.secondstages[j],3); 
+					opb.Write(1,1);
+					opb.Write(info.secondstages[j] >> 3,5); 
 				}
 				else
 				{
-					opb.write(info.secondstages[j],4); /* trailing zero */
+					opb.Write(info.secondstages[j],4); /* trailing zero */
 				}
 				acc+=icount(info.secondstages[j]);
 			}
 			for(int j=0;j<acc;j++)
 			{
-				opb.write(info.booklist[j],8);
+				opb.Write(info.booklist[j],8);
 			}
 		}
 
@@ -71,18 +71,18 @@ namespace csvorbis
 			int acc=0;
 			InfoResidue0 info=new InfoResidue0();
 
-			info.begin=opb.read(24);
-			info.end=opb.read(24);
-			info.grouping=opb.read(24)+1;
-			info.partitions=opb.read(6)+1;
-			info.groupbook=opb.read(8);
+			info.begin=opb.Read(24);
+			info.end=opb.Read(24);
+			info.grouping=opb.Read(24)+1;
+			info.partitions=opb.Read(6)+1;
+			info.groupbook=opb.Read(8);
 
 			for(int j=0;j<info.partitions;j++)
 			{
-				int cascade=opb.read(3);
-				if(opb.read(1)!=0)
+				int cascade=opb.Read(3);
+				if(opb.Read(1)!=0)
 				{
-					cascade|=(opb.read(5)<<3);
+					cascade|=(opb.Read(5)<<3);
 				}
 				info.secondstages[j]=cascade;
 				acc+=icount(cascade);
@@ -90,7 +90,7 @@ namespace csvorbis
 
 			for(int j=0;j<acc;j++)
 			{
-				info.booklist[j]=opb.read(8);
+				info.booklist[j]=opb.Read(8);
 				//    if(info.booklist[j]==255)info.booklist[j]=-1;
 			}
 
