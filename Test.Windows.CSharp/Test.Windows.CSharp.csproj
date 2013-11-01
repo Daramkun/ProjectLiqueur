@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Test.Windows.CSharp</RootNamespace>
     <AssemblyName>Test.Windows.CSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProductVersion>12.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -50,7 +53,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -72,9 +77,9 @@
       <Project>{B4799777-35C6-44F0-B18A-350A9BCEF41E}</Project>
       <Name>Daramkun.Liqueur.Platforms.OpenTK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Daramkun.Liqueur.Spirit\Daramkun.Liqueur.Spirit.csproj">
+    <ProjectReference Include="..\Daramkun.Liqueur.Engine.Spirit\Daramkun.Liqueur.Engine.Spirit.csproj">
       <Project>{5037F5CA-5FB2-47E3-AF5C-81D40EC439A9}</Project>
-      <Name>Daramkun.Liqueur.Spirit</Name>
+      <Name>Daramkun.Liqueur.Engine.Spirit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
