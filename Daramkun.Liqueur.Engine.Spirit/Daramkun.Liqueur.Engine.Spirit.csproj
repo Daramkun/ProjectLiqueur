@@ -54,6 +54,7 @@
     <Compile Include="Common\ExternLib\TrueTypeSharp\TrueTypeFont.Codepoints.cs" />
     <Compile Include="Common\ExternLib\TrueTypeSharp\TrueTypeFont.cs" />
     <Compile Include="Contents\Loaders\LsfFontContentLoader.cs" />
+    <Compile Include="Contents\Loaders\TrueTypeFontContentLoader.cs" />
     <Compile Include="Graphics\Font.cs" />
     <Compile Include="Graphics\Fonts\LsfFont.cs" />
     <Compile Include="Graphics\Fonts\TrueTypeFont.cs" />
