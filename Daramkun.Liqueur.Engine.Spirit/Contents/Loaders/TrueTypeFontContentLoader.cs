@@ -11,7 +11,7 @@ namespace Daramkun.Liqueur.Contents.Loaders
 	{
 		public Type ContentType { get { return typeof ( TrueTypeFont ); } }
 
-		public IEnumerable<string> FileExtensions { get { yield return "LSF"; } }
+		public IEnumerable<string> FileExtensions { get { yield return "TTF"; } }
 
 		public bool IsSelfStreamDispose { get { return false; } }
 
