@@ -34,7 +34,6 @@ namespace Daramkun.Liqueur.Tools.Lemon.Tools
 						Console.WriteLine ( "  2. Remove resource" );
 						Console.WriteLine ( "  3. Show resources of current culture" );
 						Console.WriteLine ( "  4. Change current culture" );
-						Console.WriteLine ( "  5. Quit without save" );
 						Console.WriteLine ( "  else. save and quit" );
 						Console.Write ( ">" );
 
@@ -122,8 +121,6 @@ namespace Daramkun.Liqueur.Tools.Lemon.Tools
 									cultureInfo = new CultureInfo ( Console.ReadLine () );
 								}
 								break;
-							case 5:
-								return;
 							default:
 								return;
 						}
