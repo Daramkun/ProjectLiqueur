@@ -53,18 +53,18 @@ namespace Daramkun.Liqueur.Tools.Lemon.Tools
 									{
 										Console.Write ( "CMD>" );
 										string cmd = Console.ReadLine ();
-										if ( cmd == "dir" || cmd == "ls" )
+										if ( cmd.ToLower () == "dir" || cmd.ToLower () == "ls" )
 										{
 											foreach ( string d in Directory.GetDirectories ( dir ) )
 												Console.WriteLine ( "[D] {0}", Path.GetFileName ( d ) );
 											foreach ( string f in Directory.GetFiles ( dir ) )
 												Console.WriteLine ( "[F] {0}", Path.GetFileName ( f ) );
 										}
-										else if ( cmd == "pwd" )
+										else if ( cmd.ToLower () == "pwd" )
 										{
 											Console.WriteLine ( "PATH>{0}", dir );
 										}
-										else if ( cmd.Substring ( 0, 2 ) == "cd" )
+										else if ( cmd.Substring ( 0, 2 ).ToLower () == "cd" )
 										{
 											string folder = cmd.Substring ( 3, cmd.Length - 3 );
 											if ( folder.Trim () == ".." )
@@ -78,7 +78,7 @@ namespace Daramkun.Liqueur.Tools.Lemon.Tools
 												dir = Path.Combine ( dir, folder.Trim () );
 											Console.WriteLine ( "PATH>{0}", dir );
 										}
-										else if ( cmd.Substring ( 0, 3 ) == "add" )
+										else if ( cmd.Substring ( 0, 3 ).ToLower () == "add" )
 										{
 											string filename = cmd.Substring ( 4, cmd.Length - 4 );
 											byte [] data = File.ReadAllBytes ( Path.Combine ( dir, filename ) );
@@ -88,6 +88,14 @@ namespace Daramkun.Liqueur.Tools.Lemon.Tools
 												s.Write ( data, 0, data.Length );
 											}
 											break;
+										}
+										else if ( cmd.ToLower () == "help" )
+										{
+											Console.WriteLine ( "DIR\tDisplay the Files and Directories List." );
+											Console.WriteLine ( "LS" );
+											Console.WriteLine ( "PWD\tDisplay current directory path." );
+											Console.WriteLine ( "CD\tMove to inner directory or outer directory." );
+											Console.WriteLine ( "ADD\tAdd the file." );
 										}
 									}
 								}
