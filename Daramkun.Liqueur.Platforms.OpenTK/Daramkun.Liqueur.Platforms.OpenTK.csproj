@@ -57,6 +57,7 @@
     <Compile Include="Inputs\Mouse.cs" />
     <Compile Include="Logging\LogWriters\ConsoleLogWriter.cs" />
     <Compile Include="Platforms\Launcher.cs" />
+    <Compile Include="Platforms\ParallelForEach.cs" />
     <Compile Include="Platforms\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

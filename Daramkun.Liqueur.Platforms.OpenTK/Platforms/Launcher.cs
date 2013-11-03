@@ -128,6 +128,8 @@ namespace Daramkun.Liqueur.Platforms
 
 		public void LauncherFinalize ( IWindow window, IGraphicsDevice graphicsDevice, IAudioDevice audioDevice )
 		{
+			if ( updateThread != null )
+				updateThread.Abort ();
 			if ( audioDevice != null )
 				audioDevice.Dispose ();
 			graphicsDevice.Dispose ();

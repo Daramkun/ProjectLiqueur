@@ -33,11 +33,14 @@ namespace Daramkun.Liqueur
 
 		public static ILauncher Launcher { get; private set; }
 
+		public static IForEach<Node> UpdateLooper { get; set; }
+
 		static LiqueurSystem ()
 		{
 			CurrentCulture = CultureInfo.CurrentCulture;
 			FixedUpdateTimeStep = new TimeSpan ();
 			FixedDrawTimeStep = new TimeSpan ();
+			UpdateLooper = new ForEach<Node> ();
 		}
 
 		public static bool SkipInitializeException { get; set; }

@@ -132,28 +132,28 @@ void main () {
 
 			public override void Draw ( GameTime gameTime )
 			{
-				LiqueurSystem.GraphicsDevice.RenderTarget = renderBuffer;
-				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, Color.White );
-				effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = texture } );
-				effect.Dispatch ( ( IEffect ef ) =>
-				{
-					LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
-				} );
+				//LiqueurSystem.GraphicsDevice.RenderTarget = renderBuffer;
+				//LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, Color.White );
+				//effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = texture } );
+				//effect.Dispatch ( ( IEffect ef ) =>
+				//{
+				//	LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
+				//} );
 
-				LiqueurSystem.GraphicsDevice.RenderTarget = null;
+				//LiqueurSystem.GraphicsDevice.RenderTarget = null;
 				LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, new Color ( 0.2f, 0.5f, 0.4f, 1.0f ) );
 				
-				effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = renderBuffer } );
-				effect.Dispatch ( ( IEffect ef ) =>
-				{
-					LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
-				} );
+				//effect.SetTextures ( new TextureArgument () { Uniform = "texture", Texture = renderBuffer } );
+				//effect.Dispatch ( ( IEffect ef ) =>
+				//{
+				//	LiqueurSystem.GraphicsDevice.Draw<Vertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
+				//} );
 
-				World2 world = new World2 ( LiqueurSystem.GraphicsDevice.ScreenSize / 2 - sprite.Texture.Size / 2,
-					new Vector2 ( 1 + angle ), sprite.Texture.Size / 2, angle, sprite.Texture.Size / 2 );
-				sprite.Draw ( world );
+				//World2 world = new World2 ( LiqueurSystem.GraphicsDevice.ScreenSize / 2 - sprite.Texture.Size / 2,
+				//	new Vector2 ( 1 + angle ), sprite.Texture.Size / 2, angle, sprite.Texture.Size / 2 );
+				//sprite.Draw ( world );
 
-				font.DrawFont ( "Test (문자열 출력 테스트!) 日本語テスト ♣♪", Color.White, new Vector2 ( 0, 0 ) );
+				//font.DrawFont ( "Test (문자열 출력 테스트!) 日本語テスト ♣♪", Color.White, new Vector2 ( 0, 0 ) );
 				
 				base.Draw ( gameTime );
 			}
@@ -177,6 +177,7 @@ void main () {
 		{
 			LiqueurSystem.SkipInitializeException = true;
 			LiqueurSystem.FixedUpdateTimeStep = LiqueurSystem.FixedDrawTimeStep = new TimeSpan ();
+			LiqueurSystem.UpdateLooper = new ParallelForEach<Node> ();
 			LiqueurSystem.Run ( new Launcher ( true ), new InternalScene () );
 		}
 	}

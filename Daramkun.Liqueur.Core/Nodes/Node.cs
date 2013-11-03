@@ -99,11 +99,11 @@ namespace Daramkun.Liqueur.Nodes
 
 			if ( children.Count > 0 )
 			{
-				foreach ( Node node in children.ToArray () )
+				LiqueurSystem.UpdateLooper.Run ( children.ToArray (), ( Node item ) =>
 				{
-					if ( node.IsEnabled )
-						node.Update ( gameTime );
-				}
+					if ( item.IsEnabled )
+						item.Update ( gameTime );
+				} );
 			}
 		}
 

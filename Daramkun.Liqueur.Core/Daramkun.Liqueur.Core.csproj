@@ -262,6 +262,7 @@
     <Compile Include="Nodes\Node.cs" />
     <Compile Include="Nodes\TimerScheduler.cs" />
     <Compile Include="Platforms\IDesktopWindow.cs" />
+    <Compile Include="Platforms\IForEach.cs" />
     <Compile Include="Platforms\ILauncher.cs" />
     <Compile Include="Platforms\IWindow.cs" />
     <Compile Include="Platforms\IWindowEvent.cs" />
