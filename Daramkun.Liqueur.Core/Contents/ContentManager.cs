@@ -143,10 +143,10 @@ namespace Daramkun.Liqueur.Contents
 		/// </summary>
 		/// <typeparam name="T">Content Type</typeparam>
 		/// <param name="filename">Filename</param>
-		/// <param name="realname">Real filename</param>
+		/// <param name="key">Real filename</param>
 		/// <param name="args">Argument, if you need</param>
 		/// <returns>Loaded content</returns>
-		public T Load<T> ( string filename, out string realname, params object [] args )
+		public T Load<T> ( string filename, out string key, params object [] args )
 		{
 			if ( FileSystem == null )
 				throw new ArgumentNullException ();
@@ -158,7 +158,7 @@ namespace Daramkun.Liqueur.Contents
 					loader = contentLoader;
 			}
 
-			realname = null;
+			key = null;
 
 			if ( loader == null )
 				throw new ArgumentException ();
@@ -166,7 +166,7 @@ namespace Daramkun.Liqueur.Contents
 			if ( !FileSystem.IsFileExist ( filename ) )
 			{
 				if ( FileSystem.IsFileExist ( PathCombine ( LiqueurSystem.CurrentCulture.Name, filename ) ) )
-					realname = PathCombine ( LiqueurSystem.CurrentCulture.Name, filename );
+					key = PathCombine ( LiqueurSystem.CurrentCulture.Name, filename );
 				else
 				{
 					bool exist = false;
@@ -174,13 +174,13 @@ namespace Daramkun.Liqueur.Contents
 					{
 						if ( FileSystem.IsFileExist ( string.Format ( "{0}.{1}", filename, ext.ToLower () ) ) )
 						{
-							realname = string.Format ( "{0}.{1}", filename, ext.ToLower () );
+							key = string.Format ( "{0}.{1}", filename, ext.ToLower () );
 							exist = true;
 							break;
 						}
 						else if ( FileSystem.IsFileExist ( PathCombine ( LiqueurSystem.CurrentCulture.Name, string.Format ( "{0}.{1}", filename, ext.ToLower () ) ) ) )
 						{
-							realname = PathCombine ( LiqueurSystem.CurrentCulture.Name, string.Format ( "{0}.{1}", filename, ext.ToLower () ) );
+							key = PathCombine ( LiqueurSystem.CurrentCulture.Name, string.Format ( "{0}.{1}", filename, ext.ToLower () ) );
 							exist = true;
 							break;
 						}
@@ -190,21 +190,32 @@ namespace Daramkun.Liqueur.Contents
 						throw new FileNotFoundException ();
 				}
 			}
+			else key = filename;
 
-			if ( loadedContent.ContainsKey ( realname ) )
+			filename = key;
+			key = MakeKey ( filename, args );
+
+			if ( loadedContent.ContainsKey ( filename ) )
 			{
-				realname = filename;
-				return ( T ) loadedContent [ realname ];
+				key = filename;
+				return ( T ) loadedContent [ key ];
 			}
 			else
 			{
-				Stream stream = FileSystem.OpenFile ( realname );
+				Stream stream = FileSystem.OpenFile ( filename );
 				object data = loader.Load ( stream, args );
-				loadedContent.Add ( realname, data );
+				loadedContent.Add ( key, data );
 				if ( !loader.IsSelfStreamDispose )
 					stream.Dispose ();
 				return ( T ) data;
 			}
+		}
+
+		private string MakeKey ( string filename, params object [] args )
+		{
+			foreach ( object o in args )
+				filename += "." + o.ToString ();
+			return filename;
 		}
 
 		/// <summary>

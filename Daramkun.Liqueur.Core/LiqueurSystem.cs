@@ -45,7 +45,7 @@ namespace Daramkun.Liqueur
 
 		public static bool SkipInitializeException { get; set; }
 
-		public static void Run ( ILauncher launcher, Node mainNode, params object [] args )
+		public static void Run ( ILauncher launcher, Node mainNode, Action initializeEvent = null, params object [] args )
 		{
 			IWindow window = null; IGraphicsDevice graphicsDevice = null; IAudioDevice audioDevice = null;
 
@@ -59,6 +59,9 @@ namespace Daramkun.Liqueur
 			Window = window;
 			GraphicsDevice = graphicsDevice;
 			AudioDevice = audioDevice;
+
+			if ( initializeEvent != null )
+				initializeEvent ();
 
 			MainNode = mainNode;
 
@@ -133,6 +136,7 @@ namespace Daramkun.Liqueur
 		{
 			if ( MainNode != null )
 				MainNode.Outro ();
+			MainNode = null;
 			Launcher.LauncherFinalize ( Window, GraphicsDevice, AudioDevice );
 		}
 	}

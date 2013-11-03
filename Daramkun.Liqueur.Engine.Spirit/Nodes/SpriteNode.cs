@@ -49,6 +49,8 @@ namespace Daramkun.Liqueur.Spirit.Nodes
 		public SpriteNode ( ITexture2D texture )
 		{
 			sprite = new Sprite ( texture );
+			World = World2.Identity;
+			Alignment = SpriteAlignment.LeftTop;
 		}
 
 		public SpriteNode ( ImageInfo imageInfo, Color? colorKey = null )

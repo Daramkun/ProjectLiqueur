@@ -51,6 +51,7 @@ namespace Daramkun.Liqueur.Graphics
 					shader.Dispose ();
 				}
 				GL.DeleteProgram ( programId );
+				programId = 0;
 			}
 		}
 

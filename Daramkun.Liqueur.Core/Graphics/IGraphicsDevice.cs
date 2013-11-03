@@ -103,7 +103,6 @@ namespace Daramkun.Liqueur.Graphics
 
 		CullingMode CullingMode { get; set; }
 		FillMode FillMode { get; set; }
-		//BufferFormat BufferFormat { get; set; }
 		Viewport Viewport { get; set; }
 
 		bool IsZWriteEnable { get; set; }

@@ -14,8 +14,9 @@ namespace Daramkun.Liqueur.Nodes
 
 		GameTimeEventArgs updateGameTimeEventArgs = null, drawGameTimeEventArgs = null;
 
-		public Node Parent { get; private set; }
+		public Node Parent { get; internal set; }
 		public IEnumerable<Node> Children { get { return children; } }
+		public int ChildrenCount { get { return children.Count; } }
 
 		public uint ZOrder
 		{
@@ -51,8 +52,9 @@ namespace Daramkun.Liqueur.Nodes
 
 		public Node Add ( Node node, params object [] args )
 		{
+			if ( node == null ) return null;
 			children.Add ( node );
-			children.Sort ();
+			//children.Sort ();
 			node.Parent = this;
 			node.Intro ( args );
 			return node;
