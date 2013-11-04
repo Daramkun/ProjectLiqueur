@@ -16,10 +16,8 @@ namespace Test.Game.Dodge.Controllers
 		{
 			bulletImage = ( Parent as GameScene ).Contents.Load<ITexture2D> ( "Test.Game.Dodge.Resources.bullet.bmp",
 				Color.Magenta);
-			for ( int i = 0; i < 256; i++ )
-			{
+			for ( int i = 0; i < 128; i++ )
 				Add ( new Bullet ( bulletImage ) );
-			}
 			base.Intro ( args );
 		}
 

@@ -38,6 +38,7 @@ namespace Daramkun.Liqueur.Spirit.Nodes
 	public class SpriteNode : Node
 	{
 		Sprite sprite;
+		World2 tempWorld;
 
 		public Color OverlayColor { get { return sprite.OverlayColor; } set { sprite.OverlayColor = value; } }
 		public Rectangle ClippingArea { get { return sprite.ClippingArea; } set { sprite.ClippingArea = value; } }
@@ -50,6 +51,7 @@ namespace Daramkun.Liqueur.Spirit.Nodes
 		{
 			sprite = new Sprite ( texture );
 			World = World2.Identity;
+			tempWorld = World2.Identity;
 			Alignment = SpriteAlignment.LeftTop;
 		}
 
@@ -59,18 +61,24 @@ namespace Daramkun.Liqueur.Spirit.Nodes
 
 		public override void Draw ( GameTime gameTime )
 		{
-			World2 world = World;
-			Vector2 tempTranslate = world.Translate;
+			tempWorld.Translate = World.Translate;
+			tempWorld.Scale = World.Scale;
+			tempWorld.ScaleCenter = World.ScaleCenter;
+			tempWorld.Rotation = World.Rotation;
+			tempWorld.RotationCenter = World.RotationCenter;
 
-			if ( ( Alignment & SpriteAlignment.Center ) != 0 ) world.Translate += new Vector2 ( -sprite.ClippingArea.Size.X * world.Scale.X / 2, 0 );
-			if ( ( Alignment & SpriteAlignment.Right ) != 0 ) world.Translate += new Vector2 ( -sprite.ClippingArea.Size.X * world.Scale.X, 0 );
+			if ( ( Alignment & SpriteAlignment.Center ) != 0 )
+				tempWorld.Translate += new Vector2 ( -sprite.ClippingArea.Size.X * tempWorld.Scale.X / 2, 0 );
+			else if ( ( Alignment & SpriteAlignment.Right ) != 0 )
+				tempWorld.Translate += new Vector2 ( -sprite.ClippingArea.Size.X * tempWorld.Scale.X, 0 );
 
-			if ( ( Alignment & SpriteAlignment.Middle ) != 0 ) world.Translate += new Vector2 ( 0, -sprite.ClippingArea.Size.Y * world.Scale.Y / 2 );
-			if ( ( Alignment & SpriteAlignment.Bottom ) != 0 ) world.Translate += new Vector2 ( 0, -sprite.ClippingArea.Size.Y * world.Scale.Y );
+			if ( ( Alignment & SpriteAlignment.Middle ) != 0 ) 
+				tempWorld.Translate += new Vector2 ( 0, -sprite.ClippingArea.Size.Y * tempWorld.Scale.Y / 2 );
+			else if ( ( Alignment & SpriteAlignment.Bottom ) != 0 )
+				tempWorld.Translate += new Vector2 ( 0, -sprite.ClippingArea.Size.Y * tempWorld.Scale.Y );
 
-			sprite.Draw ( World );
+			sprite.Draw ( tempWorld );
 
-			World.Translate = tempTranslate;
 			base.Draw ( gameTime );
 		}
 	}

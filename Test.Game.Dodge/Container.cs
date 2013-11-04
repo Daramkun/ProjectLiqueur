@@ -31,6 +31,7 @@ namespace Test.Game.Dodge
 
 		public override void Intro ( params object [] args )
 		{
+			LiqueurSystem.Window.Title = "Simple Dodge";
 			LiqueurSystem.GraphicsDevice.BlendState = true;
 			LiqueurSystem.GraphicsDevice.BlendOperation = BlendOperation.AlphaBlend;
 
