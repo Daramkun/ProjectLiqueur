@@ -21,13 +21,12 @@ namespace Daramkun.Liqueur.Nodes
 		public int ChildrenCount { get { return children.Count; } }
 		//public static IForEach UpdateLooper { get; set; }
 
-		public uint ZOrder
+		public virtual uint ZOrder
 		{
 			get { return zOrder; }
 			set
 			{
 				zOrder = value;
-				Parent.children.Sort ();
 			}
 		}
 
@@ -59,7 +58,6 @@ namespace Daramkun.Liqueur.Nodes
 			lock ( forLock )
 			{
 				children.Add ( node );
-				//children.Sort ();
 				node.Parent = this;
 				node.Intro ( args );
 			}
@@ -142,16 +140,11 @@ namespace Daramkun.Liqueur.Nodes
 			{
 				Node [] arr;
 				lock ( forLock ) arr = children.ToArray ();
-				foreach ( Node node in from a in arr where a.IsVisible select a )
+				foreach ( Node node in from a in arr where a.IsVisible orderby a.ZOrder select a )
 				{
 					node.Draw ( gameTime );
 				}
 			}
-		}
-
-		public int CompareTo ( Node other )
-		{
-			return -ZOrder.CompareTo ( other.ZOrder );
 		}
 	}
 }
