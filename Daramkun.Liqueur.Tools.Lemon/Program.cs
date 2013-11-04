@@ -11,7 +11,7 @@ namespace Daramkun.Liqueur.Tools.Lemon
 	{
 		static void Main ( string [] args )
 		{
-			if ( args [ 0 ] == "-h" )
+			if ( args.Length == 0 || args [ 0 ] == "-h" )
 			{
 				Console.WriteLine ( "USECASE:" );
 				Console.WriteLine ( "  lemon.exe -[lsf|res|stt] [args]" );
