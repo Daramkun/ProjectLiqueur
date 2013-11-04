@@ -14,6 +14,8 @@
     <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,11 +37,11 @@
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
     <ProjectReference Include="..\Daramkun.Liqueur.Core\Daramkun.Liqueur.Core.csproj">
-      <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
+      <Project>{032EC8FF-8AA5-4ACE-8147-D7F0FCECFF04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Daramkun.Liqueur.Engine.Spirit\Daramkun.Liqueur.Engine.Spirit.csproj">
-      <Project>{5037f5ca-5fb2-47e3-af5c-81d40ec439a9}</Project>
+      <Project>{5037F5CA-5FB2-47E3-AF5C-81D40EC439A9}</Project>
       <Name>Daramkun.Liqueur.Engine.Spirit</Name>
     </ProjectReference>
   </ItemGroup>
@@ -50,6 +52,7 @@
     <Compile Include="GameScene.cs" />
     <Compile Include="MenuScene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Bullet.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\bullet.bmp" />
