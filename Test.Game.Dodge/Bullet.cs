@@ -66,7 +66,16 @@ namespace Test.Game.Dodge
 			if ( World.Translate.Y < 0 || World.Translate.Y > 600 )
 				InitializeBullet ();
 
+			SpriteNode chr = Parent.Parent [ 0 ] [ 1 ] as SpriteNode;
+			if ( CheckCollaps ( World.Translate, Texture.Width / 2, chr.World.Translate, chr.Texture.Width / 2 ) )
+				( Parent.Parent as GameScene ).IsGameOver = true;
+
 			base.Update ( gameTime );
+		}
+
+		private bool CheckCollaps ( Vector2 v1, float r1, Vector2 v2, float r2 )
+		{
+			return new Circle ( v1, r1 ).IsCollisionTo ( new Circle ( v2, r2 ) );
 		}
 
 		public override void Draw ( GameTime gameTime )
