@@ -159,6 +159,7 @@
     <Compile Include="Common\ExternLib\PngCs\Zlib\ZlibStreamFactory.cs" />
     <Compile Include="Contents\Decoder\Images\ImageDirectCopyDecoder.cs" />
     <Compile Include="Contents\Decoder\Images\PngDecoder.cs" />
+    <Compile Include="Contents\Decoder\Packages\PackageDecoder.cs" />
     <Compile Include="Contents\Encoder\Audios\IAudioEncoder.cs" />
     <Compile Include="Contents\Encoder\IEncoder.cs" />
     <Compile Include="Contents\Encoder\Images\IImageEncoder.cs" />
@@ -173,7 +174,10 @@
     <Compile Include="Contents\Loaders\TextContentLoader.cs" />
     <Compile Include="Contents\Loaders\Texture2DContentLoader.cs" />
     <Compile Include="Contents\Loaders\ZipContentLoader.cs" />
+    <Compile Include="Contents\PackageInfo.cs" />
+    <Compile Include="Contents\ScriptTable.cs" />
     <Compile Include="Contents\StringTable.cs" />
+    <Compile Include="Contents\VariableTable.cs" />
     <Compile Include="Data\Checksums\Adler32.cs" />
     <Compile Include="Data\Checksums\CRC32.cs" />
     <Compile Include="Data\Checksums\IChecksum.cs" />
@@ -188,7 +192,9 @@
     <Compile Include="Exceptions\CompressionProcessException.cs" />
     <Compile Include="Exceptions\EffectConfigurationException.cs" />
     <Compile Include="Exceptions\FileFormatMismatchException.cs" />
+    <Compile Include="Exceptions\ScriptLanguageMismatchException.cs" />
     <Compile Include="Exceptions\ShaderCompilationException.cs" />
+    <Compile Include="Exceptions\SubPackageNotAllowedThisPackageException.cs" />
     <Compile Include="Exceptions\VersionMismatchException.cs" />
     <Compile Include="Graphics\BlendOperation.cs" />
     <Compile Include="Graphics\Color.cs" />
@@ -264,6 +270,7 @@
     <Compile Include="Nodes\Scenes\SceneContainer.cs" />
     <Compile Include="Nodes\Scenes\ISceneTransitor.cs" />
     <Compile Include="Nodes\TimerScheduler.cs" />
+    <Compile Include="PackageSystem.cs" />
     <Compile Include="Platforms\IDesktopWindow.cs" />
     <Compile Include="Platforms\IForEach.cs" />
     <Compile Include="Platforms\ILauncher.cs" />
@@ -272,6 +279,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mathematics\IVector.cs" />
     <Compile Include="Mathematics\Transforms\CommonTransform.cs" />
+    <Compile Include="Scripts\IScriptEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\ExternLib\CsVorbis\LICENSE.txt" />
