@@ -45,7 +45,9 @@
     <Compile Include="Tools\LiqueurSpriteFontGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\Packer.cs" />
     <Compile Include="Tools\ResourceTableEditor.cs" />
+    <Compile Include="Tools\ScriptPacker.cs" />
     <Compile Include="Tools\StringTableEditor.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,8 @@ namespace Daramkun.Liqueur.Tools.Lemon
 				Console.WriteLine ( "    lsf: Liqueur Sprite Font Generator" );
 				Console.WriteLine ( "    res: Resource Table Editor" );
 				Console.WriteLine ( "    stt: String Table Editor" );
+				Console.WriteLine ( "    src: Script Packer" );
+				Console.WriteLine ( "    pck: Content Package Packer" );
 			}
 			else
 			{
@@ -34,6 +36,12 @@ namespace Daramkun.Liqueur.Tools.Lemon
 						break;
 					case "-stt":
 						new StringTableEditor ().Run ( arguments.ToArray () );
+						break;
+					case "-scr":
+						new ScriptPacker ().Run ( arguments.ToArray () );
+						break;
+					case "-pck":
+						new Packer ().Run ( arguments.ToArray () );
 						break;
 				}
 			}
