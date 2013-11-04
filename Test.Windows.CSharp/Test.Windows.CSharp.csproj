@@ -83,6 +83,10 @@
       <Project>{1ed93c3f-e2da-4aea-95e5-55400e61d152}</Project>
       <Name>Test.Game.Dodge</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Test.Game.PerformanceTester\Test.Game.PerformanceTester.csproj">
+      <Project>{dc427f05-b00c-4b98-ba25-1b2bfc745cef}</Project>
+      <Name>Test.Game.PerformanceTester</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

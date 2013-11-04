@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Daramkun.Liqueur.Common;
+using Daramkun.Liqueur.Platforms;
 
 namespace Daramkun.Liqueur.Nodes
 {
 	public class Node
 	{
+		object forLock = new object ();
 		List<Node> children;
 		uint zOrder;
 
@@ -17,6 +19,7 @@ namespace Daramkun.Liqueur.Nodes
 		public Node Parent { get; internal set; }
 		public IEnumerable<Node> Children { get { return children; } }
 		public int ChildrenCount { get { return children.Count; } }
+		//public static IForEach UpdateLooper { get; set; }
 
 		public uint ZOrder
 		{
@@ -53,21 +56,27 @@ namespace Daramkun.Liqueur.Nodes
 		public Node Add ( Node node, params object [] args )
 		{
 			if ( node == null ) return null;
-			children.Add ( node );
-			//children.Sort ();
-			node.Parent = this;
-			node.Intro ( args );
+			lock ( forLock )
+			{
+				children.Add ( node );
+				//children.Sort ();
+				node.Parent = this;
+				node.Intro ( args );
+			}
 			return node;
 		}
 
 		public void Remove ( Node node )
 		{
-			node.Outro ();
-			node.Parent = null;
-			children.Remove ( node );
+			lock ( forLock )
+			{
+				node.Outro ();
+				node.Parent = null;
+				children.Remove ( node );
+			}
 		}
 
-		public Node this [ int index ] { get { return children [ index ]; } }
+		public Node this [ int index ] { get { lock ( forLock ) { return children [ index ]; } } }
 
 		public Node ()
 		{
@@ -103,11 +112,21 @@ namespace Daramkun.Liqueur.Nodes
 
 			if ( children.Count > 0 )
 			{
-				LiqueurSystem.UpdateLooper.Run ( children.ToArray (), ( Node item ) =>
-				{
-					if ( item.IsEnabled )
+				Node [] arr;
+				lock ( forLock ) arr = children.ToArray ();
+				var arrEnum = from a in arr where a.IsEnabled select a;
+				//if ( UpdateLooper == null )
+				//{
+					foreach ( Node item in arrEnum )
 						item.Update ( gameTime );
-				} );
+				/*}
+				else
+				{
+					UpdateLooper.Run ( arrEnum, ( object item ) =>
+					{
+						( item as Node ).Update ( gameTime );
+					} );
+				}*/
 			}
 		}
 
@@ -121,10 +140,11 @@ namespace Daramkun.Liqueur.Nodes
 
 			if ( children.Count > 0 )
 			{
-				foreach ( Node node in children.ToArray () )
+				Node [] arr;
+				lock ( forLock ) arr = children.ToArray ();
+				foreach ( Node node in from a in arr where a.IsVisible select a )
 				{
-					if ( node.IsVisible )
-						node.Draw ( gameTime );
+					node.Draw ( gameTime );
 				}
 			}
 		}

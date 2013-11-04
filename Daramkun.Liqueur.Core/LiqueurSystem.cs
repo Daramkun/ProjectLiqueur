@@ -33,14 +33,11 @@ namespace Daramkun.Liqueur
 
 		public static ILauncher Launcher { get; private set; }
 
-		public static IForEach<Node> UpdateLooper { get; set; }
-
 		static LiqueurSystem ()
 		{
 			CurrentCulture = CultureInfo.CurrentCulture;
 			FixedUpdateTimeStep = new TimeSpan ();
 			FixedDrawTimeStep = new TimeSpan ();
-			UpdateLooper = new ForEach<Node> ();
 		}
 
 		public static bool SkipInitializeException { get; set; }
@@ -83,7 +80,7 @@ namespace Daramkun.Liqueur
 				{
 					if ( LiqueurSystem.AudioDevice != null )
 						LiqueurSystem.AudioDevice.Update ();
-					if ( elapsedUpdateTimeStep >= FixedUpdateTimeStep )
+					if ( elapsedUpdateTimeStep >= FixedUpdateTimeStep || FixedUpdateTimeStep.TotalMilliseconds == 0 )
 					{
 						updateGameTime.Update ();
 						if ( mainNode != null )
@@ -99,7 +96,7 @@ namespace Daramkun.Liqueur
 				},
 				DrawLogic = () =>
 				{
-					if ( elapsedDrawTimeStep >= FixedDrawTimeStep )
+					if ( elapsedDrawTimeStep >= FixedDrawTimeStep || FixedDrawTimeStep.TotalMilliseconds == 0 )
 					{
 						drawGameTime.Update ();
 						if ( mainNode != null )

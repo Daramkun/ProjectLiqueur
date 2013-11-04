@@ -18,7 +18,6 @@ using Daramkun.Liqueur.Nodes;
 using Daramkun.Liqueur.Platforms;
 using Daramkun.Liqueur.Spirit.Graphics;
 using Daramkun.Liqueur.Spirit.Nodes;
-using Test.Game.Dodge;
 
 namespace Test.Windows.CSharp
 {
@@ -29,12 +28,16 @@ namespace Test.Windows.CSharp
 		{
 			LiqueurSystem.SkipInitializeException = true;
 			//LiqueurSystem.UpdateLooper = new ParallelForEach<Node> ();
+			ForEachCollection.AddForEach ( "Parallel", new ParallelForEach () );
 			try
 			{
-				LiqueurSystem.Run ( new Launcher ( true ), new Container (), () =>
-				{
-					LiqueurSystem.Keyboard = new Keyboard ( LiqueurSystem.Window );
-				} );
+				LiqueurSystem.Run ( new Launcher ( true ),
+					//new Test.Game.Dodge.Container (),
+					new Test.Game.PerformanceTester.Container (),
+					() =>
+					{
+						LiqueurSystem.Keyboard = new Keyboard ( LiqueurSystem.Window );
+					} );
 			}
 			catch ( Exception ex ) { Debug.WriteLine ( ex.StackTrace ); }
 		}

@@ -1,21 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Daramkun.Liqueur.Platforms
 {
-	public interface IForEach<T>
+	public interface IForEach
 	{
-		void Run ( IEnumerable<T> iterator, Action<T> action );
+		void Run ( IEnumerable<object> iterator, Action<object> action );
 	}
 
-	public class ForEach<T> : IForEach<T>
+	public static class ForEachCollection
 	{
-		public void Run ( IEnumerable<T> iterator, Action<T> action )
+		static Dictionary<string, IForEach> collection = new Dictionary<string, IForEach> ();
+
+		public static void AddForEach ( string key, IForEach forEach ) { collection.Add ( key, forEach ); }
+
+		public static IForEach GetForEach ( string key )
 		{
-			foreach ( T item in iterator )
-				action ( item );
+			if ( collection.ContainsKey ( key ) ) return collection [ key ];
+			else return null;
 		}
 	}
 }

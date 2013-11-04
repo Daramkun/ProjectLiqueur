@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Daramkun.Liqueur.Platforms
 {
-	public class ParallelForEach<T> : IForEach<T>
+	public class ParallelForEach : IForEach
 	{
-		public void Run ( IEnumerable<T> iterator, Action<T> action )
+		public void Run ( IEnumerable<object> iterator, Action<object> action )
 		{
-			Parallel.ForEach<T> ( iterator, action );
+			Parallel.ForEach<object> ( iterator, action );
 		}
 	}
 }

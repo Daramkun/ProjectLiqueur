@@ -55,8 +55,9 @@ namespace Daramkun.Liqueur.Audio
 
 		public void Update ()
 		{
-			foreach ( IAudio audio in audioList.ToArray () )
-				audio.Update ();
+			if ( audioList.Count > 0 )
+				foreach ( IAudio audio in audioList.ToArray () )
+					audio.Update ();
 		}
 
 		public void Play ( IAudio audio )

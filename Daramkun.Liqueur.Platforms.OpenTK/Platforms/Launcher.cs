@@ -118,7 +118,7 @@ namespace Daramkun.Liqueur.Platforms
 					while ( !window.IsExiting )
 					{
 						args.UpdateLogic ();
-						Thread.Sleep ( 1 );
+						Thread.Sleep ( 0 );
 					}
 				} );
 				updateThread.Start ();
