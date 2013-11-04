@@ -29,6 +29,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		static IIndexBuffer indexBuffer;
 		static int indexReference;
+		static SpriteEffect baseSpriteEffect;
 
 		IVertexBuffer<SpriteVertex> vertexBuffer;
 		Rectangle clippingArea;
@@ -69,11 +70,18 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 		}
 
 		public Sprite ( ITexture2D texture )
-			: this ( texture, new SpriteEffect () )
+			: this ( texture, baseSpriteEffect )
 		{ }
 
 		public Sprite ( ITexture2D texture, IEffect effect )
 		{
+			if ( effect == null )
+			{
+				if ( baseSpriteEffect == null )
+					baseSpriteEffect = new SpriteEffect ();
+				effect = baseSpriteEffect;
+			}
+
 			Texture = texture;
 			Effect = effect;
 
