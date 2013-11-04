@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Mathematics.Transforms
 {
-	public struct PerspectiveOffCenterProjection : IProjection
+	public class PerspectiveOffCenterProjection : IProjection
 	{
 		public Rectangle OffCenter { get; set; }
 		public float Near { get; set; }
 		public float Far { get; set; }
 
 		public PerspectiveOffCenterProjection ( int left, int top, int right, int bottom, float near, float far )
-			: this ()
+			//: this ()
 		{
 			OffCenter = new Rectangle ( new Vector2 ( left, top ),
 				new Vector2 ( right - left, bottom - top ) );
@@ -21,7 +21,7 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 		}
 
 		public PerspectiveOffCenterProjection ( int width, int height, float near, float far )
-			: this ()
+			//: this ()
 		{
 			OffCenter = new Rectangle ( new Vector2 (), new Vector2 ( width, height ) );
 			Near = near;

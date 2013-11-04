@@ -7,6 +7,7 @@ using Daramkun.Liqueur;
 using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Contents.FileSystems;
+using Daramkun.Liqueur.Contents.Loaders;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Mathematics;
 using Daramkun.Liqueur.Nodes;
@@ -24,6 +25,7 @@ namespace Test.Game.Dodge
 
 		public Container ()
 		{
+			Texture2DContentLoader.AddDefaultDecoders ();
 			ContentManager.ContentLoaderAssemblies.Add ( Assembly.Load ( "Daramkun.Liqueur.Spirit" ) );
 		}
 

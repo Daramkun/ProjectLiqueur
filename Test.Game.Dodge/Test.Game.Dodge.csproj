@@ -45,13 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Container.cs" />
+    <Compile Include="Controllers\BulletController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="GameScene.cs" />
     <Compile Include="MenuScene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\bullet.bmp" />
-    <EmbeddedResource Include="Resources\Daram.bmp" />
+    <EmbeddedResource Include="Resources\daram.bmp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\GameFont.ttf" />

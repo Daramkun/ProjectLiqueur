@@ -38,6 +38,8 @@ namespace TrueTypeSharp
 
             Buffer = new byte[width * height];
             Stride = Width = width; Height = height;
+			BufferOffset = 0;
+			XOffset = YOffset = 0;
         }
 
         public FontBitmap GetResizedBitmap(int width, int height)

@@ -67,6 +67,8 @@ namespace Daramkun.Liqueur.Nodes
 			children.Remove ( node );
 		}
 
+		public Node this [ int index ] { get { return children [ index ]; } }
+
 		public Node ()
 		{
 			children = new List<Node> ();

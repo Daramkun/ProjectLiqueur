@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Mathematics.Transforms
 {
-	public struct World3 : IWorld<Vector3, Vector3>
+	public class World3 : IWorld<Vector3, Vector3>
 	{
 		public Vector3 Translate { get; set; }
 		public Vector3 ScaleCenter { get; set; }
@@ -16,6 +16,11 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 		public static World3 Identity
 		{
 			get { return new World3 () { Scale = new Vector3 ( 1, 1, 1 ) }; }
+		}
+
+		public World3 ()
+		{
+			Scale = new Vector3 ( 1 );
 		}
 
 		public World3 ( Vector3 translate, Vector3 scaleCenter, Vector3 scale, Vector3 rotation, Vector3 rotationCenter )

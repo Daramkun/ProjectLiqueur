@@ -60,6 +60,7 @@ namespace Daramkun.Liqueur.Spirit.Nodes
 		public override void Draw ( GameTime gameTime )
 		{
 			World2 world = World;
+			Vector2 tempTranslate = world.Translate;
 
 			if ( ( Alignment & SpriteAlignment.Center ) != 0 ) world.Translate += new Vector2 ( -sprite.ClippingArea.Size.X * world.Scale.X / 2, 0 );
 			if ( ( Alignment & SpriteAlignment.Right ) != 0 ) world.Translate += new Vector2 ( -sprite.ClippingArea.Size.X * world.Scale.X, 0 );
@@ -69,6 +70,7 @@ namespace Daramkun.Liqueur.Spirit.Nodes
 
 			sprite.Draw ( World );
 
+			World.Translate = tempTranslate;
 			base.Draw ( gameTime );
 		}
 	}

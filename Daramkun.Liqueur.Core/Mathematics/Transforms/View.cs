@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Mathematics.Transforms
 {
-	public struct View : ITransform
+	public class View : ITransform
 	{
 		public Vector3 Position { get; set; }
 		public Vector3 Target { get; set; }
@@ -37,7 +37,7 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 		}
 
 		public View ( Vector3 position, Vector3 target, Vector3 upVector )
-			: this ()
+			//: this ()
 		{
 			Position = position;
 			Target = target;
