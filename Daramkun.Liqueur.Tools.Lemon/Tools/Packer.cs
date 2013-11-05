@@ -54,11 +54,11 @@ namespace Daramkun.Liqueur.Tools.Lemon.Tools
 						if ( coverImage == null ) writer.Write ( ( int ) 0 );
 						else { writer.Write ( coverImage.Length ); writer.Write ( coverImage ); }
 
-						if ( jsonEntry.Contains ( "subpacks" ) )
+						if ( jsonEntry.Contains ( "mainpacks" ) )
 						{
 							writer.Write ( true );
 
-							JsonArray array = jsonEntry [ "subpacks" ] as JsonArray;
+							JsonArray array = jsonEntry [ "mainpacks" ] as JsonArray;
 							writer.Write ( ( byte ) array.Count );
 							foreach ( object arr in array )
 							{
