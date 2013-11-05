@@ -80,11 +80,11 @@
       <Name>Daramkun.Liqueur.Engine.Spirit</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.Game.Dodge\Test.Game.Dodge.csproj">
-      <Project>{1ed93c3f-e2da-4aea-95e5-55400e61d152}</Project>
+      <Project>{1ED93C3F-E2DA-4AEA-95E5-55400E61D152}</Project>
       <Name>Test.Game.Dodge</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.Game.PerformanceTester\Test.Game.PerformanceTester.csproj">
-      <Project>{dc427f05-b00c-4b98-ba25-1b2bfc745cef}</Project>
+      <Project>{DC427F05-B00C-4B98-BA25-1B2BFC745CEF}</Project>
       <Name>Test.Game.PerformanceTester</Name>
     </ProjectReference>
   </ItemGroup>
