@@ -170,6 +170,7 @@
     <Compile Include="Contents\ImageInfo.cs" />
     <Compile Include="Contents\Loaders\AudioContentLoader.cs" />
     <Compile Include="Contents\Loaders\JsonContentLoader.cs" />
+    <Compile Include="Contents\Loaders\PackageContentLoader.cs" />
     <Compile Include="Contents\Loaders\StringTableContentLoader.cs" />
     <Compile Include="Contents\Loaders\TextContentLoader.cs" />
     <Compile Include="Contents\Loaders\Texture2DContentLoader.cs" />
