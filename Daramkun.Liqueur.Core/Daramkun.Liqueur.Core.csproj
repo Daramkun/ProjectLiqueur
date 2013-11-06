@@ -80,6 +80,7 @@
     <Compile Include="Common\FileFormatAttribute.cs" />
     <Compile Include="Common\GameTime.cs" />
     <Compile Include="Common\ICollision.cs" />
+    <Compile Include="Common\SpinLock.cs" />
     <Compile Include="Common\Timer.cs" />
     <Compile Include="Common\Utilities.cs" />
     <Compile Include="Contents\AudioInfo.cs" />

@@ -11,15 +11,18 @@ namespace Daramkun.Liqueur.Nodes
 	public class Node
 	{
 		object forLock = new object ();
-		List<Node> children;
 		uint zOrder;
+
+		SpinLock spinlock = new SpinLock ();
+		List<Node> children;
+		Node [] childrenArray;
 
 		GameTimeEventArgs updateGameTimeEventArgs = null, drawGameTimeEventArgs = null;
 
 		public Node Parent { get; internal set; }
 		public IEnumerable<Node> Children { get { return children; } }
 		public int ChildrenCount { get { return children.Count; } }
-		//public static IForEach UpdateLooper { get; set; }
+		public static IForEach UpdateLooper { get; set; }
 
 		public virtual uint ZOrder
 		{
@@ -55,23 +58,28 @@ namespace Daramkun.Liqueur.Nodes
 		public Node Add ( Node node, params object [] args )
 		{
 			if ( node == null ) return null;
-			lock ( forLock )
-			{
-				children.Add ( node );
-				node.Parent = this;
-				node.Intro ( args );
-			}
+
+			node.Parent = this;
+			node.Intro ( args );
+
+			spinlock.Enter ();
+			children.Add ( node );
+			childrenArray = children.ToArray ();
+			spinlock.Exit ();
 			return node;
 		}
 
 		public void Remove ( Node node )
 		{
-			lock ( forLock )
-			{
-				node.Outro ();
-				node.Parent = null;
-				children.Remove ( node );
-			}
+			if ( node == null ) return;
+
+			spinlock.Enter ();
+			children.Remove ( node );
+			childrenArray = children.ToArray ();
+			spinlock.Exit ();
+
+			node.Outro ();
+			node.Parent = null;
 		}
 
 		public Node this [ int index ] { get { lock ( forLock ) { return children [ index ]; } } }
@@ -79,6 +87,7 @@ namespace Daramkun.Liqueur.Nodes
 		public Node ()
 		{
 			children = new List<Node> ();
+			childrenArray = children.ToArray ();
 			IsEnabled = IsVisible = true;
 		}
 
@@ -110,21 +119,19 @@ namespace Daramkun.Liqueur.Nodes
 
 			if ( children.Count > 0 )
 			{
-				Node [] arr;
-				lock ( forLock ) arr = children.ToArray ();
-				var arrEnum = from a in arr where a.IsEnabled select a;
-				//if ( UpdateLooper == null )
-				//{
+				var arrEnum = from a in childrenArray where a.IsEnabled select a;
+				if ( UpdateLooper == null )
+				{
 					foreach ( Node item in arrEnum )
 						item.Update ( gameTime );
-				/*}
+				}
 				else
 				{
 					UpdateLooper.Run ( arrEnum, ( object item ) =>
 					{
 						( item as Node ).Update ( gameTime );
 					} );
-				}*/
+				}
 			}
 		}
 
@@ -138,9 +145,7 @@ namespace Daramkun.Liqueur.Nodes
 
 			if ( children.Count > 0 )
 			{
-				Node [] arr;
-				lock ( forLock ) arr = children.ToArray ();
-				foreach ( Node node in from a in arr where a.IsVisible orderby a.ZOrder select a )
+				foreach ( Node node in from a in childrenArray where a.IsVisible orderby a.ZOrder select a )
 				{
 					node.Draw ( gameTime );
 				}
