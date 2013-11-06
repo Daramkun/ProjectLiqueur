@@ -326,8 +326,8 @@ namespace Daramkun.Liqueur.Graphics
 			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.Diffuse ) != 0 )
 			{
 				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 4, /*VertexAttribPointerType.Float*/VertexAttribPointerType.UnsignedByte, true, typeSize, offset );
-				offset += 4;//16;
+				GL.VertexAttribPointer ( index, 4, VertexAttribPointerType.Float/*VertexAttribPointerType.UnsignedByte*/, /*true*/false, typeSize, offset );
+				offset += 16;//4;
 				++index;
 			}
 

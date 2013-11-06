@@ -7,7 +7,6 @@ namespace Daramkun.Liqueur.Graphics
 {
 	public struct Color
 	{
-		/*
 		public float RedScalar { get; set; }
 		public float GreenScalar { get; set; }
 		public float BlueScalar { get; set; }
@@ -17,7 +16,7 @@ namespace Daramkun.Liqueur.Graphics
 		public byte RedValue { get { return ( byte ) ( RedScalar * 255 ); } set { RedScalar = value / 255.0f; } }
 		public byte GreenValue { get { return ( byte ) ( GreenScalar * 255 ); } set { GreenScalar = value / 255.0f; } }
 		public byte BlueValue { get { return ( byte ) ( BlueScalar * 255 ); } set { BlueScalar = value / 255.0f; } }
-		*/
+		/*
 		public byte RedValue { get; set; }
 		public byte GreenValue { get; set; }
 		public byte BlueValue { get; set; }
@@ -27,7 +26,7 @@ namespace Daramkun.Liqueur.Graphics
 		public float RedScalar { get { return RedValue / 255.0f; } set { RedValue = ( byte ) ( value * 255 ); } }
 		public float GreenScalar { get { return GreenValue / 255.0f; } set { GreenValue = ( byte ) ( value * 255 ); } }
 		public float BlueScalar { get { return BlueValue / 255.0f; } set { BlueValue = ( byte ) ( value * 255 ); } }
-
+		*/
 		public int ColorValue { get { return ( ( ( int ) RedValue ) << 24 ) + ( ( ( int ) GreenValue ) << 16 ) + ( ( ( int ) BlueValue ) << 8 ) + AlphaValue; } }
 
 		public Color ( byte red, byte green, byte blue )
