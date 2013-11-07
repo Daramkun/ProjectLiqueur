@@ -162,6 +162,25 @@ namespace Daramkun.Liqueur.Graphics
 			GL.UseProgram ( lastProgram );
 		}
 
+		public void SetTexture ( TextureArgument texture )
+		{
+			int lastProgram;
+			GL.GetInteger ( GetPName.CurrentProgram, out lastProgram );
+			GL.UseProgram ( programId );
+			GL.ActiveTexture ( TextureUnit.Texture0 );
+			GL.BindTexture ( TextureTarget.Texture2D, ( texture.Texture as Texture2D ).texture );
+
+			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
+			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+
+			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
+			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
+
+			int uniform = GL.GetUniformLocation ( programId, texture.Uniform );
+			GL.Uniform1 ( uniform, 0 );
+			GL.UseProgram ( lastProgram );
+		}
+
 		public void SetTextures ( params TextureArgument [] textures )
 		{
 			int lastProgram;

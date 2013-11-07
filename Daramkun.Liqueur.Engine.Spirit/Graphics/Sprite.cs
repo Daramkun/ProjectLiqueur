@@ -132,7 +132,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		public void Draw ( World2 transform )
 		{
-			Effect.SetTextures ( new TextureArgument () { Texture = Texture, Uniform = "texture0" } );
+			Effect.SetTexture ( new TextureArgument () { Texture = Texture, Uniform = "texture0" } );
 			Effect.SetArgument<Matrix4x4> ( "projectionMatrix", new OrthographicProjection (
 				0, LiqueurSystem.GraphicsDevice.ScreenSize.X, LiqueurSystem.GraphicsDevice.ScreenSize.Y, 0,
 				0.0001f, 1000.0f

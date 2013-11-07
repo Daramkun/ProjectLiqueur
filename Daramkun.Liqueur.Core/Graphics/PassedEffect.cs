@@ -63,6 +63,12 @@ namespace Daramkun.Liqueur.Graphics
 				ef.SetArgument<T> ( parameter, argument );
 		}
 
+		public void SetTexture ( TextureArgument texture )
+		{
+			foreach ( IEffect ef in effects )
+				ef.SetTexture ( texture );
+		}
+
 		public void SetTextures ( params TextureArgument [] textures )
 		{
 			foreach ( IEffect ef in effects )

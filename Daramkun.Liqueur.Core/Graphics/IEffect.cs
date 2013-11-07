@@ -41,6 +41,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		T GetArgument<T> ( string parameter );
 		void SetArgument<T> ( string parameter, T argument );
+		void SetTexture ( TextureArgument texture );
 		void SetTextures ( params TextureArgument [] textures );
 	}
 }

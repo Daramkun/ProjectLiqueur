@@ -57,14 +57,14 @@ namespace Test.Game.PerformanceTester
 		private void Add (int count)
 		{
 			IsManuallyChildrenCacheMode = true;
-			for ( int i = 0; i < count; ++i )
+			LiqueurSystem.Launcher.InvokeInMainThread ( () =>
 			{
-				LiqueurSystem.Launcher.InvokeInMainThread ( () =>
+				for ( int i = 0; i < count; ++i )
 				{
 					Add ( new PerformanceSpriteNode ( textures [ random.Next ( 4 ) ] ) );
-				}, false );
-			}
-			RefreshChildrenCache ();
+				}
+				RefreshChildrenCache ();
+			}, false );
 		}
 
 		private void Remove (int count)
