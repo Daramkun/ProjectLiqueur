@@ -23,7 +23,7 @@ namespace Test.Game.Dodge
 
 		public override void Intro ( params object [] args )
 		{
-			contentManager = new ContentManager ( new ManifestFileSystem () );
+			contentManager = new ContentManager ( FileSystemManager.GetFileSystem ( "ManifestFileSystem" ) );
 			contentManager.AddDefaultContentLoader ();
 			LiqueurSystem.Launcher.InvokeInMainThread ( () =>
 			{

@@ -37,7 +37,7 @@ namespace Test.Game.Dodge
 
 		public override void Intro ( params object [] args )
 		{
-			Contents = new ContentManager ( new ManifestFileSystem () );
+			Contents = new ContentManager ( FileSystemManager.GetFileSystem ( "ManifestFileSystem" ) );
 			Contents.AddDefaultContentLoader ();
 
 			Add ( new PlayerController () );

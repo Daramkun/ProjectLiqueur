@@ -35,7 +35,7 @@ namespace Test.Game.PerformanceTester
 			Add ( calc );
 
 			ContentManager.ContentLoaderAssemblies.Add ( Assembly.Load ( "Daramkun.Liqueur.Spirit" ) );
-			contentManager = new ContentManager ( new ManifestFileSystem () );
+			contentManager = new ContentManager ( FileSystemManager.GetFileSystem ( "ManifestFileSystem" ) );
 			contentManager.AddDefaultContentLoader ();
 			Texture2DContentLoader.AddDefaultDecoders ();
 

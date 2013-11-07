@@ -400,7 +400,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		private void UnsettingTextures ( int length )
 		{
-			for ( int i = 0; i < length; i++ )
+			for ( int i = 0; i < length; ++i )
 			{
 				GL.ActiveTexture ( TextureUnit.Texture0 + i );
 				GL.BindTexture ( TextureTarget.Texture2D, 0 );

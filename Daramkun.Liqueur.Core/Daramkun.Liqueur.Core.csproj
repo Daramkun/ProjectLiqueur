@@ -282,6 +282,7 @@
     <Compile Include="Mathematics\IVector.cs" />
     <Compile Include="Mathematics\Transforms\CommonTransform.cs" />
     <Compile Include="Scripts\IScriptEngine.cs" />
+    <Compile Include="Contents\FileSystems\FileSystemManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\ExternLib\CsVorbis\LICENSE.txt" />

@@ -25,7 +25,6 @@ namespace Daramkun.Liqueur.Contents.Decoder.Audios
 		{
 			try
 			{
-				stream.Position = 0;
 				OggDecodeStream decodeStream = new OggDecodeStream ( stream );
 				return new WaveDecoder().Decode ( decodeStream );
 			}

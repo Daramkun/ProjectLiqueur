@@ -18,9 +18,8 @@ namespace Daramkun.Liqueur.Contents.FileSystems
 		/// Constructor of Manifest File System class
 		/// </summary>
 		public ManifestFileSystem ()
-		{
-			assembly = Assembly.GetCallingAssembly ();
-		}
+			: this ( Assembly.GetCallingAssembly () )
+		{ }
 
 		/// <summary>
 		/// Constructor of Manifest File System class

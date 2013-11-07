@@ -138,10 +138,12 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 				0.0001f, 1000.0f
 			).Matrix );
 			Effect.SetArgument<Matrix4x4> ( "worldMatrix", transform.Matrix );
-			Effect.Dispatch ( ( IEffect effect ) =>
-			{
-				LiqueurSystem.GraphicsDevice.Draw<SpriteVertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
-			} );
+			Effect.Dispatch ( RenderingSprite );
+		}
+
+		private void RenderingSprite ( IEffect effect )
+		{
+			LiqueurSystem.GraphicsDevice.Draw<SpriteVertex> ( PrimitiveType.TriangleList, vertexBuffer, indexBuffer );
 		}
 
 		public void Reset ()

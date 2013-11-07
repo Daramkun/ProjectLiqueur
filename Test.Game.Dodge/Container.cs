@@ -39,7 +39,7 @@ namespace Test.Game.Dodge
 			InputHelper.IsKeyboardEnabled = true;
 			Add ( SceneContainer = new SceneContainer ( new MenuScene () ) );
 			
-			contentManager = new ContentManager ( new ManifestFileSystem () );
+			contentManager = new ContentManager ( FileSystemManager.GetFileSystem ( "ManifestFileSystem" ) );
 			contentManager.AddDefaultContentLoader ();
 			LiqueurSystem.Launcher.InvokeInMainThread ( () =>
 			{

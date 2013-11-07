@@ -166,7 +166,9 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			int lastProgram;
 			GL.GetInteger ( GetPName.CurrentProgram, out lastProgram );
+
 			GL.UseProgram ( programId );
+
 			GL.ActiveTexture ( TextureUnit.Texture0 );
 			GL.BindTexture ( TextureTarget.Texture2D, ( texture.Texture as Texture2D ).texture );
 
@@ -178,6 +180,7 @@ namespace Daramkun.Liqueur.Graphics
 
 			int uniform = GL.GetUniformLocation ( programId, texture.Uniform );
 			GL.Uniform1 ( uniform, 0 );
+
 			GL.UseProgram ( lastProgram );
 		}
 

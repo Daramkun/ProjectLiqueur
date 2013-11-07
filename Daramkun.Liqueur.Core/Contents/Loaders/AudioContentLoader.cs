@@ -73,6 +73,7 @@ namespace Daramkun.Liqueur.Contents.Loaders
 			{
 				try
 				{
+					stream.Position = 0;
 					audioInfo = decoder.Decode ( stream );
 					isLoadComplete = true;
 					break;
