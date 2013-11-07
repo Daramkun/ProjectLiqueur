@@ -54,52 +54,54 @@ namespace Test.Game.PerformanceTester
 			base.Outro ();
 		}
 
-		private void Add ()
+		private void Add (int count)
 		{
-			LiqueurSystem.Launcher.InvokeInMainThread ( () =>
+			IsManuallyChildrenCacheMode = true;
+			for ( int i = 0; i < count; ++i )
 			{
-				Add ( new PerformanceSpriteNode ( textures [ random.Next ( 4 ) ] ) );
-			}, false );
+				LiqueurSystem.Launcher.InvokeInMainThread ( () =>
+				{
+					Add ( new PerformanceSpriteNode ( textures [ random.Next ( 4 ) ] ) );
+				}, false );
+			}
+			RefreshChildrenCache ();
 		}
 
-		private void Remove ()
+		private void Remove (int count)
 		{
-			Remove ( this [ ChildrenCount - 1 ] );
+			IsManuallyChildrenCacheMode = true;
+			for ( int i = 0; i < count; ++i )
+			{
+				Remove ( this [ ChildrenCount - 1 ] );
+			}
+			RefreshChildrenCache ();
 		}
 
 		public override void Update ( GameTime gameTime )
 		{
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Q ) )
-				for ( int i = 0; i < 10; i++ )
-					Add ();
+				Add ( 10 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.W ) )
-				for ( int i = 0; i < 10; i++ )
-					Remove ();
+				Remove ( 10 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.A ) )
-				for ( int i = 0; i < 100; i++ )
-					Add ();
+				Add ( 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.S ) )
-				for ( int i = 0; i < 100; i++ )
-					Remove ();
+				Remove ( 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Z ) )
-				for ( int i = 0; i < 1000; i++ )
-					Add ();
+				Add ( 1000 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.X ) )
-				for ( int i = 0; i < 1000; i++ )
-					Remove ();
+				Remove ( 1000 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Space ) )
-				for ( int i = 0; i < 10000; i++ )
-					Add ();
+				Add ( 10000 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Return ) )
-				for ( int i = 0; i < 10000; i++ )
-					Remove ();
+				Remove ( 10000 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.T ) )
 			{

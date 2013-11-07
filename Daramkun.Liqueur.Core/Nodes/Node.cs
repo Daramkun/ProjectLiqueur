@@ -23,6 +23,7 @@ namespace Daramkun.Liqueur.Nodes
 		public IEnumerable<Node> Children { get { return children; } }
 		public int ChildrenCount { get { return children.Count; } }
 		public static IForEach UpdateLooper { get; set; }
+		public bool IsManuallyChildrenCacheMode { get; set; }
 
 		public virtual uint ZOrder
 		{
@@ -64,9 +65,17 @@ namespace Daramkun.Liqueur.Nodes
 
 			spinlock.Enter ();
 			children.Add ( node );
-			childrenArray = children.ToArray ();
+			if ( !IsManuallyChildrenCacheMode )
+				childrenArray = children.ToArray ();
 			spinlock.Exit ();
 			return node;
+		}
+
+		public void RefreshChildrenCache ()
+		{
+			spinlock.Enter ();
+			childrenArray = children.ToArray ();
+			spinlock.Exit ();
 		}
 
 		public void Remove ( Node node )
@@ -75,14 +84,18 @@ namespace Daramkun.Liqueur.Nodes
 
 			spinlock.Enter ();
 			children.Remove ( node );
-			childrenArray = children.ToArray ();
+			if ( !IsManuallyChildrenCacheMode )
+				childrenArray = children.ToArray ();
 			spinlock.Exit ();
 
 			node.Outro ();
 			node.Parent = null;
 		}
 
-		public Node this [ int index ] { get { lock ( forLock ) { return children [ index ]; } } }
+		public Node this [ int index ]
+		{
+			get { return childrenArray [ index ]; }
+		}
 
 		public Node ()
 		{
