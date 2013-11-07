@@ -15,7 +15,11 @@ namespace Daramkun.Liqueur.Nodes.Scenes
 	public class SceneContainer : Node
 	{
 		Stack<Node> sceneList;
+		Node currentNode;
 		Node nextNode;
+		object [] nextNodeArgs;
+
+		SpinLock spinlock;
 
 		public ISceneTransitor SceneTransitor { get; set; }
 		public TransitionState TransitionState { get; set; }
@@ -23,19 +27,22 @@ namespace Daramkun.Liqueur.Nodes.Scenes
 
 		public SceneContainer ( Node firstScene )
 		{
+			spinlock = new SpinLock ();
+
 			sceneList = new Stack<Node> ();
 			firstScene.Parent = this;
-			sceneList.Push ( firstScene );
+			sceneList.Push ( currentNode = firstScene );
 
 			ContainMethod = SceneContainMethod.Flat;
 			SceneTransitor = new DirectTransitor ();
 			TransitionState = TransitionState.None;
 		}
 
-		public void Transition ( Node node )
+		public void Transition ( Node node, params object [] args )
 		{
 			if ( TransitionState != TransitionState.None ) return;
 			nextNode = node;
+			nextNodeArgs = args;
 			TransitionState = TransitionState.Begin;
 		}
 
@@ -45,31 +52,40 @@ namespace Daramkun.Liqueur.Nodes.Scenes
 			if ( ContainMethod != SceneContainMethod.Stack ) return;
 			if ( sceneList.Count == 1 ) return;
 			nextNode = null;
+			nextNodeArgs = null;
 			TransitionState = TransitionState.Begin;
 		}
 
 		public override void Intro ( params object [] args )
 		{
-			sceneList.Peek ().Intro ();
+			currentNode.Intro ();
 			base.Intro ( args );
 		}
 
 		public override void Outro ()
 		{
+			spinlock.Enter ();
 			while ( sceneList.Count > 0 )
 				sceneList.Pop ().Outro ();
+			spinlock.Exit ();
 			base.Outro ();
 		}
 
 		public override void Update ( GameTime gameTime )
 		{
-			if ( sceneList.Count > 0 )
-				sceneList.Peek ().Update ( gameTime );
+			spinlock.Enter ();
+			Node currentNode = this.currentNode;
+			spinlock.Exit ();
+			if ( currentNode != null )
+				currentNode.Update ( gameTime );
 			base.Update ( gameTime );
 		}
 
 		public override void Draw ( GameTime gameTime )
 		{
+			if ( currentNode != null )
+				currentNode.Draw ( gameTime );
+
 			if ( TransitionState != TransitionState.None )
 			{
 				TransitionState = SceneTransitor.Transitioning ( TransitionState, sceneList.Peek () );
@@ -78,22 +94,35 @@ namespace Daramkun.Liqueur.Nodes.Scenes
 					switch ( ContainMethod )
 					{
 						case SceneContainMethod.Flat:
+							spinlock.Enter ();
 							sceneList.Pop ().Outro ();
-							nextNode.Intro ();
+							nextNode.Intro ( nextNodeArgs );
 							nextNode.Parent = this;
-							sceneList.Push ( nextNode );
+							sceneList.Push ( currentNode = nextNode );
+							nextNode = null;
+							nextNodeArgs = null;
+							spinlock.Exit ();
 							break;
 						case SceneContainMethod.Stack:
 							if ( nextNode == null )
 							{
+								spinlock.Enter ();
 								Node nn = sceneList.Pop ();
 								nn.Parent = null;
 								nn.Outro ();
+								currentNode = null;
+								nextNode = null;
+								nextNodeArgs = null;
+								spinlock.Exit ();
 							}
 							else
 							{
-								nextNode.Intro ();
-								sceneList.Push ( nextNode );
+								spinlock.Enter ();
+								nextNode.Intro ( nextNodeArgs );
+								sceneList.Push ( currentNode = nextNode );
+								nextNode = null;
+								nextNodeArgs = null;
+								spinlock.Exit ();
 							}
 							break;
 					}
@@ -104,9 +133,6 @@ namespace Daramkun.Liqueur.Nodes.Scenes
 					nextNode = null;
 				}
 			}
-			else
-				if ( sceneList.Count > 0 )
-					sceneList.Peek ().Draw ( gameTime );
 			base.Draw ( gameTime );
 		}
 	}

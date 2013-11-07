@@ -106,13 +106,6 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		public void Dispose ()
 		{
-			if ( Effect != null )
-			{
-				if ( Effect is SpriteEffect )
-					Effect.Dispose ();
-				Effect = null;
-			}
-
 			if ( indexReference != 0 )
 			{
 				indexReference--;
@@ -120,6 +113,13 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 				{
 					indexBuffer.Dispose ();
 					indexBuffer = null;
+
+					if ( Effect != null )
+					{
+						if ( Effect is SpriteEffect )
+							Effect.Dispose ();
+						Effect = null;
+					}
 				}
 			}
 
