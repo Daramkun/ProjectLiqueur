@@ -105,10 +105,10 @@ namespace Test.Game.PerformanceTester
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.T ) )
 			{
-				/*if ( UpdateLooper == null )
+				if ( UpdateLooper == null )
 					UpdateLooper = ForEachCollection.GetForEach ( "Parallel" );
 				else
-					UpdateLooper = null;*/
+					UpdateLooper = null;
 			}
 
 			base.Update ( gameTime );
