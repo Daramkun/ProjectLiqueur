@@ -172,16 +172,38 @@ namespace Daramkun.Liqueur.Graphics
 			GL.ActiveTexture ( TextureUnit.Texture0 );
 			GL.BindTexture ( TextureTarget.Texture2D, ( texture.Texture as Texture2D ).texture );
 
-			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
-			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, GetFilter ( texture.Filter ) );
+			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, GetFilter ( texture.Filter ) );
 
-			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
-			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
+			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, GetAddressing ( texture.Addressing ) );
+			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, GetAddressing ( texture.Addressing ) );
 
 			int uniform = GL.GetUniformLocation ( programId, texture.Uniform );
 			GL.Uniform1 ( uniform, 0 );
 
 			GL.UseProgram ( lastProgram );
+		}
+
+		private int GetAddressing ( TextureAddressing textureAddressing )
+		{
+			switch ( textureAddressing )
+			{
+				case TextureAddressing.Mirror: return ( int ) TextureWrapMode.MirroredRepeat;
+				case TextureAddressing.Clamp: return ( int ) TextureWrapMode.Clamp;
+				default:
+				case TextureAddressing.Wrap: return ( int ) TextureWrapMode.Repeat;
+			}
+		}
+
+		private int GetFilter ( TextureFilter textureFilter )
+		{
+			switch ( textureFilter )
+			{
+				case TextureFilter.Linear: return ( int ) TextureMinFilter.Linear;
+
+				default:
+				case TextureFilter.Nearest: return ( int ) TextureMinFilter.Nearest;
+			}
 		}
 
 		public void SetTextures ( params TextureArgument [] textures )

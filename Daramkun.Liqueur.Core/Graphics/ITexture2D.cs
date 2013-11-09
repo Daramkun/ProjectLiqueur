@@ -7,10 +7,25 @@ using Daramkun.Liqueur.Mathematics;
 
 namespace Daramkun.Liqueur.Graphics
 {
+	public enum TextureFilter
+	{
+		Nearest,
+		Linear,
+	}
+
+	public enum TextureAddressing
+	{
+		Wrap,
+		Mirror,
+		Clamp,
+	}
+
 	public struct TextureArgument
 	{
 		public string Uniform { get; set; }
 		public ITexture2D Texture { get; set; }
+		public TextureFilter Filter { get; set; }
+		public TextureAddressing Addressing { get; set; }
 	}
 
 	public interface ITexture2D : IDisposable
