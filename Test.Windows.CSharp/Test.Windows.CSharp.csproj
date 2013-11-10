@@ -71,6 +71,10 @@
       <Project>{032EC8FF-8AA5-4ACE-8147-D7F0FCECFF04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Daramkun.Liqueur.Desktop.Common\Daramkun.Liqueur.Desktop.Common.csproj">
+      <Project>{118af382-a917-4c73-8e96-22f5e6945dfe}</Project>
+      <Name>Daramkun.Liqueur.Desktop.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Daramkun.Liqueur.Platforms.OpenTK\Daramkun.Liqueur.Platforms.OpenTK.csproj">
       <Project>{B4799777-35C6-44F0-B18A-350A9BCEF41E}</Project>
       <Name>Daramkun.Liqueur.Platforms.OpenTK</Name>

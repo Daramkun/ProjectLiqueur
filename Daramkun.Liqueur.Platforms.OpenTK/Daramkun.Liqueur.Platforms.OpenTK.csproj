@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Audio\Audio.cs" />
     <Compile Include="Audio\AudioDevice.cs" />
-    <Compile Include="Contents\FileSystems\LocalFileSystem.cs" />
     <Compile Include="Graphics\Effect.cs" />
     <Compile Include="Graphics\GraphicsDevice.cs" />
     <Compile Include="Graphics\IndexBuffer.cs" />
@@ -55,9 +54,7 @@
     <Compile Include="Graphics\VertexBuffer.cs" />
     <Compile Include="Inputs\Keyboard.cs" />
     <Compile Include="Inputs\Mouse.cs" />
-    <Compile Include="Logging\LogWriters\ConsoleLogWriter.cs" />
     <Compile Include="Platforms\Launcher.cs" />
-    <Compile Include="Platforms\ParallelForEach.cs" />
     <Compile Include="Platforms\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

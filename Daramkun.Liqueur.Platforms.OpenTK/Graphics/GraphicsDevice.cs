@@ -455,7 +455,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		public IIndexBuffer CreateIndexBuffer ( int indexCount )
 		{
-			return new IndexBuffer ( indexCount );
+			return new IndexBuffer ( this, indexCount );
 		}
 
 		public IIndexBuffer CreateIndexBuffer ( int [] indices )

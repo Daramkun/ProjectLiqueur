@@ -36,7 +36,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		public object Handle { get { return indexBuffer; } }
 
-		public IndexBuffer ( int indexCount )
+		public IndexBuffer ( IGraphicsDevice graphicsDevice, int indexCount )
 		{
 			Length = indexCount;
 
@@ -48,7 +48,7 @@ namespace Daramkun.Liqueur.Graphics
 		}
 
 		public IndexBuffer ( IGraphicsDevice graphicsDevice, int [] indices )
-			: this ( indices.Length )
+			: this ( graphicsDevice, indices.Length )
 		{
 			Indices = indices;
 		}
