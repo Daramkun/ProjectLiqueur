@@ -13,9 +13,12 @@ namespace Daramkun.Liqueur.Graphics
 		public ShaderOption Option { get; set; }
 		public object Handle { get; private set; }
 
+		internal SharpDX.Direct3D9.ConstantTable constantTable;
+
 		private Shader ( IGraphicsDevice graphicsDevice, SharpDX.Direct3D9.ShaderBytecode function, Graphics.ShaderType shaderType )
 		{
 			ShaderType = shaderType;
+			constantTable = function.ConstantTable;
 			switch ( ShaderType )
 			{
 				case Graphics.ShaderType.VertexShader:
