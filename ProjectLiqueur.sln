@@ -200,9 +200,6 @@ Global
 		{7689BA77-BAAD-4949-8B89-6EBE57C57447} = {B820D9C8-3DDC-4514-AC4A-DB0E00AF060B}
 		{118AF382-A917-4C73-8E96-22F5E6945DFE} = {B820D9C8-3DDC-4514-AC4A-DB0E00AF060B}
 	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Test.Windows.CSharp\Test.Windows.CSharp.csproj
 	EndGlobalSection

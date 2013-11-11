@@ -65,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\BaseSpriteEffect\DirectX10\" />
     <Folder Include="Resources\BaseSpriteEffect\XNA\" />
   </ItemGroup>
   <ItemGroup>
@@ -72,8 +73,8 @@
     <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGL2\VertexShader.shader" />
     <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGLES\PixelShader.shader" />
     <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGLES\VertexShader.shader" />
-    <EmbeddedResource Include="Resources\BaseSpriteEffect\DirectX\PixelShader.shader" />
-    <EmbeddedResource Include="Resources\BaseSpriteEffect\DirectX\VertexShader.shader" />
+    <EmbeddedResource Include="Resources\BaseSpriteEffect\DirectX9\PixelShader.shader" />
+    <EmbeddedResource Include="Resources\BaseSpriteEffect\DirectX9\VertexShader.shader" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\BaseSpriteEffect\OpenGL3\PixelShader.shader" />

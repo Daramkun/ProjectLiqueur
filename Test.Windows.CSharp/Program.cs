@@ -29,17 +29,17 @@ namespace Test.Windows.CSharp
 			LiqueurSystem.SkipInitializeException = true;
 			//LiqueurSystem.UpdateLooper = new ParallelForEach<Node> ();
 			ForEachCollection.AddForEach ( "Parallel", new ParallelForEach () );
-			try
-			{
-				LiqueurSystem.Run ( new Launcher ( true ),
+			//try
+			//{
+				LiqueurSystem.Run ( new Launcher (/* true */),
 					new Test.Game.Dodge.Container (),
 					//new Test.Game.PerformanceTester.Container (),
 					() =>
 					{
 						LiqueurSystem.Keyboard = new Keyboard ( LiqueurSystem.Window );
 					} );
-			}
-			catch ( Exception ex ) { Debug.WriteLine ( ex.StackTrace ); }
+			//}
+			//catch ( Exception ex ) { Debug.WriteLine ( ex.Message ); Debug.WriteLine ( ex.StackTrace ); }
 		}
 	}
 }

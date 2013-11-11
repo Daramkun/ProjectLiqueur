@@ -56,6 +56,7 @@ namespace Daramkun.Liqueur.Platforms
 
 		internal void Run ()
 		{
+			window.Show ();
 			while ( window.IsHandleCreated )
 			{
 				DoEvents ();

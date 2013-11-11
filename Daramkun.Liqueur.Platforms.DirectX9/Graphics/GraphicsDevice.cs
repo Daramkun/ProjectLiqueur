@@ -152,7 +152,41 @@ namespace Daramkun.Liqueur.Graphics
 			}
 			set
 			{
-				throw new NotImplementedException ();
+				d3dDevice.SetRenderState ( SharpDX.Direct3D9.RenderState.BlendOperation, ConvertBlendOp ( value.Operator ) );
+				d3dDevice.SetRenderState ( SharpDX.Direct3D9.RenderState.SourceBlend, ConvertBlendParam ( value.SourceParameter ) );
+				d3dDevice.SetRenderState ( SharpDX.Direct3D9.RenderState.DestinationBlend, ConvertBlendParam ( value.DestinationParameter ) );
+			}
+		}
+
+		private int ConvertBlendParam ( BlendParameter blendParameter )
+		{
+			switch ( blendParameter )
+			{
+				case BlendParameter.Zero: return ( int ) SharpDX.Direct3D9.Blend.Zero;
+				case BlendParameter.One: return ( int ) SharpDX.Direct3D9.Blend.One;
+				case BlendParameter.SourceColor: return ( int ) SharpDX.Direct3D9.Blend.SourceColor;
+				case BlendParameter.SourceAlpha: return ( int ) SharpDX.Direct3D9.Blend.SourceAlpha;
+				case BlendParameter.DestinationColor: return ( int ) SharpDX.Direct3D9.Blend.DestinationColor;
+				case BlendParameter.DestinationAlpha: return ( int ) SharpDX.Direct3D9.Blend.DestinationAlpha;
+				case BlendParameter.InvertSourceColor: return ( int ) SharpDX.Direct3D9.Blend.InverseSourceColor;
+				case BlendParameter.InvertSourceAlpha: return ( int ) SharpDX.Direct3D9.Blend.InverseSourceAlpha;
+				case BlendParameter.InvertDestinationColor: return ( int ) SharpDX.Direct3D9.Blend.InverseDestinationColor;
+				case BlendParameter.InvertDestinationAlpha: return ( int ) SharpDX.Direct3D9.Blend.InverseDestinationAlpha;
+
+				default: throw new ArgumentException ();
+			}
+		}
+
+		private int ConvertBlendOp ( BlendOperator blendOperator )
+		{
+			switch ( blendOperator )
+			{
+				case BlendOperator.Add: return ( int ) SharpDX.Direct3D9.BlendOperation.Add;
+				case BlendOperator.Minimum: return ( int ) SharpDX.Direct3D9.BlendOperation.Minimum;
+				case BlendOperator.Maximum: return ( int ) SharpDX.Direct3D9.BlendOperation.Maximum;
+				case BlendOperator.Subtract: return ( int ) SharpDX.Direct3D9.BlendOperation.Subtract;
+				case BlendOperator.ReverseSubtract: return ( int ) SharpDX.Direct3D9.BlendOperation.ReverseSubtract;
+				default: throw new ArgumentException ();
 			}
 		}
 
@@ -250,6 +284,7 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			d3dDevice.VertexFormat = ConvertFVF ( vertexBuffer.FVF );
 			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, Marshal.SizeOf ( typeof ( T ) ) );
+			d3dDevice.VertexDeclaration = ( vertexBuffer as VertexBuffer<T> ).vertexDeclaration;
 			d3dDevice.DrawPrimitives ( ConvertPrimitiveType ( primitiveType ), 0, vertexBuffer.Length / GetPrimitiveUnit ( primitiveType ) );
 		}
 
@@ -257,6 +292,7 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			d3dDevice.VertexFormat = ConvertFVF ( vertexBuffer.FVF );
 			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, Marshal.SizeOf ( typeof ( T ) ) );
+			d3dDevice.VertexDeclaration = ( vertexBuffer as VertexBuffer<T> ).vertexDeclaration;
 			d3dDevice.Indices = indexBuffer.Handle as SharpDX.Direct3D9.IndexBuffer;
 			d3dDevice.DrawIndexedPrimitive ( ConvertPrimitiveType ( primitiveType ), 0, 0, vertexBuffer.Length,
 				0, indexBuffer.Length / GetPrimitiveUnit ( primitiveType ) );

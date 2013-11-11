@@ -31,6 +31,13 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 				else
 					rendererType += "3";
 			}
+			else if ( LiqueurSystem.GraphicsDevice.BaseRenderer == BaseRenderer.DirectX )
+			{
+				if ( LiqueurSystem.GraphicsDevice.RendererVersion.Major == 9 )
+					rendererType += "9";
+				else
+					rendererType += "10";
+			}
 
 			return Assembly.GetExecutingAssembly ().GetManifestResourceStream (
 				string.Format ( "Daramkun.Liqueur.Spirit.Resources.BaseSpriteEffect.{0}.{1}.shader",

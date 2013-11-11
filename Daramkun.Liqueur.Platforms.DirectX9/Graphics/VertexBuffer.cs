@@ -10,6 +10,7 @@ namespace Daramkun.Liqueur.Graphics
 	class VertexBuffer<T> : IVertexBuffer<T> where T : struct
 	{
 		SharpDX.Direct3D9.VertexBuffer vertexBuffer;
+		internal SharpDX.Direct3D9.VertexDeclaration vertexDeclaration;
 
 		public int Length { get; private set; }
 		public int TotalBytesize { get; private set; }
@@ -38,8 +39,67 @@ namespace Daramkun.Liqueur.Graphics
 			vertexBuffer = new SharpDX.Direct3D9.VertexBuffer ( graphicsDevice.Handle as SharpDX.Direct3D9.Device,
 				TotalBytesize = vertexCount * Marshal.SizeOf ( typeof ( T ) ), SharpDX.Direct3D9.Usage.None, ConvertVertexFormat ( fvf ),
 				SharpDX.Direct3D9.Pool.Default );
+
+			vertexDeclaration = new SharpDX.Direct3D9.VertexDeclaration ( graphicsDevice.Handle as SharpDX.Direct3D9.Device, ConvertVertexElements ( fvf ) );
+
 			Length = vertexCount;
 			FVF = fvf;
+		}
+
+		private SharpDX.Direct3D9.VertexElement [] ConvertVertexElements ( FlexibleVertexFormat fvf )
+		{
+			List<SharpDX.Direct3D9.VertexElement> elements = new List<SharpDX.Direct3D9.VertexElement> ();
+
+			short offset = 0;
+
+			if ( fvf.HasFlag ( FlexibleVertexFormat.PositionXY ) )
+			{
+				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2, SharpDX.Direct3D9.DeclarationMethod.Default, SharpDX.Direct3D9.DeclarationUsage.Position, 0 ) );
+				offset += 8;
+			}
+			else if ( fvf.HasFlag ( FlexibleVertexFormat.PositionXYZ ) )
+			{
+				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float3, SharpDX.Direct3D9.DeclarationMethod.Default, SharpDX.Direct3D9.DeclarationUsage.Position, 0 ) );
+				offset += 12;
+			}
+
+			if ( fvf.HasFlag ( FlexibleVertexFormat.Diffuse ) )
+			{
+				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float4, SharpDX.Direct3D9.DeclarationMethod.Default, SharpDX.Direct3D9.DeclarationUsage.Color, 0 ) );
+				offset += 16;
+			}
+
+			if ( fvf.HasFlag ( FlexibleVertexFormat.Normal ) )
+			{
+				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float3, SharpDX.Direct3D9.DeclarationMethod.Default, SharpDX.Direct3D9.DeclarationUsage.Normal, 0 ) );
+				offset += 12;
+			}
+
+			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV1 ) )
+			{
+				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2, SharpDX.Direct3D9.DeclarationMethod.UV, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 0 ) );
+				offset += 8;
+			}
+
+			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV2 ) )
+			{
+				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2, SharpDX.Direct3D9.DeclarationMethod.UV, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 0 ) );
+				offset += 8;
+			}
+
+			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV3 ) )
+			{
+				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2, SharpDX.Direct3D9.DeclarationMethod.UV, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 0 ) );
+				offset += 8;
+			}
+
+			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV4 ) )
+			{
+				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2, SharpDX.Direct3D9.DeclarationMethod.UV, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 0 ) );
+				offset += 8;
+			}
+
+			return elements.ToArray ();
 		}
 
 		private SharpDX.Direct3D9.VertexFormat ConvertVertexFormat ( FlexibleVertexFormat fvf )
