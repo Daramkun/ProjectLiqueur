@@ -184,6 +184,28 @@ namespace Daramkun.Liqueur.Graphics
 			GL.UseProgram ( lastProgram );
 		}
 
+		public void SetTextures ( params TextureArgument [] textures )
+		{
+			int lastProgram;
+			GL.GetInteger ( GetPName.CurrentProgram, out lastProgram );
+			GL.UseProgram ( programId );
+			for ( int i = 0; i < textures.Length; i++ )
+			{
+				GL.ActiveTexture ( TextureUnit.Texture0 + i );
+				GL.BindTexture ( TextureTarget.Texture2D, ( textures [ i ].Texture as Texture2D ).texture );
+
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, GetFilter ( textures [ i ].Filter ) );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, GetFilter ( textures [ i ].Filter ) );
+
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, GetAddressing ( textures [ i ].Addressing ) );
+				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, GetAddressing ( textures [ i ].Addressing ) );
+
+				int uniform = GL.GetUniformLocation ( programId, textures [ i ].Uniform );
+				GL.Uniform1 ( uniform, i );
+			}
+			GL.UseProgram ( lastProgram );
+		}
+
 		private int GetAddressing ( TextureAddressing textureAddressing )
 		{
 			switch ( textureAddressing )
@@ -204,28 +226,6 @@ namespace Daramkun.Liqueur.Graphics
 				default:
 				case TextureFilter.Nearest: return ( int ) TextureMinFilter.Nearest;
 			}
-		}
-
-		public void SetTextures ( params TextureArgument [] textures )
-		{
-			int lastProgram;
-			GL.GetInteger ( GetPName.CurrentProgram, out lastProgram );
-			GL.UseProgram ( programId );
-			for ( int i = 0; i < textures.Length; i++ )
-			{
-				GL.ActiveTexture ( TextureUnit.Texture0 + i );
-				GL.BindTexture ( TextureTarget.Texture2D, ( textures [ i ].Texture as Texture2D ).texture );
-
-				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
-				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
-
-				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
-				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
-
-				int uniform = GL.GetUniformLocation ( programId, textures [ i ].Uniform );
-				GL.Uniform1 ( uniform, i );
-			}
-			GL.UseProgram ( lastProgram );
 		}
 	}
 }
