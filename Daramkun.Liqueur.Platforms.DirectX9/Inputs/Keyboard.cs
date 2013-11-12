@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Daramkun.Liqueur.Inputs.RawDevice;
 using Daramkun.Liqueur.Inputs.State;
@@ -14,10 +13,9 @@ namespace Daramkun.Liqueur.Inputs
 	{
 		IWindow window;
 
-		protected override bool IsSupportMultiPlayers { get { return false; } }
-
 		public override bool IsSupport { get { return true; } }
 		public override bool IsConnected { get { return true; } }
+		protected override bool IsSupportMultiPlayers { get { return false; } }
 
 		private List<KeyboardKey> pressedKeys;
 
@@ -59,9 +57,11 @@ namespace Daramkun.Liqueur.Inputs
 
 		protected override KeyboardState GenerateState ()
 		{
+			if ( pressedKeys.Count == 0 ) return new KeyboardState ();
 			return new KeyboardState ( pressedKeys.ToArray () );
 		}
 
+		#region Converter
 		private KeyboardKey ConvertKeys ( Keys keys )
 		{
 			switch ( keys )
@@ -160,5 +160,6 @@ namespace Daramkun.Liqueur.Inputs
 
 			return KeyboardKey.Unknown;
 		}
+		#endregion
 	}
 }

@@ -57,6 +57,7 @@ namespace Daramkun.Liqueur.Inputs
 
 		protected override KeyboardState GenerateState ()
 		{
+			if ( pressedKeys.Count == 0 ) return new KeyboardState ();
 			return new KeyboardState ( pressedKeys.ToArray () );
 		}
 

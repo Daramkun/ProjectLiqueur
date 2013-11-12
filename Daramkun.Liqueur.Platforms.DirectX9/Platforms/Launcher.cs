@@ -80,7 +80,7 @@ namespace Daramkun.Liqueur.Platforms
 			{
 				updateThread = new Thread ( () =>
 				{
-					while ( !window.IsHandleCreated )
+					while ( window.IsHandleCreated )
 					{
 						args.UpdateLogic ();
 						Thread.Sleep ( 0 );

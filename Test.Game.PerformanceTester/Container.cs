@@ -45,8 +45,6 @@ namespace Test.Game.PerformanceTester
 			textures [ 2 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.test3.png" );
 			textures [ 3 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.test4.png" );
 
-			Add ( 100 );
-
 			base.Intro ( args );
 		}
 
