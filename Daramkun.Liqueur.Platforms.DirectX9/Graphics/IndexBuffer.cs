@@ -35,7 +35,7 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			Length = indexCount;
 			indexBuffer = new SharpDX.Direct3D9.IndexBuffer ( graphicsDevice.Handle as SharpDX.Direct3D9.Device,
-				indexCount * 4, SharpDX.Direct3D9.Usage.None, SharpDX.Direct3D9.Pool.Default, false );
+				indexCount * 4, SharpDX.Direct3D9.Usage.None, SharpDX.Direct3D9.Pool.Managed, false );
 		}
 
 		public IndexBuffer ( IGraphicsDevice graphicsDevice, int [] indices )

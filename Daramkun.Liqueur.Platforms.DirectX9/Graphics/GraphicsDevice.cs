@@ -283,6 +283,7 @@ namespace Daramkun.Liqueur.Graphics
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer ) where T : struct
 		{
 			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, ( vertexBuffer as VertexBuffer<T> ).typeSize );
+			d3dDevice.VertexFormat = ( vertexBuffer as VertexBuffer<T> ).vf;
 			d3dDevice.VertexDeclaration = ( vertexBuffer as VertexBuffer<T> ).vertexDeclaration;
 			d3dDevice.DrawPrimitives ( ConvertPrimitiveType ( primitiveType ), 0, vertexBuffer.Length / GetPrimitiveUnit ( primitiveType ) );
 		}
