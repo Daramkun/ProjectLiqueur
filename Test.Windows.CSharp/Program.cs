@@ -27,7 +27,6 @@ namespace Test.Windows.CSharp
 		static void Main ()
 		{
 			LiqueurSystem.SkipInitializeException = true;
-			//LiqueurSystem.UpdateLooper = new ParallelForEach<Node> ();
 			ForEachCollection.AddForEach ( "Parallel", new ParallelForEach () );
 			//try
 			//{

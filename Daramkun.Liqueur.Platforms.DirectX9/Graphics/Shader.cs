@@ -31,13 +31,44 @@ namespace Daramkun.Liqueur.Graphics
 		}
 
 		public Shader ( IGraphicsDevice graphicsDevice, Stream stream, Graphics.ShaderType shaderType )
-			: this ( graphicsDevice, new SharpDX.Direct3D9.ShaderBytecode ( stream ), shaderType )
+			: this ( graphicsDevice, SharpDX.Direct3D9.ShaderBytecode.Compile ( GetShaderSource ( stream ),
+			GetShaderEntryPoint ( shaderType ), GetShaderProfile ( shaderType ), SharpDX.Direct3D9.ShaderFlags.None ),
+			shaderType )
 		{
 
 		}
 
+		private static string GetShaderProfile ( ShaderType shaderType )
+		{
+			switch ( shaderType )
+			{
+				case ShaderType.VertexShader: return "vs_2_0";
+				case ShaderType.PixelShader: return "ps_2_0";
+				default: throw new ArgumentException ();
+			}
+		}
+
+		private static string GetShaderSource ( Stream stream )
+		{
+			using ( StreamReader reader = new StreamReader ( stream ) )
+			{
+				return reader.ReadToEnd ();
+			}
+		}
+
+		private static string GetShaderEntryPoint ( ShaderType shaderType )
+		{
+			switch ( shaderType )
+			{
+				case ShaderType.VertexShader: return "vs_main";
+				case ShaderType.PixelShader: return "ps_main";
+				default: throw new ArgumentException ();
+			}
+		}
+
 		public Shader ( IGraphicsDevice graphicsDevice, string shaderCode, Graphics.ShaderType shaderType )
-			: this ( graphicsDevice, new SharpDX.Direct3D9.ShaderBytecode ( Encoding.UTF8.GetBytes ( shaderCode ) ), shaderType )
+			: this ( graphicsDevice, SharpDX.Direct3D9.ShaderBytecode.Compile ( shaderCode,
+			GetShaderEntryPoint ( shaderType ), GetShaderProfile ( shaderType ), SharpDX.Direct3D9.ShaderFlags.None ), shaderType )
 		{
 
 		}
