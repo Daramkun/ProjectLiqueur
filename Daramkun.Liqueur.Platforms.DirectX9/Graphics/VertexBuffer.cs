@@ -42,11 +42,12 @@ namespace Daramkun.Liqueur.Graphics
 			FVF = fvf;
 			typeSize = Marshal.SizeOf ( typeof ( T ) );
 
-			vertexBuffer = new SharpDX.Direct3D9.VertexBuffer ( graphicsDevice.Handle as SharpDX.Direct3D9.Device,
-				TotalBytesize, SharpDX.Direct3D9.Usage.None, ConvertVertexFormat ( fvf ),
-				SharpDX.Direct3D9.Pool.Managed );
+			SharpDX.Direct3D9.Device device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
 
-			vertexDeclaration = new SharpDX.Direct3D9.VertexDeclaration ( graphicsDevice.Handle as SharpDX.Direct3D9.Device, ConvertVertexElements ( fvf ) );
+			vertexBuffer = new SharpDX.Direct3D9.VertexBuffer ( device, TotalBytesize, SharpDX.Direct3D9.Usage.None,
+				ConvertVertexFormat ( fvf ), SharpDX.Direct3D9.Pool.Managed );
+
+			vertexDeclaration = new SharpDX.Direct3D9.VertexDeclaration ( device, ConvertVertexElements ( fvf ) );
 		}
 
 		private SharpDX.Direct3D9.VertexElement [] ConvertVertexElements ( FlexibleVertexFormat fvf )
@@ -85,7 +86,7 @@ namespace Daramkun.Liqueur.Graphics
 			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV1 ) )
 			{
 				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2,
-					SharpDX.Direct3D9.DeclarationMethod.UV, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 0 ) );
+					SharpDX.Direct3D9.DeclarationMethod.Default, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 0 ) );
 				offset += 8;
 			}
 

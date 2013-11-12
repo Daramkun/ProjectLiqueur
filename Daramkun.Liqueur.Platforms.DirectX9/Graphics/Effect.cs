@@ -100,7 +100,7 @@ namespace Daramkun.Liqueur.Graphics
 		public void SetTexture ( TextureArgument texture )
 		{
 			var device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
-			var constantTable = ( vertexShader as Shader ).constantTable;
+			var constantTable = ( pixelShader as Shader ).constantTable;
 			var handle = constantTable.GetConstantByName ( null, texture.Uniform );
 			var samplerIndex = constantTable.GetSamplerIndex ( handle );
 
