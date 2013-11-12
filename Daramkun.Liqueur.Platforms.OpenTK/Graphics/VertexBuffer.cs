@@ -7,13 +7,21 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Daramkun.Liqueur.Graphics
 {
+	class VertexDeclaration
+	{
+		public int Size;
+		public int Offset;
+	}
+
 	class VertexBuffer<T> : IVertexBuffer<T> where T : struct
 	{
 		internal int vertexBuffer;
+		internal VertexDeclaration [] declaration;
+		internal int typeSize;
 
 		public int Length { get; private set; }
 
-		public int TotalBytesize { get { return Marshal.SizeOf ( typeof ( T ) ) * Length; } }
+		public int TotalBytesize { get { return typeSize * Length; } }
 
 		public FlexibleVertexFormat FVF { get; private set; }
 
@@ -48,11 +56,68 @@ namespace Daramkun.Liqueur.Graphics
 			FVF = fvf;
 			Length = vertexCount;
 
+			typeSize = Marshal.SizeOf ( typeof ( T ) );
+			DetectDeclaration ( fvf );
+
 			GL.GenBuffers ( 1, out vertexBuffer );
 
 			GL.BindBuffer ( BufferTarget.ArrayBuffer, vertexBuffer );
 			GL.BufferData ( BufferTarget.ArrayBuffer, new IntPtr ( TotalBytesize ), IntPtr.Zero, BufferUsageHint.StaticDraw );
 			GL.BindBuffer ( BufferTarget.ArrayBuffer, 0 );
+		}
+
+		private void DetectDeclaration ( FlexibleVertexFormat fvf )
+		{
+			List<VertexDeclaration> _declaration = new List<VertexDeclaration> ();
+			int offset = 0;
+			if ( ( fvf & FlexibleVertexFormat.PositionXY ) != 0 )
+			{
+				_declaration.Add ( new VertexDeclaration () { Size = 2, Offset = offset } );
+				offset += 8;
+			}
+			else if ( ( fvf & FlexibleVertexFormat.PositionXYZ ) != 0 )
+			{
+				_declaration.Add ( new VertexDeclaration () { Size = 3, Offset = offset } );
+				offset += 12;
+			}
+
+			if ( ( fvf & FlexibleVertexFormat.Diffuse ) != 0 )
+			{
+				_declaration.Add ( new VertexDeclaration () { Size = 4, Offset = offset } );
+				offset += 16;
+			}
+
+			if ( ( fvf & FlexibleVertexFormat.Normal ) != 0 )
+			{
+				_declaration.Add ( new VertexDeclaration () { Size = 3, Offset = offset } );
+				offset += 12;
+			}
+
+			if ( ( fvf & FlexibleVertexFormat.TextureUV1 ) != 0 )
+			{
+				_declaration.Add ( new VertexDeclaration () { Size = 2, Offset = offset } );
+				offset += 8;
+			}
+
+			if ( ( fvf & FlexibleVertexFormat.TextureUV2 ) != 0 )
+			{
+				_declaration.Add ( new VertexDeclaration () { Size = 2, Offset = offset } );
+				offset += 8;
+			}
+
+			if ( ( fvf & FlexibleVertexFormat.TextureUV3 ) != 0 )
+			{
+				_declaration.Add ( new VertexDeclaration () { Size = 2, Offset = offset } );
+				offset += 8;
+			}
+
+			if ( ( fvf & FlexibleVertexFormat.TextureUV4 ) != 0 )
+			{
+				_declaration.Add ( new VertexDeclaration () { Size = 2, Offset = offset } );
+				offset += 8;
+			}
+
+			declaration = _declaration.ToArray ();
 		}
 
 		public VertexBuffer ( IGraphicsDevice graphicsDevice, FlexibleVertexFormat fvf, T [] vertices )

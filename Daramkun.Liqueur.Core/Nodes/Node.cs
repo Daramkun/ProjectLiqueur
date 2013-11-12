@@ -22,7 +22,6 @@ namespace Daramkun.Liqueur.Nodes
 		public Node Parent { get; internal set; }
 		public IEnumerable<Node> Children { get { return children; } }
 		public int ChildrenCount { get { return children.Count; } }
-		public static IForEach UpdateLooper { get; set; }
 		public bool IsManuallyChildrenCacheMode { get; set; }
 
 		public virtual uint ZOrder
@@ -133,18 +132,8 @@ namespace Daramkun.Liqueur.Nodes
 			if ( children.Count > 0 )
 			{
 				var arrEnum = from a in childrenArray where a.IsEnabled select a;
-				if ( UpdateLooper == null )
-				{
-					foreach ( Node item in arrEnum )
-						item.Update ( gameTime );
-				}
-				else
-				{
-					UpdateLooper.Run ( arrEnum, ( object item ) =>
-					{
-						( item as Node ).Update ( gameTime );
-					} );
-				}
+				foreach ( Node item in arrEnum )
+					item.Update ( gameTime );
 			}
 		}
 

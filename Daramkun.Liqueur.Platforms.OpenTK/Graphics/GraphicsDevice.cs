@@ -306,126 +306,38 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			GL.BindBuffer ( BufferTarget.ArrayBuffer, ( vertexBuffer as VertexBuffer<T> ).vertexBuffer );
 
-			int offset = 0, index = 0;
-			int typeSize = Marshal.SizeOf ( typeof ( T ) );
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.PositionXY ) != 0 )
+			VertexDeclaration [] declaration = (vertexBuffer as VertexBuffer<T>).declaration;
+			int typeSize = ( vertexBuffer as VertexBuffer<T> ).typeSize;
+			for ( int i = 0; i < declaration.Length; ++i )
 			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, typeSize, offset );
-				offset += 8;
-				++index;
-			}
-			else if ( ( vertexBuffer.FVF & FlexibleVertexFormat.PositionXYZ ) != 0 )
-			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 3, VertexAttribPointerType.Float, false, typeSize, offset );
-				offset += 12;
-				++index;
-			}
-
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.Diffuse ) != 0 )
-			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 4, VertexAttribPointerType.Float/*VertexAttribPointerType.UnsignedByte*/, /*true*/false, typeSize, offset );
-				offset += 16;//4;
-				++index;
-			}
-
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.Normal ) != 0 )
-			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 3, VertexAttribPointerType.Float, false, typeSize, offset );
-				offset += 12;
-				++index;
-			}
-
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.TextureUV1 ) != 0 )
-			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, typeSize, offset );
-				offset += 8;
-				++index;
-			}
-
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.TextureUV2 ) != 0 )
-			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, typeSize, offset );
-				offset += 8;
-				++index;
-			}
-
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.TextureUV3 ) != 0 )
-			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, typeSize, offset );
-				offset += 8;
-				++index;
-			}
-
-			if ( ( vertexBuffer.FVF & FlexibleVertexFormat.TextureUV4 ) != 0 )
-			{
-				GL.EnableVertexAttribArray ( index );
-				GL.VertexAttribPointer ( index, 2, VertexAttribPointerType.Float, false, typeSize, offset );
-				offset += 8;
-				++index;
+				GL.EnableVertexAttribArray ( i );
+				GL.VertexAttribPointer ( i, declaration [ i ].Size, VertexAttribPointerType.Float,
+					false, typeSize, declaration [ i ].Offset );
 			}
 		}
 
-		private void UnsettingVertexBuffer<T> ( FlexibleVertexFormat fvf ) where T : struct
+		private void UnsettingVertexBuffer<T> ( IVertexBuffer<T> vertexBuffer ) where T : struct
 		{
-			int index = 0;
-
-			if ( ( fvf & FlexibleVertexFormat.PositionXY ) != 0 ||
-				( fvf & FlexibleVertexFormat.PositionXYZ ) != 0 )
-				++index;
-			if ( ( fvf & FlexibleVertexFormat.Normal ) != 0 )
-				++index;
-			if ( ( fvf & FlexibleVertexFormat.Diffuse ) != 0 )
-				++index;
-			if ( ( fvf & FlexibleVertexFormat.TextureUV1 ) != 0 )
-				++index;
-			if ( ( fvf & FlexibleVertexFormat.TextureUV2 ) != 0 )
-				++index;
-			if ( ( fvf & FlexibleVertexFormat.TextureUV3 ) != 0 )
-				++index;
-			if ( ( fvf & FlexibleVertexFormat.TextureUV4 ) != 0 )
-				++index;
-
-			for ( ; index >= 0; --index )
+			for ( int index = ( vertexBuffer as VertexBuffer<T> ).declaration.Length; index >= 0; --index )
 				GL.DisableVertexAttribArray ( index );
 
 			GL.BindBuffer ( BufferTarget.ArrayBuffer, 0 );
 		}
 
-		private void UnsettingTextures ( int length )
-		{
-			for ( int i = 0; i < length; ++i )
-			{
-				GL.ActiveTexture ( TextureUnit.Texture0 + i );
-				GL.BindTexture ( TextureTarget.Texture2D, 0 );
-			}
-		}
-
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer ) where T : struct
 		{
 			SettingVertexBuffer<T> ( vertexBuffer );
-
 			GL.DrawArrays ( ConvertPrimitiveMode ( primitiveType ), 0, vertexBuffer.Length );
-
-			UnsettingVertexBuffer<T> ( vertexBuffer.FVF );
+			UnsettingVertexBuffer<T> ( vertexBuffer );
 		}
 
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer, IIndexBuffer indexBuffer ) where T : struct
 		{
 			SettingVertexBuffer<T> ( vertexBuffer );
-
 			GL.BindBuffer ( BufferTarget.ElementArrayBuffer, ( indexBuffer as IndexBuffer ).indexBuffer );
-
 			GL.DrawElements ( ConvertPrimitiveMode ( primitiveType ), indexBuffer.Length, DrawElementsType.UnsignedInt, 0 );
-
 			GL.BindBuffer ( BufferTarget.ElementArrayBuffer, 0 );
-			UnsettingVertexBuffer<T> ( vertexBuffer.FVF );
+			UnsettingVertexBuffer<T> ( vertexBuffer );
 		}
 
 		public ITexture2D CreateTexture2D ( int width, int height )
@@ -521,7 +433,7 @@ namespace Daramkun.Liqueur.Graphics
 				case BlendOperator.Minimum: return BlendEquationMode.Min;
 				case BlendOperator.Maximum: return BlendEquationMode.Max;
 			}
-			return ( BlendEquationMode ) ( -1 );
+			throw new ArgumentException ();
 		}
 
 		private OpenTK.Graphics.OpenGL.StencilFunction ConvertStencilFunction ( StencilFunction stencilFunction )

@@ -104,7 +104,6 @@ namespace Daramkun.Liqueur.Graphics
 			var handle = constantTable.GetConstantByName ( null, texture.Uniform );
 			var samplerIndex = constantTable.GetSamplerIndex ( handle );
 
-			device.SetTextureStageState ( samplerIndex, SharpDX.Direct3D9.TextureStage.TexCoordIndex, SharpDX.Direct3D9.TextureArgument.Texture );
 			device.SetTexture ( samplerIndex, texture.Texture.Handle as SharpDX.Direct3D9.Texture );
 		}
 

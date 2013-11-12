@@ -37,7 +37,6 @@
   <ItemGroup>
     <Compile Include="Contents\FileSystems\LocalFileSystem.cs" />
     <Compile Include="Logging\LogWriters\ConsoleLogWriter.cs" />
-    <Compile Include="Platforms\ParallelForEach.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +44,9 @@
       <Project>{032ec8ff-8aa5-4ace-8147-d7f0fcecff04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Platforms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

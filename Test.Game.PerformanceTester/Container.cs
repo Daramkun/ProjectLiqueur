@@ -45,6 +45,8 @@ namespace Test.Game.PerformanceTester
 			textures [ 2 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.test3.png" );
 			textures [ 3 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.test4.png" );
 
+			Add ( 100 );
+
 			base.Intro ( args );
 		}
 
@@ -102,14 +104,6 @@ namespace Test.Game.PerformanceTester
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Return ) )
 				Remove ( 10000 );
-
-			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.T ) )
-			{
-				if ( UpdateLooper == null )
-					UpdateLooper = ForEachCollection.GetForEach ( "Parallel" );
-				else
-					UpdateLooper = null;
-			}
 
 			base.Update ( gameTime );
 		}

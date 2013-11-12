@@ -71,6 +71,7 @@ namespace Daramkun.Liqueur.Platforms
 				if ( !isMultithread )
 					args.UpdateLogic ();
 			};
+			window.Resize += ( object sender, EventArgs e ) => { args.Resize (); };
 			( LiqueurSystem.Window as Window ).RenderFrame += ( object sender, EventArgs e ) =>
 			{
 				args.DrawLogic ();

@@ -75,13 +75,13 @@
       <Project>{118af382-a917-4c73-8e96-22f5e6945dfe}</Project>
       <Name>Daramkun.Liqueur.Desktop.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Daramkun.Liqueur.Platforms.DirectX9\Daramkun.Liqueur.Platforms.DirectX9.csproj">
-      <Project>{a52044d0-44e2-49e4-8ce8-8acbbbf207d2}</Project>
-      <Name>Daramkun.Liqueur.Platforms.DirectX9</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Daramkun.Liqueur.Engine.Spirit\Daramkun.Liqueur.Engine.Spirit.csproj">
       <Project>{5037F5CA-5FB2-47E3-AF5C-81D40EC439A9}</Project>
       <Name>Daramkun.Liqueur.Engine.Spirit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Daramkun.Liqueur.Platforms.DirectX9\Daramkun.Liqueur.Platforms.DirectX9.csproj">
+      <Project>{a52044d0-44e2-49e4-8ce8-8acbbbf207d2}</Project>
+      <Name>Daramkun.Liqueur.Platforms.DirectX9</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.Game.Dodge\Test.Game.Dodge.csproj">
       <Project>{1ED93C3F-E2DA-4AEA-95E5-55400E61D152}</Project>

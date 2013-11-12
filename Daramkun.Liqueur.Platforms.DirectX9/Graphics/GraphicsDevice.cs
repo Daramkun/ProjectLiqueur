@@ -282,47 +282,19 @@ namespace Daramkun.Liqueur.Graphics
 
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer ) where T : struct
 		{
-			d3dDevice.VertexFormat = ConvertFVF ( vertexBuffer.FVF );
-			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, Marshal.SizeOf ( typeof ( T ) ) );
+			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, ( vertexBuffer as VertexBuffer<T> ).typeSize );
 			d3dDevice.VertexDeclaration = ( vertexBuffer as VertexBuffer<T> ).vertexDeclaration;
 			d3dDevice.DrawPrimitives ( ConvertPrimitiveType ( primitiveType ), 0, vertexBuffer.Length / GetPrimitiveUnit ( primitiveType ) );
 		}
 
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer, IIndexBuffer indexBuffer ) where T : struct
 		{
-			d3dDevice.VertexFormat = ConvertFVF ( vertexBuffer.FVF );
-			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, Marshal.SizeOf ( typeof ( T ) ) );
+			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, ( vertexBuffer as VertexBuffer<T> ).typeSize );
+			d3dDevice.VertexFormat = ( vertexBuffer as VertexBuffer<T> ).vf;
 			d3dDevice.VertexDeclaration = ( vertexBuffer as VertexBuffer<T> ).vertexDeclaration;
 			d3dDevice.Indices = indexBuffer.Handle as SharpDX.Direct3D9.IndexBuffer;
 			d3dDevice.DrawIndexedPrimitive ( ConvertPrimitiveType ( primitiveType ), 0, 0, vertexBuffer.Length,
 				0, indexBuffer.Length / GetPrimitiveUnit ( primitiveType ) );
-		}
-
-		private SharpDX.Direct3D9.VertexFormat ConvertFVF ( FlexibleVertexFormat flexibleVertexFormat )
-		{
-			SharpDX.Direct3D9.VertexFormat vertexFormat = SharpDX.Direct3D9.VertexFormat.None;
-			
-			if ( flexibleVertexFormat.HasFlag ( FlexibleVertexFormat.PositionXY ) )
-				vertexFormat |= SharpDX.Direct3D9.VertexFormat.Position;
-			if ( flexibleVertexFormat.HasFlag ( FlexibleVertexFormat.PositionXYZ ) )
-				vertexFormat |= SharpDX.Direct3D9.VertexFormat.Position;
-
-			if ( flexibleVertexFormat.HasFlag ( FlexibleVertexFormat.Diffuse ) )
-				vertexFormat |= SharpDX.Direct3D9.VertexFormat.Diffuse;
-
-			if ( flexibleVertexFormat.HasFlag ( FlexibleVertexFormat.Normal ) )
-				vertexFormat |= SharpDX.Direct3D9.VertexFormat.Normal;
-
-			if ( flexibleVertexFormat.HasFlag ( FlexibleVertexFormat.TextureUV1 ) )
-				vertexFormat |= SharpDX.Direct3D9.VertexFormat.Texture1;
-			if ( flexibleVertexFormat.HasFlag ( FlexibleVertexFormat.TextureUV2 ) )
-				vertexFormat |= SharpDX.Direct3D9.VertexFormat.Texture2;
-			if ( flexibleVertexFormat.HasFlag ( FlexibleVertexFormat.TextureUV3 ) )
-				vertexFormat |= SharpDX.Direct3D9.VertexFormat.Texture3;
-			if ( flexibleVertexFormat.HasFlag ( FlexibleVertexFormat.TextureUV4 ) )
-				vertexFormat |= SharpDX.Direct3D9.VertexFormat.Texture4;
-
-			return vertexFormat;
 		}
 
 		private SharpDX.Direct3D9.PrimitiveType ConvertPrimitiveType ( PrimitiveType primitiveType )

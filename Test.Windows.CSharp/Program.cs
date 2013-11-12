@@ -27,12 +27,11 @@ namespace Test.Windows.CSharp
 		static void Main ()
 		{
 			LiqueurSystem.SkipInitializeException = true;
-			ForEachCollection.AddForEach ( "Parallel", new ParallelForEach () );
 			//try
 			//{
-				LiqueurSystem.Run ( new Launcher (/* true */),
-					new Test.Game.Dodge.Container (),
-					//new Test.Game.PerformanceTester.Container (),
+				LiqueurSystem.Run ( new Launcher ( true ),
+					//new Test.Game.Dodge.Container (),
+					new Test.Game.PerformanceTester.Container (),
 					() =>
 					{
 						LiqueurSystem.Keyboard = new Keyboard ( LiqueurSystem.Window );

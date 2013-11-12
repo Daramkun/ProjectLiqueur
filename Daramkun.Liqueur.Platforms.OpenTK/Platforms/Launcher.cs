@@ -110,6 +110,7 @@ namespace Daramkun.Liqueur.Platforms
 			window.RenderFrame += ( object sender, FrameEventArgs e ) =>
 			{
 				args.DrawLogic ();
+				Thread.Sleep ( 0 );
 			};
 			if ( isMultithread )
 			{
