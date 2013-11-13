@@ -53,7 +53,7 @@ namespace Daramkun.Liqueur.Platforms
 
 			window.Load += ( object sender, EventArgs e ) =>
 			{
-				LiqueurSystem.Window.Title = "Project Liqueur"; 
+				LiqueurSystem.Window.Title = "Project Liqueur";
 				args.Initialize ();
 			};
 			window.Activated += ( object sender, EventArgs e ) => { args.Activated (); };

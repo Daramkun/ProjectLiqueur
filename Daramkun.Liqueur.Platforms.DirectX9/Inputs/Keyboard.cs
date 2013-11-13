@@ -18,6 +18,7 @@ namespace Daramkun.Liqueur.Inputs
 		protected override bool IsSupportMultiPlayers { get { return false; } }
 
 		private List<KeyboardKey> pressedKeys;
+		KeyboardKey [] nullKeys = new KeyboardKey [ 0 ];
 
 		public Keyboard ( IWindow window )
 		{
@@ -57,7 +58,7 @@ namespace Daramkun.Liqueur.Inputs
 
 		protected override KeyboardState GenerateState ()
 		{
-			if ( pressedKeys.Count == 0 ) return new KeyboardState ();
+			if ( pressedKeys.Count == 0 ) return new KeyboardState ( nullKeys );
 			return new KeyboardState ( pressedKeys.ToArray () );
 		}
 

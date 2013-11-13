@@ -71,7 +71,7 @@ namespace Daramkun.Liqueur.Graphics
 				case Graphics.CullingMode.None: return ( int ) SharpDX.Direct3D9.Cull.None;
 				case Graphics.CullingMode.ClockWise: return ( int ) SharpDX.Direct3D9.Cull.Clockwise;
 				case Graphics.CullingMode.CounterClockWise: return ( int ) SharpDX.Direct3D9.Cull.Counterclockwise;
-				default: return -1;
+				default: throw new ArgumentException ();
 			}
 		}
 
@@ -82,7 +82,7 @@ namespace Daramkun.Liqueur.Graphics
 				case SharpDX.Direct3D9.Cull.None: return Graphics.CullingMode.None;
 				case SharpDX.Direct3D9.Cull.Clockwise: return Graphics.CullingMode.ClockWise;
 				case SharpDX.Direct3D9.Cull.Counterclockwise: return Graphics.CullingMode.CounterClockWise;
-				default: return ( Graphics.CullingMode ) ( -1 );
+				default: throw new ArgumentException ();
 			}
 		}
 
@@ -99,7 +99,7 @@ namespace Daramkun.Liqueur.Graphics
 				case Graphics.FillMode.Point: return ( int ) SharpDX.Direct3D9.FillMode.Point;
 				case Graphics.FillMode.Wireframe: return ( int ) SharpDX.Direct3D9.FillMode.Wireframe;
 				case Graphics.FillMode.Solid: return ( int ) SharpDX.Direct3D9.FillMode.Solid;
-				default: return -1;
+				default: throw new ArgumentException ();
 			}
 		}
 
@@ -110,7 +110,7 @@ namespace Daramkun.Liqueur.Graphics
 				case SharpDX.Direct3D9.FillMode.Solid: return Graphics.FillMode.Solid;
 				case SharpDX.Direct3D9.FillMode.Wireframe: return Graphics.FillMode.Wireframe;
 				case SharpDX.Direct3D9.FillMode.Point: return Graphics.FillMode.Point;
-				default: return ( Graphics.FillMode ) ( -1 );
+				default: throw new ArgumentException ();
 			}
 		}
 

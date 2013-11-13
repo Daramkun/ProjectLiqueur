@@ -24,6 +24,8 @@ namespace Test.Game.PerformanceTester
 
 		public override void Intro ( params object [] args )
 		{
+			LiqueurSystem.GraphicsDevice.CullingMode = CullingMode.None;
+
 			Add ( InputHelper.CreateInstance () );
 			
 			FpsCalculator calc = new FpsCalculator ();
