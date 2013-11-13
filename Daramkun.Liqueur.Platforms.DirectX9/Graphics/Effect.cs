@@ -93,7 +93,7 @@ namespace Daramkun.Liqueur.Graphics
 			else if ( baseType == typeof ( Matrix4x4 ) )
 			{
 				Matrix4x4 v = ( Matrix4x4 ) ( object ) argument;
-				constantTable.SetValue ( device, handle, new SharpDX.Matrix ( v.ToArray () ) );
+				constantTable.SetValue<Matrix4x4> ( device, handle, v );
 			}
 		}
 
