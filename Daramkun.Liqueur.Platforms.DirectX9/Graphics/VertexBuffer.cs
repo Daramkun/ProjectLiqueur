@@ -43,9 +43,8 @@ namespace Daramkun.Liqueur.Graphics
 			typeSize = Marshal.SizeOf ( typeof ( T ) );
 
 			SharpDX.Direct3D9.Device device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
-
 			vertexBuffer = new SharpDX.Direct3D9.VertexBuffer ( device, TotalBytesize, SharpDX.Direct3D9.Usage.None,
-				ConvertVertexFormat ( fvf ), SharpDX.Direct3D9.Pool.Managed );
+				vf = ConvertVertexFormat ( fvf ), SharpDX.Direct3D9.Pool.Managed );
 
 			vertexDeclaration = new SharpDX.Direct3D9.VertexDeclaration ( device, ConvertVertexElements ( fvf ) );
 		}

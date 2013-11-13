@@ -56,51 +56,51 @@ namespace Daramkun.Liqueur.Graphics
 		public T GetArgument<T> ( string parameter )
 		{
 			var device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
-			var handle = ( vertexShader as Shader ).constantTable.GetConstantByName ( null, parameter );
+			var handle = ( vertexShader.Handle as SharpDX.Direct3D9.VertexShader ).Function.ConstantTable.GetConstantByName ( null, parameter );
 			throw new NotImplementedException ();
 		}
 
 		public void SetArgument<T> ( string parameter, T argument )
 		{
 			var device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
-			var constantTable = ( vertexShader as Shader ).constantTable;
+			var constantTable = ( vertexShader.Handle as SharpDX.Direct3D9.VertexShader ).Function.ConstantTable;
 			var handle = constantTable.GetConstantByName ( null, parameter );
 
 			Type baseType = argument.GetType ();
 			if ( baseType == typeof ( int ) )
 			{
-				constantTable.SetValue<int> ( device, handle, ( int ) ( object ) argument );
+				constantTable.SetValue ( device, handle, ( int ) ( object ) argument );
 			}
 			else if ( baseType == typeof ( float ) )
 			{
-				constantTable.SetValue<float> ( device, handle, ( float ) ( object ) argument );
+				constantTable.SetValue ( device, handle, ( float ) ( object ) argument );
 			}
 			if ( baseType == typeof ( Vector2 ) )
 			{
 				Vector2 v = ( Vector2 ) ( object ) argument;
-				constantTable.SetValue<Vector2> ( device, handle, ( Vector2 ) ( object ) argument );
+				constantTable.SetValue<Vector2> ( device, handle, v );
 			}
 			else if ( baseType == typeof ( Vector3 ) )
 			{
 				Vector3 v = ( Vector3 ) ( object ) argument;
-				constantTable.SetValue<Vector3> ( device, handle, ( Vector3 ) ( object ) argument );
+				constantTable.SetValue<Vector3> ( device, handle, v );
 			}
 			else if ( baseType == typeof ( Vector4 ) )
 			{
 				Vector4 v = ( Vector4 ) ( object ) argument;
-				constantTable.SetValue<Vector4> ( device, handle, ( Vector4 ) ( object ) argument );
+				constantTable.SetValue<Vector4> ( device, handle, v );
 			}
 			else if ( baseType == typeof ( Matrix4x4 ) )
 			{
 				Matrix4x4 v = ( Matrix4x4 ) ( object ) argument;
-				constantTable.SetValue ( device, handle, new SharpDX.Matrix ( ( ( Matrix4x4 ) ( object ) argument ).ToArray () ) );
+				constantTable.SetValue ( device, handle, new SharpDX.Matrix ( v.ToArray () ) );
 			}
 		}
 
 		public void SetTexture ( TextureArgument texture )
 		{
 			var device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
-			var constantTable = ( pixelShader as Shader ).constantTable;
+			var constantTable = ( pixelShader.Handle as SharpDX.Direct3D9.PixelShader ).Function.ConstantTable;
 			var handle = constantTable.GetConstantByName ( null, texture.Uniform );
 			var samplerIndex = constantTable.GetSamplerIndex ( handle );
 

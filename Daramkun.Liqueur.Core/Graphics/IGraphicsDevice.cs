@@ -36,23 +36,6 @@ namespace Daramkun.Liqueur.Graphics
 	#endregion
 
 	[Flags]
-	public enum BufferFormat
-	{
-		Unknown = 0,
-
-		ColorBuffer24Bit = 1 << 0,
-		ColorBuffer32Bit = 1 << 1,
-		
-		DepthBuffer16Bit = 1 << 2,
-		DepthBuffer24Bit = 1 << 3,
-		DepthBuffer32Bit = 1 << 4,
-
-		StencilBuffer0Bit = 0,
-		StencilBuffer4Bit = 1 << 5,
-		StencilBuffer8Bit = 1 << 6,
-	}
-
-	[Flags]
 	public enum ClearBuffer
 	{ 
 		ColorBuffer = 1 << 0,

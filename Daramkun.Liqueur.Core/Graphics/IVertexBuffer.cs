@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Graphics
 {
+	[Flags]
 	public enum FlexibleVertexFormat
 	{
 		PositionXY = 1 << 0,

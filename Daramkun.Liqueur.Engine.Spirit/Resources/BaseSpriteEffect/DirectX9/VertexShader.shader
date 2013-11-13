@@ -3,7 +3,7 @@ float4x4 worldMatrix;
 
 struct VS_INPUT
 {
-   float3 i_position : POSITION;
+   float2 i_position : POSITION;
    float4 i_overlay : COLOR;
    float2 i_texture : TEXCOORD0;
 };
@@ -18,7 +18,7 @@ struct PS_INPUT
 PS_INPUT vs_main(VS_INPUT input)
 {
    PS_INPUT output;
-   output.o_position = float4(input.i_position, 1);
+   output.o_position = float4(input.i_position, 1, 1);
    output.o_position = mul(output.o_position, worldMatrix);
    output.o_position = mul(output.o_position, projectionMatrix);
    output.o_overlay = input.i_overlay;
