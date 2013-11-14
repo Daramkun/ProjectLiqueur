@@ -10,6 +10,16 @@ namespace Daramkun.Liqueur.Inputs.RawDevice
 	{
 		public abstract bool IsSupportVibration { get; }
 
+		public override bool IsConnected
+		{
+			get
+			{
+				foreach ( PlayerIndex pi in new [] { PlayerIndex.Player1, PlayerIndex.Player2, PlayerIndex.Player3, PlayerIndex.Player4 } )
+					if ( IsConnectedPlayer ( pi ) ) return true;
+				return false;
+			}
+		}
+
 		public abstract bool IsConnectedPlayer ( PlayerIndex playerIndex = PlayerIndex.Player1 );
 
 		protected abstract GamePadState GenerateState ( PlayerIndex playerIndex );

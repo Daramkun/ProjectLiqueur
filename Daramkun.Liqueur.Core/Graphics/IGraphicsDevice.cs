@@ -79,6 +79,7 @@ namespace Daramkun.Liqueur.Graphics
 		Version RendererVersion { get; }
 
 		Vector2 [] AvailableScreenSize { get; }
+		int MaximumAnisotropicLevel { get; }
 
 		Vector2 ScreenSize { get; set; }
 		bool FullscreenMode { get; set; }

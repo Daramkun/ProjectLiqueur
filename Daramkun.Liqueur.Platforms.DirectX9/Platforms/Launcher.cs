@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Daramkun.Liqueur.Audio;
 using Daramkun.Liqueur.Graphics;
 
 namespace Daramkun.Liqueur.Platforms
@@ -42,7 +43,7 @@ namespace Daramkun.Liqueur.Platforms
 		{
 			window = new Window ();
 			graphicsDevice = new GraphicsDevice ( window );
-			audioDevice = null;
+			audioDevice = new AudioDevice ( window );
 		}
 
 		public void LauncherRun ( LauncherArgument args )

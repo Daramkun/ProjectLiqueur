@@ -83,6 +83,8 @@ namespace Daramkun.Liqueur.Graphics
 			device.SetSamplerState ( samplerIndex, SharpDX.Direct3D9.SamplerState.AddressU, ChangeAddress ( texture.Addressing ) );
 			device.SetSamplerState ( samplerIndex, SharpDX.Direct3D9.SamplerState.AddressV, ChangeAddress ( texture.Addressing ) );
 
+			device.SetSamplerState ( samplerIndex, SharpDX.Direct3D9.SamplerState.MaxAnisotropy, texture.AnisotropicLevel );
+
 			device.SetTexture ( samplerIndex, texture.Texture.Handle as SharpDX.Direct3D9.Texture );
 		}
 
@@ -90,8 +92,9 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			switch ( textureFilter )
 			{
-				case TextureFilter.Nearest: return ( int ) SharpDX.Direct3D9.Filter.Box;
-				case TextureFilter.Linear: return ( int ) SharpDX.Direct3D9.Filter.Linear;
+				case TextureFilter.Nearest: return ( int ) SharpDX.Direct3D9.TextureFilter.Point;
+				case TextureFilter.Linear: return ( int ) SharpDX.Direct3D9.TextureFilter.Linear;
+				case TextureFilter.Anisotropic: return ( int ) SharpDX.Direct3D9.TextureFilter.Anisotropic;
 				default: throw new ArgumentException ();
 			}
 		}

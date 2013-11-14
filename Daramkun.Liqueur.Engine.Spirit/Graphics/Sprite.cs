@@ -38,6 +38,9 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 		public IEffect Effect { get; set; }
 		public ITexture2D Texture { get; private set; }
 
+		public TextureFilter TextureFilter { get; set; }
+		public int AnisotropicLevel { get; set; }
+
 		public Rectangle ClippingArea
 		{
 			get { return clippingArea; }
@@ -100,6 +103,8 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			indexReference++;
 
 			clippingArea = new Rectangle ( 0, 0, width, height );
+
+			TextureFilter = Liqueur.Graphics.TextureFilter.Linear;
 		}
 
 		public void Dispose ()
@@ -130,7 +135,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 		public void Draw ( World2 transform )
 		{
-			Effect.SetTexture ( new TextureArgument () { Texture = Texture, Uniform = "texture0" } );
+			Effect.SetTexture ( new TextureArgument () { Texture = Texture, Uniform = "texture0", Filter = TextureFilter, AnisotropicLevel = AnisotropicLevel } );
 			Effect.SetArgument<Matrix4x4> ( "projectionMatrix", new OrthographicProjection (
 				0, LiqueurSystem.GraphicsDevice.ScreenSize.X, LiqueurSystem.GraphicsDevice.ScreenSize.Y, 0,
 				0.001f, 1000.0f

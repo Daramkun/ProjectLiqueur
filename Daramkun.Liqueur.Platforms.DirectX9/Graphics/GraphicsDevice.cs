@@ -13,6 +13,7 @@ namespace Daramkun.Liqueur.Graphics
 	class GraphicsDevice : IGraphicsDevice
 	{
 		SharpDX.Direct3D9.Direct3D d3d;
+		SharpDX.Direct3D9.Capabilities d3dCaps;
 		SharpDX.Direct3D9.Device d3dDevice;
 		SharpDX.Direct3D9.PresentParameters d3dpp;
 
@@ -33,6 +34,14 @@ namespace Daramkun.Liqueur.Graphics
 					sizes.Add ( new Mathematics.Vector2 ( mode.Width, mode.Height ) );
 				}
 				return sizes.ToArray ();
+			}
+		}
+
+		public int MaximumAnisotropicLevel
+		{
+			get
+			{
+				return d3dCaps.MaxAnisotropy;
 			}
 		}
 
@@ -217,6 +226,7 @@ namespace Daramkun.Liqueur.Graphics
 		public GraphicsDevice ( IWindow window )
 		{
 			d3d = new SharpDX.Direct3D9.Direct3D ();
+			d3dCaps = d3d.GetDeviceCaps ( 0, SharpDX.Direct3D9.DeviceType.Hardware );
 			
 			IntPtr handle = ( window.Handle as System.Windows.Forms.Form ).Handle;
 
@@ -237,27 +247,31 @@ namespace Daramkun.Liqueur.Graphics
 						handle, SharpDX.Direct3D9.CreateFlags.SoftwareVertexProcessing,
 						d3dpp );
 			}
-
 		}
 
 		public void Dispose ()
 		{
-			d3dDevice.Dispose ();
+			SharpDX.Direct3D9.Device device = d3dDevice;
+			d3dDevice = null;
+			device.Dispose ();
 			d3d.Dispose ();
 		}
 
 		public void BeginScene ()
 		{
+			if ( d3dDevice == null ) return;
 			d3dDevice.BeginScene ();
 		}
 
 		public void EndScene ()
 		{
+			if ( d3dDevice == null ) return;
 			d3dDevice.EndScene ();
 		}
 
 		public void Clear ( ClearBuffer clearBuffer, Color color )
 		{
+			if ( d3dDevice == null ) return;
 			d3dDevice.Clear ( ChangeClearBuffer ( clearBuffer ), ChangeColor ( color ), 1, 0 );
 		}
 
@@ -277,11 +291,13 @@ namespace Daramkun.Liqueur.Graphics
 
 		public void SwapBuffer ()
 		{
+			if ( d3dDevice == null ) return;
 			d3dDevice.Present ();
 		}
 
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer ) where T : struct
 		{
+			if ( d3dDevice == null ) return;
 			d3dDevice.VertexDeclaration = ( vertexBuffer as VertexBuffer<T> ).vertexDeclaration;
 			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, ( vertexBuffer as VertexBuffer<T> ).typeSize );
 			d3dDevice.DrawPrimitives ( ConvertPrimitiveType ( primitiveType ), 0, vertexBuffer.Length / GetPrimitiveUnit ( primitiveType ) );
@@ -289,6 +305,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		public void Draw<T> ( PrimitiveType primitiveType, IVertexBuffer<T> vertexBuffer, IIndexBuffer indexBuffer ) where T : struct
 		{
+			if ( d3dDevice == null ) return;
 			d3dDevice.VertexDeclaration = ( vertexBuffer as VertexBuffer<T> ).vertexDeclaration;
 			d3dDevice.SetStreamSource ( 0, vertexBuffer.Handle as SharpDX.Direct3D9.VertexBuffer, 0, ( vertexBuffer as VertexBuffer<T> ).typeSize );
 			d3dDevice.Indices = indexBuffer.Handle as SharpDX.Direct3D9.IndexBuffer;

@@ -47,6 +47,16 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
+		public int MaximumAnisotropicLevel
+		{
+			get
+			{
+				int level;
+				GL.GetInteger ( ( GetPName ) ExtTextureFilterAnisotropic.MaxTextureMaxAnisotropyExt, out level );
+				return level;
+			}
+		}
+
 		private Vector2 ChangeToVector ( System.Drawing.Size size )
 		{
 			return new Vector2 ( size.Width, size.Height );

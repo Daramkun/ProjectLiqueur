@@ -11,6 +11,7 @@ namespace Daramkun.Liqueur.Graphics
 	{
 		Nearest,
 		Linear,
+		Anisotropic,
 	}
 
 	public enum TextureAddressing
@@ -26,6 +27,7 @@ namespace Daramkun.Liqueur.Graphics
 		public ITexture2D Texture { get; set; }
 		public TextureFilter Filter { get; set; }
 		public TextureAddressing Addressing { get; set; }
+		public int AnisotropicLevel { get; set; }
 	}
 
 	public interface ITexture2D : IDisposable

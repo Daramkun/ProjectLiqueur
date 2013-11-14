@@ -57,7 +57,7 @@ namespace Daramkun.Liqueur.Platforms
 		internal void Run ()
 		{
 			window.Show ();
-			while ( window.IsHandleCreated )
+			while ( window.IsHandleCreated && !( LiqueurSystem.GraphicsDevice.Handle as SharpDX.Direct3D9.Device ).IsDisposed )
 			{
 				DoEvents ();
 				UpdateFrame ( this, null );

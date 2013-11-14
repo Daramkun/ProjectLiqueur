@@ -11,9 +11,6 @@ namespace Daramkun.Liqueur.Mathematics
 		public Vector2 Position;
 		public Vector2 Size;
 
-		//public Vector2 Position { get { return position; } set { position = value; } }
-		//public Vector2 Size { get { return size; } set { size = value; } }
-
 		public Rectangle ( float x, float y, float width, float height )
 		{
 			Position = new Vector2 ( x, y );

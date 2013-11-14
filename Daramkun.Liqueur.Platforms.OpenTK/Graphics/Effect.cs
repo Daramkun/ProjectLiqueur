@@ -178,6 +178,8 @@ namespace Daramkun.Liqueur.Graphics
 			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, GetAddressing ( texture.Addressing ) );
 			GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, GetAddressing ( texture.Addressing ) );
 
+			GL.TexParameter ( TextureTarget.Texture2D, ( TextureParameterName ) ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, texture.AnisotropicLevel );
+
 			int uniform = GL.GetUniformLocation ( programId, texture.Uniform );
 			GL.Uniform1 ( uniform, 0 );
 
@@ -200,6 +202,8 @@ namespace Daramkun.Liqueur.Graphics
 				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, GetAddressing ( textures [ i ].Addressing ) );
 				GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, GetAddressing ( textures [ i ].Addressing ) );
 
+				GL.TexParameter ( TextureTarget.Texture2D, ( TextureParameterName ) ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, textures [ i ].AnisotropicLevel );
+
 				int uniform = GL.GetUniformLocation ( programId, textures [ i ].Uniform );
 				GL.Uniform1 ( uniform, i );
 			}
@@ -210,10 +214,10 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			switch ( textureAddressing )
 			{
+				case TextureAddressing.Wrap: return ( int ) TextureWrapMode.Repeat;
 				case TextureAddressing.Mirror: return ( int ) TextureWrapMode.MirroredRepeat;
 				case TextureAddressing.Clamp: return ( int ) TextureWrapMode.Clamp;
-				default:
-				case TextureAddressing.Wrap: return ( int ) TextureWrapMode.Repeat;
+				default: throw new ArgumentException ();
 			}
 		}
 
@@ -221,10 +225,11 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			switch ( textureFilter )
 			{
-				case TextureFilter.Linear: return ( int ) TextureMinFilter.Linear;
-
-				default:
 				case TextureFilter.Nearest: return ( int ) TextureMinFilter.Nearest;
+				case TextureFilter.Linear: return ( int ) TextureMinFilter.Linear;
+				case TextureFilter.Anisotropic: return ( int ) TextureMinFilter.LinearMipmapLinear;
+
+				default: throw new ArgumentException ();
 			}
 		}
 	}
