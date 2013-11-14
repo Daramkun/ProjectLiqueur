@@ -16,14 +16,14 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			get
 			{
-				SharpDX.DataStream stream = indexBuffer.Lock ( 0, Length * 4, SharpDX.Direct3D9.LockFlags.None );
+				SharpDX.DataStream stream = indexBuffer.Lock ( 0, 0, SharpDX.Direct3D9.LockFlags.None );
 				int [] arr = stream.ReadRange<int> ( Length );
 				indexBuffer.Unlock ();
 				return arr;
 			}
 			set
 			{
-				SharpDX.DataStream stream = indexBuffer.Lock ( 0, Length * 4, SharpDX.Direct3D9.LockFlags.None );
+				SharpDX.DataStream stream = indexBuffer.Lock ( 0, 0, SharpDX.Direct3D9.LockFlags.None );
 				stream.WriteRange<int> ( value );
 				indexBuffer.Unlock ();
 			}
@@ -35,7 +35,7 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			Length = indexCount;
 			indexBuffer = new SharpDX.Direct3D9.IndexBuffer ( graphicsDevice.Handle as SharpDX.Direct3D9.Device,
-				indexCount * 4, SharpDX.Direct3D9.Usage.None, SharpDX.Direct3D9.Pool.Managed, false );
+				indexCount * sizeof ( int ), SharpDX.Direct3D9.Usage.None, SharpDX.Direct3D9.Pool.Managed, false );
 		}
 
 		public IndexBuffer ( IGraphicsDevice graphicsDevice, int [] indices )

@@ -70,7 +70,7 @@ namespace Daramkun.Liqueur.Graphics
 			GL.UseProgram ( lastProgram );
 		}
 
-		public T GetArgument<T> ( string parameter )
+		public T GetArgument<T> ( string parameter ) where T : struct
 		{
 			int lastProgram;
 			GL.GetInteger ( GetPName.CurrentProgram, out lastProgram );
@@ -124,7 +124,7 @@ namespace Daramkun.Liqueur.Graphics
 			return returnValue;
 		}
 
-		public void SetArgument<T> ( string parameter, T argument )
+		public void SetArgument<T> ( string parameter, T argument ) where T : struct
 		{
 			int lastProgram;
 			GL.GetInteger ( GetPName.CurrentProgram, out lastProgram );

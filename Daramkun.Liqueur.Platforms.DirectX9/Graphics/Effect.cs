@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Daramkun.Liqueur.Graphics
 
 		public object Handle
 		{
-			get { throw new NotImplementedException (); }
+			get { return new [] { vertexShader, pixelShader }; }
 		}
 
 		public Effect ( IGraphicsDevice graphicsDevice, params IShader [] shaders )
@@ -34,7 +35,8 @@ namespace Daramkun.Liqueur.Graphics
 
 		public void Dispose ()
 		{
-
+			pixelShader.Dispose ();
+			vertexShader.Dispose ();
 		}
 
 		public void Dispatch ( Action<IEffect> dispatchEvent )
@@ -53,48 +55,19 @@ namespace Daramkun.Liqueur.Graphics
 			device.PixelShader = oldPixelShader;
 		}
 
-		public T GetArgument<T> ( string parameter )
+		public T GetArgument<T> ( string parameter ) where T : struct
 		{
 			var device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
 			var handle = ( vertexShader.Handle as SharpDX.Direct3D9.VertexShader ).Function.ConstantTable.GetConstantByName ( null, parameter );
 			throw new NotImplementedException ();
 		}
 
-		public void SetArgument<T> ( string parameter, T argument )
+		public void SetArgument<T> ( string parameter, T argument ) where T : struct
 		{
 			var device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
 			var constantTable = ( vertexShader.Handle as SharpDX.Direct3D9.VertexShader ).Function.ConstantTable;
 			var handle = constantTable.GetConstantByName ( null, parameter );
-
-			Type baseType = argument.GetType ();
-			if ( baseType == typeof ( int ) )
-			{
-				constantTable.SetValue ( device, handle, ( int ) ( object ) argument );
-			}
-			else if ( baseType == typeof ( float ) )
-			{
-				constantTable.SetValue ( device, handle, ( float ) ( object ) argument );
-			}
-			if ( baseType == typeof ( Vector2 ) )
-			{
-				Vector2 v = ( Vector2 ) ( object ) argument;
-				constantTable.SetValue<Vector2> ( device, handle, v );
-			}
-			else if ( baseType == typeof ( Vector3 ) )
-			{
-				Vector3 v = ( Vector3 ) ( object ) argument;
-				constantTable.SetValue<Vector3> ( device, handle, v );
-			}
-			else if ( baseType == typeof ( Vector4 ) )
-			{
-				Vector4 v = ( Vector4 ) ( object ) argument;
-				constantTable.SetValue<Vector4> ( device, handle, v );
-			}
-			else if ( baseType == typeof ( Matrix4x4 ) )
-			{
-				Matrix4x4 v = ( Matrix4x4 ) ( object ) argument;
-				constantTable.SetValue<Matrix4x4> ( device, handle, v );
-			}
+			constantTable.SetValue<T> ( device, handle, argument );
 		}
 
 		public void SetTexture ( TextureArgument texture )
@@ -104,7 +77,34 @@ namespace Daramkun.Liqueur.Graphics
 			var handle = constantTable.GetConstantByName ( null, texture.Uniform );
 			var samplerIndex = constantTable.GetSamplerIndex ( handle );
 
+			device.SetSamplerState ( samplerIndex, SharpDX.Direct3D9.SamplerState.MinFilter, ChangeFilter ( texture.Filter ) );
+			device.SetSamplerState ( samplerIndex, SharpDX.Direct3D9.SamplerState.MagFilter, ChangeFilter ( texture.Filter ) );
+
+			device.SetSamplerState ( samplerIndex, SharpDX.Direct3D9.SamplerState.AddressU, ChangeAddress ( texture.Addressing ) );
+			device.SetSamplerState ( samplerIndex, SharpDX.Direct3D9.SamplerState.AddressV, ChangeAddress ( texture.Addressing ) );
+
 			device.SetTexture ( samplerIndex, texture.Texture.Handle as SharpDX.Direct3D9.Texture );
+		}
+
+		private int ChangeFilter ( TextureFilter textureFilter )
+		{
+			switch ( textureFilter )
+			{
+				case TextureFilter.Nearest: return ( int ) SharpDX.Direct3D9.Filter.Box;
+				case TextureFilter.Linear: return ( int ) SharpDX.Direct3D9.Filter.Linear;
+				default: throw new ArgumentException ();
+			}
+		}
+
+		private int ChangeAddress ( TextureAddressing textureAddressing )
+		{
+			switch ( textureAddressing )
+			{
+				case TextureAddressing.Wrap: return ( int ) SharpDX.Direct3D9.TextureAddress.Wrap;
+				case TextureAddressing.Mirror: return ( int ) SharpDX.Direct3D9.TextureAddress.Mirror;
+				case TextureAddressing.Clamp: return ( int ) SharpDX.Direct3D9.TextureAddress.Clamp;
+				default: throw new ArgumentException ();
+			}
 		}
 
 		public void SetTextures ( params TextureArgument [] textures )

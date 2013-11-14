@@ -37,7 +37,7 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 				Matrix4x4 matrix = new Matrix4x4 ();
 				matrix.M11 = 2 / ( right - left );
 				matrix.M22 = 2 / ( top - bottom );
-				matrix.M33 = 1 / ( Near - Far );
+				matrix.M33 = 1 / ( Far - Near );
 				matrix.M41 = ( left + right ) / ( left - right );
 				matrix.M42 = ( top + bottom ) / ( bottom - top );
 				matrix.M43 = Near / ( Near - Far );

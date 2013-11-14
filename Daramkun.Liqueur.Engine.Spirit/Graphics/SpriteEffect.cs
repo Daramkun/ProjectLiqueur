@@ -112,8 +112,15 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			baseEffect.Dispatch ( dispatchEvent );
 		}
 
-		public T GetArgument<T> ( string parameter ) { return baseEffect.GetArgument<T> ( parameter ); }
-		public void SetArgument<T> ( string parameter, T argument ) { baseEffect.SetArgument<T> ( parameter, argument ); }
+		public T GetArgument<T> ( string parameter ) where T : struct
+		{
+			return baseEffect.GetArgument<T> ( parameter );
+		}
+
+		public void SetArgument<T> ( string parameter, T argument ) where T : struct
+		{
+			baseEffect.SetArgument<T> ( parameter, argument );
+		}
 
 		public void SetTexture ( TextureArgument texture )
 		{

@@ -12,8 +12,7 @@ namespace Daramkun.Liqueur.Graphics
 		SharpDX.Direct3D9.VertexBuffer vertexBuffer;
 		internal int typeSize;
 		internal SharpDX.Direct3D9.VertexDeclaration vertexDeclaration;
-		internal SharpDX.Direct3D9.VertexFormat vf;
-
+		
 		public int Length { get; private set; }
 		public int TotalBytesize { get { return typeSize * Length; } }
 		public object Handle { get { return vertexBuffer; } }
@@ -44,7 +43,7 @@ namespace Daramkun.Liqueur.Graphics
 
 			SharpDX.Direct3D9.Device device = graphicsDevice.Handle as SharpDX.Direct3D9.Device;
 			vertexBuffer = new SharpDX.Direct3D9.VertexBuffer ( device, TotalBytesize, SharpDX.Direct3D9.Usage.None,
-				vf = ConvertVertexFormat ( fvf ), SharpDX.Direct3D9.Pool.Managed );
+				0, SharpDX.Direct3D9.Pool.Managed );
 
 			vertexDeclaration = new SharpDX.Direct3D9.VertexDeclaration ( device, ConvertVertexElements ( fvf ) );
 		}
@@ -112,25 +111,6 @@ namespace Daramkun.Liqueur.Graphics
 			elements.Add ( SharpDX.Direct3D9.VertexElement.VertexDeclarationEnd );
 
 			return elements.ToArray ();
-		}
-
-		private SharpDX.Direct3D9.VertexFormat ConvertVertexFormat ( FlexibleVertexFormat fvf )
-		{
-			vf = SharpDX.Direct3D9.VertexFormat.None;
-			
-			if ( fvf.HasFlag ( FlexibleVertexFormat.PositionXY ) ) vf |= SharpDX.Direct3D9.VertexFormat.Position;
-			if ( fvf.HasFlag ( FlexibleVertexFormat.PositionXYZ ) ) vf |= SharpDX.Direct3D9.VertexFormat.Position;
-
-			if ( fvf.HasFlag ( FlexibleVertexFormat.Normal ) ) vf |= SharpDX.Direct3D9.VertexFormat.Normal;
-
-			if ( fvf.HasFlag ( FlexibleVertexFormat.Diffuse ) ) vf |= SharpDX.Direct3D9.VertexFormat.Diffuse;
-
-			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV1 ) ) vf |= SharpDX.Direct3D9.VertexFormat.Texture1;
-			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV2 ) ) vf |= SharpDX.Direct3D9.VertexFormat.Texture2;
-			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV3 ) ) vf |= SharpDX.Direct3D9.VertexFormat.Texture3;
-			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV4 ) ) vf |= SharpDX.Direct3D9.VertexFormat.Texture4;
-
-			return vf;
 		}
 
 		public VertexBuffer ( IGraphicsDevice graphicsDevice, FlexibleVertexFormat fvf, T [] vertices )

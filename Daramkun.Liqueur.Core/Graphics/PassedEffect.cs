@@ -52,12 +52,12 @@ namespace Daramkun.Liqueur.Graphics
 			effects [ pass ].Dispatch ( dispatchEvent );
 		}
 
-		public T GetArgument<T> ( string parameter )
+		public T GetArgument<T> ( string parameter ) where T : struct
 		{
 			return effects [ 0 ].GetArgument<T> ( parameter );
 		}
 
-		public void SetArgument<T> ( string parameter, T argument )
+		public void SetArgument<T> ( string parameter, T argument ) where T : struct
 		{
 			foreach ( IEffect ef in effects )
 				ef.SetArgument<T> ( parameter, argument );

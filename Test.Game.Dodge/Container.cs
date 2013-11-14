@@ -72,7 +72,9 @@ namespace Test.Game.Dodge
 		public override void Draw ( GameTime gameTime )
 		{
 			LiqueurSystem.GraphicsDevice.Clear ( ClearBuffer.AllBuffer, Color.Black );
+			LiqueurSystem.GraphicsDevice.BeginScene ();
 			base.Draw ( gameTime );
+			LiqueurSystem.GraphicsDevice.EndScene ();
 		}
 	}
 }

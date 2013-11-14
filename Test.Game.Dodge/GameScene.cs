@@ -83,7 +83,7 @@ namespace Test.Game.Dodge
 					LiqueurSystem.GraphicsDevice.ScreenSize / 2 - gameOverFont.MeasureString ( "GAME OVER" ) / 2 );
 				string noticeString = "PRESS SPACEBAR TO MENU";
 				timeStampFont.DrawFont ( noticeString, Color.White, ( LiqueurSystem.GraphicsDevice.ScreenSize / 2 -
-					gameOverFont.MeasureString ( noticeString ) / 2 ) + new Vector2 ( 0, 48 ) );
+					timeStampFont.MeasureString ( noticeString ) / 2 ) + new Vector2 ( 0, 48 ) );
 			}
 		}
 	}

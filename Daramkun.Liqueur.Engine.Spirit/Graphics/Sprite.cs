@@ -88,18 +88,16 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			int width = 1, height = 1;
 			if ( texture != null ) { width = texture.Width; height = texture.Height; }
 
-			vertexBuffer = LiqueurSystem.GraphicsDevice.CreateVertexBuffer<SpriteVertex> ( SpriteVertexFormat, 4 );
-			if ( indexBuffer == null )
-				indexBuffer = LiqueurSystem.GraphicsDevice.CreateIndexBuffer ( new int [] { 0, 1, 2, 1, 3, 2 } );
-			indexReference++;
-
-			vertexBuffer.Vertices = new SpriteVertex []
+			vertexBuffer = LiqueurSystem.GraphicsDevice.CreateVertexBuffer<SpriteVertex> ( SpriteVertexFormat, new SpriteVertex []
 			{
 				new SpriteVertex ( new Vector2 ( 0, 0 ), Color.White, new Vector2 ( 0, 0 ) ),
 				new SpriteVertex ( new Vector2 ( width, 0 ), Color.White, new Vector2 ( 1, 0 ) ),
 				new SpriteVertex ( new Vector2 ( 0, height ), Color.White, new Vector2 ( 0, 1 ) ),
 				new SpriteVertex ( new Vector2 ( width, height ), Color.White, new Vector2 ( 1, 1 ) ),
-			};
+			} );
+			if ( indexBuffer == null )
+				indexBuffer = LiqueurSystem.GraphicsDevice.CreateIndexBuffer ( new int [] { 0, 1, 2, 1, 3, 2 } );
+			indexReference++;
 
 			clippingArea = new Rectangle ( 0, 0, width, height );
 		}
@@ -135,7 +133,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 			Effect.SetTexture ( new TextureArgument () { Texture = Texture, Uniform = "texture0" } );
 			Effect.SetArgument<Matrix4x4> ( "projectionMatrix", new OrthographicProjection (
 				0, LiqueurSystem.GraphicsDevice.ScreenSize.X, LiqueurSystem.GraphicsDevice.ScreenSize.Y, 0,
-				0.0001f, 1000.0f
+				0.001f, 1000.0f
 			).Matrix );
 			Effect.SetArgument<Matrix4x4> ( "worldMatrix", transform.Matrix );
 			Effect.Dispatch ( RenderingSprite );
