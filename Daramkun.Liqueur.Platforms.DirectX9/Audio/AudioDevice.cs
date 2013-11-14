@@ -42,7 +42,7 @@ namespace Daramkun.Liqueur.Audio
 
 		public void Update ()
 		{
-			throw new NotImplementedException ();
+
 		}
 
 		public IAudio CreateAudio ( Contents.AudioInfo audioInfo )

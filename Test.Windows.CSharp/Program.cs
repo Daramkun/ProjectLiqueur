@@ -30,8 +30,9 @@ namespace Test.Windows.CSharp
 			//try
 			//{
 				LiqueurSystem.Run ( new Launcher ( true ),
-					new Test.Game.Dodge.Container (),
+					//new Test.Game.Dodge.Container (),
 					//new Test.Game.PerformanceTester.Container (),
+					new Test.Game.InfoViewer.Container (),
 					() =>
 					{
 						LiqueurSystem.Keyboard = new Keyboard ( LiqueurSystem.Window );
