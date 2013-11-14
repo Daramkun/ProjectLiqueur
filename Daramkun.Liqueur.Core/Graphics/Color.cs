@@ -28,7 +28,7 @@ namespace Daramkun.Liqueur.Graphics
 		public float BlueScalar { get { return BlueValue / 255.0f; } set { BlueValue = ( byte ) ( value * 255 ); } }
 		*/
 		public int ColorValue { get { return ( ( ( int ) RedValue ) << 24 ) + ( ( ( int ) GreenValue ) << 16 ) + ( ( ( int ) BlueValue ) << 8 ) + AlphaValue; } }
-		public uint ColorValueReversed { get { return ( ( ( uint ) AlphaValue ) << 24 ) + ( ( ( uint ) BlueValue ) << 16 ) + ( ( ( uint ) GreenValue ) << 8 ) + RedValue; } }
+		public int ARGBValue { get { return ( ( ( int ) AlphaValue ) << 24 ) + ( ( ( int ) RedValue ) << 16 ) + ( ( ( int ) GreenValue ) << 8 ) + BlueValue; } }
 
 		public Color ( byte red, byte green, byte blue )
 			: this ( red, green, blue, 255 )
@@ -64,13 +64,13 @@ namespace Daramkun.Liqueur.Graphics
 			AlphaValue = alpha;
 		}
 
-		public Color ( uint argbColorValue, bool isReversed = false )
+		public Color ( int argbColorValue, bool isArgb = false )
 			: this ()
 		{
-			RedValue = ( byte ) ( ( argbColorValue >> ( isReversed ? 0 : 24 ) ) & 0xff );
-			GreenValue = ( byte ) ( ( argbColorValue >> ( isReversed ? 8 : 16 ) ) & 0xff );
-			BlueValue = ( byte ) ( ( argbColorValue >> ( isReversed ? 16 : 8 ) ) & 0xff );
-			AlphaValue = ( byte ) ( ( argbColorValue >> ( isReversed ? 24 : 0 ) ) & 0xff );
+			RedValue = ( byte ) ( ( argbColorValue >> ( isArgb ? 0 : 8 ) ) & 0xff );
+			GreenValue = ( byte ) ( ( argbColorValue >> ( isArgb ? 8 : 16 ) ) & 0xff );
+			BlueValue = ( byte ) ( ( argbColorValue >> ( isArgb ? 16 : 24 ) ) & 0xff );
+			AlphaValue = ( byte ) ( ( argbColorValue >> ( isArgb ? 24 : 0 ) ) & 0xff );
 		}
 
 		public override int GetHashCode ()

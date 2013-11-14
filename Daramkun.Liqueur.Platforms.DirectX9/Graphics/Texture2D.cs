@@ -26,8 +26,8 @@ namespace Daramkun.Liqueur.Graphics
 				SharpDX.DataRectangle dr = texture.LockRectangle ( 0, new SharpDX.Rectangle ( 0, 0, Width, Height ), SharpDX.Direct3D9.LockFlags.None );
 				SharpDX.DataStream stream = new SharpDX.DataStream ( dr.DataPointer, Width * Height * 4, true, false );
 				Color [] colours = new Color [ stream.Length / 4 ];
-				//for ( int i = 0; i < colours.Length; ++i )
-				//	colours [ i ] = new Color ( ( uint ) stream.Read<SharpDX.Color> ().ToBgra (), true );
+				for ( int i = 0; i < colours.Length; ++i )
+					colours [ i ] = new Color ( stream.Read<SharpDX.Color> ().ToBgra (), true );
 				texture.UnlockRectangle ( 0 );
 				return colours;
 			}
@@ -36,9 +36,8 @@ namespace Daramkun.Liqueur.Graphics
 				SharpDX.DataRectangle dr = texture.LockRectangle ( 0, new SharpDX.Rectangle ( 0, 0, Width, Height ), SharpDX.Direct3D9.LockFlags.None );
 				SharpDX.DataStream stream = new SharpDX.DataStream ( dr.DataPointer, Width * Height * 4, false, true );
 				SharpDX.Color [] colours = new SharpDX.Color [ stream.Length / 4 ];
-				for ( int y = 0; y < Height; ++y )
-					for ( int x = 0; x < Width; ++x )
-						colours [ x + ( y * ( dr.Pitch / 4 ) ) ] = new SharpDX.Color ( value [ x + ( y * Width ) ].ColorValueReversed );
+				for ( int i = 0; i < value.Length; ++i )
+					colours [ i ] = new SharpDX.Color ( value [ i ].ARGBValue );
 				stream.WriteRange<SharpDX.Color> ( colours );
 				texture.UnlockRectangle ( 0 );
 			}
