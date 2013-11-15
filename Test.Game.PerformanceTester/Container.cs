@@ -17,7 +17,7 @@ namespace Test.Game.PerformanceTester
 {
     public class Container : Node
     {
-		Random random = new Random ( Environment.TickCount );
+		Node [] nodes;
 		ITexture2D [] textures;
 
 		ContentManager contentManager;
@@ -31,8 +31,11 @@ namespace Test.Game.PerformanceTester
 			FpsCalculator calc = new FpsCalculator ();
 			calc.DrawEvent += ( object sender, GameTimeEventArgs e ) =>
 			{
+				int childrenCount = 0;
+				for ( int i = 0; i < 6; ++i )
+					childrenCount += nodes [ i ].ChildrenCount;
 				LiqueurSystem.Window.Title = string.Format ( "Update FPS: {0}, Draw FPS: {1}, Children count: {2}",
-					calc.UpdateFPS, calc.DrawFPS, ChildrenCount );
+					calc.UpdateFPS, calc.DrawFPS, childrenCount );
 			};
 			Add ( calc );
 
@@ -41,11 +44,19 @@ namespace Test.Game.PerformanceTester
 			contentManager.AddDefaultContentLoader ();
 			Texture2DContentLoader.AddDefaultDecoders ();
 
-			textures = new ITexture2D [ 4 ];
-			textures [ 0 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.test1.png" );
-			textures [ 1 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.test2.png" );
-			textures [ 2 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.test3.png" );
-			textures [ 3 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.test4.png" );
+			textures = new ITexture2D [ 6 ];
+			textures [ 0 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.0096x0096.png" );
+			textures [ 1 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.0128x0128.png" );
+			textures [ 2 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.0256x0256.png" );
+			textures [ 3 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.0512x0512.png" );
+			textures [ 4 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.1024x1024.png" );
+			textures [ 5 ] = contentManager.Load<ITexture2D> ( "Test.Game.PerformanceTester.Resources.2048x2048.png" );
+
+			nodes = new Node [ 6 ];
+			for ( int i = 0; i < 6; ++i )
+			{
+				nodes [ i ] = Add ( new Node () );
+			}
 
 			base.Intro ( args );
 		}
@@ -56,25 +67,25 @@ namespace Test.Game.PerformanceTester
 			base.Outro ();
 		}
 
-		private void Add (int count)
+		private void Add ( int mode, int count )
 		{
 			IsManuallyChildrenCacheMode = true;
 			LiqueurSystem.Launcher.InvokeInMainThread ( () =>
 			{
 				for ( int i = 0; i < count; ++i )
 				{
-					Add ( new PerformanceSpriteNode ( textures [ random.Next ( 4 ) ] ) );
+					nodes [ mode ].Add ( new PerformanceSpriteNode ( textures [ mode ] ) );
 				}
 				RefreshChildrenCache ();
 			}, false );
 		}
 
-		private void Remove (int count)
+		private void Remove ( int mode, int count )
 		{
 			IsManuallyChildrenCacheMode = true;
 			for ( int i = 0; i < count; ++i )
 			{
-				Remove ( this [ ChildrenCount - 1 ] );
+				nodes [ mode ].Remove ( nodes [ mode ] [ nodes [ mode ].ChildrenCount - 1 ] );
 			}
 			RefreshChildrenCache ();
 		}
@@ -82,28 +93,40 @@ namespace Test.Game.PerformanceTester
 		public override void Update ( GameTime gameTime )
 		{
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Q ) )
-				Add ( 10 );
+				Add ( 0, 10 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.W ) )
-				Remove ( 10 );
+				Add ( 1, 10 );
+
+			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.E ) )
+				Add ( 2, 10 );
+
+			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.R ) )
+				Add ( 3, 10 );
+
+			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.T ) )
+				Add ( 4, 10 );
+
+			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Y ) )
+				Add ( 5, 10 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.A ) )
-				Add ( 100 );
+				Remove ( 0, 10 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.S ) )
-				Remove ( 100 );
+				Remove ( 1, 10 );
 
-			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Z ) )
-				Add ( 1000 );
+			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.D ) )
+				Remove ( 2, 10 );
 
-			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.X ) )
-				Remove ( 1000 );
+			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.F ) )
+				Remove ( 3, 10 );
 
-			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Space ) )
-				Add ( 10000 );
+			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.G ) )
+				Remove ( 4, 10 );
 
-			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Return ) )
-				Remove ( 10000 );
+			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.H ) )
+				Remove ( 5, 10 );
 
 			base.Update ( gameTime );
 		}

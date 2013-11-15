@@ -50,18 +50,18 @@ namespace Daramkun.Liqueur.Contents.Decoder.Images
 		{
 			Hjg.Pngcs.PngReader reader = ( ( object ) imageInfo.Data ) as Hjg.Pngcs.PngReader;
 			MemoryStream stream = new MemoryStream ();
-			for ( int i = 0; i < imageInfo.Height; i++ )
+			for ( int i = 0; i < imageInfo.Height; ++i )
 			{
 				Hjg.Pngcs.ImageLine column = reader.ReadRowByte ( i );
 				byte [] data = column.GetScanlineByte ();
 				stream.Write ( data, 0, data.Length );
 			}
-
+			
 			byte [] pixels = stream.ToArray ();
 			Color [] colors = new Color [ imageInfo.Width * imageInfo.Height ];
-			for ( int i = 0, index = 0; i < pixels.Length; i += ( pixels.Length % 3 == 0 ) ? 3 : 4, index++ )
+			for ( int i = 0, index = 0; i < pixels.Length; i += reader.ImgInfo.BytesPixel, ++index )
 			{
-				if ( pixels.Length % 3 == 0 )
+				if ( reader.ImgInfo.BytesPixel == 3 )
 					colors [ index ] = new Color ( pixels [ i + 0 ], pixels [ i + 1 ], pixels [ i + 2 ] );
 				else
 					colors [ index ] = new Color ( pixels [ i + 0 ], pixels [ i + 1 ], pixels [ i + 2 ], pixels [ i + 3 ] );

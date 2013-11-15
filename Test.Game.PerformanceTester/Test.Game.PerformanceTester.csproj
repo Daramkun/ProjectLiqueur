@@ -51,10 +51,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\test1.png" />
-    <EmbeddedResource Include="Resources\test2.png" />
-    <EmbeddedResource Include="Resources\test3.png" />
-    <EmbeddedResource Include="Resources\test4.png" />
+    <EmbeddedResource Include="Resources\0096x0096.png" />
+    <EmbeddedResource Include="Resources\0128x0128.png" />
+    <EmbeddedResource Include="Resources\0512x0512.png" />
+    <EmbeddedResource Include="Resources\1024x1024.png" />
+    <EmbeddedResource Include="Resources\2048x2048.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\0256x0256.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

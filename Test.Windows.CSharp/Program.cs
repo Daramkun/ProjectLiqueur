@@ -9,6 +9,7 @@ using Daramkun.Liqueur.Common;
 using Daramkun.Liqueur.Contents;
 using Daramkun.Liqueur.Contents.Decoder.Audios;
 using Daramkun.Liqueur.Contents.Decoder.Images;
+using Daramkun.Liqueur.Contents.FileSystems;
 using Daramkun.Liqueur.Contents.Loaders;
 using Daramkun.Liqueur.Graphics;
 using Daramkun.Liqueur.Inputs;
@@ -27,12 +28,13 @@ namespace Test.Windows.CSharp
 		static void Main ()
 		{
 			LiqueurSystem.SkipInitializeException = true;
+			FileSystemManager.AddFileSystem ( "LocalFileSystem", typeof ( LocalFileSystem ) );
 			//try
 			//{
 				LiqueurSystem.Run ( new Launcher ( true ),
 					//new Test.Game.Dodge.Container (),
-					//new Test.Game.PerformanceTester.Container (),
-					new Test.Game.InfoViewer.Container (),
+					new Test.Game.PerformanceTester.Container (),
+					//new Test.Game.InfoViewer.Container (),
 					() =>
 					{
 						LiqueurSystem.Keyboard = new Keyboard ( LiqueurSystem.Window );
