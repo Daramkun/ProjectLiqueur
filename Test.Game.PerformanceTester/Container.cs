@@ -93,40 +93,40 @@ namespace Test.Game.PerformanceTester
 		public override void Update ( GameTime gameTime )
 		{
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Q ) )
-				Add ( 0, 10 );
+				Add ( 0, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.W ) )
-				Add ( 1, 10 );
+				Add ( 1, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.E ) )
-				Add ( 2, 10 );
+				Add ( 2, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.R ) )
-				Add ( 3, 10 );
+				Add ( 3, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.T ) )
-				Add ( 4, 10 );
+				Add ( 4, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.Y ) )
-				Add ( 5, 10 );
+				Add ( 5, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.A ) )
-				Remove ( 0, 10 );
+				Remove ( 0, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.S ) )
-				Remove ( 1, 10 );
+				Remove ( 1, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.D ) )
-				Remove ( 2, 10 );
+				Remove ( 2, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.F ) )
-				Remove ( 3, 10 );
+				Remove ( 3, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.G ) )
-				Remove ( 4, 10 );
+				Remove ( 4, 100 );
 
 			if ( InputHelper.IsKeyboardKeyUpRightNow ( KeyboardKey.H ) )
-				Remove ( 5, 10 );
+				Remove ( 5, 100 );
 
 			base.Update ( gameTime );
 		}
