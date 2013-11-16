@@ -40,6 +40,9 @@ namespace Daramkun.Liqueur.Platforms
 		{
 			window = new Form ();
 			window.Text = "Project Liqueur";
+			window.FormBorderStyle = FormBorderStyle.FixedSingle;
+			window.MaximizeBox = false;
+			window.Icon = System.Drawing.Icon.ExtractAssociatedIcon ( "C:\\Windows\\System32\\user32.dll" );
 			window.ClientSize = new Size ( 800, 600 );
 			window.StartPosition = FormStartPosition.CenterScreen;
 		}
