@@ -39,8 +39,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -94,6 +92,10 @@
     <ProjectReference Include="..\Test.Game.PerformanceTester\Test.Game.PerformanceTester.csproj">
       <Project>{DC427F05-B00C-4B98-BA25-1B2BFC745CEF}</Project>
       <Name>Test.Game.PerformanceTester</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.Game.PlaySound\Test.Game.PlaySound.csproj">
+      <Project>{efb4ddae-7726-4a09-afe9-9ad5131ff791}</Project>
+      <Name>Test.Game.PlaySound</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

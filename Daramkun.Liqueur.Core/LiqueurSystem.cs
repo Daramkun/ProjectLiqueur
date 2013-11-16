@@ -78,8 +78,6 @@ namespace Daramkun.Liqueur
 				},
 				UpdateLogic = () =>
 				{
-					if ( LiqueurSystem.AudioDevice != null )
-						LiqueurSystem.AudioDevice.Update ();
 					if ( elapsedUpdateTimeStep >= FixedUpdateTimeStep || FixedUpdateTimeStep.TotalMilliseconds == 0 )
 					{
 						updateGameTime.Update ();
@@ -96,6 +94,9 @@ namespace Daramkun.Liqueur
 				},
 				DrawLogic = () =>
 				{
+					if ( LiqueurSystem.AudioDevice != null )
+						LiqueurSystem.AudioDevice.Update ();
+
 					if ( elapsedDrawTimeStep >= FixedDrawTimeStep || FixedDrawTimeStep.TotalMilliseconds == 0 )
 					{
 						drawGameTime.Update ();
