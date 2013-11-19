@@ -11,6 +11,7 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 		public float AspectRatio { get; set; }
 		public float Near { get; set; }
 		public float Far { get; set; }
+		public HandDirection HandDirection { get; set; }
 
 		public PerspectiveFieldOfViewProjection ( float fieldOfView, float aspectRatio, float near, float far )
 			//: this ()
@@ -25,14 +26,12 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 		{
 			get
 			{
-				Matrix4x4 matrix = new Matrix4x4 ();
-				float num = 1 / ( float ) System.Math.Tan ( FieldOfView * 0.5f );
-				matrix.M11 = num / AspectRatio;
-				matrix.M22 = num;
-				matrix.M33 = Far / ( Near - Far );
-				matrix.M34 = -1;
-				matrix.M43 = ( Near * Far ) / ( Near - Far );
-				return matrix;
+				Func<float, float, float, float, Matrix4x4> perspFov;
+
+				if ( HandDirection == HandDirection.RightHand ) perspFov = CommonTransform.PerspectiveFieldOfViewRH;
+				else perspFov = CommonTransform.PerspectiveFieldOfViewLH;
+
+				return perspFov ( FieldOfView, AspectRatio, Near, Far );
 			}
 		}
 	}

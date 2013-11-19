@@ -5,11 +5,9 @@ using System.Text;
 
 namespace Daramkun.Liqueur.Mathematics.Transforms
 {
-	public interface IProjection : ITransform
+	public enum HandDirection
 	{
-		float Near { get; set; }
-		float Far { get; set; }
-
-		HandDirection HandDirection { get; set; }
+		LeftHand,
+		RightHand,
 	}
 }

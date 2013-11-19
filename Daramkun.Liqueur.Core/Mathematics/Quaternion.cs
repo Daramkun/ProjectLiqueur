@@ -9,7 +9,10 @@ namespace Daramkun.Liqueur.Mathematics
 	{
 		public float W, X, Y, Z;
 
-		public static Quaternion Identity = new Quaternion ( 0, 0, 0, 1 );
+		public static readonly Quaternion Identity = new Quaternion ( 0, 0, 0, 1 );
+
+		public float Length { get { return ( float ) Math.Sqrt ( LengthSquared ); } }
+		public float LengthSquared { get { return ( ( ( ( this.X * this.X ) + ( this.Y * this.Y ) ) + ( this.Z * this.Z ) ) + ( this.W * this.W ) ); } }
 
 		public Quaternion ( float x, float y, float z, float w )
 		{
@@ -20,22 +23,16 @@ namespace Daramkun.Liqueur.Mathematics
 			: this ( vectorPart.X, vectorPart.Y, vectorPart.Z, scalarPart )
 		{ }
 
-		public float Length
+		public Quaternion ( float yaw, float pitch, float roll )
+			: this ()
 		{
-			get
-			{
-				return ( float ) Math.Sqrt ( LengthSquared );
-			}
+			this = FromYawPitchRoll ( yaw, pitch, roll );
 		}
 
-		public float LengthSquared
+		public Quaternion ( Matrix4x4 rotationMatrix )
 		{
-			get
-			{
-				return ( ( ( ( this.X * this.X ) + ( this.Y * this.Y ) ) + ( this.Z * this.Z ) ) + ( this.W * this.W ) );
-			}
+			this = FromRotationMatrix4x4 ( rotationMatrix );
 		}
-
 
 		public static Quaternion operator + ( Quaternion quaternion1, Quaternion quaternion2 )
 		{
@@ -222,48 +219,90 @@ namespace Daramkun.Liqueur.Mathematics
 			return !( quaternion1 == quaternion2 );
 		}
 
-		public static Matrix4x4 ToMatrix ( Quaternion quaternion )
+		public static Matrix4x4 ToMatrix4x4 ( Quaternion q )
 		{
-			Matrix4x4 matrix = new Matrix4x4 ();
+			float num9 = q.X * q.X;
+			float num8 = q.Y * q.Y;
+			float num7 = q.Z * q.Z;
+			float num6 = q.X * q.Y;
+			float num5 = q.Z * q.W;
+			float num4 = q.Z * q.X;
+			float num3 = q.Y * q.W;
+			float num2 = q.Y * q.Z;
+			float num = q.X * q.W;
 
-			float x2 = quaternion.X * quaternion.X;
-			float y2 = quaternion.Y * quaternion.Y;
-			float z2 = quaternion.Z * quaternion.Z;
-			float xy = quaternion.X * quaternion.Y;
-			float xz = quaternion.X * quaternion.Z;
-			float yz = quaternion.Y * quaternion.Z;
-			float wx = quaternion.W * quaternion.X;
-			float wy = quaternion.W * quaternion.Y;
-			float wz = quaternion.W * quaternion.Z;
+			return new Matrix4x4
+			(
+				1f - ( 2f * ( num8 + num7 ) ), 2f * ( num6 + num5 ), 2f * ( num4 - num3 ), 0,
+				2f * ( num6 - num5 ), 1f - ( 2f * ( num7 + num9 ) ), 2f * ( num2 + num ), 0,
+				2f * ( num4 + num3 ), 2f * ( num2 - num ), 1f - ( 2f * ( num8 + num9 ) ), 0,
+				0, 0, 0, 1
+			);
+		}
 
+		public Matrix4x4 ToMatrix4x4 () { return ToMatrix4x4 ( this ); }
 
-			// This calculation would be a lot more complicated for non-unit length quaternions
-			// Note: The constructor of Matrix4 expects the Matrix in column-major format like expected by
-			//   OpenGL
-			matrix.M11 = 1.0f - 2.0f * ( y2 + z2 );
-			matrix.M12 = 2.0f * ( xy - wz );
-			matrix.M13 = 2.0f * ( xz + wy );
-			matrix.M14 = 0.0f;
+		public static Quaternion FromYawPitchRoll ( float yaw, float pitch, float roll )
+		{
+			float num9 = roll * 0.5f;
+			float num6 = ( float ) Math.Sin ( num9 );
+			float num5 = ( float ) Math.Cos ( num9 );
+			float num8 = pitch * 0.5f;
+			float num4 = ( float ) Math.Sin ( num8 );
+			float num3 = ( float ) Math.Cos ( num8 );
+			float num7 = yaw * 0.5f;
+			float num2 = ( float ) Math.Sin ( num7 );
+			float num = ( float ) Math.Cos ( num7 );
 
+			return new Quaternion (
+				( ( num * num4 ) * num5 ) + ( ( num2 * num3 ) * num6 ),
+				( ( num2 * num3 ) * num5 ) - ( ( num * num4 ) * num6 ),
+				( ( num * num3 ) * num6 ) - ( ( num2 * num4 ) * num5 ),
+				( ( num * num3 ) * num5 ) + ( ( num2 * num4 ) * num6 )
+			);
+		}
 
-			matrix.M21 = 2.0f * ( xy + wz );
-			matrix.M22 = 1.0f - 2.0f * ( x2 + z2 );
-			matrix.M23 = 2.0f * ( yz - wx );
-			matrix.M24 = 0.0f;
-
-
-			matrix.M31 = 2.0f * ( xz - wy );
-			matrix.M32 = 2.0f * ( yz + wx );
-			matrix.M33 = 1.0f - 2.0f * ( x2 + y2 );
-			matrix.M34 = 0.0f;
-
-
-			matrix.M41 = 2.0f * ( xz - wy );
-			matrix.M42 = 2.0f * ( yz + wx );
-			matrix.M43 = 1.0f - 2.0f * ( x2 + y2 );
-			matrix.M44 = 0.0f;
-
-			return matrix;
+		public static Quaternion FromRotationMatrix4x4 ( Matrix4x4 matrix )
+		{
+			Quaternion result = new Quaternion ();
+			float num8 = ( matrix.M11 + matrix.M22 ) + matrix.M33;
+			if ( num8 > 0f )
+			{
+				float num = ( float ) Math.Sqrt ( ( double ) ( num8 + 1f ) );
+				result.W = num * 0.5f;
+				num = 0.5f / num;
+				result.X = ( matrix.M23 - matrix.M32 ) * num;
+				result.Y = ( matrix.M31 - matrix.M13 ) * num;
+				result.Z = ( matrix.M12 - matrix.M21 ) * num;
+			}
+			else if ( ( matrix.M11 >= matrix.M22 ) && ( matrix.M11 >= matrix.M33 ) )
+			{
+				float num7 = ( float ) Math.Sqrt ( ( double ) ( ( ( 1f + matrix.M11 ) - matrix.M22 ) - matrix.M33 ) );
+				float num4 = 0.5f / num7;
+				result.X = 0.5f * num7;
+				result.Y = ( matrix.M12 + matrix.M21 ) * num4;
+				result.Z = ( matrix.M13 + matrix.M31 ) * num4;
+				result.W = ( matrix.M23 - matrix.M32 ) * num4;
+			}
+			else if ( matrix.M22 > matrix.M33 )
+			{
+				float num6 = ( float ) Math.Sqrt ( ( double ) ( ( ( 1f + matrix.M22 ) - matrix.M11 ) - matrix.M33 ) );
+				float num3 = 0.5f / num6;
+				result.X = ( matrix.M21 + matrix.M12 ) * num3;
+				result.Y = 0.5f * num6;
+				result.Z = ( matrix.M32 + matrix.M23 ) * num3;
+				result.W = ( matrix.M31 - matrix.M13 ) * num3;
+			}
+			else
+			{
+				float num5 = ( float ) Math.Sqrt ( ( double ) ( ( ( 1f + matrix.M33 ) - matrix.M11 ) - matrix.M22 ) );
+				float num2 = 0.5f / num5;
+				result.X = ( matrix.M31 + matrix.M13 ) * num2;
+				result.Y = ( matrix.M32 + matrix.M23 ) * num2;
+				result.Z = 0.5f * num5;
+				result.W = ( matrix.M12 - matrix.M21 ) * num2;
+			}
+			return result;
 		}
 
 		public override bool Equals ( object obj )

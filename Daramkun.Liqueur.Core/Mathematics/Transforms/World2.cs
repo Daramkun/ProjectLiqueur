@@ -45,53 +45,21 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 				v1.Scale / v2.Scale, v1.Rotation - v2.Rotation, v1.RotationCenter - v2.RotationCenter );
 		}
 
-		private Matrix4x4 TranslationMatrix ( Vector2 translate )
-		{
-			return new Matrix4x4 (
-				1, 0, 0, 0,
-				0, 1, 0, 0,
-				0, 0, 1, 0,
-				translate.X, translate.Y, 0, 1
-				);
-		}
-
-		private Matrix4x4 ScaleMatrix ( Vector2 scale )
-		{
-			return new Matrix4x4 (
-				scale.X, 0, 0, 0,
-				0, scale.Y, 0, 0,
-				0, 0, 1, 0,
-				0, 0, 0, 1 );
-		}
-
-		private Matrix4x4 RotateMatrix ( float rotation )
-		{
-			var val1 = ( float ) System.Math.Cos ( rotation );
-			var val2 = ( float ) System.Math.Sin ( rotation );
-
-			return new Matrix4x4 (
-				val1, val2, 0, 0,
-				-val2, val1, 0, 0,
-				0, 0, 1, 0,
-				0, 0, 0, 1
-			);
-		}
-
 		public Matrix4x4 Matrix
 		{
 			get
 			{
 				Matrix4x4 matrix = Matrix4x4.Identity;
 
-				matrix *= TranslationMatrix ( -RotationCenter );
-				matrix *= RotateMatrix ( Rotation );
-				matrix *= TranslationMatrix ( RotationCenter );
+				matrix *= CommonTransform.Translate ( new Vector3 ( -RotationCenter, 0 ) );
+				matrix *= CommonTransform.RotationZ ( Rotation );
+				matrix *= CommonTransform.Translate ( new Vector3 ( RotationCenter, 0 ) );
 
-				matrix *= TranslationMatrix ( -ScaleCenter );
-				matrix *= ScaleMatrix ( Scale );
-				matrix *= TranslationMatrix ( ScaleCenter );
+				matrix *= CommonTransform.Translate ( new Vector3 ( -ScaleCenter, 0 ) );
+				matrix *= CommonTransform.Scale ( new Vector3 ( Scale, 1 ) );
+				matrix *= CommonTransform.Translate ( new Vector3 ( ScaleCenter, 0 ) );
 
-				matrix *= TranslationMatrix ( Translate );
+				matrix *= CommonTransform.Translate ( new Vector3 ( Translate, 0 ) );
 
 				return matrix;
 			}
