@@ -69,24 +69,16 @@
       <Project>{032EC8FF-8AA5-4ACE-8147-D7F0FCECFF04}</Project>
       <Name>Daramkun.Liqueur.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Daramkun.Liqueur.Desktop.Common\Daramkun.Liqueur.Desktop.Common.csproj">
-      <Project>{118af382-a917-4c73-8e96-22f5e6945dfe}</Project>
-      <Name>Daramkun.Liqueur.Desktop.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Daramkun.Liqueur.Engine.Spirit\Daramkun.Liqueur.Engine.Spirit.csproj">
       <Project>{5037F5CA-5FB2-47E3-AF5C-81D40EC439A9}</Project>
       <Name>Daramkun.Liqueur.Engine.Spirit</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Daramkun.Liqueur.Platforms.DirectX9\Daramkun.Liqueur.Platforms.DirectX9.csproj">
-      <Project>{a52044d0-44e2-49e4-8ce8-8acbbbf207d2}</Project>
-      <Name>Daramkun.Liqueur.Platforms.DirectX9</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.Game.Dodge\Test.Game.Dodge.csproj">
       <Project>{1ED93C3F-E2DA-4AEA-95E5-55400E61D152}</Project>
       <Name>Test.Game.Dodge</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.Game.InfoViewer\Test.Game.InfoViewer.csproj">
-      <Project>{4efd0b38-3451-48f1-b738-e02e0a317ca8}</Project>
+      <Project>{4EFD0B38-3451-48F1-B738-E02E0A317CA8}</Project>
       <Name>Test.Game.InfoViewer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.Game.PerformanceTester\Test.Game.PerformanceTester.csproj">
@@ -94,8 +86,16 @@
       <Name>Test.Game.PerformanceTester</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.Game.PlaySound\Test.Game.PlaySound.csproj">
-      <Project>{efb4ddae-7726-4a09-afe9-9ad5131ff791}</Project>
+      <Project>{EFB4DDAE-7726-4A09-AFE9-9AD5131FF791}</Project>
       <Name>Test.Game.PlaySound</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Daramkun.Liqueur.Platforms.OpenTK\Daramkun.Liqueur.Platforms.OpenTK.csproj">
+      <Project>{B4799777-35C6-44F0-B18A-350A9BCEF41E}</Project>
+      <Name>Daramkun.Liqueur.Platforms.OpenTK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Daramkun.Liqueur.Desktop.Common\Daramkun.Liqueur.Desktop.Common.csproj">
+      <Project>{118AF382-A917-4C73-8E96-22F5E6945DFE}</Project>
+      <Name>Daramkun.Liqueur.Desktop.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
