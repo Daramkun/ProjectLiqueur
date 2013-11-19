@@ -259,6 +259,7 @@
     <Compile Include="Mathematics\Transforms\OrthographicProjection.cs" />
     <Compile Include="Mathematics\Transforms\PerspectiveFieldOfViewProjection.cs" />
     <Compile Include="Mathematics\Transforms\PerspectiveOffCenterProjection.cs" />
+    <Compile Include="Mathematics\Transforms\HandDirection.cs" />
     <Compile Include="Mathematics\Transforms\View.cs" />
     <Compile Include="Mathematics\Transforms\World2.cs" />
     <Compile Include="Mathematics\Transforms\World3.cs" />

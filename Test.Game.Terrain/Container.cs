@@ -95,6 +95,9 @@ namespace Test.Game.Terrain
 			texture = contentManager.Load<ITexture2D> ( "Test.Game.Terrain.Resources.terrain_02.png" );
 
 			LiqueurSystem.GraphicsDevice.CullingMode = CullingMode.None;
+			LiqueurSystem.GraphicsDevice.IsZWriteEnable = true;
+			LiqueurSystem.GraphicsDevice.BlendState = true;
+			LiqueurSystem.GraphicsDevice.BlendOperation = BlendOperation.AlphaBlend;
 
 			base.Intro ( args );
 		}
@@ -118,10 +121,10 @@ namespace Test.Game.Terrain
 			LiqueurSystem.GraphicsDevice.BeginScene ();
 
 			terrainEffect.SetArgument<Matrix4x4> ( "worldMatrix",
-				new World3 ( new Vector3 ( 0, -200, 0 ), new Vector3 ( 0 ), new Vector3 ( 1 ), new Vector3 ( 0 ), new Vector3 ( 0 ) ).Matrix *
-				new View ( new Vector3 ( 0, 0, 0 ), new Vector3 ( 0, -200, 0 ), new Vector3 ( 0, 1, 0 ) ).Matrix );
+				new View ( new Vector3 ( 20, 0, 20 ), new Vector3 ( 0, -200, 0 ), new Vector3 ( 0, 1, 0 ) ).Matrix *
+				new World3 ( new Vector3 ( 0, -200, 0 ), new Vector3 ( 0 ), new Vector3 ( 1 ), new Vector3 ( 0 ), new Vector3 ( 0 ) ).Matrix );
 			terrainEffect.SetArgument<Matrix4x4> ( "projectionMatrix",
-				new PerspectiveFieldOfViewProjection ( 3.141492f / 4, 800 / 600.0f, 1.000f, 10000.0f ).Matrix );
+				new PerspectiveFieldOfViewProjection ( 3.141492f / 4, 800 / 600.0f, 0.001f, 10000.0f ).Matrix );
 			terrainEffect.SetTexture ( new TextureArgument () { Texture = texture, Uniform = "texture0" } );
 			terrainEffect.Dispatch ( ( IEffect effect ) =>
 			{
