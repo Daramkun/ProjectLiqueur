@@ -63,6 +63,8 @@ namespace Daramkun.Liqueur.Contents.Decoder.Images
 			{
 				if ( reader.ImgInfo.BytesPixel == 3 )
 					colors [ index ] = new Color ( pixels [ i + 0 ], pixels [ i + 1 ], pixels [ i + 2 ] );
+				else if ( reader.ImgInfo.BytesPixel == 1 )
+					colors [ index ] = new Color ( pixels [ i ], pixels [ i ], pixels [ i ], 255 );
 				else
 					colors [ index ] = new Color ( pixels [ i + 0 ], pixels [ i + 1 ], pixels [ i + 2 ], pixels [ i + 3 ] );
 			}

@@ -27,15 +27,16 @@ namespace Test.Windows.CSharp
 		[STAThread]
 		static void Main ()
 		{
-			LiqueurSystem.SkipInitializeException = true;
+			//LiqueurSystem.SkipInitializeException = true;
 			FileSystemManager.AddFileSystem ( "LocalFileSystem", typeof ( LocalFileSystem ) );
 			//try
 			//{
 				LiqueurSystem.Run ( new Launcher ( true ),
-					new Test.Game.Dodge.Container (),
+					//new Test.Game.Dodge.Container (),
 					//new Test.Game.PerformanceTester.Container (),
 					//new Test.Game.InfoViewer.Container (),
 					//new Test.Game.PlaySound.Container (),
+					new Test.Game.Terrain.Container (),
 					() =>
 					{
 						LiqueurSystem.Keyboard = new Keyboard ( LiqueurSystem.Window );

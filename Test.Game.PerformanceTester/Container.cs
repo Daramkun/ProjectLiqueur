@@ -69,25 +69,26 @@ namespace Test.Game.PerformanceTester
 
 		private void Add ( int mode, int count )
 		{
-			IsManuallyChildrenCacheMode = true;
+			nodes [ mode ].IsManuallyChildrenCacheMode = true;
 			LiqueurSystem.Launcher.InvokeInMainThread ( () =>
 			{
 				for ( int i = 0; i < count; ++i )
 				{
 					nodes [ mode ].Add ( new PerformanceSpriteNode ( textures [ mode ] ) );
 				}
-				RefreshChildrenCache ();
+				nodes [ mode ].RefreshChildrenCache ();
 			}, false );
 		}
 
 		private void Remove ( int mode, int count )
 		{
-			IsManuallyChildrenCacheMode = true;
+			nodes [ mode ].IsManuallyChildrenCacheMode = true;
 			for ( int i = 0; i < count; ++i )
 			{
+				if ( nodes [ mode ].ChildrenCount <= 0 ) continue;
 				nodes [ mode ].Remove ( nodes [ mode ] [ nodes [ mode ].ChildrenCount - 1 ] );
 			}
-			RefreshChildrenCache ();
+			nodes [ mode ].RefreshChildrenCache ();
 		}
 
 		public override void Update ( GameTime gameTime )
