@@ -238,6 +238,15 @@ namespace Daramkun.Liqueur.Mathematics.Transforms
 		}
 
 		public static Matrix4x4 FromYawPitchRoll ( Vector3 ypr ) { return FromYawPitchRoll ( ypr.X, ypr.Y, ypr.Z ); }
+
+		public static Vector3 TransformCoord ( Vector3 pos, Matrix4x4 matrix )
+		{
+			return new Vector3 (
+				( pos.X * matrix.M11 ) + ( pos.Y * matrix.M21 ) + ( pos.Z * matrix.M31 ) + matrix.M41,
+				( pos.X * matrix.M12 ) + ( pos.Y * matrix.M22 ) + ( pos.Z * matrix.M32 ) + matrix.M42,
+				( pos.X * matrix.M13 ) + ( pos.Y * matrix.M23 ) + ( pos.Z * matrix.M33 ) + matrix.M43
+			);
+		}
 	}
 }
 
