@@ -211,17 +211,7 @@ namespace Daramkun.Liqueur.Graphics
 			}
 		}
 
-		public IRenderBuffer RenderTarget
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-			set
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		public IRenderBuffer RenderTarget { get; set; }
 
 		public GraphicsDevice ( IWindow window )
 		{
@@ -260,13 +250,19 @@ namespace Daramkun.Liqueur.Graphics
 		public void BeginScene ()
 		{
 			if ( d3dDevice == null ) return;
-			d3dDevice.BeginScene ();
+			if ( RenderTarget == null )
+				d3dDevice.BeginScene ();
+			else
+				( RenderTarget as RenderBuffer ).rts.BeginScene ( ( RenderTarget as RenderBuffer ).texture.GetSurfaceLevel ( 0 ), d3dDevice.Viewport );
 		}
 
 		public void EndScene ()
 		{
 			if ( d3dDevice == null ) return;
-			d3dDevice.EndScene ();
+			if ( RenderTarget == null )
+				d3dDevice.EndScene ();
+			else
+				( RenderTarget as RenderBuffer ).rts.EndScene ( SharpDX.Direct3D9.Filter.Default );
 		}
 
 		public void Clear ( ClearBuffer clearBuffer, Color color )
