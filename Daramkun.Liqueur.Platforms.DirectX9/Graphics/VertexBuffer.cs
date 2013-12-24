@@ -91,21 +91,21 @@ namespace Daramkun.Liqueur.Graphics
 			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV2 ) )
 			{
 				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2,
-					SharpDX.Direct3D9.DeclarationMethod.UV, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 1 ) );
+					SharpDX.Direct3D9.DeclarationMethod.Default, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 1 ) );
 				offset += 8;
 			}
 
 			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV3 ) )
 			{
 				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2,
-					SharpDX.Direct3D9.DeclarationMethod.UV, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 2 ) );
+					SharpDX.Direct3D9.DeclarationMethod.Default, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 2 ) );
 				offset += 8;
 			}
 
 			if ( fvf.HasFlag ( FlexibleVertexFormat.TextureUV4 ) )
 			{
 				elements.Add ( new SharpDX.Direct3D9.VertexElement ( 0, offset, SharpDX.Direct3D9.DeclarationType.Float2,
-					SharpDX.Direct3D9.DeclarationMethod.UV, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 3 ) );
+					SharpDX.Direct3D9.DeclarationMethod.Default, SharpDX.Direct3D9.DeclarationUsage.TextureCoordinate, 3 ) );
 				offset += 8;
 			}
 			elements.Add ( SharpDX.Direct3D9.VertexElement.VertexDeclarationEnd );

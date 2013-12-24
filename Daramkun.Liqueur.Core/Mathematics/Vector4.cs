@@ -9,7 +9,7 @@ namespace Daramkun.Liqueur.Mathematics
 	{
 		public static readonly Vector4 Zero = new Vector4 ( 0 );
 
-		public float W, X, Y, Z;
+		public float X, Y, Z, W;
 
 		public Vector4 ( float x, float y, float z, float w )
 		{

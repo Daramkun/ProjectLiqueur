@@ -27,7 +27,7 @@ namespace Test.Windows.CSharp
 		[STAThread]
 		static void Main ()
 		{
-			//LiqueurSystem.SkipInitializeException = true;
+			LiqueurSystem.SkipInitializeException = true;
 			FileSystemManager.AddFileSystem ( "LocalFileSystem", typeof ( LocalFileSystem ) );
 			//try
 			//{

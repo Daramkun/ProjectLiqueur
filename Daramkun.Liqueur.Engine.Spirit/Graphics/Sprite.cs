@@ -93,9 +93,9 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 			vertexBuffer = LiqueurSystem.GraphicsDevice.CreateVertexBuffer<SpriteVertex> ( SpriteVertexFormat, new SpriteVertex []
 			{
-				new SpriteVertex ( new Vector2 ( 0, 0 ), Color.White, new Vector2 ( 0, 0 ) ),
-				new SpriteVertex ( new Vector2 ( width, 0 ), Color.White, new Vector2 ( 1, 0 ) ),
-				new SpriteVertex ( new Vector2 ( 0, height ), Color.White, new Vector2 ( 0, 1 ) ),
+				new SpriteVertex ( new Vector2 ( 0.001f, 0.001f ), Color.White, new Vector2 ( 0.001f, 0.001f ) ),
+				new SpriteVertex ( new Vector2 ( width, 0.001f ), Color.White, new Vector2 ( 1, 0.001f ) ),
+				new SpriteVertex ( new Vector2 ( 0.001f, height ), Color.White, new Vector2 ( 0.001f, 1 ) ),
 				new SpriteVertex ( new Vector2 ( width, height ), Color.White, new Vector2 ( 1, 1 ) ),
 			} );
 			if ( indexBuffer == null )
@@ -104,7 +104,7 @@ namespace Daramkun.Liqueur.Spirit.Graphics
 
 			clippingArea = new Rectangle ( 0, 0, width, height );
 
-			TextureFilter = Liqueur.Graphics.TextureFilter.Linear;
+			TextureFilter = Liqueur.Graphics.TextureFilter.Nearest;
 		}
 
 		public void Dispose ()

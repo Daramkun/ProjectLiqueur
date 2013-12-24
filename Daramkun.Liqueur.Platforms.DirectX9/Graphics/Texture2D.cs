@@ -47,8 +47,9 @@ namespace Daramkun.Liqueur.Graphics
 		{
 			if ( width == 0 ) width = 1;
 			if ( height == 0 ) height = 1;
-			texture = new SharpDX.Direct3D9.Texture ( graphicsDevice.Handle as SharpDX.Direct3D9.Device, width, height, 1, SharpDX.Direct3D9.Usage.None,
-				SharpDX.Direct3D9.Format.A8R8G8B8, SharpDX.Direct3D9.Pool.Managed );
+			texture = new SharpDX.Direct3D9.Texture ( graphicsDevice.Handle as SharpDX.Direct3D9.Device, width, height,
+				1, SharpDX.Direct3D9.Usage.AutoGenerateMipMap, SharpDX.Direct3D9.Format.A8R8G8B8, SharpDX.Direct3D9.Pool.Managed );
+			texture.FilterTexture ( 0, SharpDX.Direct3D9.Filter.Point );
 			Size = new Vector2 ( width, height );
 		}
 

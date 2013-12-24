@@ -7,7 +7,7 @@ namespace Daramkun.Liqueur.Mathematics
 {
 	public struct Quaternion : IComparer<Quaternion>
 	{
-		public float W, X, Y, Z;
+		public float X, Y, Z, W;
 
 		public static readonly Quaternion Identity = new Quaternion ( 0, 0, 0, 1 );
 
